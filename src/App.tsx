@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { ConfigProvider, Layout } from 'antd';
+import { ConfigProvider, Layout, Menu } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { useUpdateStore, useAppData } from 'simple-redux-store';
 import Body from 'src/common/Body';
 import './App.scss';
 import Header from './common/Header';
+import Menus from './Menus';
 
 dayjs.locale('zh-cn');
 
@@ -40,11 +41,11 @@ const App = () => {
       <BrowserRouter>
         <Layout className="app">
           <Header />
-          <Layout>
-            <Layout.Sider>
-              
+          <Layout style={{ background: '#fff' }}>
+            <Layout.Sider style={{ background: '#fff' }}>
+              <Menus />
             </Layout.Sider>
-            <Layout.Content>
+            <Layout.Content style={{ background: '#fff' }}>
               <Body>
                 <Suspense fallback={<PageLoading />}>
                   <Switch>

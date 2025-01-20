@@ -151,7 +151,10 @@ const Header = () => {
   const hideHeader = hideHeaderRoutesCfg.includes(pathname);
 
   return !hideHeader ? (
-    <Layout.Header className="app-nav top-header">
+    <Layout.Header
+      style={{ background: '#fff' }}
+      className="app-nav top-header"
+    >
       <div className="logo" />
       {isSimpleMode ? (
         <div className="simple-header">

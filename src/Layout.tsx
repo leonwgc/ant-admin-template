@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Spin } from 'antd';
 import { Route, Switch, Redirect } from 'react-router';
 import Body from 'src/common/Body';
-import Menus from './Menus';
+// import Menus from './Menus';
 import Nav from 'src/common/Nav';
 import txlRoutes from './v2/txl/routes';
 import { useAppData } from 'simple-redux-store';
@@ -49,7 +49,7 @@ export default function AdminLayout({ history }) {
   return (
     <Body bgColor="#fff" style={{ width: '100%' }}>
       <div style={{ display: 'flex' }}>
-        <Menus />
+        {/* <Menus /> */}
         <div className="admin-wrapper">
           <Nav />
           <div>
