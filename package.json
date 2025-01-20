@@ -1,0 +1,32 @@
+{
+  "name": "ant-admin-template",
+  "version": "1.0.0",
+  "description": "antd admin template",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@types/react-router-dom": "^5.1.7",
+    "packrs": "^0.2.1"
+  },
+  "dependencies": {
+    "urijs": "^1.19.11",
+    "@ant-design/icons": "^5.5.2",
+    "ahooks": "^3.8.4",
+    "antd": "^5.23.1",
+    "clsx": "^1.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^7.0.0",
+    "react-router-dom": "^5.0.0",
+    "react-uni-comps": "^1.8.9",
+    "redux": "^4.0.0",
+    "simple-redux-store": "^2.0.0",
+    "styled-component": "^2.8.0"
+  }
+}

@@ -1,0 +1,175 @@
+// 覆盖antd样式
+.ant-modal-content {
+  border-radius: 5px;
+  padding: 32px 32px 0 32px;
+  .ant-modal-header {
+    border-bottom: none;
+    padding: 0;
+    padding-bottom: 24px;
+    .ant-modal-title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  .ant-modal-body {
+    padding: 0;
+    font-size: 14px;
+    p {
+      margin: 0;
+    }
+  }
+  .ant-modal-footer {
+    border-top: none;
+    padding: 0;
+    padding-bottom: 24px;
+    padding-top: 32px;
+    .ant-btn {
+      border-radius: 5px;
+      width: 80px;
+      margin-left: 16px !important;
+      padding: 0;
+      text-align: center;
+    }
+  }
+}
+.ant-input-prefix {
+  color: #8c8c8c;
+}
+.form-upload-wrapper {
+  .ant-upload-list {
+    margin-left: 25px;
+    margin-top: 0;
+    width: 200px;
+    .ant-upload-list-item {
+      height: 32px;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+  }
+  > span {
+    display: flex;
+  }
+}
+
+.ant-table-thead {
+  > tr {
+    .ant-table-cell {
+      background-color: #fff;
+      border: none;
+      color: #8c8c8c;
+      font-size: 14px;
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+.ant-input-affix-wrapper {
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+.ant-picker,
+.ant-input,
+.ant-btn,
+.ant-input-affix-wrapper,
+.ant-select {
+  border-radius: 4px;
+}
+
+.ant-menu-submenu-placement-rightTop {
+  .ant-menu-vertical {
+    width: 160px;
+    > .ant-menu-item {
+      width: 152px;
+      margin: 4px auto;
+      display: block;
+      border-radius: 4px;
+    }
+  }
+}
+.role-select-item {
+  display: flex;
+  justify-content: space-between;
+}
+.ant-picker,
+.ant-input,
+.ant-btn,
+.ant-input-affix-wrapper,
+.ant-select {
+  border-radius: 4px;
+}
+.ant-drawer-close {
+  padding-top: 24px;
+}
+
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td,
+.ant-table tfoot > tr > th,
+.ant-table tfoot > tr > td {
+  padding: 12px 12px;
+}
+
+.ant-pagination.mini {
+  .ant-pagination-item {
+    margin: 0 4px;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    > a {
+      font-weight: 400;
+      padding: 0;
+    }
+  }
+}
+
+.ant-table-body {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.ant-modal-confirm {
+  .ant-modal-confirm-body-wrapper {
+    padding-bottom: 24px;
+    .anticon {
+      font-size: 32px;
+      margin-top: -5px;
+    }
+    .ant-modal-confirm-content {
+      margin-top: 28px;
+      padding-left: 10px;
+    }
+    .ant-modal-confirm-title {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: left;
+    }
+    .ant-modal-confirm-btns {
+      .ant-btn {
+        margin-left: 16px;
+        padding: 0;
+        width: 80px;
+        text-align: center;
+        &.ant-btn-loading {
+          width: auto;
+          padding: 0 16px;
+          .anticon {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ant-tooltip-inner {
+  font-size: 14px;
+  font-weight: 400;
+}
+.ant-table-thead > tr .ant-table-cell {
+  background: #f5f7fa;
+}
+
+.ant-table-thead {
+  white-space: nowrap;
+}

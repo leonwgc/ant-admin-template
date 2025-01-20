@@ -1,0 +1,95 @@
+.top-header {
+  height: 76px;
+  position: relative;
+  min-width: 1024px;
+
+  > header {
+    // max-width: 1180px;
+    min-width: 1024px;
+    margin: 0 auto;
+    height: 60px;
+    line-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 1500px) {
+      padding-left: 160px;
+      padding-right: 20px;
+    }
+  }
+
+  .menu-item {
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 20px;
+    opacity: 0.75;
+    font-size: 14px;
+    font-family: PingFangSC;
+    text-align: left;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: normal;
+
+    &.active {
+      font-weight: 500;
+      opacity: 1;
+      font-weight: bolder;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      opacity: 1;
+    }
+  }
+
+  .right-side {
+    color: #fff;
+    display: flex;
+    align-items: center;
+
+    .text {
+      opacity: 0.75;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #ffffff;
+      line-height: 20px;
+    }
+
+    .logout {
+      cursor: pointer;
+    }
+  }
+  .line {
+    width: 1px;
+    height: 20px;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.simple-header {
+  position: absolute;
+  color: #fff;
+  right: 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 120px;
+  height: 60px;
+  margin: 0 20px;
+  position: absolute;
+  top: 0;
+  // background-image: ${({
+  //   custIcon = '//static.zuifuli.com/assets/icare-company/head-logo.png',
+  // }) => `url(${custIcon})`};
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
