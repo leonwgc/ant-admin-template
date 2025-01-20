@@ -1,4 +1,6 @@
-import { lazy } from 'react';
+// import { lazy } from 'react';
+
+import Layout from './Layout';
 
 // global routes
 
@@ -19,7 +21,7 @@ const routes = [
 
   {
     path: `/`,
-    component: lazy(() => import('./Layout')),
+    component: Layout,
   },
 ];
 

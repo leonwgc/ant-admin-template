@@ -1,13 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import { Provider, configureStore } from 'simple-redux-store';
-// import { Icon } from 'react-uni-comps';
-import { createFromIconfontCN } from '@ant-design/icons';
+import { Icon } from 'react-uni-comps';
+// import { createFromIconfontCN } from '@ant-design/icons';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-export const Icon = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2639743_irllp2uw61.js',
-});
+Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2639743_irllp2uw61.js');
 
 type MenuInfo = {
   funTitle: string;

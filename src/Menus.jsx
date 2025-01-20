@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Menu } from 'antd';
-import { Icon } from './index';
+// import { Icon } from './index';
+
 import { useUpdateStore, useAppData } from 'simple-redux-store';
 // import { getSearchParams } from './utils/';
-import { nanoid, styled, css } from 'react-uni-comps';
+import { nanoid, styled, css, Icon } from 'react-uni-comps';
 const { SubMenu } = Menu;
 
 import menuData from './menuDataNew';

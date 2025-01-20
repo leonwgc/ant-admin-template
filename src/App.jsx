@@ -53,18 +53,16 @@ const App = () => {
         <Header />
         <Body>
           <Suspense fallback={<PageLoading />}>
-            <ErrorBoundary>
-              <Switch>
-                {routes.map((route, idx) => (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    component={route.component}
-                  />
-                ))}
-              </Switch>
-            </ErrorBoundary>
+            <Switch>
+              {routes.map((route, idx) => (
+                <Route
+                  key={idx}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.component}
+                />
+              ))}
+            </Switch>
           </Suspense>
         </Body>
       </BrowserRouter>
