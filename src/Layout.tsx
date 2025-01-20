@@ -6,8 +6,10 @@ import Menus from './Menus';
 import Nav from 'src/common/Nav';
 import txlRoutes from './v2/txl/routes';
 import { useAppData } from 'simple-redux-store';
+
 // import { StyledAdminWrapper } from './common/StyledComponents';
 import ErrorBoundary from 'src/common/ErrorBoundary';
+import Header from './common/Header';
 
 const routes = [...txlRoutes];
 

@@ -8,9 +8,11 @@ import routes from './routes';
 import PageLoading from './common/PageLoading';
 import usePageTitle from 'src/hooks/usePageTitle';
 import { useUpdateStore, useAppData } from 'simple-redux-store';
-import Header from 'src/common/Header';
+// import Header from 'src/common/Header';
+
 import Body from 'src/common/Body';
 import './App.scss';
+import Header from './common/Header';
 
 dayjs.locale('zh-cn');
 
@@ -38,21 +40,27 @@ const App = () => {
       <BrowserRouter>
         <Layout className="app">
           <Header />
-
-          <Body>
-            <Suspense fallback={<PageLoading />}>
-              <Switch>
-                {routes.map((route, idx) => (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    component={route.component}
-                  />
-                ))}
-              </Switch>
-            </Suspense>
-          </Body>
+          <Layout>
+            <Layout.Sider>
+              
+            </Layout.Sider>
+            <Layout.Content>
+              <Body>
+                <Suspense fallback={<PageLoading />}>
+                  <Switch>
+                    {routes.map((route, idx) => (
+                      <Route
+                        key={idx}
+                        path={route.path}
+                        exact={route.exact}
+                        component={route.component}
+                      />
+                    ))}
+                  </Switch>
+                </Suspense>
+              </Body>
+            </Layout.Content>
+          </Layout>
         </Layout>
       </BrowserRouter>
     </ConfigProvider>
