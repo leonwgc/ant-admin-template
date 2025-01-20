@@ -1,0 +1,137 @@
+// html {
+//   text-size-adjust: 100%;
+//   -webkit-tap-highlight-color: transparent;
+// }
+// body {
+//   font-family: PingFangSC-Regular, 'helvetica neue', 'hiragino sans gb', arial,
+//     'microsoft yahei ui', 'microsoft yahei', simsun, sans-serif;
+//   background-color: #f5f5f5;
+//   font-size: 14px;
+// }
+// *,
+// *:before,
+// *:after {
+//   box-sizing: border-box;
+//   margin: 0;
+//   padding: 0;
+//   outline: none;
+// }
+// ul,
+// li {
+//   list-style: none;
+// }
+
+// .clearfix {
+//   &::before {
+//     display: table;
+//     content: '';
+//   }
+//   &::after {
+//     display: table;
+//     clear: both;
+//     content: '';
+//   }
+// }
+
+// .body-wrap {
+//   margin-top: -20px;
+//   min-width: 1024px;
+//   border-radius: 8px 8px 0px 0px;
+//   position: relative;
+//   background-color: #f5f5f5;
+
+//   &.white {
+//     background-color: #fff;
+//   }
+// }
+
+@import './scss/common.scss';
+
+.app {
+  .app-content {
+    position: relative;
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: var(--nav-height) 0 0 var(--menu-width);
+    transition: padding-left $theme-transition-duration ease-in-out;
+    padding-bottom: 40px;
+
+    .app-loading {
+      position: absolute;
+      top: 56px;
+      left: 248px;
+      right: 0;
+      bottom: 50px;
+      width: 48px;
+      height: 48px;
+      margin: auto;
+      transition: left $theme-transition-duration ease-in-out;
+    }
+
+    .app-content-modal {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .ds-table {
+      &.ds-table-empty {
+        .ds-table-cell {
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+  &.no-padding-bottom .app-content {
+    padding-bottom: 0;
+  }
+
+  &.has-banner {
+    .nav-menu {
+      height: 100%;
+    }
+
+    .app-content {
+      padding-top: 56px;
+
+      .module-header.fixed {
+        top: 56px;
+      }
+    }
+  }
+
+  &.footer-hidden {
+    .app-content {
+      padding-bottom: 0;
+    }
+
+    .app-footer {
+      display: none;
+    }
+  }
+}
+
+.nav-menu-collapsed .app-content {
+  padding-left: 64px;
+
+  .app-loading {
+    left: 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    .app-content {
+      // 100% 高度减去 mobile footer 的高度
+      min-height: calc(100vh - 56px);
+      padding: 56px 0 64px 0;
+
+      .app-loading {
+        left: 0;
+      }
+    }
+  }
+}

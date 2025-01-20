@@ -7,7 +7,7 @@ run({
   dist: './dist',
   port: 3000,
   less: true,
-  sass: false,
+  sass: true,
   rsConfig: {
     // resolve: {
     //   aliasStrategy: 'prefer-alias',

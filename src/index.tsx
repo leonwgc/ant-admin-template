@@ -1,9 +1,10 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider, configureStore } from 'simple-redux-store';
 import { Icon } from 'react-uni-comps';
-// import { createFromIconfontCN } from '@ant-design/icons';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import './scss/index.scss';
+import './scss/global.scss';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2639743_irllp2uw61.js');
 
@@ -54,12 +55,8 @@ const data: StoreData = {
 
 const store = configureStore(data, true);
 
-const app = document.getElementById('app');
-
-createRoot(app as HTMLElement).render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>
+createRoot(document.getElementById('app') as HTMLElement).render(
+  <Provider store={store}>
+    <App />
+  </Provider>
 );

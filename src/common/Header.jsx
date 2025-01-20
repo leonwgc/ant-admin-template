@@ -9,6 +9,8 @@ import hideHeaderRoutesCfg from './hideHeaderRoutesCfg';
 import './Header.less';
 import URI from 'urijs';
 import menuData from '../menuDataNew';
+import { Layout } from 'antd';
+
 const pathWithoutMenus = ['/login', '/forget'];
 
 const outsidePathes = ['/login', '/forget', '/index', '/info'];
@@ -149,7 +151,7 @@ const Header = () => {
   const hideHeader = hideHeaderRoutesCfg.includes(pathname);
 
   return !hideHeader ? (
-    <div className="top-header">
+    <Layout.Header className="app-nav top-header">
       <div className="logo" />
       {isSimpleMode ? (
         <div className="simple-header">
@@ -184,7 +186,7 @@ const Header = () => {
           </div>
         </header>
       )}
-    </div>
+    </Layout.Header>
   ) : null;
 };
 
