@@ -1,6 +1,6 @@
 import { Layout, SiderProps } from 'antd';
 import { useState, useEffect } from 'react';
-import AppSiderToggleButton from './AppSiderToggleButton';
+import SiderToggleButton from './SiderToggleButton';
 import Menus from './Menus';
 
 export default (props: SiderProps) => {
@@ -24,7 +24,7 @@ export default (props: SiderProps) => {
       {...props}
     >
       <Menus />
-      <AppSiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
+      <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
     </Layout.Sider>
   );
 };

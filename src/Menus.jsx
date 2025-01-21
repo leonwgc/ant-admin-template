@@ -10,6 +10,7 @@ const { SubMenu } = Menu;
 
 import menuData from './menuDataNew';
 import URI from 'urijs';
+import { BellOutlined, BellTwoTone } from '@ant-design/icons';
 
 const sep = '$';
 
@@ -277,10 +278,11 @@ const Menus = () => {
             title={menuCollapsed ? null : item.funTitle}
             icon={
               menuCollapsed ? (
-                <StyledIcon
-                  type={item.funLogo || defaultIcon}
-                  style={{ color: '#8c8c8c', fontSize: 20 }}
-                />
+                // <StyledIcon
+                //   type={item.funLogo || defaultIcon}
+                //   style={{ color: '#8c8c8c', fontSize: 20 }}
+                // />
+                <BellOutlined />
               ) : null
             }
           ></StyledSubMenu>
@@ -315,14 +317,7 @@ const Menus = () => {
             collapsed={menuCollapsed}
             key={item.id}
             title={menuCollapsed ? null : item.funTitle}
-            icon={
-              menuCollapsed ? (
-                <StyledIcon
-                  type={item.funLogo || defaultIcon}
-                  style={{ color: '#8c8c8c', fontSize: 20 }}
-                />
-              ) : null
-            }
+            icon={menuCollapsed ? <BellOutlined /> : null}
           >
             {menuRender(item.childs, false)}
           </StyledSubMenu>

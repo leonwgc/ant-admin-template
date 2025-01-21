@@ -7,12 +7,10 @@ import { Button } from 'antd';
 // Vendors
 import classNames from 'classnames';
 
-// Styles
-// import './AppSiderToggleButton.scss';
 import { useLatest } from 'ahooks';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 
-const AppSiderToggleButton = ({ onToggle, collapsed }) => {
+const SiderToggleButton = ({ onToggle, collapsed }) => {
   const onToggleRef = useLatest(onToggle);
 
   const handleToggleCollapse = useCallback(() => {
@@ -36,4 +34,4 @@ const AppSiderToggleButton = ({ onToggle, collapsed }) => {
   );
 };
 
-export default AppSiderToggleButton;
+export default SiderToggleButton;
