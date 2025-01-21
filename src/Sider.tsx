@@ -15,17 +15,16 @@ export default (props: SiderProps) => {
 
   return (
     <Layout.Sider
-      // trigger={null}
+      trigger={null}
       width={256}
       collapsedWidth={64}
       collapsible
-      // collapsed={collapsed}
-
+      collapsed={collapsed}
       theme="light"
       {...props}
     >
       <Menus />
-      <AppSiderToggleButton />
+      <AppSiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
     </Layout.Sider>
   );
 };

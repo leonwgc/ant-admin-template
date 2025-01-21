@@ -8,24 +8,24 @@ import { Button } from 'antd';
 import classNames from 'classnames';
 
 // Styles
-import './AppSiderToggleButton.scss';
-import { useToggle } from 'ahooks';
+// import './AppSiderToggleButton.scss';
+import { useLatest } from 'ahooks';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 
-const AppSiderToggleButton = () => {
-  const [collapsed, { toggle }] = useToggle();
+const AppSiderToggleButton = ({ onToggle, collapsed }) => {
+  const onToggleRef = useLatest(onToggle);
 
   const handleToggleCollapse = useCallback(() => {
-    toggle?.();
+    onToggleRef.current(!collapsed);
     document.documentElement.style.setProperty(
       '--menu-width',
       !collapsed ? '56px' : '256px'
     );
-  }, [collapsed, toggle]);
+  }, [collapsed]);
 
   return (
     <Button
-      className={classNames('app-layout__toggle-button', {
+      className={classNames('app-layout__sider__toggle-button', {
         collapsed: collapsed,
         expanded: !collapsed,
       })}
