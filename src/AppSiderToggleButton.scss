@@ -1,0 +1,52 @@
+.app-layout-sider .app-sider-toggle-button {
+  position: absolute;
+  right: -16px;
+  top: 8px;
+  box-sizing: border-box;
+  width: 32px;
+  height: 24px;
+  padding: 0 2px;
+  border: none;
+  border-radius: 16px;
+  box-shadow: none;
+  line-height: 24px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: right 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+    opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+    width 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  .ds-btn-icon {
+    transition: margin-left 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+      margin-right 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+}
+
+.app-sider:hover .ds-btn.app-sider-toggle-button {
+  opacity: 1;
+
+  &:hover {
+    width: 40px;
+  }
+
+  &.collapsed {
+    &:hover {
+      right: -24px;
+
+      .ds-btn-icon {
+        margin-left: 8px;
+      }
+    }
+  }
+
+  &.expanded {
+    &:hover {
+      right: -16px;
+
+      .ds-btn-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}

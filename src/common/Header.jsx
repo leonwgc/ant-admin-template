@@ -152,7 +152,7 @@ const Header = () => {
 
   return !hideHeader ? (
     <Layout.Header
-      style={{ background: '#fff' }}
+      style={{ background: '#fff', display: 'flex', alignItems: 'center' }}
       className="app-nav top-header"
     >
       <div className="logo" />

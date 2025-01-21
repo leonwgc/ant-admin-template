@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"]
+    },
     "module": "esnext",
+    "outDir": "./dist",
     "target": "es2020",
     "lib": ["es2020", "esnext", "dom"],
     "jsx": "preserve",
     "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["./src/*"]
-    }
+    "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build", "dist"]

@@ -13,10 +13,10 @@
     "@types/react-dom": "^19.0.3",
     "@types/react-router-dom": "^5.1.7",
     "packrs": "^0.2.1",
-    "sass": "^1.77.8"
+    "sass": "^1.77.8",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
-    "urijs": "^1.19.11",
     "@ant-design/icons": "^5.5.2",
     "ahooks": "^3.8.4",
     "antd": "^5.23.1",
@@ -28,6 +28,7 @@
     "react-uni-comps": "^1.8.9",
     "redux": "^4.0.0",
     "simple-redux-store": "^2.0.0",
-    "styled-component": "^2.8.0"
+    "styled-component": "^2.8.0",
+    "urijs": "^1.19.11"
   }
 }

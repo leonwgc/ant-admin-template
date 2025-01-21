@@ -10,6 +10,7 @@ import { useAppData } from 'simple-redux-store';
 // import { StyledAdminWrapper } from './common/StyledComponents';
 import ErrorBoundary from 'src/common/ErrorBoundary';
 import Header from './common/Header';
+import usePageTitle from '~/hooks/usePageTitle';
 
 const routes = [...txlRoutes];
 

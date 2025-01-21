@@ -68,7 +68,7 @@ const StyledMenuTop = styled.div`
   border-top-left-radius: 8px;
   padding: 0 16px 0 20px;
   height: 48px;
-  width: ${({ collapsed }) => (collapsed ? '48px' : '172px')} !important;
+  /* width: ${({ collapsed }) => (collapsed ? '48px' : '172px')} !important; */
   justify-content: ${({ collapsed }) =>
     collapsed ? 'center' : 'space-between'};
 
@@ -85,16 +85,11 @@ const StyledMenuTop = styled.div`
   }
 `;
 
-const StyledSide = styled.div`
-  transition: width 300ms ease-in-out;
-  width: ${({ collapsed }) => (collapsed ? '48px' : '172px')};
-`;
-
 const StyledMenu = styled(Menu)`
   background: #f5f7fa;
   border-right: none;
   height: calc(100vh - 76px);
-  width: ${({ collapsed = false }) => (collapsed ? '48px' : '172px')};
+  /* width: ${({ collapsed = false }) => (collapsed ? '48px' : '172px')}; */
   font-size: 14px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -114,7 +109,7 @@ const StyledMenu = styled(Menu)`
   .ant-menu-item {
     color: #1a1a1a;
     margin: 0 auto;
-    width: 164px;
+
     &-selected {
       color: ${(props) => props.theme.color};
       background: rgba(0, 75, 204, 0.06);
@@ -336,17 +331,7 @@ const Menus = () => {
     });
   };
   return (
-    <StyledSide collapsed={menuCollapsed}>
-      <StyledMenuTop collapsed={menuCollapsed}>
-        {menuCollapsed ? null : (
-          <div className="title">{currentMenu?.funTitle}</div>
-        )}
-        <StyledIcon
-          style={{ color: '#8c8c8c' }}
-          type={menuCollapsed ? 'icon-zhankai_line' : 'icon-zhedie_line'}
-          onClick={() => updateStore({ menuCollapsed: !menuCollapsed })}
-        />
-      </StyledMenuTop>
+    <>
       <StyledMenu
         collapsed={menuCollapsed}
         mode={menuCollapsed ? 'vertical' : 'inline'}
@@ -357,7 +342,7 @@ const Menus = () => {
       >
         {menuRender(menuInfo?.menus)}
       </StyledMenu>
-    </StyledSide>
+    </>
   );
 };
 
