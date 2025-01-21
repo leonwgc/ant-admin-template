@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Menu } from 'antd';
-// import { Icon } from './index';
 
 import { useUpdateStore, useAppData } from 'simple-redux-store';
-// import { getSearchParams } from './utils/';
 import { nanoid, styled, css, Icon } from 'react-uni-comps';
 const { SubMenu } = Menu;
 
 import menuData from './menuDataNew';
 import URI from 'urijs';
-import { BellOutlined, BellTwoTone, HomeOutlined } from '@ant-design/icons';
+import { BellOutlined, HomeOutlined } from '@ant-design/icons';
+
+import './Menus.scss';
 
 const sep = '$';
 
@@ -59,32 +59,32 @@ const StyledSubMenu = styled(SubMenu)`
   }
 `;
 
-const StyledIcon = styled(Icon)`
-  font-size: 20px;
-`;
+// const StyledIcon = styled(Icon)`
+//   font-size: 20px;
+// `;
 
-const StyledMenuTop = styled.div`
-  display: flex;
-  background: #f5f7fa;
-  border-top-left-radius: 8px;
-  padding: 0 16px 0 20px;
-  height: 48px;
-  /* width: ${({ collapsed }) => (collapsed ? '48px' : '172px')} !important; */
-  justify-content: ${({ collapsed }) =>
-    collapsed ? 'center' : 'space-between'};
+// const StyledMenuTop = styled.div`
+//   display: flex;
+//   background: #f5f7fa;
+//   border-top-left-radius: 8px;
+//   padding: 0 16px 0 20px;
+//   height: 48px;
+//   /* width: ${({ collapsed }) => (collapsed ? '48px' : '172px')} !important; */
+//   justify-content: ${({ collapsed }) =>
+//     collapsed ? 'center' : 'space-between'};
 
-  .anticon {
-    line-height: 48px;
-  }
-  .title {
-    font-size: 16px;
-    font-family: PingFangSC, PingFangSC-Medium;
-    font-weight: 500;
-    text-align: left;
-    color: #1a1a1a;
-    line-height: 48px;
-  }
-`;
+//   .anticon {
+//     line-height: 48px;
+//   }
+//   .title {
+//     font-size: 16px;
+//     font-family: PingFangSC, PingFangSC-Medium;
+//     font-weight: 500;
+//     text-align: left;
+//     color: #1a1a1a;
+//     line-height: 48px;
+//   }
+// `;
 
 const StyledMenu = styled(Menu)`
   /* background: #f5f7fa; */
@@ -269,15 +269,17 @@ const Menus = () => {
     const renderMenuNoChilds = (item) => {
       if (isFirst) {
         return menuCollapsed ? (
-          <StyledSubMenu
-            className={getSubMenuClassName(item.id)}
+          // StyledSubMenu
+          <div
+            className="app-menus__submenu"
+            // className={getSubMenuClassName(item.id)}
             collapsed={menuCollapsed}
             noArrow
             onTitleClick={() => history.push(item.funUrl)}
             key={item.id}
             title={menuCollapsed ? null : item.funTitle}
             icon={<HomeOutlined />}
-          ></StyledSubMenu>
+          ></div>
         ) : (
           <Menu.Item
             key={item.id}
@@ -304,32 +306,32 @@ const Menus = () => {
         return renderMenuNoChilds(item);
       } else {
         return (
-          <StyledSubMenu
-            className={getSubMenuClassName(item.id)}
-            collapsed={menuCollapsed}
+          <div
+            className="app-menus__submenu"
+            // className={getSubMenuClassName(item.id)}
+            // collapsed={menuCollapsed}
             key={item.id}
             title={menuCollapsed ? null : item.funTitle}
             icon={<BellOutlined />}
           >
             {menuRender(item.childs, false)}
-          </StyledSubMenu>
+          </div>
         );
       }
     });
   };
   return (
-    <>
-      <StyledMenu
-        collapsed={menuCollapsed}
-        mode={menuCollapsed ? 'vertical' : 'inline'}
-        onClick={onClick}
-        openKeys={openKeys}
-        selectedKeys={selectedKeys}
-        onOpenChange={setOpenKeys}
-      >
-        {menuRender(menuInfo?.menus)}
-      </StyledMenu>
-    </>
+    <Menu
+      className="app-menus"
+      collapsed={menuCollapsed}
+      mode={menuCollapsed ? 'vertical' : 'inline'}
+      onClick={onClick}
+      openKeys={openKeys}
+      selectedKeys={selectedKeys}
+      onOpenChange={setOpenKeys}
+    >
+      {menuRender(menuInfo?.menus)}
+    </Menu>
   );
 };
 

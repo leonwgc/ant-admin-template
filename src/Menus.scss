@@ -1,0 +1,60 @@
+@import './scss/common.scss';
+
+.app-menus {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__submenu {
+    &.collapsed {
+      margin: 16px auto;
+
+      .ant-menu-submenu-title {
+        font-size: 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+      }
+
+      // &.ant-menu-submenu-selected > .ant-menu-submenu-title {
+      //   ${submenuActiveTitleCss}
+      // }
+
+      // .ant-menu-submenu-title {
+      //   :hover {
+      //     ${submenuActiveTitleCss};
+      //   }
+      // }
+    }
+
+    .ant-menu-submenu-title {
+      padding-left: 16px;
+      padding-right: 16px;
+      height: 48px;
+      line-height: 48px;
+
+      color: #1a1a1a;
+      font-weight: bolder;
+    }
+    .ant-menu-item {
+      color: #1a1a1a;
+      margin: 0 auto;
+
+      &-selected {
+        //   color: ${(props) => props.theme.color};
+        background: rgba(0, 75, 204, 0.06);
+        border-radius: 4px;
+
+        &::after {
+          display: none; // hide line
+        }
+      }
+    }
+  }
+}
