@@ -1,4 +1,4 @@
-.app-layout-sider .app-sider-toggle-button {
+.app-layout__sider .app-sider__toggle-button {
   position: absolute;
   right: -16px;
   top: 8px;
@@ -23,7 +23,7 @@
   }
 }
 
-.app-sider:hover .ds-btn.app-sider-toggle-button {
+.app-laoyout__sider:hover .app-sider__toggle-button {
   opacity: 1;
 
   &:hover {

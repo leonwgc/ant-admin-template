@@ -1,5 +1,5 @@
-import React, { Suspense, useEffect, useState } from 'react';
-import { ConfigProvider, Layout, Menu, theme } from 'antd';
+import { Suspense } from 'react';
+import { ConfigProvider, Layout } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -7,12 +7,11 @@ import dayjs from 'dayjs';
 import routes from './routes';
 import PageLoading from './common/PageLoading';
 import usePageTitle from '~/hooks/usePageTitle';
-import { useUpdateStore, useAppData } from 'simple-redux-store';
+import { useUpdateStore } from 'simple-redux-store';
 
-import Body from 'src/common/Body';
 import './App.scss';
-import Menus from './Menus';
-import AppSiderToggleButton from './AppSiderToggleButton';
+import Sider from './Sider';
+import Header from './Header';
 
 dayjs.locale('zh-cn');
 
@@ -20,20 +19,6 @@ const outsidePathes = ['/login', '/forget'];
 
 const App = () => {
   usePageTitle('admin');
-  const [collapsed, setCollapsed] = useState(false);
-
-  // const {
-  //   token: { colorBgContainer, borderRadiusLG },
-  // } = theme.useToken();
-
-  const updateStore = useUpdateStore();
-
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--menu-width',
-      collapsed ? '56px' : '256px'
-    );
-  }, [collapsed]);
 
   return (
     <ConfigProvider
@@ -47,22 +32,10 @@ const App = () => {
     >
       <BrowserRouter>
         <Layout className="app-layout">
-          <Layout.Header className="app-layout__header">hello</Layout.Header>
+          <Header className="app-layout__header" />
           <Layout>
-            <Layout.Sider
-              className="app-layout__sider"
-              // trigger={null}
-              width={256}
-              collapsedWidth={64}
-              collapsible
-              // collapsed={collapsed}
-
-              theme="light"
-            >
-              <Menus />
-              <AppSiderToggleButton />
-            </Layout.Sider>
-            <Layout.Content>
+            <Sider className="app-layout__sider" />
+            <Layout.Content className="app-layout__content">
               <Suspense fallback={<PageLoading />}>
                 <Switch>
                   {routes.map((route, idx) => (

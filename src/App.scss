@@ -13,6 +13,10 @@
     position: fixed;
     top: 0;
     box-shadow: 0 4px 4px #708a9714;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   &__sider {
     height: calc(100vh - 56px);
@@ -22,10 +26,10 @@
     top: 0;
     bottom: 0;
     left: 0;
-    background: #fff !important;
-    position: fixed !important;
+    background: #fff;
+    position: fixed;
   }
-  .app-content {
+  &-content {
     position: relative;
     box-sizing: border-box;
     min-height: 100vh;
@@ -51,14 +55,6 @@
       right: 0;
       top: 0;
       bottom: 0;
-    }
-
-    .ds-table {
-      &.ds-table-empty {
-        .ds-table-cell {
-          overflow: hidden;
-        }
-      }
     }
   }
 
@@ -100,8 +96,8 @@
 }
 
 @media (max-width: 768px) {
-  .app {
-    .app-content {
+  .app-layout {
+    &-content {
       // 100% 高度减去 mobile footer 的高度
       min-height: calc(100vh - 56px);
       padding: 56px 0 64px 0;

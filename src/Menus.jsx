@@ -86,9 +86,9 @@ const StyledMenuTop = styled.div`
 `;
 
 const StyledMenu = styled(Menu)`
-  background: #f5f7fa;
-  border-right: none;
-  height: calc(100vh - 76px);
+  /* background: #f5f7fa; */
+  /* border-right: none; */
+  /* height: calc(100vh - 76px); */
   /* width: ${({ collapsed = false }) => (collapsed ? '48px' : '172px')}; */
   font-size: 14px;
   overflow-y: scroll;
