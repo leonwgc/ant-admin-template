@@ -1,75 +1,72 @@
-import { Layout, SiderProps, MenuProps, Menu } from 'antd';
-import { useState, useEffect } from 'react';
-import SiderToggleButton from './SiderToggleButton';
-// import Menus from './Menus';
+import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
 import {
-  MailOutlined,
-  SettingOutlined,
-  AppstoreOutlined,
-} from '@ant-design/icons';
+  Layout,
+  Menu,
+  MenuProps,
+  SiderProps,
+  MenuItemProps,
+  SubMenuProps,
+} from 'antd';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import SiderToggleButton from './SiderToggleButton';
+import { useMount } from 'ahooks';
+import { SubMenuType } from 'antd/es/menu/interface';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
   {
-    key: 'sub1',
-    label: 'Navigation One',
+    key: '1',
+    label: 'user management',
     icon: <MailOutlined />,
     children: [
       {
-        key: 'g1',
-        label: 'Item 1',
+        key: '11',
+        label: 'user list',
       },
       {
-        key: 'g2',
-        label: 'Item 2',
+        key: '12',
+        label: 'user data',
       },
     ],
   },
   {
-    key: 'sub2',
+    key: '2',
     label: 'Navigation Two',
     icon: <AppstoreOutlined />,
     children: [
-      { key: '5', label: 'Option 5' },
-      { key: '6', label: 'Option 6' },
+      { key: '21', label: 'Option 5' },
+      { key: '22', label: 'Option 6' },
       {
-        key: 'sub3',
+        key: '23',
         label: 'Submenu',
         children: [
-          { key: '7', label: 'Option 7' },
-          { key: '8', label: 'Option 8' },
+          { key: '231', label: 'Option 7' },
+          { key: '232', label: 'Option 8' },
         ],
       },
     ],
   },
-  {
-    type: 'divider',
-  },
-  {
-    key: 'sub4',
-    label: 'Navigation Three',
-    icon: <SettingOutlined />,
-    children: [
-      { key: '9', label: 'Option 9' },
-      { key: '10', label: 'Option 10' },
-      { key: '11', label: 'Option 11' },
-      { key: '12', label: 'Option 12' },
-    ],
-  },
-  {
-    key: 'grp',
-    label: 'Group',
-    type: 'group',
-    children: [
-      { key: '13', label: 'Option 13' },
-      { key: '14', label: 'Option 14' },
-    ],
-  },
 ];
+
+function getParentKeys(key, items, parent = []) {
+  if (!items || !items.length) return;
+  for (let item of items) {
+    if (item.children && item.children?.includes(key)) {
+      parent.push(item.key);
+    } else {
+      getParentKeys(key, item.children || [], parent);
+    }
+  }
+}
 
 export default (props: SiderProps) => {
   const [collapsed, setCollapsed] = useState(false);
+  const history = useHistory();
+
+  const [openKeys, setOpenKeys] = useState<string[]>([items[0].key as string]);
+  const [selectedKeys, setSelectedKeys] = useState([items[0].children[1].key]);
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -77,6 +74,8 @@ export default (props: SiderProps) => {
       collapsed ? '56px' : '256px'
     );
   }, [collapsed]);
+
+  useMount(() => {});
 
   return (
     <Layout.Sider
@@ -89,10 +88,17 @@ export default (props: SiderProps) => {
       {...props}
     >
       <Menu
-        // onClick={onClick}
-        // style={{ width: 256 }}
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        onClick={(item) => history.push(item.key)}
+        defaultSelectedKeys={selectedKeys}
+        selectedKeys={selectedKeys}
+        onSelect={({ key }) => {
+          setSelectedKeys([key]);
+
+          const parentKeys = [];
+          getParentKeys(key, items, parentKeys);
+          setOpenKeys(parentKeys);
+        }}
+        defaultOpenKeys={openKeys}
         mode="inline"
         items={items}
       />
