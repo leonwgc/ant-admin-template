@@ -6,7 +6,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   return (
     <Layout.Header {...props}>
       <DerbySoftLogo />
-      <Avatar />
+      <Avatar>W</Avatar>
     </Layout.Header>
   );
 };
