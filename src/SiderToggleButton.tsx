@@ -8,7 +8,7 @@ import { Button } from 'antd';
 import classNames from 'classnames';
 
 import { useLatest } from 'ahooks';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 const SiderToggleButton = ({ onToggle, collapsed }) => {
   const onToggleRef = useLatest(onToggle);
@@ -28,7 +28,7 @@ const SiderToggleButton = ({ onToggle, collapsed }) => {
         expanded: !collapsed,
       })}
       type="primary"
-      icon={collapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+      icon={collapsed ? <ArrowRightOutlined /> : <ArrowLeftOutlined />}
       onClick={handleToggleCollapse}
     />
   );

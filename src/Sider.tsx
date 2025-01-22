@@ -50,23 +50,37 @@ const items: MenuItem[] = [
   },
 ];
 
-function getParentKeys(key, items, parent = []) {
-  if (!items || !items.length) return;
-  for (let item of items) {
-    if (item.children && item.children?.includes(key)) {
-      parent.push(item.key);
-    } else {
-      getParentKeys(key, item.children || [], parent);
-    }
-  }
+interface LevelKeysProps {
+  key?: string;
+  children?: LevelKeysProps[];
 }
+
+const getLevelKeys = (items1: LevelKeysProps[]) => {
+  const key: Record<string, number> = {};
+  const func = (items2: LevelKeysProps[], level = 1) => {
+    items2.forEach((item) => {
+      if (item.key) {
+        key[item.key] = level;
+      }
+      if (item.children) {
+        func(item.children, level + 1);
+      }
+    });
+  };
+  func(items1);
+  return key;
+};
+
+const levelKeys = getLevelKeys(items as LevelKeysProps[]);
 
 export default (props: SiderProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const history = useHistory();
 
   const [openKeys, setOpenKeys] = useState<string[]>([items[0].key as string]);
-  const [selectedKeys, setSelectedKeys] = useState([items[0].children[1].key]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([
+    items[0].children[1].key,
+  ]);
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -75,7 +89,31 @@ export default (props: SiderProps) => {
     );
   }, [collapsed]);
 
-  useMount(() => {});
+  /**
+   * Click menu, collapse other same level open menus, keep menu focus concise.
+   * @param keys the keys of opened menus
+   */
+  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
+    const currentOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+
+    // open
+    if (currentOpenKey !== undefined) {
+      const repeatIndex = keys
+        .filter((key) => key !== currentOpenKey)
+        .findIndex((key) => levelKeys[key] === levelKeys[currentOpenKey]);
+
+      setOpenKeys(
+        keys
+          // remove repeat key
+          .filter((_, index) => index !== repeatIndex)
+          // remove current level all child
+          .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey])
+      );
+    } else {
+      // close
+      setOpenKeys(keys);
+    }
+  };
 
   return (
     <Layout.Sider
@@ -91,14 +129,12 @@ export default (props: SiderProps) => {
         onClick={(item) => history.push(item.key)}
         defaultSelectedKeys={selectedKeys}
         selectedKeys={selectedKeys}
-        onSelect={({ key }) => {
-          setSelectedKeys([key]);
-
-          const parentKeys = [];
-          getParentKeys(key, items, parentKeys);
-          setOpenKeys(parentKeys);
+        onSelect={(item) => {
+          setSelectedKeys([item.key]);
+          // setOpenKeys(item.keyPath.slice(1));
         }}
-        defaultOpenKeys={openKeys}
+        openKeys={openKeys}
+        onOpenChange={onOpenChange}
         mode="inline"
         items={items}
       />
