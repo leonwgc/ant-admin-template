@@ -1,17 +1,12 @@
-import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
 import {
-  Layout,
-  Menu,
-  MenuProps,
-  SiderProps,
-  MenuItemProps,
-  SubMenuProps,
-} from 'antd';
+  AppstoreOutlined,
+  MailOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
+import { Layout, Menu, MenuProps, SiderProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import SiderToggleButton from './SiderToggleButton';
-import { useMount } from 'ahooks';
-import { SubMenuType } from 'antd/es/menu/interface';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -48,6 +43,11 @@ const items: MenuItem[] = [
       },
     ],
   },
+  {
+    key: '3',
+    label: 'Navigation Three',
+    icon: <SettingOutlined />,
+  },
 ];
 
 interface LevelKeysProps {
@@ -77,10 +77,8 @@ export default (props: SiderProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const history = useHistory();
 
-  const [openKeys, setOpenKeys] = useState<string[]>([items[0].key as string]);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([
-    items[0].children[1].key,
-  ]);
+  const [openKeys, setOpenKeys] = useState<string[]>(['1']);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(['11']);
 
   useEffect(() => {
     document.documentElement.style.setProperty(
