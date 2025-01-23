@@ -5,8 +5,10 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, MenuProps, SiderProps } from 'antd';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import SiderToggleButton from './SiderToggleButton';
+import MenuItem from 'antd/es/menu/MenuItem';
+import { getPathnameAssociatedMenu } from './helper';
 
 type MenuItem = Required<MenuProps>['items'][number] & {
   children?: MenuItem[];
@@ -82,8 +84,8 @@ export default (props: SiderProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  const [openKeys, setOpenKeys] = useState<string[]>(['1']);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>(['11']);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -91,6 +93,22 @@ export default (props: SiderProps) => {
       collapsed ? '56px' : '256px'
     );
   }, [collapsed]);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // restore menu status
+    const result = {
+      parents: [],
+      found: false,
+    };
+    getPathnameAssociatedMenu(pathname, items, null, result);
+    if (result.found) {
+      const parents = result.parents;
+      setSelectedKeys([parents[parents.length - 1].key]);
+      setOpenKeys(parents.slice(0, -1).map((item) => item.key));
+    }
+  }, [pathname]);
 
   /**
    * Click menu, collapse other same level open menus, keep menu focus concise.
@@ -140,7 +158,7 @@ export default (props: SiderProps) => {
           }
           navigate(menu?.route);
         }}
-        defaultSelectedKeys={selectedKeys}
+        // defaultSelectedKeys={selectedKeys}
         selectedKeys={selectedKeys}
         onSelect={(item) => {
           setSelectedKeys([item.key]);
