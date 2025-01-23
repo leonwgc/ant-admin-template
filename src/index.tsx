@@ -1,57 +1,22 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider, configureStore } from 'simple-redux-store';
-import { Icon } from 'react-uni-comps';
 import App from './App';
 import './scss/index.scss';
 import './scss/global.scss';
 import { BrowserRouter } from 'react-router';
-
-Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2639743_irllp2uw61.js');
-
-type MenuInfo = {
-  funTitle: string;
-  funUrl: string;
-  childs?: MenuInfo[];
-};
+import operations from './config.operations';
 
 type StoreData = {
-  color: string;
-  menuCollapsed: boolean;
-  currentMenu?: MenuInfo; // sec
-  unitInfo: {
-    name?: string; // 积分名称
-    rate?: number; // 一元兑换多少point ,比率
-    alarmValue?: number; // 保证金余额警戒值
-    currencySymbol?: string; // 货币符号
-  };
-  orgInfo: {
-    name?: string;
-    custIcon?: string;
-    extra?: {
-      staffNum: number;
-    };
-  };
-  nav?: string[]; // 额外的导航信息
-  userInfo: { name?: string; custIcon?: string }; //登录用户信息
-  acctInfo?: {
-    amount?: number;
-    consumed?: number;
-  };
+  operations: string[];
 };
 
 const data: StoreData = {
-  color: '#005cff',
-  menuCollapsed: false,
-  // currentMenu: null,
-  unitInfo: {
-    name: '积分',
-    rate: 100,
-  },
-  orgInfo: {},
-  userInfo: {},
-  acctInfo: {},
-  nav: [],
+  operations: [
+    operations.VIEW_USER,
+    operations.VIEW_TEMPLATE,
+    operations.CREATE_TEMPLATE,
+  ],
 };
 
 const store = configureStore(data, true);

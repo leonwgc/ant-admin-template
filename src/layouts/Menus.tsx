@@ -1,5 +1,5 @@
 import { Menu, MenuProps } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import {
   getPathnameAssociatedMenu,
@@ -7,17 +7,25 @@ import {
   LevelKeysProps,
   getAllMenuItems,
 } from './Menus.helper';
-import { items } from '../config.menu';
-
-const levelKeys = getLevelKeys(items as LevelKeysProps[]);
-const menuItems = getAllMenuItems(items);
+import { getItems } from '../config.menu';
+import { useAppData } from 'simple-redux-store';
 
 export default (props: MenuProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const { operations = [] } = useAppData();
+
+  const items = useMemo(() => getItems(operations), [operations]);
+
+  const levelKeys = useMemo(() => {
+    return getLevelKeys(getItems(operations) as LevelKeysProps[]);
+  }, [operations]);
+
+  const menuItems = useMemo(() => {
+    return getAllMenuItems(getItems(operations));
+  }, [operations]);
 
   useEffect(() => {
     // restore menu from pathname
