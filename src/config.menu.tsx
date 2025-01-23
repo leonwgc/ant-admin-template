@@ -13,26 +13,26 @@ export const allMenuData: MenuItem[] = [
     key: 'user',
     label: 'Users',
     icon: <MailOutlined />,
-    access: [operations.VIEW_USER],
+    permissions: [operations.VIEW_USER],
     children: [
       {
         key: 'user-1',
         label: 'User list',
         route: '/app/users',
-        access: [operations.VIEW_USER],
+        permissions: [operations.VIEW_USER],
       },
       {
         key: 'user-2',
         label: 'add',
         route: '/app/users/add',
-        access: [operations.CREATE_USER],
+        permissions: [operations.CREATE_USER],
         visible: false,
       },
       {
         key: 'user-3',
         label: 'edit',
         route: '/app/users/edit',
-        access: [operations.UPDATE_USER],
+        permissions: [operations.UPDATE_USER],
         visible: false,
       },
     ],
@@ -46,7 +46,7 @@ export const allMenuData: MenuItem[] = [
         key: 'log-1',
         label: 'logs',
         route: '/app/logs',
-        access: [operations.VIEW_LOG],
+        permissions: [operations.VIEW_LOG],
       },
     ],
   },
@@ -54,19 +54,19 @@ export const allMenuData: MenuItem[] = [
     key: 'template',
     label: 'Templates',
     icon: <SettingOutlined />,
-    access: [operations.VIEW_TEMPLATE],
+    permissions: [operations.VIEW_TEMPLATE],
     children: [
       {
         key: 'template-1',
         label: 'Template List',
         route: '/app/templates',
-        access: [operations.VIEW_TEMPLATE],
+        permissions: [operations.VIEW_TEMPLATE],
       },
       {
         key: 'template-2',
         label: 'Add Template',
         route: '/app/templates/add',
-        access: [operations.CREATE_TEMPLATE],
+        permissions: [operations.CREATE_TEMPLATE],
       },
     ],
   },
@@ -75,14 +75,14 @@ export const allMenuData: MenuItem[] = [
 /**
  * Check if the current user has the required permission
  * @param operations The user's operations
- * @param access The required operations
+ * @param permissions The required operations
  * @returns `true` if the user has the required permission, otherwise `false`
  */
 export const hasPermission = (
   operations: string[],
-  access: string[] | undefined
+  permissions: string[] | undefined
 ) => {
-  if (!Array.isArray(access) || !access?.length) {
+  if (!Array.isArray(permissions) || !permissions?.length) {
     return true;
   }
 
@@ -90,7 +90,7 @@ export const hasPermission = (
     return false;
   }
 
-  return access.every((item) => operations.includes(item));
+  return permissions.every((item) => operations.includes(item));
 };
 
 /**
@@ -101,7 +101,10 @@ export const hasPermission = (
 export const getItems: (permissions: string[]) => MenuItem[] = (operations) => {
   const filterItems = (items: MenuItem[]) => {
     return items.filter((item) => {
-      if (hasPermission(operations, item.access) && item.visible !== false) {
+      if (
+        hasPermission(operations, item.permissions) &&
+        item.visible !== false
+      ) {
         if (item.children) {
           item.children = filterItems(item.children);
 

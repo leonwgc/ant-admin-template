@@ -39,7 +39,7 @@ export default (props: MenuProps) => {
     if (
       !hasPermission(
         operations,
-        menuItems.find((item) => item.route === pathname)?.access
+        menuItems.find((item) => item.route === pathname)?.permissions
       )
     ) {
       navigate('./no-permission', { replace: true });

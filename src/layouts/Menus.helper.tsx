@@ -3,7 +3,7 @@ import { MenuProps } from 'antd';
 export type MenuItem = Required<MenuProps>['items'][number] & {
   children?: MenuItem[];
   route?: string;
-  access?: string[]; // permission controls
+  permissions?: string[]; // permission controls
   visible?: boolean; // control whether this menu item is visible
 };
 
