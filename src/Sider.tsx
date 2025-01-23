@@ -21,13 +21,13 @@ const items: MenuItem[] = [
     children: [
       {
         key: '11',
-        label: 'user list',
+        label: 'User list',
         route: '/app/users',
       },
       {
         key: '12',
-        label: 'add user',
-        route: '/app/users/add',
+        label: 'Logs',
+        route: '/app/logs',
       },
     ],
   },
