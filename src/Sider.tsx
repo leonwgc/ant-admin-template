@@ -5,8 +5,11 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, MenuProps, SiderProps } from 'antd';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+
+// import { useHistory } from 'react-router-dom';
 import SiderToggleButton from './SiderToggleButton';
+import Routes from './Routes';
+import { useNavigate } from 'react-router';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -75,7 +78,7 @@ const levelKeys = getLevelKeys(items as LevelKeysProps[]);
 
 export default (props: SiderProps) => {
   const [collapsed, setCollapsed] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [openKeys, setOpenKeys] = useState<string[]>(['1']);
   const [selectedKeys, setSelectedKeys] = useState<string[]>(['11']);
@@ -124,7 +127,7 @@ export default (props: SiderProps) => {
       {...props}
     >
       <Menu
-        onClick={(item) => history.push(item.key)}
+        onClick={(item) => navigate(item.key)}
         defaultSelectedKeys={selectedKeys}
         selectedKeys={selectedKeys}
         onSelect={(item) => {

@@ -5,6 +5,7 @@ import { Icon } from 'react-uni-comps';
 import App from './App';
 import './scss/index.scss';
 import './scss/global.scss';
+import { BrowserRouter } from 'react-router';
 
 Icon.loadFromIconfontCN('//at.alicdn.com/t/font_2639743_irllp2uw61.js');
 
@@ -56,7 +57,9 @@ const data: StoreData = {
 const store = configureStore(data, true);
 
 createRoot(document.getElementById('app') as HTMLElement).render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
 );
