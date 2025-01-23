@@ -23,7 +23,7 @@ export default (props: MenuProps) => {
     return getLevelKeys(getItems(operations) as LevelKeysProps[]);
   }, [operations]);
 
-  const menuItems = useMemo(() => {
+  const allMenuItems = useMemo(() => {
     return getAllMenuItems(allMenuData);
   }, [operations]);
 
@@ -39,7 +39,7 @@ export default (props: MenuProps) => {
     if (
       !hasPermission(
         operations,
-        menuItems.find((item) => item.route === pathname)?.permissions
+        allMenuItems.find((item) => item.route === pathname)?.permissions
       )
     ) {
       navigate('./no-permission', { replace: true });
@@ -91,7 +91,7 @@ export default (props: MenuProps) => {
   return (
     <Menu
       onClick={(item) => {
-        const menu = menuItems.find((m) => m.key === item.key);
+        const menu = allMenuItems.find((m) => m.key === item.key);
         if (menu?.route) {
           navigate(menu?.route);
         }
