@@ -4,6 +4,10 @@ import Users from './pages/Users';
 import AddUser from './pages/AddUser';
 import Logs from './pages/Logs';
 import EditUser from './pages/Edituser';
+import Templates from './pages/Templates';
+import AddTemplate from './pages/AddTemplate';
+import EditTemplate from './pages/EditTemplate';
+import Log from './pages/Log';
 
 /**
  * RouteConfig
@@ -24,7 +28,15 @@ const RouteConfig = () => {
           <Route path="add" element={<AddUser />} />
           <Route path="edit" element={<EditUser />} />
         </Route>
-        <Route path="logs" element={<Logs />} />
+        <Route path="logs">
+          <Route index element={<Logs />} />
+          <Route path="log" element={<Log></Log>} />
+        </Route>
+        <Route path="templates">
+          <Route index element={<Templates />} />
+          <Route path="add" element={<AddTemplate />} />
+          <Route path="edit" element={<EditTemplate />} />
+        </Route>
         <Route path="*" element={<div>Not Found</div>} />
       </Route>
       <Route path="*" element={<div>Login</div>} />

@@ -1,6 +1,6 @@
 import { Space } from 'antd';
 import React, { useEffect } from 'react';
-import { Link, Outlet } from 'react-router';
+import { Link } from 'react-router';
 
 const Users = () => {
   useEffect(() => {

@@ -6,7 +6,7 @@ import {
   getLevelKeys,
   LevelKeysProps,
 } from './Menus.helper';
-import { items } from './Menus.config';
+import { items } from './MenusConfig';
 
 const levelKeys = getLevelKeys(items as LevelKeysProps[]);
 
@@ -23,14 +23,21 @@ export default (props: MenuProps) => {
       parents: [],
       found: false,
     };
-    getPathnameAssociatedMenu(pathname, items, null, result);
-    if (result.found) {
-      const parents = result.parents;
-      setSelectedKeys([parents[parents.length - 1].key]);
-      setOpenKeys(parents.slice(0, -1).map((item) => item.key));
-    } else {
-      setSelectedKeys([items[0].children[0].key as string]);
-      setOpenKeys([items[0].key as string]);
+    let currentPath = pathname;
+    while (!result.found && currentPath) {
+      getPathnameAssociatedMenu(currentPath, items, null, result);
+      if (result.found) {
+        const parents = result.parents;
+        setSelectedKeys([parents[parents.length - 1].key]);
+        setOpenKeys(parents.slice(0, -1).map((item) => item.key));
+      } else {
+        setSelectedKeys([items[0].children[0].key as string]);
+        setOpenKeys([items[0].key as string]);
+      }
+      if (result.found || currentPath === '/' || !currentPath) {
+        break;
+      }
+      currentPath = currentPath.split('/').slice(0, -1).join('/');
     }
   }, [pathname]);
 
