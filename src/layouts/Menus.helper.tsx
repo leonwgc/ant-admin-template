@@ -1,14 +1,32 @@
 import { MenuProps } from 'antd';
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
+  /**
+   * menu item children
+   */
   children?: MenuItem[];
+  /**
+   * menu item route
+   */
   route?: string;
-  permissions?: string[]; // permission controls
-  visible?: boolean; // control whether this menu item is visible
+  /**
+   * permissions needed to access this menu item
+   */
+  permissions?: string[];
+  /**
+   * whether this menu item is visible
+   */
+  visible?: boolean;
 };
 
 type Result = {
+  /**
+   * The associated menu items
+   */
   parents: MenuItem[];
+  /**
+   * Whether the associated menu item is found
+   */
   found: boolean;
 };
 
