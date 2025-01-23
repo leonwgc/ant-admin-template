@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router';
-import AppLayout from './AppLayout';
+import AppLayout from './layouts/AppLayout';
 import Users from './pages/Users';
 import AddUser from './pages/AddUser';
 import Logs from './pages/Logs';

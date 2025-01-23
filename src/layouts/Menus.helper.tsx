@@ -72,3 +72,23 @@ export const getLevelKeys = (items1: LevelKeysProps[]) => {
   func(items1);
   return key;
 };
+
+/**
+ * Get all menu items
+ * @param items the menu items to get
+ * @returns all menu items
+ */
+export const getAllMenuItems = (items: MenuItem[]) => {
+  const result: MenuItem[] = [];
+
+  items.reduce((acc: MenuItem[], item: MenuItem) => {
+    if (item.children) {
+      acc.push(...getAllMenuItems(item.children));
+    } else {
+      acc.push(item);
+    }
+    return acc;
+  }, result);
+
+  return result;
+};

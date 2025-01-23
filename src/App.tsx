@@ -3,7 +3,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import usePageTitle from '~/hooks/usePageTitle';
-import RouteConfig from './RouteConfig';
+import RouteConfig from './config.route';
 import './App.scss';
 
 dayjs.locale('zh-cn');

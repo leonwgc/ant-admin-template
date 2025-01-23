@@ -5,10 +5,12 @@ import {
   getPathnameAssociatedMenu,
   getLevelKeys,
   LevelKeysProps,
+  getAllMenuItems,
 } from './Menus.helper';
-import { items } from './MenusConfig';
+import { items } from '../config.menu';
 
 const levelKeys = getLevelKeys(items as LevelKeysProps[]);
+const menuItems = getAllMenuItems(items);
 
 export default (props: MenuProps) => {
   const navigate = useNavigate();
@@ -30,14 +32,16 @@ export default (props: MenuProps) => {
         const parents = result.parents;
         setSelectedKeys([parents[parents.length - 1].key]);
         setOpenKeys(parents.slice(0, -1).map((item) => item.key));
-      } else {
-        setSelectedKeys([items[0].children[0].key as string]);
-        setOpenKeys([items[0].key as string]);
       }
       if (result.found || currentPath === '/' || !currentPath) {
         break;
       }
       currentPath = currentPath.split('/').slice(0, -1).join('/');
+    }
+    if (!result.found) {
+      // fallback to first menu
+      setSelectedKeys([items[0].children[0].key as string]);
+      setOpenKeys([items[0].key as string]);
     }
   }, [pathname]);
 
@@ -66,20 +70,12 @@ export default (props: MenuProps) => {
   return (
     <Menu
       onClick={(item) => {
-        let index = item.keyPath.length - 1;
-        let menu;
-        let parentItems = items.slice();
-        while (index > -1) {
-          menu = parentItems.find((m) => m.key === item.keyPath[index]);
-          parentItems = menu?.children || [];
-          index--;
+        const menu = menuItems.find((m) => m.key === item.key);
+        if (menu?.route) {
+          navigate(menu?.route);
         }
-        navigate(menu?.route);
       }}
       selectedKeys={selectedKeys}
-      onSelect={(item) => {
-        setSelectedKeys([item.key]);
-      }}
       openKeys={openKeys}
       onOpenChange={onOpenChange}
       mode="inline"

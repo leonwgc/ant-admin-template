@@ -4,7 +4,7 @@ import {
   MailOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import { MenuItem } from './Menus.helper';
+import { MenuItem } from './layouts/Menus.helper';
 
 // TODO: add operations config
 export const items: MenuItem[] = [
