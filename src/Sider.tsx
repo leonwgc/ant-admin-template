@@ -7,13 +7,12 @@ import { Layout, Menu, MenuProps, SiderProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import SiderToggleButton from './SiderToggleButton';
-import MenuItem from 'antd/es/menu/MenuItem';
-import { getPathnameAssociatedMenu } from './helper';
-
-type MenuItem = Required<MenuProps>['items'][number] & {
-  children?: MenuItem[];
-  route?: string;
-};
+import {
+  getPathnameAssociatedMenu,
+  getLevelKeys,
+  LevelKeysProps,
+  MenuItem,
+} from './Sider.helper';
 
 const items: MenuItem[] = [
   {
@@ -56,27 +55,6 @@ const items: MenuItem[] = [
     icon: <SettingOutlined />,
   },
 ];
-
-interface LevelKeysProps {
-  key?: string;
-  children?: LevelKeysProps[];
-}
-
-const getLevelKeys = (items1: LevelKeysProps[]) => {
-  const key: Record<string, number> = {};
-  const func = (items2: LevelKeysProps[], level = 1) => {
-    items2.forEach((item) => {
-      if (item.key) {
-        key[item.key] = level;
-      }
-      if (item.children) {
-        func(item.children, level + 1);
-      }
-    });
-  };
-  func(items1);
-  return key;
-};
 
 const levelKeys = getLevelKeys(items as LevelKeysProps[]);
 
@@ -158,11 +136,9 @@ export default (props: SiderProps) => {
           }
           navigate(menu?.route);
         }}
-        // defaultSelectedKeys={selectedKeys}
         selectedKeys={selectedKeys}
         onSelect={(item) => {
           setSelectedKeys([item.key]);
-          // setOpenKeys(item.keyPath.slice(1));
         }}
         openKeys={openKeys}
         onOpenChange={onOpenChange}
