@@ -8,6 +8,8 @@ import Templates from './pages/Templates';
 import AddTemplate from './pages/AddTemplate';
 import EditTemplate from './pages/EditTemplate';
 import Log from './pages/Log';
+import NoPermission from './pages/NoPermission';
+import Welcome from './pages/Welcome';
 
 /**
  * RouteConfig
@@ -22,7 +24,7 @@ const RouteConfig = () => {
       <Route path="login" element={<div>Login</div>} />
       <Route path="register" element={<div>Register</div>} />
       <Route path="app" element={<AppLayout />}>
-        <Route index element={<div>Welcome Home</div>} />
+        <Route index element={<Welcome />} />
         <Route path="users">
           <Route index element={<Users />} />
           <Route path="add" element={<AddUser />} />
@@ -37,6 +39,7 @@ const RouteConfig = () => {
           <Route path="add" element={<AddTemplate />} />
           <Route path="edit" element={<EditTemplate />} />
         </Route>
+        <Route path="no-permission" element={<NoPermission />}></Route>
         <Route path="*" element={<div>Not Found</div>} />
       </Route>
       <Route path="*" element={<div>Login</div>} />

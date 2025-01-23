@@ -3,7 +3,8 @@ import { MenuProps } from 'antd';
 export type MenuItem = Required<MenuProps>['items'][number] & {
   children?: MenuItem[];
   route?: string;
-  access?: string[];
+  access?: string[]; // permission controls
+  visible?: boolean; // control whether this menu item is visible
 };
 
 type Result = {
@@ -75,7 +76,7 @@ export const getLevelKeys = (items1: LevelKeysProps[]) => {
 };
 
 /**
- * Get all menu items
+ * Get all menu items, nothing to do with permissions.
  * @param items the menu items to get
  * @returns all menu items
  */

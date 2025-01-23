@@ -8,7 +8,7 @@ import { MenuItem } from './layouts/Menus.helper';
 import operations from './config.operations';
 import cloneDeep from 'lodash/cloneDeep';
 
-const items: MenuItem[] = [
+export const allMenuData: MenuItem[] = [
   {
     key: 'user',
     label: 'Users',
@@ -26,6 +26,14 @@ const items: MenuItem[] = [
         label: 'add',
         route: '/app/users/add',
         access: [operations.CREATE_USER],
+        visible: false,
+      },
+      {
+        key: 'user-3',
+        label: 'edit',
+        route: '/app/users/edit',
+        access: [operations.UPDATE_USER],
+        visible: false,
       },
     ],
   },
@@ -70,7 +78,10 @@ const items: MenuItem[] = [
  * @param access The required operations
  * @returns `true` if the user has the required permission, otherwise `false`
  */
-const hasPermission = (operations: string[], access: string[] | undefined) => {
+export const hasPermission = (
+  operations: string[],
+  access: string[] | undefined
+) => {
   if (!Array.isArray(access) || !access?.length) {
     return true;
   }
@@ -83,14 +94,14 @@ const hasPermission = (operations: string[], access: string[] | undefined) => {
 };
 
 /**
- * Get the menu items according to the user's permissions
+ * Get the menu items according to the user's permissions and visible setting
  * @param permissions The user's operations
  * @returns The menu items that the user can see
  */
 export const getItems: (permissions: string[]) => MenuItem[] = (operations) => {
   const filterItems = (items: MenuItem[]) => {
     return items.filter((item) => {
-      if (hasPermission(operations, item.access)) {
+      if (hasPermission(operations, item.access) && item.visible !== false) {
         if (item.children) {
           item.children = filterItems(item.children);
 
@@ -104,5 +115,5 @@ export const getItems: (permissions: string[]) => MenuItem[] = (operations) => {
     });
   };
 
-  return filterItems(cloneDeep(items));
+  return filterItems(cloneDeep(allMenuData));
 };

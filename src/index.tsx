@@ -14,6 +14,7 @@ type StoreData = {
 const data: StoreData = {
   operations: [
     operations.VIEW_USER,
+    operations.CREATE_USER,
     operations.VIEW_TEMPLATE,
     operations.CREATE_TEMPLATE,
   ],

@@ -7,7 +7,7 @@ import {
   LevelKeysProps,
   getAllMenuItems,
 } from './Menus.helper';
-import { getItems } from '../config.menu';
+import { getItems, hasPermission, allMenuData } from '../config.menu';
 import { useAppData } from 'simple-redux-store';
 
 export default (props: MenuProps) => {
@@ -24,7 +24,7 @@ export default (props: MenuProps) => {
   }, [operations]);
 
   const menuItems = useMemo(() => {
-    return getAllMenuItems(getItems(operations));
+    return getAllMenuItems(allMenuData);
   }, [operations]);
 
   useEffect(() => {
@@ -34,11 +34,24 @@ export default (props: MenuProps) => {
       found: false,
     };
     let currentPath = pathname;
+
+    // access control
+    if (
+      !hasPermission(
+        operations,
+        menuItems.find((item) => item.route === pathname)?.access
+      )
+    ) {
+      navigate('./no-permission', { replace: true });
+      return;
+    }
+
     while (!result.found && currentPath) {
       getPathnameAssociatedMenu(currentPath, items, null, result);
       if (result.found) {
         const parents = result.parents;
-        setSelectedKeys([parents[parents.length - 1].key]);
+        const key = parents[parents.length - 1].key;
+        setSelectedKeys([key]);
         setOpenKeys(parents.slice(0, -1).map((item) => item.key));
       }
       if (result.found || currentPath === '/' || !currentPath) {
