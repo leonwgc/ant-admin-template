@@ -5,13 +5,13 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, MenuProps, SiderProps } from 'antd';
 import { useEffect, useState } from 'react';
-
-// import { useHistory } from 'react-router-dom';
-import SiderToggleButton from './SiderToggleButton';
-import Routes from './Routes';
 import { useNavigate } from 'react-router';
+import SiderToggleButton from './SiderToggleButton';
 
-type MenuItem = Required<MenuProps>['items'][number];
+type MenuItem = Required<MenuProps>['items'][number] & {
+  children?: MenuItem[];
+  route?: string;
+};
 
 const items: MenuItem[] = [
   {
@@ -22,10 +22,12 @@ const items: MenuItem[] = [
       {
         key: '11',
         label: 'user list',
+        route: '/app/users',
       },
       {
         key: '12',
-        label: 'user data',
+        label: 'add user',
+        route: '/app/users/add',
       },
     ],
   },
@@ -127,7 +129,17 @@ export default (props: SiderProps) => {
       {...props}
     >
       <Menu
-        onClick={(item) => navigate(item.key)}
+        onClick={(item) => {
+          let index = item.keyPath.length - 1;
+          let menu;
+          let parentItems = items.slice();
+          while (index > -1) {
+            menu = parentItems.find((m) => m.key === item.keyPath[index]);
+            parentItems = menu?.children || [];
+            index--;
+          }
+          navigate(menu?.route);
+        }}
         defaultSelectedKeys={selectedKeys}
         selectedKeys={selectedKeys}
         onSelect={(item) => {

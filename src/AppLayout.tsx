@@ -1,6 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Layout } from 'antd';
-import { Route, Routes } from 'react-router';
+import { Outlet } from 'react-router';
 import Sider from './Sider';
 import Header from './Header';
 
@@ -13,7 +13,7 @@ const AppLayout: React.FC = () => {
       <Layout>
         <Sider className="app-layout__sider" />
         <Layout.Content className="app-layout__content">
-          <Suspense fallback={<div>Loading...</div>}>hello</Suspense>
+          <Outlet />
         </Layout.Content>
       </Layout>
     </Layout>

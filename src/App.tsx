@@ -25,7 +25,13 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<div>Login</div>} />
         <Route path="/register" element={<div>Register</div>} />
-        <Route path="app" element={<AppLayout />}></Route>
+        <Route path="app" element={<AppLayout />}>
+          <Route index element={<div>Welcome Home</div>} />
+          <Route path="users" element={<div>Users</div>} />
+          <Route path="users/add" element={<div>add user</div>} />
+          <Route path="admins" element={<div>Admins</div>} />
+          <Route path="*" element={<div>Not Found</div>} />
+        </Route>
       </Routes>
     </ConfigProvider>
   );
