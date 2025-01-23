@@ -27,8 +27,8 @@ const App = () => {
       }}
     >
       <Routes>
-        <Route path="/login" element={<div>Login</div>} />
-        <Route path="/register" element={<div>Register</div>} />
+        <Route path="login" element={<div>Login</div>} />
+        <Route path="register" element={<div>Register</div>} />
         <Route path="app" element={<AppLayout />}>
           <Route index element={<div>Welcome Home</div>} />
           <Route path="users">
@@ -39,6 +39,7 @@ const App = () => {
           <Route path="logs" element={<Logs />} />
           <Route path="*" element={<div>Not Found</div>} />
         </Route>
+        <Route path="*" element={<div>Login</div>} />
       </Routes>
     </ConfigProvider>
   );

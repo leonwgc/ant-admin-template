@@ -11,7 +11,6 @@ const Users = () => {
     <div>
       <h1>Users</h1>
       <p>This is the Users page.</p>
-      <Outlet />
       <Space>
         <Link to={'/app/users/add'}>Add User</Link>
         <Link to={'/app/users/edit'}>Edit User</Link>
