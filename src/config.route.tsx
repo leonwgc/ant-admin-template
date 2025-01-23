@@ -1,15 +1,17 @@
 import { Route, Routes } from 'react-router';
 import AppLayout from './layouts/AppLayout';
-import Users from './pages/Users';
-import AddUser from './pages/AddUser';
-import Logs from './pages/Logs';
-import EditUser from './pages/Edituser';
-import Templates from './pages/Templates';
-import AddTemplate from './pages/AddTemplate';
-import EditTemplate from './pages/EditTemplate';
-import Log from './pages/Log';
-import NoPermission from './pages/NoPermission';
-import Welcome from './pages/Welcome';
+import { lazy, Suspense } from 'react';
+
+const Users = lazy(() => import('./pages/Users'));
+const AddUser = lazy(() => import('./pages/AddUser'));
+const Logs = lazy(() => import('./pages/Logs'));
+const EditUser = lazy(() => import('./pages/Edituser'));
+const Templates = lazy(() => import('./pages/Templates'));
+const AddTemplate = lazy(() => import('./pages/AddTemplate'));
+const EditTemplate = lazy(() => import('./pages/EditTemplate'));
+const Log = lazy(() => import('./pages/Log'));
+const NoPermission = lazy(() => import('./pages/NoPermission'));
+const Welcome = lazy(() => import('./pages/Welcome'));
 
 /**
  * RouteConfig
@@ -20,30 +22,32 @@ import Welcome from './pages/Welcome';
  */
 const RouteConfig = () => {
   return (
-    <Routes>
-      <Route path="login" element={<div>Login</div>} />
-      <Route path="register" element={<div>Register</div>} />
-      <Route path="app" element={<AppLayout />}>
-        <Route index element={<Welcome />} />
-        <Route path="users">
-          <Route index element={<Users />} />
-          <Route path="add" element={<AddUser />} />
-          <Route path="edit" element={<EditUser />} />
+    <Suspense>
+      <Routes>
+        <Route path="login" element={<div>Login</div>} />
+        <Route path="register" element={<div>Register</div>} />
+        <Route path="app" element={<AppLayout />}>
+          <Route index element={<Welcome />} />
+          <Route path="users">
+            <Route index element={<Users />} />
+            <Route path="add" element={<AddUser />} />
+            <Route path="edit" element={<EditUser />} />
+          </Route>
+          <Route path="logs">
+            <Route index element={<Logs />} />
+            <Route path="log" element={<Log></Log>} />
+          </Route>
+          <Route path="templates">
+            <Route index element={<Templates />} />
+            <Route path="add" element={<AddTemplate />} />
+            <Route path="edit" element={<EditTemplate />} />
+          </Route>
+          <Route path="no-permission" element={<NoPermission />}></Route>
+          <Route path="*" element={<div>Not Found</div>} />
         </Route>
-        <Route path="logs">
-          <Route index element={<Logs />} />
-          <Route path="log" element={<Log></Log>} />
-        </Route>
-        <Route path="templates">
-          <Route index element={<Templates />} />
-          <Route path="add" element={<AddTemplate />} />
-          <Route path="edit" element={<EditTemplate />} />
-        </Route>
-        <Route path="no-permission" element={<NoPermission />}></Route>
-        <Route path="*" element={<div>Not Found</div>} />
-      </Route>
-      <Route path="*" element={<div>Login</div>} />
-    </Routes>
+        <Route path="*" element={<div>Login</div>} />
+      </Routes>
+    </Suspense>
   );
 };
 
