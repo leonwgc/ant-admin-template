@@ -5,8 +5,13 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
   route?: string;
 };
 
+type Result = {
+  parents: MenuItem[];
+  found: boolean;
+};
+
 /**
- * Get the associated menu items for a given pathname
+ * Get the associated menu item for a given pathname
  * @param pathname the pathname to search
  * @param childrenItems the menu items to search
  * @param item the parent menu item
@@ -16,7 +21,7 @@ export const getPathnameAssociatedMenu = (
   pathname: string,
   childrenItems: MenuItem[],
   item: MenuItem,
-  result
+  result: Result
 ) => {
   if (!childrenItems || !childrenItems.length || result.found) {
     return;
@@ -47,10 +52,10 @@ export const getPathnameAssociatedMenu = (
   }
 };
 
-export interface LevelKeysProps {
+export type LevelKeysProps = {
   key?: string;
   children?: LevelKeysProps[];
-}
+};
 
 export const getLevelKeys = (items1: LevelKeysProps[]) => {
   const key: Record<string, number> = {};
