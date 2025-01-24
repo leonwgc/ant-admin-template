@@ -1,22 +1,99 @@
-import { Space } from 'antd';
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Flex, Space, Table, Tag } from 'antd';
+import type { TableProps } from 'antd';
 import { Link } from 'react-router';
 
-const Users = () => {
-  useEffect(() => {
-    console.log('users');
-  }, []);
+interface DataType {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+  tags: string[];
+}
 
-  return (
-    <div>
-      <h1>Users</h1>
-      <p>This is the Users page.</p>
-      <Space>
-        <Link to={'/app/users/add'}>Add User</Link>
-        <Link to={'/app/users/edit'}>Edit User</Link>
+const columns: TableProps<DataType>['columns'] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+    key: 'age',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address',
+  },
+  {
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'tags',
+    render: (_, { tags }) => (
+      <>
+        {tags.map((tag) => {
+          let color = tag.length > 5 ? 'geekblue' : 'green';
+          if (tag === 'loser') {
+            color = 'volcano';
+          }
+          return (
+            <Tag color={color} key={tag}>
+              {tag.toUpperCase()}
+            </Tag>
+          );
+        })}
+      </>
+    ),
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (_, record) => (
+      <Space size="middle">
+        <a>Invite {record.name}</a>
+        <a>Delete</a>
       </Space>
-    </div>
-  );
-};
+    ),
+  },
+];
 
-export default Users;
+const data: DataType[] = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sydney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
+];
+
+const App: React.FC = () => (
+  <>
+    <Flex style={{ margin: '16px 0' }}>
+      <Space>
+        <Link to={'./add'}>Add</Link>
+        <Link to={'./edit'}>Edit</Link>
+      </Space>
+    </Flex>
+    <Table<DataType> columns={columns} dataSource={data} />
+  </>
+);
+
+export default App;
