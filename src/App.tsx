@@ -25,7 +25,7 @@ const App = () => {
             itemSelectedColor: '#00131c',
             itemHoverBg: '#EFFFFF',
             itemSelectedBg: '#EDEEEF',
-            subMenuItemBg: 'transparent',
+            subMenuItemBg: '#fff',
           },
         },
       }}

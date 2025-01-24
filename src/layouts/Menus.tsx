@@ -9,9 +9,12 @@ import {
 } from './Menus.helper';
 import { getItems, hasPermission, allMenuData } from '../config.menu';
 import { useAppData } from 'simple-redux-store';
+import classNames from 'classnames';
 import './Menus.scss';
 
-export default (props: MenuProps & { afterClick?: () => void }) => {
+export default (
+  props: MenuProps & { afterClick?: () => void; collapsed?: boolean }
+) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -91,7 +94,9 @@ export default (props: MenuProps & { afterClick?: () => void }) => {
 
   return (
     <Menu
-      className="app-menus"
+      className={classNames('app-menus', {
+        collapsed: props?.collapsed,
+      })}
       onClick={(item) => {
         const menu = allMenuItems.find((m) => m.key === item.key);
         if (menu?.route) {
@@ -107,6 +112,7 @@ export default (props: MenuProps & { afterClick?: () => void }) => {
       onOpenChange={onOpenChange}
       mode="inline"
       items={items}
+      inlineCollapsed={props?.collapsed}
       {...props}
     />
   );

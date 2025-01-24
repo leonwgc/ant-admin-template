@@ -28,7 +28,7 @@ export default (props: SiderProps) => {
       theme="light"
       {...props}
     >
-      <Menus />
+      <Menus collapsed={collapsed} />
       <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
     </Layout.Sider>
   );
