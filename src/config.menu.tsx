@@ -56,6 +56,12 @@ export const allMenuData: MenuItem[] = [
         route: '/app/templates/add',
         permissions: [operations.CREATE_TEMPLATE],
       },
+      {
+        key: 'template-2',
+        label: 'Edit',
+        route: '/app/templates/edit',
+        permissions: [operations.UPDATE_TEMPLATE],
+      },
     ],
   },
   {

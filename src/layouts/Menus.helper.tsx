@@ -21,7 +21,7 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
 
 type Result = {
   /**
-   * The associated menu items
+   * The associated menu items, from parent to self
    */
   parents: MenuItem[];
   /**
