@@ -13,6 +13,8 @@ const Log = lazy(() => import('./pages/Log'));
 const NoPermission = lazy(() => import('./pages/NoPermission'));
 const Welcome = lazy(() => import('./pages/Welcome'));
 
+const Login = lazy(() => import('./pages/Login/Login'));
+
 /**
  * RouteConfig
  *
@@ -24,7 +26,7 @@ const RouteConfig = () => {
   return (
     <Suspense>
       <Routes>
-        <Route path="login" element={<div>Login</div>} />
+        <Route index element={<Login />} />
         <Route path="register" element={<div>Register</div>} />
         <Route path="app" element={<AppLayout />}>
           <Route index element={<Welcome />} />
