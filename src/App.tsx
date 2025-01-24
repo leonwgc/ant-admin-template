@@ -16,8 +16,17 @@ const App = () => {
       locale={zhCN}
       theme={{
         token: {
-          colorPrimary: '#005cff',
+          colorPrimary: '#00131c',
           colorBgContainer: '#fff',
+        },
+        components: {
+          Menu: {
+            itemColor: '#00131c',
+            itemSelectedColor: '#00131c',
+            itemHoverBg: '#EFFFFF',
+            itemSelectedBg: '#EDEEEF',
+            subMenuItemBg: 'transparent',
+          },
         },
       }}
     >

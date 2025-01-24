@@ -9,6 +9,7 @@ import {
 } from './Menus.helper';
 import { getItems, hasPermission, allMenuData } from '../config.menu';
 import { useAppData } from 'simple-redux-store';
+import './Menus.scss';
 
 export default (props: MenuProps & { afterClick?: () => void }) => {
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ export default (props: MenuProps & { afterClick?: () => void }) => {
 
   return (
     <Menu
+      className="app-menus"
       onClick={(item) => {
         const menu = allMenuItems.find((m) => m.key === item.key);
         if (menu?.route) {
