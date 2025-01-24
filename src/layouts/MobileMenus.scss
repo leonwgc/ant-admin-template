@@ -1,0 +1,16 @@
+.app-drawer__menus--mobile {
+  .ant-drawer-body {
+    padding: 0;
+
+    .ant-menu {
+      border: none;
+    }
+  }
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .app-drawer__menus--mobile {
+    display: block;
+  }
+}

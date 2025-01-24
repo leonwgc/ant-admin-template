@@ -17,6 +17,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .mobile-menus {
+      font-size: 20px;
+      display: none;
+    }
   }
   &__sider {
     // overflow-y: scroll;
@@ -176,6 +181,11 @@
 @media (max-width: 768px) {
   .app-layout {
     --menu-width: 0;
+    &__header {
+      .mobile-menus {
+        display: block;
+      }
+    }
     &__sider {
       display: none;
     }

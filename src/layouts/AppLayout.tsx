@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router';
 import Sider from './Sider';
-import Header from '../Header';
+import Header from './Header';
 
 import './AppLayout.scss';
 
