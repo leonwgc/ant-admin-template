@@ -96,9 +96,10 @@
     padding: var(--nav-height) 0 0 var(--menu-width);
     transition: padding-left $theme-transition-duration ease-in-out;
     padding-bottom: 40px;
+    background: #fff;
 
-    .box {
-      padding: 0 32px;
+    &__wrapper {
+      padding: 16px 24px;
     }
 
     .app-loading {
