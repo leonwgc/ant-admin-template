@@ -37,19 +37,7 @@ export const allMenuData: MenuItem[] = [
       },
     ],
   },
-  {
-    key: 'log',
-    label: 'Logs',
-    icon: <AppstoreOutlined />,
-    children: [
-      {
-        key: 'log-1',
-        label: 'logs',
-        route: '/app/logs',
-        permissions: [operations.VIEW_LOG],
-      },
-    ],
-  },
+
   {
     key: 'template',
     label: 'Templates',
@@ -69,6 +57,13 @@ export const allMenuData: MenuItem[] = [
         permissions: [operations.CREATE_TEMPLATE],
       },
     ],
+  },
+  {
+    key: 'log',
+    label: 'Logs',
+    icon: <AppstoreOutlined />,
+    // permissions: [operations.VIEW_LOG],
+    route: '/app/logs',
   },
 ];
 

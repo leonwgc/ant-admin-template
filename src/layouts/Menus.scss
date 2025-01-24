@@ -1,11 +1,27 @@
 @import '../scss/common.scss';
 
 .app-menus {
+  div[role='menuitem'] {
+    .anticon {
+      font-size: 20px;
+
+      + span {
+        margin-left: 14px;
+      }
+    }
+  }
   li[role='menuitem'] {
     display: flex;
     padding: 0px 36px 0px 10px;
     &.ant-menu-item-selected {
       font-weight: 600;
+    }
+    .anticon {
+      font-size: 20px;
+
+      + span {
+        margin-left: 14px;
+      }
     }
   }
 }
