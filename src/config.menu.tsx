@@ -58,13 +58,13 @@ export const allMenuData: MenuItem[] = [
     children: [
       {
         key: 'template-1',
-        label: 'Template List',
+        label: 'List',
         route: '/app/templates',
         permissions: [operations.VIEW_TEMPLATE],
       },
       {
         key: 'template-2',
-        label: 'Add Template',
+        label: 'Add',
         route: '/app/templates/add',
         permissions: [operations.CREATE_TEMPLATE],
       },
