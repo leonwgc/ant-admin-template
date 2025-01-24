@@ -16,7 +16,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
 
         <Space size={16}>
           <MenuOutlined className="mobile-menus" onClick={setRight} />
-          <Avatar>W</Avatar>
+          <Avatar>LW</Avatar>
         </Space>
       </Layout.Header>
       <MobileMenus open={open} onClose={setLeft} />

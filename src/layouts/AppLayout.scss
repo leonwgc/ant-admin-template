@@ -19,7 +19,7 @@
     align-items: center;
 
     .mobile-menus {
-      font-size: 20px;
+      font-size: 18px;
       display: none;
     }
   }
@@ -191,17 +191,3 @@
     }
   }
 }
-
-// @media (max-width: 768px) {
-//   .app-layout {
-//     &-content {
-//       // 100% 高度减去 mobile footer 的高度
-//       min-height: calc(100vh - 56px);
-//       padding: 56px 0 64px 0;
-
-//       .app-loading {
-//         left: 0;
-//       }
-//     }
-//   }
-// }

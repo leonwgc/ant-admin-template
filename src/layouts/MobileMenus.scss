@@ -1,4 +1,13 @@
 .app-drawer__menus--mobile {
+  .ant-drawer-header-title {
+    display: flex;
+    justify-content: space-between;
+
+    .ant-drawer-close {
+      order: 1;
+    }
+  }
+
   .ant-drawer-body {
     padding: 0;
 
