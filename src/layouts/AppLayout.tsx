@@ -17,9 +17,14 @@ const AppLayout: React.FC = () => {
       <Layout>
         <Sider className="app-layout__sider" />
         <Layout.Content className="app-layout__content">
-          <div className="app-layout__content__wrapper">
-            <Outlet />
-          </div>
+          <Layout className="content-layout">
+            <Layout.Header className="content-layout__header">
+              header
+            </Layout.Header>
+            <Layout.Content className="content-layout__content">
+              <Outlet />
+            </Layout.Content>
+          </Layout>
         </Layout.Content>
       </Layout>
     </Layout>

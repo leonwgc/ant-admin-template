@@ -98,8 +98,21 @@
     padding-bottom: 40px;
     background: #fff;
 
-    &__wrapper {
-      padding: 16px 24px;
+    .content-layout {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      gap: 16px;
+      &__header {
+        padding: 8px 40px 16px;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #dfe4e8;
+      }
+      &__content {
+        padding: 40px 40px 0;
+      }
     }
 
     .app-loading {
