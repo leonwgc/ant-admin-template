@@ -14,6 +14,7 @@ const NoPermission = lazy(() => import('./pages/NoPermission'));
 const Welcome = lazy(() => import('./pages/Welcome'));
 
 const Login = lazy(() => import('./pages/Login/Login'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
 /**
  * RouteConfig
@@ -45,9 +46,9 @@ const RouteConfig = () => {
             <Route path="edit" element={<EditTemplate />} />
           </Route>
           <Route path="no-permission" element={<NoPermission />}></Route>
-          <Route path="*" element={<div>Not Found</div>} />
+          <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="*" element={<div>Login</div>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
