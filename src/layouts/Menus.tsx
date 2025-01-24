@@ -10,7 +10,7 @@ import {
 import { getItems, hasPermission, allMenuData } from '../config.menu';
 import { useAppData } from 'simple-redux-store';
 
-export default (props: MenuProps) => {
+export default (props: MenuProps & { afterClick?: () => void }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -94,6 +94,10 @@ export default (props: MenuProps) => {
         const menu = allMenuItems.find((m) => m.key === item.key);
         if (menu?.route) {
           navigate(menu?.route);
+
+          if (props?.afterClick) {
+            props.afterClick();
+          }
         }
       }}
       selectedKeys={selectedKeys}

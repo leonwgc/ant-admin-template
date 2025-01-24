@@ -13,6 +13,10 @@ const MobileMenus: React.FC<DrawerProps> = (props) => {
     }
   }, [width]);
 
+  const afterClick = () => {
+    props.onClose?.(null);
+  };
+
   return (
     <>
       <Drawer
@@ -22,7 +26,7 @@ const MobileMenus: React.FC<DrawerProps> = (props) => {
         width={320}
         {...props}
       >
-        <Menus />
+        <Menus afterClick={afterClick} />
       </Drawer>
     </>
   );
