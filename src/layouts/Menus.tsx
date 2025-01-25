@@ -15,6 +15,7 @@ import './Menus.scss';
 export default (
   props: MenuProps & { afterClick?: () => void; collapsed?: boolean }
 ) => {
+  const { afterClick, collapsed, ...menuProps } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -102,9 +103,7 @@ export default (
         if (menu?.route) {
           navigate(menu?.route);
 
-          if (props?.afterClick) {
-            props.afterClick();
-          }
+          afterClick?.();
         }
       }}
       selectedKeys={selectedKeys}
@@ -112,8 +111,8 @@ export default (
       onOpenChange={onOpenChange}
       mode="inline"
       items={items}
-      inlineCollapsed={props?.collapsed}
-      {...props}
+      inlineCollapsed={collapsed}
+      {...menuProps}
     />
   );
 };
