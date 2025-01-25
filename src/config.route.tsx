@@ -10,7 +10,7 @@ const Templates = lazy(() => import('./pages/Templates'));
 const AddTemplate = lazy(() => import('./pages/AddTemplate'));
 const EditTemplate = lazy(() => import('./pages/EditTemplate'));
 const Log = lazy(() => import('./pages/Log'));
-const NoPermission = lazy(() => import('./pages/NoPermission'));
+const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const Welcome = lazy(() => import('./pages/Welcome'));
 
 const Login = lazy(() => import('./pages/Login/Login'));
@@ -29,6 +29,12 @@ const RouteConfig = () => {
       <Routes>
         <Route index element={<Login />} />
         <Route path="register" element={<div>Register</div>} />
+        <Route
+          path="no-permission"
+          element={<AppLayout hasSider={false} hasContentHeader={false} />}
+        >
+          <Route index element={<NoPermission />}></Route>
+        </Route>
         <Route path="app" element={<AppLayout />}>
           <Route index element={<Welcome />} />
           <Route path="users">
@@ -45,8 +51,6 @@ const RouteConfig = () => {
             <Route path="add" element={<AddTemplate />} />
             <Route path="edit" element={<EditTemplate />} />
           </Route>
-          <Route path="no-permission" element={<NoPermission />}></Route>
-          <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -99,7 +99,11 @@
     box-sizing: border-box;
     min-height: 100vh;
     padding: var(--nav-height) 0 0 var(--menu-width);
-    transition: padding-left $theme-transition-duration ease-in-out;
+
+    &.no-sider {
+      padding-left: 0;
+    }
+    transition: paddinqg-left $theme-transition-duration ease-in-out;
     padding-bottom: 40px;
     background: #fff;
 

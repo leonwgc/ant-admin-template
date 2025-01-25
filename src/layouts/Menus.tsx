@@ -46,7 +46,7 @@ export default (
         allMenuItems.find((item) => item.route === pathname)?.permissions
       )
     ) {
-      navigate('./no-permission', { replace: true });
+      navigate('/no-permission', { replace: true });
       return;
     }
 
