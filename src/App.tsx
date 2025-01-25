@@ -5,22 +5,11 @@ import 'dayjs/locale/zh-cn';
 import RouteConfig from './config.route';
 import './App.scss';
 import { useTitle } from 'ahooks';
-import { useEffect } from 'react';
 
 dayjs.locale('zh-cn');
 
 const App = () => {
   useTitle('App');
-
-  useEffect(() => {
-    fetch('/api/users')
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  }, []);
 
   return (
     <ConfigProvider

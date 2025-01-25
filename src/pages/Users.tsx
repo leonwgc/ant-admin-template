@@ -1,99 +1,67 @@
+import { Flex, Space, Table } from 'antd';
 import React from 'react';
-import { Flex, Space, Table, Tag } from 'antd';
-import type { TableProps } from 'antd';
+import { useAntdTable } from 'ahooks';
+import type { TableColumnsType, TableProps } from 'antd';
+import { post } from '../utils/fetch';
 import { Link } from 'react-router';
 
 interface DataType {
-  key: string;
+  key: React.Key;
   name: string;
   age: number;
   address: string;
-  tags: string[];
 }
 
-const columns: TableProps<DataType>['columns'] = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
+interface Result {
+  total: number;
+  list: DataType[];
+}
 
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+const getTableData = ({ current, pageSize }): Promise<Result> => {
+  const query = `page=${current}&size=${pageSize}`;
 
-const App: React.FC = () => (
-  <>
-    <Flex style={{ margin: '16px 0' }}>
-      <Space>
-        <Link to={'./add'}>Add</Link>
-        <Link to={'./edit'}>Edit</Link>
-      </Space>
-    </Flex>
-    <Table<DataType> columns={columns} dataSource={data} />
-  </>
-);
+  return post(`/users?${query}`).then((res) => {
+    return {
+      total: res.data.total,
+      list: res.data.list,
+    };
+  });
+};
 
-export default App;
+export default () => {
+  const { tableProps } = useAntdTable(getTableData);
+
+  const columns: TableColumnsType<DataType> = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+    },
+  ];
+
+  return (
+    <div>
+      <Flex justify="space-between">
+        <h1>Users</h1>
+        <Space>
+          <Link to="./add">Add User</Link>
+          <Link to="./edit">Edit User</Link>
+        </Space>
+      </Flex>
+
+      <Table
+        columns={columns}
+        rowKey="key"
+        style={{ overflow: 'auto' }}
+        {...tableProps}
+      />
+    </div>
+  );
+};
