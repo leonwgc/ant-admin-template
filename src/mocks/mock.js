@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 const getData = (page, size) => {
-  return Array.from(new Array(10)).map((_, i) => ({
+  return Array.from(new Array(size)).map((_, i) => ({
     key: page * size + i,
     name: `name ${page * size + i}`,
     age: page * size + i,

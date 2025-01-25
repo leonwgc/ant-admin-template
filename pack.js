@@ -15,6 +15,11 @@ run({
     //     '~': path.resolve(__dirname, 'src'),
     //   },
     // },
+    source: {
+      define: {
+        MOCK: JSON.stringify(true),
+      },
+    },
     html: {
       template: './index.html',
       title: 'admin',

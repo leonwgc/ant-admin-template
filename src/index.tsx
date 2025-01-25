@@ -38,7 +38,7 @@ function start() {
   );
 }
 
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV !== 'development' || !MOCK) {
   start();
 } else {
   enableMocking().then(start);

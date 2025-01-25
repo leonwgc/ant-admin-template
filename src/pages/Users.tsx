@@ -1,4 +1,4 @@
-import { Flex, Space, Table } from 'antd';
+import { Flex, Form, Space, Table, Input, Button } from 'antd';
 import React from 'react';
 import { useAntdTable } from 'ahooks';
 import type { TableColumnsType, TableProps } from 'antd';
@@ -17,8 +17,13 @@ interface Result {
   list: DataType[];
 }
 
-const getTableData = ({ current, pageSize }): Promise<Result> => {
+const getTableData = (
+  { current, pageSize, ...rest },
+  formData
+): Promise<Result> => {
   const query = `page=${current}&size=${pageSize}`;
+
+  console.log(formData);
 
   return post(`/users?${query}`).then((res) => {
     return {
@@ -29,7 +34,17 @@ const getTableData = ({ current, pageSize }): Promise<Result> => {
 };
 
 export default () => {
-  const { tableProps } = useAntdTable(getTableData);
+  const [form] = Form.useForm();
+  const {
+    tableProps,
+    search: { submit, reset },
+  } = useAntdTable(getTableData, {
+    form,
+    defaultParams: [
+      { current: 2, pageSize: 5 },
+      { name: 'hello', age: '18', address: 'shanghai' },
+    ] as any,
+  });
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -55,6 +70,27 @@ export default () => {
           <Link to="./edit">Edit User</Link>
         </Space>
       </Flex>
+
+      <Form form={form} layout="inline" style={{ margin: '16px 0' }}>
+        <Form.Item name="name" label="name">
+          <Input />
+        </Form.Item>
+        <Form.Item name="age" label="age">
+          <Input />
+        </Form.Item>
+        <Form.Item name="address" label="address">
+          <Input />
+        </Form.Item>
+
+        <Space>
+          <Button htmlType="submit" type="primary" onClick={submit}>
+            submit
+          </Button>
+          <Button htmlType="reset" onClick={reset}>
+            reset
+          </Button>
+        </Space>
+      </Form>
 
       <Table
         columns={columns}
