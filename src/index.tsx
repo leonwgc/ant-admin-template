@@ -23,10 +23,23 @@ const data: StoreData = {
 
 const store = configureStore(data, true);
 
-createRoot(document.getElementById('app') as HTMLElement).render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>
-);
+async function enableMocking() {
+  const { worker } = await import('./mocks/bowser.js');
+  return worker.start();
+}
+
+function start() {
+  createRoot(document.getElementById('app') as HTMLElement).render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  );
+}
+
+if (process.env.NODE_ENV !== 'development') {
+  start();
+} else {
+  enableMocking().then(start);
+}

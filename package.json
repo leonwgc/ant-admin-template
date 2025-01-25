@@ -18,12 +18,14 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@types/node": "^22.10.10",
     "ahooks": "^3.8.4",
     "antd": "^5.23.1",
     "axios": "^1.7.9",
     "classnames": "^2.5.1",
     "clsx": "^1.1.1",
     "lodash": "^4.17.21",
+    "msw": "^2.7.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^7.0.0",
@@ -31,5 +33,10 @@
     "redux": "^4.0.0",
     "simple-redux-store": "^2.0.0",
     "urijs": "^1.19.11"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
