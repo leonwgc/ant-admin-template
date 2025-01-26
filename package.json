@@ -21,6 +21,7 @@
     "@types/node": "^22.10.10",
     "ahooks": "^3.8.4",
     "antd": "^5.23.1",
+    "antd-form-render": "^2.0.0-alpha.0",
     "axios": "^1.7.9",
     "classnames": "^2.5.1",
     "clsx": "^1.1.1",

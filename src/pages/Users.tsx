@@ -1,9 +1,10 @@
 import { Flex, Form, Space, Table, Input, Button } from 'antd';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAntdTable } from 'ahooks';
 import type { TableColumnsType } from 'antd';
 import { post } from '../utils/fetch';
 import { Link } from 'react-router';
+import { FormSpaceRender, Item } from 'antd-form-render';
 
 interface User {
   key: React.Key;
@@ -17,8 +18,6 @@ const getTableData = (
   formData: FormData
 ): Promise<TableDataResult<User>> => {
   const query = `page=${current}&size=${pageSize}`;
-
-  console.log(formData);
 
   return post(`/users?${query}`, formData).then((res) => {
     return {
@@ -56,6 +55,27 @@ export default () => {
     },
   ];
 
+  const layoutData = useMemo<Item[]>(
+    () => [
+      {
+        type: Input,
+        name: 'name',
+        label: 'Name',
+      },
+      {
+        type: Input,
+        name: 'age',
+        label: 'Age',
+      },
+      {
+        type: Input,
+        name: 'address',
+        label: 'Address',
+      },
+    ],
+    []
+  );
+
   return (
     <div>
       <Flex justify="space-between">
@@ -67,15 +87,7 @@ export default () => {
       </Flex>
 
       <Form form={form} layout="inline" style={{ margin: '16px 0' }}>
-        <Form.Item name="name" label="name">
-          <Input />
-        </Form.Item>
-        <Form.Item name="age" label="age">
-          <Input />
-        </Form.Item>
-        <Form.Item name="address" label="address">
-          <Input />
-        </Form.Item>
+        <FormSpaceRender layoutData={layoutData} />
 
         <Space>
           <Button htmlType="submit" type="primary" onClick={submit}>
