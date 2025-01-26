@@ -25,7 +25,7 @@ const store = configureStore(data, true);
 
 async function enableMocking() {
   const { worker } = await import('./mocks/bowser.js');
-  return worker.start();
+  return worker.start({ onUnhandledRequest: 'bypass' });
 }
 
 function start() {
