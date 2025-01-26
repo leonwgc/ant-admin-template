@@ -1,21 +1,22 @@
 import { http, HttpResponse } from 'msw';
 
-const getData = (page, size) => {
+const getData = (pageIndex, size, formData) => {
   return Array.from(new Array(size)).map((_, i) => ({
-    key: page * size + i,
-    name: `name ${page * size + i}`,
-    age: page * size + i,
-    address: `shanghai, minhang. ${page * size + i}`,
+    key: pageIndex * size + i,
+    name: `${formData?.name || 'name'} ${pageIndex * size + i}`,
+    age: pageIndex * size + i,
+    address: `${formData?.address || 'shanghai'} ${pageIndex * size + i}`,
   }));
 };
 
 export const handlers = [
-  http.post('/api/users', ({ request }) => {
+  http.post('/api/users', async ({ request }) => {
     const url = new URL(request.url);
     const page = url.searchParams.get('page');
     const size = url.searchParams.get('size') || 10;
+    const formData = await request.json();
 
-    const dataSource = getData(Number(page), Number(size));
+    const dataSource = getData(Number(page) - 1, Number(size), formData);
 
     return HttpResponse.json({
       list: dataSource,

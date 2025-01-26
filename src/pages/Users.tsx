@@ -20,7 +20,7 @@ const getTableData = (
 
   console.log(formData);
 
-  return post(`/users?${query}`).then((res) => {
+  return post(`/users?${query}`, formData).then((res) => {
     return {
       total: res.data.total,
       list: res.data.list,
@@ -36,7 +36,7 @@ export default () => {
   } = useAntdTable(getTableData, {
     form,
     defaultParams: [
-      { current: 2, pageSize: 5 },
+      { current: 1, pageSize: 5 },
       { name: 'hello', age: '18', address: 'shanghai' },
     ] as any,
   });
