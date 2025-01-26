@@ -72,6 +72,20 @@ export default () => {
         name: 'address',
         label: 'Address',
       },
+      {
+        render() {
+          return (
+            <Space>
+              <Button htmlType="submit" type="primary" onClick={submit}>
+                submit
+              </Button>
+              <Button htmlType="reset" onClick={reset}>
+                reset
+              </Button>
+            </Space>
+          );
+        },
+      },
     ],
     []
   );
@@ -86,17 +100,8 @@ export default () => {
         </Space>
       </Flex>
 
-      <Form form={form} layout="inline" style={{ margin: '16px 0' }}>
-        <FormSpaceRender layoutData={layoutData} />
-
-        <Space>
-          <Button htmlType="submit" type="primary" onClick={submit}>
-            submit
-          </Button>
-          <Button htmlType="reset" onClick={reset}>
-            reset
-          </Button>
-        </Space>
+      <Form form={form} layout="horizontal">
+        <FormSpaceRender layoutData={layoutData} size={16} align="start" />
       </Form>
 
       <Table
