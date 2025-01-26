@@ -1,26 +1,21 @@
 import { Flex, Form, Space, Table, Input, Button } from 'antd';
 import React from 'react';
 import { useAntdTable } from 'ahooks';
-import type { TableColumnsType, TableProps } from 'antd';
+import type { TableColumnsType } from 'antd';
 import { post } from '../utils/fetch';
 import { Link } from 'react-router';
 
-interface DataType {
+interface User {
   key: React.Key;
   name: string;
   age: number;
   address: string;
 }
 
-interface Result {
-  total: number;
-  list: DataType[];
-}
-
 const getTableData = (
-  { current, pageSize, ...rest },
-  formData
-): Promise<Result> => {
+  { current, pageSize, sorter, filters, extra },
+  formData: FormData
+): Promise<TableDataResult<User>> => {
   const query = `page=${current}&size=${pageSize}`;
 
   console.log(formData);
@@ -46,7 +41,7 @@ export default () => {
     ] as any,
   });
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<User> = [
     {
       title: 'Name',
       dataIndex: 'name',
