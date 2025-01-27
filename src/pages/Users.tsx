@@ -1,10 +1,10 @@
-import { Flex, Form, Space, Table, Input, Button } from 'antd';
-import React, { useMemo } from 'react';
 import { useAntdTable } from 'ahooks';
 import type { TableColumnsType } from 'antd';
-import { post } from '../utils/fetch';
-import { Link } from 'react-router';
+import { Button, Flex, Form, Input, Space, Table } from 'antd';
 import { FlexRender, Item } from 'antd-form-render';
+import React, { useMemo } from 'react';
+import { Link } from 'react-router';
+import { post } from '../utils/fetch';
 
 interface User {
   key: React.Key;
@@ -55,7 +55,7 @@ export default () => {
     },
   ];
 
-  const layoutData = useMemo<Item[]>(
+  const layout = useMemo<Item[]>(
     () => [
       {
         type: Input,
@@ -101,7 +101,7 @@ export default () => {
       </Flex>
 
       <Form form={form} layout="horizontal">
-        <FlexRender layout={layoutData} gap={16} justify="flex-end" />
+        <FlexRender layout={layout} gap={16} justify="flex-end" />
       </Form>
 
       <Table
