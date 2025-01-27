@@ -2,19 +2,19 @@ import { Route, Routes } from 'react-router';
 import AppLayout from './layouts/AppLayout';
 import { lazy, Suspense } from 'react';
 
-const Users = lazy(() => import('./pages/Users'));
-const AddUser = lazy(() => import('./pages/AddUser'));
-const Logs = lazy(() => import('./pages/Logs'));
-const EditUser = lazy(() => import('./pages/Edituser'));
-const Templates = lazy(() => import('./pages/Templates'));
-const AddTemplate = lazy(() => import('./pages/AddTemplate'));
-const EditTemplate = lazy(() => import('./pages/EditTemplate'));
-const Log = lazy(() => import('./pages/Log'));
-const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
-const Welcome = lazy(() => import('./pages/Welcome'));
+const Users = lazy(() => import('./modules/User/Users'));
+const AddUser = lazy(() => import('./modules/User/Add'));
+const Logs = lazy(() => import('./modules/Log/Logs'));
+const EditUser = lazy(() => import('./modules/User/Edit'));
+const Templates = lazy(() => import('./modules/Template/Templates'));
+const AddTemplate = lazy(() => import('./modules/Template/AddTemplate'));
+const EditTemplate = lazy(() => import('./modules/Template/EditTemplate'));
+const Log = lazy(() => import('./modules/Log/Log'));
+const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
+const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
 
-const Login = lazy(() => import('./pages/Login/Login'));
-const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+const Login = lazy(() => import('./modules/Login/Login'));
+const NotFound = lazy(() => import('./modules/NotFound/NotFound'));
 
 /**
  * RouteConfig

@@ -4,7 +4,7 @@ import { Button, Flex, Form, Input, Space, Table } from 'antd';
 import { FlexRender, Item } from 'antd-form-render';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router';
-import { post } from '../utils/fetch';
+import { post } from '../../utils/fetch';
 
 interface User {
   key: React.Key;
