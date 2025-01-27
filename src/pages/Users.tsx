@@ -107,7 +107,7 @@ export default () => {
       <Table
         columns={columns}
         rowKey="key"
-        style={{ overflow: 'auto' }}
+        scroll={{ x: 'max-content' }}
         {...tableProps}
       />
     </div>
