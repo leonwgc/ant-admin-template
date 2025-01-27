@@ -589,10 +589,12 @@ ansi-styles@^4.0.0:
   dependencies:
     color-convert "^2.0.1"
 
-antd-form-render@^2.0.0-alpha.0:
-  version "2.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/antd-form-render/-/antd-form-render-2.0.0-alpha.0.tgz#8ad07edfd993d7fb0ca5c95496236eca98ef64c5"
-  integrity sha512-xIyU+t64KHvEA9NdQMkk3LMNPO572/SD5U2201D6GkN8rdGruX9WCTYh54zuGqs0661L7Ozk0rhzybS0TOyfiw==
+antd-form-render@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/antd-form-render/-/antd-form-render-2.0.0.tgz#b13f7f31f8d4a665b28126fda824819293210d59"
+  integrity sha512-eGFQKeQ95WL9tk/Kv24DbqKlsv5u8mPW2cOAcrwG9l79YdWDd7NQIvzc44IPVw+AyiGjrfs2PXwFuceazJtjDQ==
+  dependencies:
+    packrs "^0.2.1"
 
 antd@^5.23.1:
   version "5.23.2"

@@ -4,7 +4,7 @@ import { useAntdTable } from 'ahooks';
 import type { TableColumnsType } from 'antd';
 import { post } from '../utils/fetch';
 import { Link } from 'react-router';
-import { FormSpaceRender, Item } from 'antd-form-render';
+import { FlexRender, Item } from 'antd-form-render';
 
 interface User {
   key: React.Key;
@@ -101,7 +101,7 @@ export default () => {
       </Flex>
 
       <Form form={form} layout="horizontal">
-        <FormSpaceRender layoutData={layoutData} size={16} align="start" />
+        <FlexRender layout={layoutData} gap={16} justify="flex-end" />
       </Form>
 
       <Table
