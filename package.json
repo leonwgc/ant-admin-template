@@ -11,8 +11,7 @@
   "devDependencies": {
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
-    "packrs": "^0.2.1",
-    "sass": "^1.77.8",
+    "packrs": "^1.0.1",
     "typescript": "^5.7.3"
   },
   "dependencies": {
