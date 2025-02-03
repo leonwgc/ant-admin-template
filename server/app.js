@@ -70,6 +70,14 @@ const app = express()
       res.json({ data: 'Welcome', auth: auth });
     }
   })
+  .get('/login', (req, res, next) => {
+    const auth = new DsJwtAuth(req);
+    if (!auth.checkToken()) {
+      auth.login(req, res, next);
+    } else {
+      res.json({ data: auth, status: 200 });
+    }
+  })
   .get('/ds/login', (req, res, next) => {
     const auth = new DsJwtAuth(req);
     if (!auth.checkToken()) {

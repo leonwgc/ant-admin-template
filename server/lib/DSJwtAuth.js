@@ -210,7 +210,9 @@ DsJwtAuth.prototype.login = function (req, res, next) {
 
         req.session.user = user;
 
-        res.redirect('/');
+        res.json({ data: this, status: 200 });
+
+        // res.redirect('/');
       });
     })
     .catch((e) => {
