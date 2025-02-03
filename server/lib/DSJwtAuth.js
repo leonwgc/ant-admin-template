@@ -207,14 +207,9 @@ DsJwtAuth.prototype.login = function (req, res, next) {
         req.session.accountId = user.accountId;
         req.session.accountName = user.accountName;
         req.session.basePath = user.basePath;
-        // if (this.eg) {
-        //     let eg = this.eg;
-        //     this.eg = null;
-        //     req.session.eg = null;
-        //     res.redirect(`/${eg}`);
-        // } else {
-        //     res.redirect('/');
-        // }
+
+        req.session.user = user;
+
         res.redirect('/');
       });
     })

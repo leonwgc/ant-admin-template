@@ -62,13 +62,20 @@ const app = express()
     req.dsAuth = req.dsAuthJwt; // jwt
     next();
   })
-  .get('/', (req, res) => {
-    res.json({ status: 'OK', data: 'Welcome' });
+  .get('/', (req, res, next) => {
+    const auth = new DsJwtAuth(req);
+    if (!auth.checkToken()) {
+      res.redirect('/ds/login');
+    } else {
+      res.json({ data: 'Welcome', auth: auth });
+    }
   })
   .get('/ds/login', (req, res, next) => {
     const auth = new DsJwtAuth(req);
     if (!auth.checkToken()) {
       auth.login(req, res, next);
+    } else {
+      res.redirect('/');
     }
   })
   .get('/ds/callback', [dsLoginCB1, dsLoginCB2]) // OAuth callbacks. See below
