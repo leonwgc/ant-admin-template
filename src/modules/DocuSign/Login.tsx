@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router';
 
 import { login } from './api';
 import { useLocalStorageState } from 'ahooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default () => {
   const { message } = App.useApp();
   const navigate = useNavigate();
+  const [hasValidToken, setHasValidToken] = useState(false);
   const [token, setToken] = useLocalStorageState<{
     token: string;
     expired: string;
@@ -22,6 +23,7 @@ export default () => {
       new Date(token.expired).getTime() > Date.now()
     ) {
       message.info('already login');
+      setHasValidToken(true);
       // navigate('/app/users');
     }
   }, [token]);
@@ -38,6 +40,7 @@ export default () => {
 
   return (
     <Form
+      disabled={hasValidToken}
       name="normal_login"
       className="login-form"
       initialValues={{ remember: true }}
