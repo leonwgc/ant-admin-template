@@ -5,6 +5,7 @@ import { lazy, Suspense } from 'react';
 import { Logs, Log } from './modules/Log';
 import { Users, AddUser, EditUser } from './modules/User';
 import { Templates, AddTemplate, EditTemplate } from './modules/Template';
+import { Login as DocuSignLogin } from './modules/DocuSign';
 
 const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
 const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
@@ -32,6 +33,10 @@ const RouteConfig = () => {
         </Route>
         <Route path="app" element={<AppLayout />}>
           <Route index element={<Welcome />} />
+          <Route path="docusign">
+            <Route index element={<DocuSignLogin />} />
+            <Route path="login" element={<DocuSignLogin />} />
+          </Route>
           <Route path="users">
             <Route index element={<Users />} />
             <Route path="add" element={<AddUser />} />

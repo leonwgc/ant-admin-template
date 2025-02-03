@@ -3,12 +3,27 @@ import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
+  CopyOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 import { MenuItem } from './layouts/Menus.helper';
 import operations from './config.operations';
 import cloneDeep from 'lodash/cloneDeep';
 
 export const allMenuData: MenuItem[] = [
+  {
+    key: 'docusign',
+    label: 'Docusign',
+    icon: <CopyOutlined />,
+    children: [
+      {
+        key: 'docusign-login',
+        label: 'Docusign Login',
+        icon: <RightOutlined style={{ fontSize: 14 }} />,
+        route: '/app/docusign/login',
+      },
+    ],
+  },
   {
     key: 'user',
     label: 'Users',

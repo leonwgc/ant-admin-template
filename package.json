@@ -4,7 +4,7 @@
   "description": "antd admin template",
   "main": "index.js",
   "scripts": {
-    "debug": "node --inspect  ./server/app.js"
+    "start": "node --inspect  ./server/app.js"
   },
   "author": "",
   "license": "ISC",
