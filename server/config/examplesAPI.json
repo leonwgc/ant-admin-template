@@ -1,0 +1,9 @@
+{
+  "examplesApi": {
+    "isESignatureApi": true,
+    "isRoomsApi": false,
+    "isClickApi": false,
+    "isMonitorApi": false,
+    "isAdminApi": false
+  }
+}
