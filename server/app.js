@@ -75,7 +75,7 @@ const app = express()
     if (!auth.checkToken()) {
       auth.login(req, res, next);
     } else {
-      res.json({ data: auth, status: 200 });
+      res.json(auth);
     }
   })
   .get('/ds/login', (req, res, next) => {

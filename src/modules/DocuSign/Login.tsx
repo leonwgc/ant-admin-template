@@ -22,7 +22,7 @@ export default () => {
       new Date(token.expired).getTime() > Date.now()
     ) {
       message.info('already login');
-      navigate('/app/users');
+      // navigate('/app/users');
     }
   }, [token]);
 

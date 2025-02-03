@@ -19,7 +19,7 @@ const fetchDocuSign = axios.create({
 
 const onSuccess = (response) => {
   if (response.status >= 200 && response.status < 300) {
-    return response.data;
+    return response;
   }
   return Promise.reject(new Error(`请求失败，状态码: ${response.status}`));
 };
