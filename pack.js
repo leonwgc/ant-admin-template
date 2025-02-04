@@ -13,7 +13,7 @@ run({
   rsConfig: {
     source: {
       define: {
-        MOCK: JSON.stringify(true),
+        MOCK: JSON.stringify(false),
       },
     },
     html: {

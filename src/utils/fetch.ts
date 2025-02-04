@@ -21,10 +21,7 @@ const fetchProxy = axios.create({
 
 // fetch docusign cors call api
 const fetchDocuSign = axios.create({
-  baseURL: '/dsapi',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'https://demo.docusign.net/restapi',
 });
 
 const onSuccess = (response) => {
@@ -51,6 +48,7 @@ const onFailure = (error) => {
 
 fetch.interceptors.response.use(onSuccess, onFailure);
 fetchProxy.interceptors.response.use(onSuccess, onFailure);
+fetchDocuSign.interceptors.response.use(onSuccess, onFailure);
 
 export const get = fetch.get;
 export const post = fetch.post;

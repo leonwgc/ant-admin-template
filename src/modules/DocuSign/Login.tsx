@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router';
 // import { login } from './api';
 import { useLocalStorageState, useMount } from 'ahooks';
 import { useEffect, useState } from 'react';
-import { proxyGet } from '~/utils/fetch';
+import { dsGet, proxyGet } from '~/utils/fetch';
 
-// user = {
-//   accountId: 'b1324bfe-b39f-46b7-b14b-51f0177c9958',
-//   basePath: 'https://demo.docusign.net/restapi',
-//   accountName: 'derbysoft',
-// };
+const userInfo = {
+  accountId: 'b1324bfe-b39f-46b7-b14b-51f0177c9958',
+  basePath: 'https://demo.docusign.net/restapi',
+  accountName: 'derbysoft',
+};
 
 export default () => {
   const { message } = App.useApp();
@@ -92,6 +92,20 @@ export default () => {
         </Button>
 
         <Typography.Text>{user && JSON.stringify(user)}</Typography.Text>
+      </Form.Item>
+
+      <Form.Item>
+        <Button
+          onClick={() => {
+            dsGet(`/v2.1/accounts/${userInfo.accountId}/brands`, {
+              headers: { Authorization: `Bearer ${token?.token}` },
+            }).then((res) => {
+              message.success(JSON.stringify(res.data, null, 2));
+            });
+          }}
+        >
+          Get brands via api
+        </Button>
       </Form.Item>
     </Form>
   );

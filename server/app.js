@@ -63,42 +63,32 @@ const app = express()
     next();
   })
   .get('/', (req, res, next) => {
-    const auth = new DsJwtAuth(req);
-    if (!auth.checkToken()) {
+    if (!req.dsAuth.checkToken()) {
       res.redirect('/ds/login');
     } else {
-      res.json({ data: 'Welcome', auth: auth });
+      res.json({ data: 'Welcome' });
     }
   })
   .get('/login', (req, res, next) => {
-    const auth = new DsJwtAuth(req);
-    if (!auth.checkToken()) {
-      auth.login(req, res, next);
+    if (req.dsAuth.checkToken()) {
+      req.dsAuth.login(req, res, next);
     } else {
-      res.json(auth);
+      res.json(req.dsAuth);
     }
   })
   .get('/ds/login', (req, res, next) => {
-    const auth = new DsJwtAuth(req);
-    if (!auth.checkToken()) {
-      auth.login(req, res, next);
+    if (!req.dsAuth.checkToken()) {
+      req.dsAuth.login(req, res, next);
     } else {
       res.redirect('/');
     }
   })
   .get('/user-info', async (req, res, next) => {
-    const auth = new DsJwtAuth(req);
-
-    if (!auth.checkToken()) {
+    if (!req.dsAuth.checkToken()) {
       res.json({ message: 'Not logged in' });
     } else {
-      const user = await auth.getUserInfo();
+      const user = await req.dsAuth.getUserInfo();
       res.json({ user });
-      //   {
-      //     "accountId": "b1324bfe-b39f-46b7-b14b-51f0177c9958",
-      //     "basePath": "https://demo.docusign.net/restapi",
-      //     "accountName": "derbysoft"
-      // }
     }
   })
   .get('/ds/callback', [dsLoginCB1, dsLoginCB2]) // OAuth callbacks. See below
@@ -113,6 +103,7 @@ passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
+const CORS = ['cors'];
 const SCOPES = ['signature'];
 const ROOM_SCOPES = [
   'signature',
@@ -152,10 +143,11 @@ const WEBFORMS_SCOPES = [
 ];
 
 const scope = [
-  ...ROOM_SCOPES,
-  ...CLICK_SCOPES,
-  ...MONITOR_SCOPES,
-  ...ADMIN_SCOPES,
+  ...CORS,
+  // ...ROOM_SCOPES,
+  // ...CLICK_SCOPES,
+  // ...MONITOR_SCOPES,
+  // ...ADMIN_SCOPES,
   ...SCOPES,
   ...WEBFORMS_SCOPES,
 ];
@@ -165,8 +157,8 @@ const docusignStrategyOptions = {
   production: dsConfig.production,
   clientID: dsConfig.dsClientId,
   scope: scope.join(' '),
-  clientSecret: dsConfig.dsClientSecret,
-  callbackURL: hostUrl + '/callback',
+  // clientSecret: dsConfig.dsClientSecret,
+  callbackURL: hostUrl + '/ds/callback',
   state: true, // automatic CSRF protection.
   // See https://github.com/jaredhanson/passport-oauth2/blob/master/lib/state/session.js
 };
