@@ -12,18 +12,19 @@ const userInfo = {
   accountName: 'derbysoft',
 };
 
+export type Token = {
+  accountId: string;
+  token: string;
+  expired: string;
+};
+
 export default () => {
   const { message } = App.useApp();
   const navigate = useNavigate();
   const [user, setUser] = useState('');
   const [data, setData] = useState('');
   const [hasValidToken, setHasValidToken] = useState(false);
-  const [token, setToken] = useLocalStorageState<{
-    token: string;
-    expired: string;
-  }>('token', {
-    listenStorageChange: true,
-  });
+  const [token, setToken] = useLocalStorageState<Token>('token');
 
   useMount(() => {
     if (
@@ -39,6 +40,7 @@ export default () => {
   const onFinish = () => {
     proxyGet('/login').then((res) => {
       setToken({
+        accountId: res.data?.accountId,
         token: res.data?.accessToken,
         expired: res.data?._tokenExpiration,
       });
@@ -62,6 +64,19 @@ export default () => {
           disabled={hasValidToken}
         >
           Log in
+        </Button>
+      </Form.Item>
+      <Form.Item>
+        <Button
+          type="primary"
+          className="login-form-button"
+          disabled={!hasValidToken}
+          onClick={() => {
+            setToken(undefined);
+            setHasValidToken(false);
+          }}
+        >
+          clear token
         </Button>
       </Form.Item>
 

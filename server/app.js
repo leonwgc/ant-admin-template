@@ -70,7 +70,7 @@ const app = express()
     }
   })
   .get('/login', (req, res, next) => {
-    if (req.dsAuth.checkToken()) {
+    if (!req.dsAuth.checkToken()) {
       req.dsAuth.login(req, res, next);
     } else {
       res.json(req.dsAuth);

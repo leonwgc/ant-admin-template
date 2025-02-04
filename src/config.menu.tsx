@@ -22,6 +22,12 @@ export const allMenuData: MenuItem[] = [
         icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/docusign/login',
       },
+      {
+        key: 'docusign-users',
+        label: 'Docusign Users',
+        icon: <RightOutlined style={{ fontSize: 14 }} />,
+        route: '/app/docusign/users',
+      },
     ],
   },
   {
