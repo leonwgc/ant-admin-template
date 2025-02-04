@@ -16,6 +16,7 @@ export default () => {
   const { message } = App.useApp();
   const navigate = useNavigate();
   const [user, setUser] = useState('');
+  const [data, setData] = useState('');
   const [hasValidToken, setHasValidToken] = useState(false);
   const [token, setToken] = useLocalStorageState<{
     token: string;
@@ -53,22 +54,6 @@ export default () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
-      {/* <Form.Item
-        name="username"
-        rules={[{ required: true, message: 'Please input your Username!' }]}
-      >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: 'Please input your Password!' }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item> */}
       <Form.Item>
         <Button
           type="primary"
@@ -97,15 +82,18 @@ export default () => {
       <Form.Item>
         <Button
           onClick={() => {
-            dsGet(`/v2.1/accounts/${userInfo.accountId}/brands`, {
+            dsGet(`/v2.1/accounts/${userInfo.accountId}`, {
               headers: { Authorization: `Bearer ${token?.token}` },
             }).then((res) => {
-              message.success(JSON.stringify(res.data, null, 2));
+              setData(res.data);
             });
           }}
         >
-          Get brands via api
+          Get account info via api
         </Button>
+        <p>
+          <Typography.Text>{data && JSON.stringify(data)}</Typography.Text>
+        </p>
       </Form.Item>
     </Form>
   );
