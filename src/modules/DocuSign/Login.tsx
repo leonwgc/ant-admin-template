@@ -2,7 +2,7 @@ import { Form, App, Button } from 'antd';
 import { useNavigate } from 'react-router';
 
 import { login } from './api';
-import { useLocalStorageState } from 'ahooks';
+import { useLocalStorageState, useMount } from 'ahooks';
 import { useEffect, useState } from 'react';
 
 export default () => {
@@ -16,7 +16,7 @@ export default () => {
     listenStorageChange: true,
   });
 
-  useEffect(() => {
+  useMount(() => {
     if (
       token &&
       token.token &&
@@ -24,9 +24,8 @@ export default () => {
     ) {
       message.info('already login');
       setHasValidToken(true);
-      // navigate('/app/users');
     }
-  }, [token]);
+  });
 
   const onFinish = () => {
     login().then((res) => {
