@@ -37,7 +37,7 @@ export default () => {
   return (
     <div>
       <h1>Users</h1>
-      <p>
+      <div>
         {loading ? (
           <Spin />
         ) : (
@@ -45,7 +45,7 @@ export default () => {
             <div key={index}>{JSON.stringify(user, null, 2)}</div>
           ))
         )}
-      </p>
+      </div>
     </div>
   );
 };
