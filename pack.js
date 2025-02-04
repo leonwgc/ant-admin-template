@@ -2,10 +2,10 @@ const { run } = require('packrs');
 
 run({
   proxy: {
-    context: ['/dsapi'],
+    context: ['/proxyApi'],
     target: 'http://localhost:3001',
     pathRewrite: {
-      '^/dsapi': '',
+      '^/proxyApi': '',
     },
     changeOrigin: true,
     logLevel: 'silent',

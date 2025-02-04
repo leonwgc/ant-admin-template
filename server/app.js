@@ -86,6 +86,21 @@ const app = express()
       res.redirect('/');
     }
   })
+  .get('/user-info', async (req, res, next) => {
+    const auth = new DsJwtAuth(req);
+
+    if (!auth.checkToken()) {
+      res.json({ message: 'Not logged in' });
+    } else {
+      const user = await auth.getUserInfo();
+      res.json({ user });
+      //   {
+      //     "accountId": "b1324bfe-b39f-46b7-b14b-51f0177c9958",
+      //     "basePath": "https://demo.docusign.net/restapi",
+      //     "accountName": "derbysoft"
+      // }
+    }
+  })
   .get('/ds/callback', [dsLoginCB1, dsLoginCB2]) // OAuth callbacks. See below
   .listen(PORT, () => {
     console.info(`==> 🍺  Express server running at localhost:${PORT}`);

@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// fetch normal api
 const fetch = axios.create({
   baseURL: '/api',
   withCredentials: true,
@@ -9,9 +10,18 @@ const fetch = axios.create({
   },
 });
 
+// fetch docusign auth via proxy
+const fetchProxy = axios.create({
+  baseURL: '/proxyApi',
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// fetch docusign cors call api
 const fetchDocuSign = axios.create({
   baseURL: '/dsapi',
-  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -40,12 +50,17 @@ const onFailure = (error) => {
 };
 
 fetch.interceptors.response.use(onSuccess, onFailure);
-fetchDocuSign.interceptors.response.use(onSuccess, onFailure);
+fetchProxy.interceptors.response.use(onSuccess, onFailure);
 
 export const get = fetch.get;
 export const post = fetch.post;
 export const put = fetch.put;
 export const del = fetch.delete;
+
+export const proxyGet = fetchProxy.get;
+export const proxyPost = fetchProxy.post;
+export const proxyPut = fetchProxy.put;
+export const proxyDel = fetchProxy.delete;
 
 export const dsGet = fetchDocuSign.get;
 export const dsPost = fetchDocuSign.post;

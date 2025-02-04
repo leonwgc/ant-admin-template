@@ -1,3 +1,3 @@
-import { dsGet } from '~/utils/fetch';
+import { proxyGet } from '~/utils/fetch';
 
-export const login = () => dsGet('/login');
+export const login = () => proxyGet('/login');
