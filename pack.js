@@ -20,6 +20,10 @@ run({
       template: './index.html',
       title: 'admin',
       favicon: './src/images/favicon.ico',
+      templateParameters: {
+        // https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/embedding/docusign-js-embedded-reference/#introduction
+        docusignApiTag: '-d',
+      },
     },
   },
 });

@@ -8,6 +8,7 @@ import { Templates, AddTemplate, EditTemplate } from './modules/Template';
 import {
   Login as DocuSignLogin,
   Users as DocuSignUsers,
+  Forms,
 } from './modules/DocuSign';
 
 const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
@@ -40,6 +41,7 @@ const RouteConfig = () => {
             <Route index element={<DocuSignLogin />} />
             <Route path="login" element={<DocuSignLogin />} />
             <Route path="users" element={<DocuSignUsers />} />
+            <Route path="forms" element={<Forms />} />
           </Route>
           <Route path="users">
             <Route index element={<Users />} />

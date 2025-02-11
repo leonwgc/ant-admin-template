@@ -28,6 +28,12 @@ export const allMenuData: MenuItem[] = [
         icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/docusign/users',
       },
+      {
+        key: 'docusign-forms',
+        label: 'Create Envelope and send',
+        icon: <RightOutlined style={{ fontSize: 14 }} />,
+        route: '/app/docusign/forms',
+      },
     ],
   },
   {
