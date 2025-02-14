@@ -16,7 +16,7 @@ import classNames from 'classnames';
 const AppLayout: React.FC<{
   hasSider?: boolean;
   hasContentHeader?: boolean;
-}> = ({ hasSider = true, hasContentHeader = true }) => {
+}> = ({ hasSider = true, hasContentHeader = false }) => {
   return (
     <Layout className={'app-layout'}>
       <Header className="app-layout__header" />
