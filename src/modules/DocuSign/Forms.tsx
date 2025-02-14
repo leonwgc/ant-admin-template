@@ -16,6 +16,10 @@ export default () => {
     const envelopeDefinition = {
       templateId: templateId,
       status: 'sent',
+      sendEnvelope: false, //避免自动发送邮件
+      uiConfig: {
+        hideSuccessModal: true, // 尝试设置此参数来隐藏成功弹框
+      },
     };
 
     // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/
@@ -32,6 +36,8 @@ export default () => {
     manual: true,
     onSuccess(res) {
       message.success('Success:' + JSON.stringify(res.data));
+
+      // {"envelopeId":"aaf2b275-12e7-4744-9feb-d7cf1757f7b5","uri":"/envelopes/aaf2b275-12e7-4744-9feb-d7cf1757f7b5","statusDateTime":"2025-02-11T10:06:21.2430000Z","status":"sent"}
     },
   });
 

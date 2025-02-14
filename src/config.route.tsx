@@ -11,6 +11,8 @@ import {
   Forms,
 } from './modules/DocuSign';
 
+import { Eui } from './modules/Fadada';
+
 const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
 const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
 const Login = lazy(() => import('./modules/Login/Login'));
@@ -42,6 +44,9 @@ const RouteConfig = () => {
             <Route path="login" element={<DocuSignLogin />} />
             <Route path="users" element={<DocuSignUsers />} />
             <Route path="forms" element={<Forms />} />
+          </Route>
+          <Route path="fadada">
+            <Route index element={<Eui />} />
           </Route>
           <Route path="users">
             <Route index element={<Users />} />

@@ -12,6 +12,19 @@ import cloneDeep from 'lodash/cloneDeep';
 
 export const allMenuData: MenuItem[] = [
   {
+    key: 'fadada',
+    label: 'Fadada',
+    icon: <CopyOutlined />,
+    children: [
+      {
+        key: 'fadada-eui',
+        label: 'EUI',
+        icon: <RightOutlined style={{ fontSize: 14 }} />,
+        route: '/app/fadada',
+      },
+    ],
+  },
+  {
     key: 'docusign',
     label: 'Docusign',
     icon: <CopyOutlined />,
