@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "antd admin template",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node-dev --inspect  ./server/app.js"
+    "start": "node-dev --inspect  ./server/app.js",
+    "start:fadada": "node-dev --inspect  ./server/fadadaApp.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +20,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@fddnpm/fasc-openapi-node-sdk": "^5.4.5",
     "@types/node": "^22.10.10",
     "ahooks": "^3.8.4",
     "antd": "^5.23.1",
