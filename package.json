@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "antd admin template",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node-dev --inspect  ./server/app.js",
     "start:fadada": "node-dev --inspect  ./server/fadadaApp.js"

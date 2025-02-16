@@ -19,6 +19,10 @@ const fetchProxy = axios.create({
   },
 });
 
+export const fetchProxyFadada = axios.create({
+  baseURL: '/fadadaProxyApi',
+});
+
 // fetch docusign cors call api
 const fetchDocuSign = axios.create({
   baseURL: 'https://demo.docusign.net/restapi',

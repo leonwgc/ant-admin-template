@@ -11,7 +11,7 @@ import {
   Forms,
 } from './modules/DocuSign';
 
-import { Eui } from './modules/Fadada';
+import { Eui, TemplateList } from './modules/Fadada';
 
 const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
 const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
@@ -47,6 +47,7 @@ const RouteConfig = () => {
           </Route>
           <Route path="fadada">
             <Route index element={<Eui />} />
+            <Route path="template-list" element={<TemplateList />} />
           </Route>
           <Route path="users">
             <Route index element={<Users />} />

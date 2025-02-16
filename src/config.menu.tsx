@@ -22,6 +22,12 @@ export const allMenuData: MenuItem[] = [
         icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/fadada',
       },
+      {
+        key: 'fadada-tpl-list',
+        label: 'Template List',
+        icon: <RightOutlined style={{ fontSize: 14 }} />,
+        route: '/app/fadada/template-list',
+      },
     ],
   },
   {

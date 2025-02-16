@@ -1,15 +1,27 @@
 const { run } = require('packrs');
+// import { run } from 'packrs';
 
 run({
-  proxy: {
-    context: ['/proxyApi'],
-    target: 'http://localhost:3001',
-    pathRewrite: {
-      '^/proxyApi': '',
+  proxy: [
+    {
+      context: ['/fadadaProxyApi'],
+      target: 'http://localhost:3002',
+      pathRewrite: {
+        '^/fadadaProxyApi': '',
+      },
+      changeOrigin: true,
+      logLevel: 'silent',
     },
-    changeOrigin: true,
-    logLevel: 'silent',
-  },
+    {
+      context: ['/proxyApi'],
+      target: 'http://localhost:3001',
+      pathRewrite: {
+        '^/proxyApi': '',
+      },
+      changeOrigin: true,
+      logLevel: 'silent',
+    },
+  ],
   rsConfig: {
     source: {
       define: {

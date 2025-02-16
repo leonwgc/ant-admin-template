@@ -1,10 +1,10 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
   serviceClient,
   corpClient,
   templateClient,
   euiClient,
-} from '@fddnpm/fasc-openapi-node-sdk';
+} = require('@fddnpm/fasc-openapi-node-sdk');
 
 // 配置信息
 const clientConfig = {
