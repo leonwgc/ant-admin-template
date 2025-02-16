@@ -1,31 +1,17 @@
+import { message } from 'antd';
 import React, { useState } from 'react';
+import { fetchProxyFadada } from '~/utils/fetch';
 
-const ContractSigning: React.FC = () => {
+const Sign: React.FC = () => {
   const [templateId, setTemplateId] = useState('');
   const [signerName, setSignerName] = useState('');
   const [signerEmail, setSignerEmail] = useState('');
 
   const handleSignContract = async () => {
     try {
-      const response = await fetch('https://api.example.com/sign-contract', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          template_id: templateId,
-          signer_name: signerName,
-          signer_email: signerEmail,
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Contract signing initiated:', data);
-        alert('Contract signing initiated successfully!');
-      } else {
-        console.error('Failed to initiate contract signing');
-        alert('Failed to initiate contract signing. Please try again.');
+      const response = await fetchProxyFadada.get('/signature');
+      if (response.status === 200) {
+        message.success('Contract signing initiated successfully!');
       }
     } catch (error) {
       console.error('Error during contract signing:', error);
@@ -71,4 +57,4 @@ const ContractSigning: React.FC = () => {
   );
 };
 
-export default ContractSigning;
+export default Sign;

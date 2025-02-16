@@ -28,6 +28,12 @@ export const allMenuData: MenuItem[] = [
         icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/fadada/template-list',
       },
+      {
+        key: 'fadada-sign',
+        label: 'Sign',
+        icon: <RightOutlined style={{ fontSize: 14 }} />,
+        route: '/app/fadada/sign',
+      },
     ],
   },
   {

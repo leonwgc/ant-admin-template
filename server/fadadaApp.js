@@ -4,6 +4,7 @@ const {
   corpClient,
   templateClient,
   euiClient,
+  signTaskClient,
 } = require('@fddnpm/fasc-openapi-node-sdk');
 
 // 配置信息
@@ -32,6 +33,18 @@ const checkToken = async () => {
 const app = express();
 app.use(express.json());
 
+// 添加生成随机字符串的函数
+function generateRandomString(length) {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  const maxLength = Math.min(length, 6); // 确保长度不超过6
+  for (let i = 0; i < maxLength; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
 // 创建获取模板列表的GET API, 参考templateClientAgent 定义，获取模板列表
 app.get('/get-sign-template-list', async (req, res) => {
   try {
@@ -57,6 +70,78 @@ app.get('/get-sign-template-list', async (req, res) => {
     } else {
       res.status(400).json({
         message: 'Failed to retrieve template list.',
+        error: response.error || 'Unknown error',
+      });
+    }
+  } catch (ex) {
+    res.status(500).json({
+      message: 'Internal server error',
+      error: ex.message,
+    });
+  }
+});
+
+// 添加创建签约接口
+app.get('/signature', async (req, res) => {
+  try {
+    // 检查请求中的token是否有效
+    await checkToken();
+    const signTaskClientAgent = new signTaskClient.Client(clientConfig);
+
+    const response = await signTaskClientAgent.createWithTemplate({
+      initiator: {
+        idType: 'corp',
+        openId: 'e287b939b0f24099ba67c27bb2ddcd42',
+      },
+      initiatorMemberId: '1879804313011265536',
+      signTaskSubject: '销售合同-web-api-2.16-' + generateRandomString(6),
+      signDocType: 'contract',
+      signTemplateId: '1739441471686149829',
+      autoStart: true,
+      actors: [
+        {
+          actor: {
+            actorId: '乙方',
+            actorType: 'corp',
+            actorName: 'derbysoft',
+            permissions: ['sign'],
+            actorOpenId: '8aef63de75c7441e98a6adb5af15b4a2',
+            actorFDDId: '',
+            actorEntityId: '',
+            actorCorpMembers: [
+              {
+                memberId: '1889897475004211200',
+              },
+            ],
+          },
+        },
+        {
+          actor: {
+            actorId: '甲方',
+            actorType: 'corp',
+            actorName: '德比软件（上海）有限公司',
+            permissions: ['sign'],
+            actorOpenId: 'e287b939b0f24099ba67c27bb2ddcd42',
+            actorFDDId: '',
+            actorEntityId: '',
+            actorCorpMembers: [
+              {
+                memberId: '1879804313011265536',
+              },
+            ],
+          },
+        },
+      ],
+    });
+
+    if (response.status === 200) {
+      res.status(200).json({
+        message: 'Electronic signature initiated successfully!',
+        data: response.data,
+      });
+    } else {
+      res.status(400).json({
+        message: 'Failed to initiate electronic signature.',
         error: response.error || 'Unknown error',
       });
     }
