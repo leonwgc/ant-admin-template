@@ -25,7 +25,12 @@ const checkToken = async () => {
       const sc = new serviceClient.Client(clientConfig);
       const res = await sc.getAccessToken();
       clientConfig.credential.accessToken = res.data.data.accessToken;
-    } catch (ex) {}
+    } catch (ex) {
+      res.status(500).json({
+        message: 'failed to get access token',
+        error: ex.message,
+      });
+    }
   }
   return true;
 };
