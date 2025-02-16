@@ -33,7 +33,7 @@ const app = express();
 app.use(express.json());
 
 // 创建获取模板列表的GET API, 参考templateClientAgent 定义，获取模板列表
-app.get('/get-template-list', async (req, res) => {
+app.get('/get-sign-template-list', async (req, res) => {
   try {
     // 检查请求中的token是否有效
     await checkToken(req);
@@ -42,7 +42,7 @@ app.get('/get-template-list', async (req, res) => {
     const templateClientAgent = new templateClient.Client(clientConfig);
 
     // 调用法大大SDK的获取模板列表接口
-    const response = await templateClientAgent.getDocTemplateList({
+    const response = await templateClientAgent.getSignTemplateList({
       ownerId: {
         idType: 'corp',
         openId: 'e287b939b0f24099ba67c27bb2ddcd42',
