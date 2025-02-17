@@ -30,16 +30,14 @@ const Sign: React.FC = () => {
     },
     {
       element: (
-        <Flex justify="flex-end">
-          <Button
-            type="primary"
-            disabled={!values?.subject?.trim() || loading}
-            loading={loading}
-            onClick={() => run(values?.subject)}
-          >
-            Sign Contract
-          </Button>
-        </Flex>
+        <Button
+          type="primary"
+          disabled={!values?.subject?.trim() || loading}
+          loading={loading}
+          onClick={() => run(values?.subject)}
+        >
+          Sign Contract
+        </Button>
       ),
     },
   ];
@@ -48,8 +46,8 @@ const Sign: React.FC = () => {
     <div>
       <h2>Contract Signing</h2>
 
-      <Form form={form} layout="inline">
-        <FlexRender layout={layout} gap={32} />
+      <Form form={form} layout="horizontal">
+        <FlexRender layout={layout} gap={32} justify="flex-start" />
       </Form>
     </div>
   );
