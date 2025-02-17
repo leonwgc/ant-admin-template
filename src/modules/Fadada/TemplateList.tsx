@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Table } from 'antd';
 import { fetchProxyFadada } from '~/utils/fetch';
 
 const TemplateList: React.FC = () => {
@@ -38,13 +39,22 @@ const TemplateList: React.FC = () => {
   return (
     <div>
       <h1>Template List</h1>
-      <ul>
-        {templates.map((template) => (
-          <li key={template.signTemplateId}>
-            {template.signTemplateName} - {template.signTemplateId}
-          </li>
-        ))}
-      </ul>
+      <Table
+        dataSource={templates}
+        columns={[
+          {
+            title: 'Template ID',
+            dataIndex: 'signTemplateId',
+            key: 'signTemplateId',
+          },
+          {
+            title: 'Template Name',
+            dataIndex: 'signTemplateName',
+            key: 'signTemplateName',
+          },
+        ]}
+        rowKey="signTemplateId"
+      />
     </div>
   );
 };

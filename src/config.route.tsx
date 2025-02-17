@@ -11,7 +11,7 @@ import {
   Forms,
 } from './modules/DocuSign';
 
-import { Eui, TemplateList ,Sign} from './modules/Fadada';
+import { Eui, TemplateList, Sign } from './modules/Fadada';
 
 const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
 const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
@@ -29,7 +29,7 @@ const RouteConfig = () => {
   return (
     <Suspense>
       <Routes>
-        <Route index element={<Login />} />
+        <Route index element={<AppLayout />} /> // TODO: change to Login
         <Route path="register" element={<div>Register</div>} />
         <Route
           path="no-permission"
