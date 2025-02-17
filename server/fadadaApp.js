@@ -87,7 +87,7 @@ app.get('/get-sign-template-list', async (req, res) => {
 });
 
 // 添加创建签约接口
-app.get('/signature', async (req, res) => {
+app.post('/signature', async (req, res) => {
   try {
     // 检查请求中的token是否有效
     await checkToken();
@@ -99,7 +99,7 @@ app.get('/signature', async (req, res) => {
         openId: 'e287b939b0f24099ba67c27bb2ddcd42',
       },
       initiatorMemberId: '1879804313011265536',
-      signTaskSubject: '销售合同-web-api-2.16-' + generateRandomString(6),
+      signTaskSubject: '销售合同-node-' + (req.body?.subject || '') + '-' + generateRandomString(6),
       signDocType: 'contract',
       signTemplateId: '1739441471686149829',
       autoStart: true,
