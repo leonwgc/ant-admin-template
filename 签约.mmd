@@ -63,8 +63,11 @@ sequenceDiagram
             UP服务->>+法大大系统:根据模版发起签约请求
             法大大系统->>-UP服务: 签约请求成功，开始签约流程 ，发送签约通知短信、邮件给相关参与方
             UP服务->>-UP系统: 消息中心发送通知给相关参与方（可选）
-            UP系统->>-User: 提示签约 (消息中心，邮件，手机等方式通知)
-            UP服务->>Support服务: 发送签约通知给Support操作员(邮件，手机等方式通知)
+            UP服务->>+法大大系统:根据签署任务ID获取签署任务链接
+            法大大系统->>-UP服务: 返回签署任务链接
+            UP服务->>UP系统: 返回签署任务链接
+            UP系统->>User: iframe全屏展示签署内容
+            User->>UP系统: 签署并结束
         end
     end
 
@@ -72,7 +75,7 @@ sequenceDiagram
     Support操作员->>+SSO系统: SSO登录
     SSO系统->>-Support后台: 登录验证通过
 
-     Support操作员->>+Support后台: 签署任务列表
+    Support操作员->>+Support后台: 签署任务列表
     Support后台->>+Support服务: 获取签署任务列表
     Support服务->>+法大大系统: 获取签署任务列表
     法大大系统->>-Support服务: 返回签署任务列表
