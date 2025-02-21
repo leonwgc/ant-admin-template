@@ -1,0 +1,111 @@
+sequenceDiagram
+    participant User
+    participant SSO系统
+    participant UP系统
+    participant UP服务
+    participant PC产品
+    participant Support服务
+    participant Support后台
+    participant Support操作员
+    participant 法大大系统
+
+    %% User操作
+    User->>SSO系统: SSO登录
+    SSO系统->>UP系统: 登录成功
+    UP系统->>+UP服务: 查询用户是否绑定公司
+    UP服务->>-UP系统: 返回绑定结果
+    alt 用户未绑定公司
+        User->>+UP系统: 申请免费试用PC服务,勾选试用协议
+        UP系统->>+UP服务: 试用申请
+        UP服务->>-UP系统: 操作并记录
+        UP系统->>-User: 返回试用信息
+
+        User->>+UP系统: 订阅PC服务
+        UP系统->>-User: 提示申请添加或关联公司
+        User->>UP系统: 进入添加或关联公司流程（省略具体流程）
+
+    else 用户已绑定公司
+        UP系统->>+UP服务: 查询所选公司是否开通PC服务
+        UP服务->>-UP系统: 返回开通结果
+        alt 公司已开通PC服务
+            User->>UP系统: 点击立即进入到PC产品
+            UP系统->>PC产品: 跳转到PC产品
+        else 公司未开通PC服务
+            User->>+UP系统: 申请免费试用PC服务,勾选试用协议
+            UP系统->>+UP服务: 试用申请
+            UP服务->>-UP系统: 操作并记录
+            UP系统->>-User: 返回试用信息
+
+            User->>+UP系统: 订阅PC服务
+            UP系统->>+UP服务: 查询公司是否完成法大大认证
+            UP服务->>+法大大系统: 查询公司认证、授权状态
+            法大大系统->>-UP服务: 返回认证结果
+            UP服务->>-UP系统: 返回认证结果
+        alt 未完成认证
+            UP系统->>+User: 引导开通法大大电子签，进行经办人和公司认证
+            User->>+法大大系统: 进行认证操作
+            法大大系统->>-UP服务: 通知认证结果
+            UP服务->>+法大大系统: 查询公司认证信息
+            法大大系统->>-UP服务: 返回公司认证信息
+            UP服务->>UP系统: 对比UP系统和法大大认证的公司名称，统一社会信用代码,返回对比结果
+            alt 信息一致
+                UP系统->>User: 提示认证成功
+            else 信息不一致
+                UP系统->>User: 提示可使用法大大的公司信息覆盖UP的公司信息
+                User->>+UP系统: 确认覆盖（或不覆盖）
+                UP系统->>+UP服务: 执行覆盖（不覆盖）操作
+                UP服务->>-UP系统: 操作完成
+                UP系统->>-User: 提示认证流程结束
+            end
+        else 已完成认证
+            User->>UP系统: 选择签约
+            UP系统->>+UP服务: 在线签约请求
+            UP服务->>+法大大系统:根据模版发起签约请求
+            法大大系统->>-UP服务: 签约请求成功，开始签约流程 ，发送签约通知短信、邮件给相关参与方
+            UP服务->>-UP系统: 消息中心发送通知给相关参与方（可选）
+            UP系统->>-User: 提示签约 (消息中心，邮件，手机等方式通知)
+            UP服务->>Support服务: 发送签约通知给Support操作员(邮件，手机等方式通知)
+        end
+    end
+
+    %% Support操作员操作
+    Support操作员->>+SSO系统: SSO登录
+    SSO系统->>-Support后台: 登录验证通过
+
+     Support操作员->>+Support后台: 签署任务列表
+    Support后台->>+Support服务: 获取签署任务列表
+    Support服务->>+法大大系统: 获取签署任务列表
+    法大大系统->>-Support服务: 返回签署任务列表
+    Support服务->>-Support后台: 返回签署任务列表
+    Support后台->>-Support操作员: 展示签署任务列表
+
+
+    Support操作员->>+Support后台: 获取管理签约模版EUI请求
+    Support后台->>+Support服务: 调用服务获取签约模版EUI
+    Support服务->>+法大大系统: 调用服务获取签约模版EUI
+    法大大系统->>-Support服务: 返回签约模版EUI
+    Support服务->>-Support后台: 返回签约模版EUI
+    Support后台->>-Support操作员: 在签约模版EUI进行管理维护
+
+    Support操作员->>+Support后台: 获取管理印章管理EUI请求
+    Support后台->>+Support服务: 调用服务获取印章管理EUI
+    Support服务->>+法大大系统: 调用服务获取印章管理EUI
+    法大大系统->>-Support服务: 返回印章管理EUI
+    Support服务->>-Support后台: 返回印章管理EUI
+    Support后台->>-Support操作员: 在印章管理EUI进行管理维护
+
+    Support操作员->>+Support后台: 获取管理签名管理EUI请求(如果没有签名需求就不需要)
+    Support后台->>+Support服务: 调用服务获取签名管理EUI
+    Support服务->>+法大大系统: 调用服务获取签名管理EUI
+    法大大系统->>-Support服务: 返回签名管理EUI
+    Support服务->>-Support后台: 返回签名管理EUI
+    Support后台->>-Support操作员: 在签名管理EUI进行管理维护
+
+    Support操作员->>+Support后台: 获取查看计费管理EUI请求
+    Support后台->>+Support服务: 调用服务获取计费管理EUI
+    Support服务->>+法大大系统: 调用服务获取计费管理EUI
+    法大大系统->>-Support服务: 返回计费管理EUI
+    Support服务->>-Support后台: 返回计费管理EUI
+    Support后台->>-Support操作员: 在计费管理EUI进行管理维护
+
+    end
