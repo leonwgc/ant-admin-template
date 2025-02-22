@@ -1,0 +1,53 @@
+graph TD;
+    subgraph PC
+        A0[Landing 页面]
+    end
+    subgraph SSO
+        B0[注册]
+        B1[登录]
+    end
+    subgraph UP系统
+        C0[公司创建/关联]
+        C1[PC订阅]
+        C2[PC试用]
+        C3[签约]
+        C4[支付]
+        C5[订单]
+    end
+    subgraph 第三方在线签约
+       D0[模版]
+       D1[签约]
+       D2[认证与授权]
+    end
+    subgraph Support后台
+        E0[公司管理]
+        E1[用户管理]
+        E2[模版管理]
+        E3[签约管理]
+        E4[支付订单]
+        E5[其他..]
+    end
+    subgraph 支付系统
+     F0[在线支付]
+     F1[支付信息]
+    end
+    C0 --> E0;
+    E3 --> D1;
+    E2 --> D0;
+    B0 --> E1;
+    B1 --> E1;
+    A0 --> C1;
+    A0 --> C2;
+    A0 --> B1;
+    B1 --> C1;
+    B1 --> C2;
+    C1 --> D2;
+    C1 --> C3;
+    C3 --> C4;
+    C4 --> C5;
+    C3 --> D1;
+    C4 --> F0;
+    C5 --> E4;
+    E4 --> F1;
+    F0 --> F1;
+    
