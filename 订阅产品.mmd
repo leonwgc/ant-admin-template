@@ -1,5 +1,5 @@
 flowchart TD
-    subgraph UserSubscription
+    subgraph User Subscription
         User[User] -->|Subscribe to PC Product| CheckAuthenticationStatus[Check if the company is authenticated and authorized on the Fadada platform]
         CheckAuthenticationStatus -->|Not Authenticated| GuideSigning[User completes authentication on the Fadada platform]
         GuideSigning -->|Authenticated| InitiateSigning[Initiate template signing process]
