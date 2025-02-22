@@ -1,12 +1,14 @@
 flowchart TD
-    subgraph 用户试用产品
-        用户[用户] -->|进入UP平台| 判断是否绑定公司[是否绑定公司]
-        判断是否绑定公司 -->|未绑定| 申请试用[申请免费试用PC产品]
-        申请试用 -->|试用操作| PC产品[PC产品]
-        判断是否绑定公司 -->|已绑定| 选择公司[选择绑定的公司]
-        选择公司 -->|判断公司服务状态| 判断公司是否开通[公司是否已开通PC产品服务]
-        判断公司是否开通 -->|已开通| 直接进入[直接进入PC产品]
-        直接进入 -->|使用产品| PC产品
-        判断公司是否开通 -->|未开通| 订阅产品[订阅PC产品]
-        订阅产品 -->|订阅操作| PC产品
+    subgraph Free Trial or Subscription
+        User[User] -->|Enter UP Platform| CheckIfBoundCompany[Check if Bound to Company]
+        CheckIfBoundCompany -->|Not Bound| ApplyForTrial[Apply for Free Trial of PC Product]
+        ApplyForTrial -->|Trial Operation| PCProduct[PC Product]
+        CheckIfBoundCompany -->|Bound| SelectCompany[Select Bound Company]
+        SelectCompany -->|Check Company Service Status| CheckIfCompanyActivated[Check if Company has Activated PC Product Service]
+        CheckIfCompanyActivated -->|Activated| DirectEntry[Directly Enter PC Product]
+        DirectEntry -->|Use Product| PCProduct
+        CheckIfCompanyActivated -->|Not Activated| SubscribeProduct[Subscribe to PC Product]
+        SubscribeProduct -->|Enter| OnlineContract[Online Contract]
+        OnlineContract -->|Enter| OnlinePayment[Online Payment]
+        OnlinePayment -->|Payment Successful| PCProduct
     end
