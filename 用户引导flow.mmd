@@ -1,0 +1,9 @@
+flowchart TD
+    subgraph User Boarding Flow
+        User[User] -->|Enter| PCPlatform[PC Landing Page]
+        PCPlatform -->|Redirect| PCDetailPage[PC detail page of UP product service]
+        PCDetailPage -->|Check if logged in| LoginCheck[Is logged in]
+        LoginCheck -->|Logged in| UseService[Free trial or subscribe to PC service]
+        LoginCheck -->|Not logged in| SSOSystem[SSO Login]
+        SSOSystem -->|Redirect| UseService
+    end
