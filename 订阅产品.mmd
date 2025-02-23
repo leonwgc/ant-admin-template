@@ -1,8 +1,15 @@
 flowchart TD
-    subgraph User Subscription
-        User[User] -->|Subscribe to PC Product| CheckAuthenticationStatus[Check if the company is authenticated and authorized on the Fadada platform]
-        CheckAuthenticationStatus -->|Not Authenticated| GuideSigning[User completes authentication on the Fadada platform]
-        GuideSigning -->|Authenticated| InitiateSigning[Initiate template signing process]
-        CheckAuthenticationStatus -->|Authenticated| InitiateSigning
-        InitiateSigning -->|Signing Completed| PaymentProcess[Enter payment process]
+    subgraph UP Subscription
+        User((User)) -->|Subscribe to PC| X[auth check]
+        X[Company Country Check] -->|Chinese| A
+        X[Company Country Check] -->|Not Chinese| B
+        A[Check Fadada Auth] -->|Authenticated| B1
+        A[Check Fadada Auth] -->|Not Authenticated| A1
+        A1[Fadada Auth] -->|Authenticated| B1
+        B[DocuSign] --> B1
+        B1[sign] --> C[payment]
+        C --> E[Orders]
+    end
+    subgraph Support System
+         AA[Operator with Sign permisson] --> |or auto-sign? |B1
     end
