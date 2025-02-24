@@ -13,13 +13,15 @@ graph LR;
         C1[PC Subscription]
         C2[PC Trial]
         C3[Contract Signing]
-        C4[Payment]
-        C5[Orders]
+        C4[Orders]
+        C5[Payment]
+        C6[Contracts]
     end
     subgraph Fadada / DocuSign
        D0[Template Module]
        D1[Signing Module]
        D2[Auth Module]
+       D3[Contract Module]
     end
     subgraph Ops
      O((Ops))
@@ -30,10 +32,13 @@ graph LR;
         E2[Template Management]
         E3[Signing Management]
         E4[Order Management]
+        E5[Product and Discount Management]
     end
-    subgraph Payment and Orders System
+    subgraph Payment System
      F0[Payment]
-     F1[Orders]
+    end
+    subgraph Finance System
+     G0[Invoices and Billing]
     end
     C1 --> C0;
     C0 --> E0;
@@ -49,9 +54,10 @@ graph LR;
     C3 --> C4;
     C4 --> C5;
     C3 --> D1;
-    C4 --> F0;
-    E4 --> F1;
-    C5 --> F1;
+    C5 --> F0;
     C1 --> E0;
     U --> A0;
     O --> E0;
+    C1--> E5;
+    C4--> G0;
+    C6--> D3;
