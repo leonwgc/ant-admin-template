@@ -21,6 +21,9 @@ graph LR;
        D1[Signing Module]
        D2[Auth Module]
     end
+    subgraph Ops
+     O((Ops))
+    end
     subgraph Support System
         E0[Company Management]
         E1[User Management]
@@ -51,3 +54,4 @@ graph LR;
     C5 --> F1;
     C1 --> E0;
     U --> A0;
+    O --> E0;
