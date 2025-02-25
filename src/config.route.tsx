@@ -12,6 +12,7 @@ import {
 } from './modules/DocuSign';
 
 import { Eui, TemplateList, Sign } from './modules/Fadada';
+import Callback from './modules/Common/Callback';
 
 const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
 const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
@@ -29,6 +30,7 @@ const RouteConfig = () => {
   return (
     <Suspense>
       <Routes>
+        <Route path="callback" element={<Callback />} />
         <Route index element={<AppLayout />} /> // TODO: change to Login
         <Route path="register" element={<div>Register</div>} />
         <Route
