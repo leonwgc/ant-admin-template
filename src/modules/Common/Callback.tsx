@@ -17,7 +17,10 @@ const Callback: React.FC = () => {
 
   useEffect(() => {
     console.log(qs);
-    window.parent.postMessage('authSuccess', '*');
+    if (qs.authResult === 'success') {
+      // TODO: callback api to save the auth info
+      window.parent.postMessage('authSuccess', '*');
+    }
   }, []);
 
   return <div>Callback Component</div>;
