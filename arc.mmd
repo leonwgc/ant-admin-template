@@ -16,6 +16,8 @@ graph LR;
         C4[Orders]
         C5[Payment]
         C6[Contracts]
+        C7[Billings]
+        C8[Payment Info]
     end
     subgraph Fadada / DocuSign
        D0[Template Module]
@@ -62,3 +64,5 @@ graph LR;
     C1--> E5;
     C4--> G0;
     C6--> D3;
+    C7--> G0;
+    C8--> F0;
