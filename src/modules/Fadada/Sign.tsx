@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, message, Flex } from 'antd';
+import { Button, Form, Input, message, Modal } from 'antd';
 import { fetchProxyFadada } from '~/utils/fetch';
 import { FlexRender, Item } from 'antd-form-render';
 import { useRequest } from 'ahooks';
@@ -49,6 +49,22 @@ const Sign: React.FC = () => {
       <Form form={form} layout="horizontal">
         <FlexRender layout={layout} gap={32} justify="flex-start" />
       </Form>
+
+      <div>
+        <Button
+          type="primary"
+          onClick={() => {
+            const a = document.createElement('a');
+            a.href =
+              'https://uat-cloud.fadada.com/application/task/sign/detail?signTaskId=1740473348563150962&partyId=1740473348906137982&linkType=1';
+            a.target = '_blank';
+            a.click();
+            a?.remove();
+          }}
+        >
+          Sign Contract for 甲方
+        </Button>
+      </div>
     </div>
   );
 };
