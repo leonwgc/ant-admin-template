@@ -1,0 +1,9 @@
+flowchart TD
+    A[Start] --> B[User selects WeChat login]
+    B --> C{Check if the current page is in WeChat client}
+    C -->|Yes| D[Use WeChat Official Account for OAuth2.0 authorization login]
+    C -->|No| E[Use WeChat Open Platform for QR code scan login]
+    D --> F[check code, state]
+    E --> F
+    F --> S[Login successful, return user information]
+    S --> G[End]
