@@ -99,10 +99,11 @@ app.post('/signature', async (req, res) => {
         openId: 'e287b939b0f24099ba67c27bb2ddcd42',
       },
       initiatorMemberId: '1879804313011265536',
-      signTaskSubject: '销售合同-node-' + (req.body?.subject || '') + '-' + generateRandomString(6),
+      signTaskSubject: 'pc合同-node-' + (req.body?.subject || '') + '-' + generateRandomString(6),
       signDocType: 'contract',
-      signTemplateId: '1739441471686149829',
+      signTemplateId: '1741082402611146333', // PC 专业版合同
       autoStart: true,
+      "freeSignType": "template",
       actors: [
         {
           actor: {
@@ -119,8 +120,12 @@ app.post('/signature', async (req, res) => {
               },
             ],
           },
+
         },
         {
+          "signConfigInfo": {
+            "requestVerifyFree": true
+          },
           actor: {
             actorId: '甲方',
             actorType: 'corp',
