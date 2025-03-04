@@ -116,7 +116,7 @@ app.post('/signature', async (req, res) => {
             actorEntityId: '',
             actorCorpMembers: [
               {
-                memberId: '1889897475004211200',
+                memberId: '1889897475004211200', // giantfish@126.com
               },
             ],
           },
