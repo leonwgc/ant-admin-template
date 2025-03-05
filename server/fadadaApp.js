@@ -135,11 +135,11 @@ app.post('/signature', async (req, res) => {
             actorOpenId: '8aef63de75c7441e98a6adb5af15b4a2',
             actorFDDId: '',
             actorEntityId: '',
-            actorCorpMembers: [
-              {
-                memberId: '1889897475004211200', // giantfish@126.com
-              },
-            ],
+            // actorCorpMembers: [
+            //   {
+            //     memberId: '1889897475004211200', // giantfish@126.com
+            //   },
+            // ],
           },
 
         },
