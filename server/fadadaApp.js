@@ -99,13 +99,34 @@ app.post('/signature', async (req, res) => {
         openId: 'e287b939b0f24099ba67c27bb2ddcd42',
       },
       initiatorMemberId: '1879804313011265536',
-      signTaskSubject: 'pc合同-node-' + (req.body?.subject || '') + '-' + generateRandomString(6),
+      signTaskSubject: 'pc合同-node-' + (req.body?.subject || '') + '-' + generateRandomString(2),
       signDocType: 'contract',
       signTemplateId: '1741082402611146333', // PC 专业版合同
-      autoStart: true,
-      "freeSignType": "template",
+      autoStart: false, // fill some value first
+      "freeSignType": "business",
+      // 免验证签场景🐴
+      businessId: '5986b781c9d0c68ac8956411d89abb15',
       actors: [
         {
+          "signConfigInfo": {
+            "requestVerifyFree": true
+          },
+          actor: {
+            actorId: '甲方',
+            actorType: 'corp',
+            actorName: '德比软件（上海）有限公司',
+            permissions: ['sign'],
+            actorOpenId: 'e287b939b0f24099ba67c27bb2ddcd42',
+            actorFDDId: '',
+            actorEntityId: '',
+            // TODO: test remove it
+            // actorCorpMembers: [
+            //   {
+            //     memberId: '1879804313011265536',
+            //   },
+            // ],
+          },
+        }, {
           actor: {
             actorId: '乙方',
             actorType: 'corp',
@@ -122,38 +143,43 @@ app.post('/signature', async (req, res) => {
           },
 
         },
-        {
-          "signConfigInfo": {
-            "requestVerifyFree": true
-          },
-          actor: {
-            actorId: '甲方',
-            actorType: 'corp',
-            actorName: '德比软件（上海）有限公司',
-            permissions: ['sign'],
-            actorOpenId: 'e287b939b0f24099ba67c27bb2ddcd42',
-            actorFDDId: '',
-            actorEntityId: '',
-            // TODO: test remove it
-            actorCorpMembers: [
-              {
-                memberId: '1879804313011265536',
-              },
-            ],
-          },
-        },
       ],
     });
 
-    if (response.status === 200) {
-      res.status(200).json({
-        message: 'Electronic signature initiated successfully!',
-        data: response.data,
-      });
+    if (response.status === 200 && response.data.code === '100000') {
+      const signTaskId = response.data.data.signTaskId;
+
+      // fill some value first
+      try {
+        let a = await signTaskClientAgent.fillFieldValues({
+          signTaskId,
+          docFieldValues: [
+            {
+              docId: '99125895',
+              fieldId: 'amount',
+              fieldValue: req.body?.amount || 'contract amount: $100,0000',
+            },
+          ],
+        });
+
+        // start sign task
+        let b = await signTaskClientAgent.start({
+          signTaskId,
+        });
+
+        res.status(200).json({
+          message: 'Electronic signature initiated successfully!',
+          data: response.data,
+        });
+
+      } catch (ex) {
+        console.log(ex);
+      }
+
     } else {
       res.status(400).json({
         message: 'Failed to initiate electronic signature.',
-        error: response.error || 'Unknown error',
+        error: response.data.msg,
       });
     }
   } catch (ex) {

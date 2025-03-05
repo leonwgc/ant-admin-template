@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import { fetchProxyFadada } from '~/utils/fetch';
-import { FlexRender, Item } from 'antd-form-render';
+import { GridRender, Item } from 'antd-form-render';
 import { useRequest } from 'ahooks';
 import {
   AnimatePresence,
@@ -12,9 +12,10 @@ import {
   useTransform,
 } from 'motion/react';
 
-const sign = (subject) =>
+const sign = (subject, amount) =>
   fetchProxyFadada.post('/signature', {
     subject,
+    amount,
   });
 
 const Sign: React.FC = () => {
@@ -47,12 +48,26 @@ const Sign: React.FC = () => {
       element: <Input placeholder="Enter subject" style={{ width: 280 }} />,
     },
     {
+      label: 'Amount',
+      name: 'amount',
+      itemProps: {
+        initialValue: '本次合同金额: $100,234.00',
+      },
+      rules: [{ required: true, message: 'please input' }],
+      element: (
+        <Input.TextArea
+          placeholder="Enter amount info"
+          style={{ width: 280 }}
+        />
+      ),
+    },
+    {
       element: (
         <Button
           type="primary"
           disabled={!values?.subject?.trim() || loading}
           loading={loading}
-          onClick={() => run(values?.subject)}
+          onClick={() => run(values?.subject, values?.amount)}
         >
           Sign Contract
         </Button>
@@ -79,7 +94,7 @@ const Sign: React.FC = () => {
       <h2>Contract Signing</h2>
 
       <Form form={form} layout="horizontal">
-        <FlexRender layout={layout} gap={32} justify="flex-start" />
+        <GridRender layout={layout} />
       </Form>
 
       <div>
