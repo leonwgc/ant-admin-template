@@ -151,7 +151,8 @@ app.post('/signature', async (req, res) => {
 
       // fill some value first
       try {
-        let a = await signTaskClientAgent.fillFieldValues({
+        // 没有填写权限，所以需要使用 fillFieldValues 接口
+        await signTaskClientAgent.fillFieldValues({
           signTaskId,
           docFieldValues: [
             {
@@ -163,7 +164,7 @@ app.post('/signature', async (req, res) => {
         });
 
         // start sign task
-        let b = await signTaskClientAgent.start({
+        await signTaskClientAgent.start({
           signTaskId,
         });
 
