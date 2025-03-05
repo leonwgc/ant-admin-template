@@ -134,6 +134,7 @@ app.post('/signature', async (req, res) => {
             actorOpenId: 'e287b939b0f24099ba67c27bb2ddcd42',
             actorFDDId: '',
             actorEntityId: '',
+            // TODO: test remove it
             actorCorpMembers: [
               {
                 memberId: '1879804313011265536',
