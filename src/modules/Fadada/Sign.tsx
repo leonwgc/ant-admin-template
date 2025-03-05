@@ -99,7 +99,7 @@ const Sign: React.FC = () => {
       </div>
 
       <div>
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {visible ? (
             <motion.div
               // enter animation
@@ -124,9 +124,9 @@ const Sign: React.FC = () => {
               whileInView={{ opacity: 1 }}
             />
           ) : null}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
-        <motion.div
+        {/* <motion.div
           drag
           style={{
             display: 'inline-flex',
@@ -139,7 +139,7 @@ const Sign: React.FC = () => {
             Draggable
             <motion.pre>{rounded}</motion.pre>
           </Button>
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );
