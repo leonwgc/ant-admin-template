@@ -3,6 +3,7 @@ import { Button, Form, Input, message, Modal } from 'antd';
 import { fetchProxyFadada } from '~/utils/fetch';
 import { FlexRender, Item } from 'antd-form-render';
 import { useRequest } from 'ahooks';
+import { motion, useScroll } from 'motion/react';
 
 const sign = (subject) =>
   fetchProxyFadada.post('/signature', {
@@ -10,6 +11,7 @@ const sign = (subject) =>
   });
 
 const Sign: React.FC = () => {
+  const { scrollYProgress } = useScroll();
   const [form] = Form.useForm();
   const values = Form.useWatch([], form);
 
@@ -43,7 +45,21 @@ const Sign: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div style={{ height: '200vh', position: 'relative' }}>
+      {/* scroll indicator */}
+      <motion.div
+        style={{
+          scaleX: scrollYProgress,
+          position: 'fixed',
+          top: 56,
+          left: 'var(--menu-width)',
+          borderRadius: 2,
+          right: 0,
+          height: 5,
+          originX: 0,
+          backgroundColor: '#ccc',
+        }}
+      />
       <h2>Contract Signing</h2>
 
       <Form form={form} layout="horizontal">
@@ -64,6 +80,26 @@ const Sign: React.FC = () => {
         >
           Sign Contract for 甲方
         </Button>
+      </div>
+
+      <div>
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          style={{
+            width: 100,
+            height: 100,
+            border: '1px solid red',
+          }}
+          initial={{ x: -100, y: -100, opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          animate={{
+            x: 200,
+            y: 100,
+            opacity: 1,
+            transition: { duration: 2 },
+          }}
+        />
       </div>
     </div>
   );
