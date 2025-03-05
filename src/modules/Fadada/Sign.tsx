@@ -1,9 +1,16 @@
-import React from 'react';
-import { Button, Form, Input, message, Modal } from 'antd';
+import React, { useEffect } from 'react';
+import { Button, Form, Input, message } from 'antd';
 import { fetchProxyFadada } from '~/utils/fetch';
 import { FlexRender, Item } from 'antd-form-render';
 import { useRequest } from 'ahooks';
-import { AnimatePresence, motion, useScroll } from 'motion/react';
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  animate,
+  useMotionValue,
+  useTransform,
+} from 'motion/react';
 
 const sign = (subject) =>
   fetchProxyFadada.post('/signature', {
@@ -12,9 +19,17 @@ const sign = (subject) =>
 
 const Sign: React.FC = () => {
   const { scrollYProgress } = useScroll();
+  const count = useMotionValue(0);
+  const rounded = useTransform(() => Math.round(count.get()));
   const [visible, setVisible] = React.useState(true);
   const [form] = Form.useForm();
   const values = Form.useWatch([], form);
+
+  // animate Value
+  useEffect(() => {
+    const controls = animate(count, 100, { duration: 5 });
+    return () => controls.stop();
+  }, []);
 
   const { run, loading } = useRequest(sign, {
     manual: true,
@@ -110,6 +125,21 @@ const Sign: React.FC = () => {
             />
           ) : null}
         </AnimatePresence>
+
+        <motion.div
+          drag
+          style={{
+            display: 'inline-flex',
+            width: 100,
+            backgroundColor: '#dd00ee',
+            borderRadius: 10,
+          }}
+        >
+          <Button>
+            Draggable
+            <motion.pre>{rounded}</motion.pre>
+          </Button>
+        </motion.div>
       </div>
     </div>
   );
