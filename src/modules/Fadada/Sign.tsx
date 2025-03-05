@@ -3,7 +3,7 @@ import { Button, Form, Input, message, Modal } from 'antd';
 import { fetchProxyFadada } from '~/utils/fetch';
 import { FlexRender, Item } from 'antd-form-render';
 import { useRequest } from 'ahooks';
-import { motion, useScroll } from 'motion/react';
+import { AnimatePresence, motion, useScroll } from 'motion/react';
 
 const sign = (subject) =>
   fetchProxyFadada.post('/signature', {
@@ -12,6 +12,7 @@ const sign = (subject) =>
 
 const Sign: React.FC = () => {
   const { scrollYProgress } = useScroll();
+  const [visible, setVisible] = React.useState(true);
   const [form] = Form.useForm();
   const values = Form.useWatch([], form);
 
@@ -83,23 +84,32 @@ const Sign: React.FC = () => {
       </div>
 
       <div>
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          style={{
-            width: 100,
-            height: 100,
-            border: '1px solid red',
-          }}
-          initial={{ x: -100, y: -100, opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          animate={{
-            x: 200,
-            y: 100,
-            opacity: 1,
-            transition: { duration: 2 },
-          }}
-        />
+        <AnimatePresence>
+          {visible ? (
+            <motion.div
+              // enter animation
+              initial={{ x: -100, y: 100, opacity: 0, background: '#fff' }}
+              animate={{
+                x: 100,
+                opacity: 1,
+                transition: { duration: 1 },
+              }}
+              // exit animation , must be under AnimatePresence
+              exit={{ opacity: 0, scale: 0.1 }}
+              onClick={() => setVisible(false)}
+              // guesture:  hover, tap, focus, and drag
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              style={{
+                width: 100,
+                height: 100,
+                border: '1px solid #ccc',
+              }}
+              // To trigger an animation on scroll, the whileInView prop defines a state to animate to/from when an element enters/leaves the viewport:
+              whileInView={{ opacity: 1 }}
+            />
+          ) : null}
+        </AnimatePresence>
       </div>
     </div>
   );
