@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal } from '@derbysoft/neat-design';
 import React, { useEffect, useRef } from 'react';
 
 export default () => {

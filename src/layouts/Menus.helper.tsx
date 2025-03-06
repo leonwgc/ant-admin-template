@@ -1,4 +1,4 @@
-import { MenuProps } from 'antd';
+import { MenuProps } from '@derbysoft/neat-design';
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
   /**

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table } from '@derbysoft/neat-design';
 import { fetchProxyFadada } from '~/utils/fetch';
 
 const TemplateList: React.FC = () => {

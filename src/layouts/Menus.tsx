@@ -1,4 +1,4 @@
-import { Menu, MenuProps } from 'antd';
+import { Menu, MenuProps } from '@derbysoft/neat-design';
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import {

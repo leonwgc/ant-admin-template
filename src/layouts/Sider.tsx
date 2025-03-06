@@ -1,4 +1,4 @@
-import { Layout, SiderProps } from 'antd';
+import { Layout, SiderProps } from '@derbysoft/neat-design';
 import { useEffect, useState } from 'react';
 import SiderToggleButton from './SiderToggleButton';
 import Menus from './Menus';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Avatar, Space } from 'antd';
+import { Layout, Avatar, Space } from '@derbysoft/neat-design';
 import DerbySoftLogo from './Logo';
 import { useAppData } from 'simple-redux-store';
 import { MenuOutlined } from '@ant-design/icons';

@@ -1,4 +1,4 @@
-import { Form, App, Button, Typography } from 'antd';
+import { Form, App, Button, Typography, Flex } from '@derbysoft/neat-design';
 import { useNavigate } from 'react-router';
 
 // import { login } from './api';
@@ -19,8 +19,8 @@ export type Token = {
 };
 
 export default () => {
-  const { message } = App.useApp();
-  const navigate = useNavigate();
+  const { toast } = App.useApp();
+  // const navigate = useNavigate();
   const [user, setUser] = useState('');
   const [data, setData] = useState('');
   const [hasValidToken, setHasValidToken] = useState(false);
@@ -32,12 +32,11 @@ export default () => {
       token.token &&
       new Date(token.expired).getTime() > Date.now()
     ) {
-      message.info('already login');
       setHasValidToken(true);
     }
   });
 
-  const onFinish = () => {
+  const onLogin = () => {
     proxyGet('/login').then((res) => {
       setToken({
         accountId: res.data?.accountId,
@@ -45,71 +44,59 @@ export default () => {
         expired: res.data?._tokenExpiration,
       });
       setHasValidToken(true);
-      message.success('Login successfully');
+      toast.success('Login successfully');
     });
   };
 
   return (
-    <Form
-      name="normal_login"
-      className="login-form"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-          disabled={hasValidToken}
-        >
-          Log in
-        </Button>
-      </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          className="login-form-button"
-          disabled={!hasValidToken}
-          onClick={() => {
-            setToken(undefined);
-            setHasValidToken(false);
-          }}
-        >
-          clear token
-        </Button>
-      </Form.Item>
+    <Flex vertical gap={40} style={{ width: 300 }}>
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="login-form-button"
+        disabled={hasValidToken}
+        onClick={onLogin}
+      >
+        Log in
+      </Button>
+      <Button
+        type="primary"
+        className="login-form-button"
+        disabled={!hasValidToken}
+        onClick={() => {
+          setToken(undefined);
+          setHasValidToken(false);
+        }}
+      >
+        clear token
+      </Button>
 
-      <Form.Item>
-        <Button
-          onClick={() => {
-            proxyGet('/user-info').then((res) => {
-              setUser(res.data);
-            });
-          }}
-        >
-          Get user
-        </Button>
+      <Button
+        onClick={() => {
+          proxyGet('/user-info').then((res) => {
+            setUser(res.data);
+          });
+        }}
+      >
+        Get user
+      </Button>
 
-        <Typography.Text>{user && JSON.stringify(user)}</Typography.Text>
-      </Form.Item>
+      <Typography.Text>{user && JSON.stringify(user)}</Typography.Text>
 
-      <Form.Item>
-        <Button
-          onClick={() => {
-            dsGet(`/v2.1/accounts/${userInfo.accountId}`, {
-              headers: { Authorization: `Bearer ${token?.token}` },
-            }).then((res) => {
-              setData(res.data);
-            });
-          }}
-        >
-          Get account info via api
-        </Button>
-        <p>
-          <Typography.Text>{data && JSON.stringify(data)}</Typography.Text>
-        </p>
-      </Form.Item>
-    </Form>
+      <Button
+        onClick={() => {
+          dsGet(`/v2.1/accounts/${userInfo.accountId}`, {
+            headers: { Authorization: `Bearer ${token?.token}` },
+          }).then((res) => {
+            setData(res.data);
+          });
+        }}
+      >
+        Get account info via api
+      </Button>
+      <p>
+        <Typography.Text>{data && JSON.stringify(data)}</Typography.Text>
+      </p>
+    </Flex>
   );
 };

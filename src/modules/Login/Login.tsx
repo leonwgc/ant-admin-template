@@ -1,6 +1,6 @@
 import React from 'react';
-import type { FormProps } from 'antd';
-import { Button, Checkbox, Form, Input } from 'antd';
+import type { FormProps } from '@derbysoft/neat-design';
+import { Button, Checkbox, Form, Input } from '@derbysoft/neat-design';
 import { useNavigate } from 'react-router';
 
 type FieldType = {

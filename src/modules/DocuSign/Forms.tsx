@@ -1,7 +1,7 @@
 import { useLocalStorageState, useRequest } from 'ahooks';
 import React, { useCallback } from 'react';
 import { dsPost } from '~/utils/fetch';
-import { Button, message } from 'antd';
+import { Button, message } from '@derbysoft/neat-design';
 import type { Token } from './Login';
 
 export default () => {

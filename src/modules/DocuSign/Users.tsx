@@ -1,7 +1,7 @@
 import { useLocalStorageState, useRequest } from 'ahooks';
 import React, { useCallback, useEffect } from 'react';
 import { dsGet } from '~/utils/fetch';
-import { Spin } from 'antd';
+import { Spin } from '@derbysoft/neat-design';
 import type { Token } from './Login';
 
 export default () => {

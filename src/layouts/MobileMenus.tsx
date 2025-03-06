@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Avatar, Drawer, DrawerProps } from 'antd';
+import { Avatar, Drawer, DrawerProps } from '@derbysoft/neat-design';
 import Menus from './Menus';
 import useWindowSize from '~/hooks/useWindowSize';
 import './MobileMenus.scss';
