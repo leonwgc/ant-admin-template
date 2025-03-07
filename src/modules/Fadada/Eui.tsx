@@ -26,6 +26,11 @@ export default () => {
       >
         <iframe
           ref={ref}
+          style={{
+            height: '100vh',
+            border: 'none',
+            width: '100%',
+          }}
           src="https://80002452.uat-e.fadada.com/authorizeui/corp/login?authSerial=59cbdab84fec4f0791ccd0cdb417a275"
         />
       </FullScreenModal>
