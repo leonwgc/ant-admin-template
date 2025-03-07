@@ -1,6 +1,6 @@
-import { Button, Modal } from '@derbysoft/neat-design';
+import { Button } from '@derbysoft/neat-design';
 import React, { useEffect, useRef } from 'react';
-import './Eui.scss';
+import FullScreenModal from '~/components/FullScreenModal';
 
 export default () => {
   const [open, setOpen] = React.useState(false);
@@ -18,21 +18,9 @@ export default () => {
     <>
       <Button onClick={() => setOpen(true)}>Auth</Button>
 
-      <Modal
-        rootClassName="fullscreen-modal"
-        width={'100vw'}
-        style={{
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: '100vh',
-          maxWidth: '100vw',
-        }}
+      <FullScreenModal
         open={open}
-        title={null}
-        footer={null}
-        onCancel={() => {
+        onClose={() => {
           setOpen(false);
         }}
       >
@@ -40,7 +28,7 @@ export default () => {
           ref={ref}
           src="https://80002452.uat-e.fadada.com/authorizeui/corp/login?authSerial=59cbdab84fec4f0791ccd0cdb417a275"
         />
-      </Modal>
+      </FullScreenModal>
     </>
   );
 };

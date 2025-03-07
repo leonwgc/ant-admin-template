@@ -8,7 +8,12 @@ import { Button } from '@derbysoft/neat-design';
 import classNames from 'classnames';
 
 import { useLatest } from 'ahooks';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
+// import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import {
+  MenuCollapseOutlined,
+  MenuExpandOutlined,
+} from '@derbysoft/neat-design-icons';
+import './SiderToggleButton.scss';
 
 const SiderToggleButton = ({ onToggle, collapsed }) => {
   const onToggleRef = useLatest(onToggle);
@@ -28,7 +33,7 @@ const SiderToggleButton = ({ onToggle, collapsed }) => {
         expanded: !collapsed,
       })}
       type="primary"
-      icon={collapsed ? <ArrowRightOutlined /> : <ArrowLeftOutlined />}
+      icon={collapsed ? <MenuExpandOutlined /> : <MenuCollapseOutlined />}
       onClick={handleToggleCollapse}
     />
   );
