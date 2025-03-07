@@ -1,5 +1,6 @@
 import { Button, Modal } from '@derbysoft/neat-design';
 import React, { useEffect, useRef } from 'react';
+import './Eui.scss';
 
 export default () => {
   const [open, setOpen] = React.useState(false);
@@ -18,8 +19,16 @@ export default () => {
       <Button onClick={() => setOpen(true)}>Auth</Button>
 
       <Modal
-        width={'100%'}
-        style={{ top: 0, height: '100vh', margin: '0 auto' }}
+        rootClassName="fullscreen-modal"
+        width={'100vw'}
+        style={{
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: '100vh',
+          maxWidth: '100vw',
+        }}
         open={open}
         title={null}
         footer={null}
