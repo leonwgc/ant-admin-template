@@ -38,11 +38,6 @@ export default () => {
       >
         <iframe
           ref={ref}
-          style={{
-            border: 'none',
-            width: '100%',
-            minHeight: 'calc(100vh - 56px)',
-          }}
           src="https://80002452.uat-e.fadada.com/authorizeui/corp/login?authSerial=59cbdab84fec4f0791ccd0cdb417a275"
         />
       </Modal>
