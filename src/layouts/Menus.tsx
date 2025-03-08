@@ -32,7 +32,7 @@ export default (
   }, [operations]);
 
   const filterMenus = useMemo(() => getFilterMenus(operations, menus), [operations]);
-  const allMenus = useMemo(() => {
+  const flatMenus = useMemo(() => {
     return getFlatMenus(menus);
   }, [operations]);
 
@@ -48,7 +48,7 @@ export default (
     if (
       !hasPermission(
         operations,
-        allMenus.find((item) => item.route === pathname)?.permissions
+        flatMenus.find((item) => item.route === pathname)?.permissions
       )
     ) {
       navigate('/no-permission', { replace: true });
@@ -103,7 +103,7 @@ export default (
         collapsed: props?.collapsed,
       })}
       onClick={(item) => {
-        const menu = allMenus.find((m) => m.key === item.key);
+        const menu = flatMenus.find((m) => m.key === item.key);
         if (menu?.route) {
           navigate(menu?.route);
 
