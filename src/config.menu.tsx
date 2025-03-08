@@ -8,9 +8,8 @@ import {
 } from '@ant-design/icons';
 import { MenuItem } from './layouts/Menus.helper';
 import operations from './config.operations';
-import cloneDeep from 'lodash/cloneDeep';
 
-export const allMenuData: MenuItem[] = [
+export const menus: MenuItem[] = [
   {
     key: 'fadada',
     label: 'Fadada',
@@ -125,51 +124,4 @@ export const allMenuData: MenuItem[] = [
   },
 ];
 
-/**
- * Check if the current user has the required permission
- * @param operations The user's operations
- * @param permissions The required operations
- * @returns `true` if the user has the required permission, otherwise `false`
- */
-export const hasPermission = (
-  operations: string[],
-  permissions: string[] | undefined
-) => {
-  if (!Array.isArray(permissions) || !permissions?.length) {
-    return true;
-  }
 
-  if (!operations) {
-    return false;
-  }
-
-  return permissions.every((item) => operations.includes(item));
-};
-
-/**
- * Get the menu items according to the user's permissions and visible setting
- * @param permissions The user's operations
- * @returns The menu items that the user can see
- */
-export const getItems: (permissions: string[]) => MenuItem[] = (operations) => {
-  const filterItems = (items: MenuItem[]) => {
-    return items.filter((item) => {
-      if (
-        hasPermission(operations, item.permissions) &&
-        item.visible !== false
-      ) {
-        if (item.children) {
-          item.children = filterItems(item.children);
-
-          if (!item.children.length) {
-            return false;
-          }
-        }
-        return true;
-      }
-      return false;
-    });
-  };
-
-  return filterItems(cloneDeep(allMenuData));
-};

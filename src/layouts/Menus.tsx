@@ -1,19 +1,24 @@
 import { Menu, MenuProps } from '@derbysoft/neat-design';
+import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import {
-  getPathnameAssociatedMenu,
-  getLevelKeys,
-  LevelKeysProps,
-  getAllMenuItems,
-} from './Menus.helper';
-import { getItems, hasPermission, allMenuData } from '../config.menu';
 import { useAppData } from 'simple-redux-store';
-import classNames from 'classnames';
+import { menus } from '../config.menu';
+import {
+  getFlatMenus,
+  getFilterMenus,
+  getLevelKeys,
+  searchMenusByPathname,
+  hasPermission,
+  LevelKeysProps,
+  SearchResult,
+} from './Menus.helper';
 import './Menus.scss';
 
+type Props = MenuProps & { afterClick?: () => void; collapsed?: boolean; };
+
 export default (
-  props: MenuProps & { afterClick?: () => void; collapsed?: boolean }
+  props: Props
 ) => {
   const { afterClick, collapsed, ...menuProps } = props;
   const navigate = useNavigate();
@@ -22,54 +27,53 @@ export default (
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { operations = [] } = useAppData();
 
-  const items = useMemo(() => getItems(operations), [operations]);
-
   const levelKeys = useMemo(() => {
-    return getLevelKeys(getItems(operations) as LevelKeysProps[]);
+    return getLevelKeys(getFilterMenus(operations, menus) as LevelKeysProps[]);
   }, [operations]);
 
-  const allMenuItems = useMemo(() => {
-    return getAllMenuItems(allMenuData);
+  const filterMenus = useMemo(() => getFilterMenus(operations, menus), [operations]);
+  const allMenus = useMemo(() => {
+    return getFlatMenus(menus);
   }, [operations]);
 
   useEffect(() => {
-    // restore menu from pathname
-    const result = {
+    const searchResult: SearchResult = {
       parents: [],
       found: false,
     };
+
     let currentPath = pathname;
 
-    // access control
+    // permission check
     if (
       !hasPermission(
         operations,
-        allMenuItems.find((item) => item.route === pathname)?.permissions
+        allMenus.find((item) => item.route === pathname)?.permissions
       )
     ) {
       navigate('/no-permission', { replace: true });
       return;
     }
 
-    while (!result.found && currentPath) {
-      getPathnameAssociatedMenu(currentPath, items, null, result);
-      if (result.found) {
-        const parents = result.parents;
-        const key = parents[parents.length - 1].key;
+    while (!searchResult.found && currentPath) {
+      searchMenusByPathname(currentPath, filterMenus, null, searchResult);
+      if (searchResult.found) {
+        const parents = searchResult.parents;
+        const key = parents[parents.length - 1].key as string;
         setSelectedKeys([key]);
-        setOpenKeys(parents.slice(0, -1).map((item) => item.key));
+        setOpenKeys(parents.slice(0, -1).map((item) => item.key) as string[]);
       }
-      if (result.found || currentPath === '/' || !currentPath) {
+      if (searchResult.found || currentPath === '/' || !currentPath) {
         break;
       }
       currentPath = currentPath.split('/').slice(0, -1).join('/');
     }
-    if (!result.found) {
+    if (!searchResult.found) {
       // fallback to first menu
-      setSelectedKeys([items[0].children[0].key as string]);
-      setOpenKeys([items[0].key as string]);
+      setSelectedKeys([filterMenus[0].children[0].key as string]);
+      setOpenKeys([filterMenus[0].key as string]);
     }
-  }, [pathname]);
+  }, [pathname, filterMenus]);
 
   // only expand one level menu.
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
@@ -99,7 +103,7 @@ export default (
         collapsed: props?.collapsed,
       })}
       onClick={(item) => {
-        const menu = allMenuItems.find((m) => m.key === item.key);
+        const menu = allMenus.find((m) => m.key === item.key);
         if (menu?.route) {
           navigate(menu?.route);
 
@@ -110,7 +114,7 @@ export default (
       openKeys={openKeys}
       onOpenChange={onOpenChange}
       mode="inline"
-      items={items}
+      items={filterMenus}
       inlineCollapsed={collapsed}
       {...menuProps}
     />

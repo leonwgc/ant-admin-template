@@ -1,4 +1,5 @@
 import { MenuProps } from '@derbysoft/neat-design';
+import cloneDeep from 'lodash/cloneDeep';
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
   /**
@@ -19,9 +20,9 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
   visible?: boolean;
 };
 
-type Result = {
+export type SearchResult = {
   /**
-   * The associated menu items, from parent to self
+   * The Menus paths, from parent to self
    */
   parents: MenuItem[];
   /**
@@ -33,42 +34,42 @@ type Result = {
 /**
  * Get the associated menu item for a given pathname
  * @param pathname the pathname to search
- * @param childrenItems the menu items to search
+ * @param childItems the menu items to search
  * @param item the parent menu item
- * @param result the result object
+ * @param searchResult the result object
  */
-export const getPathnameAssociatedMenu = (
+export const searchMenusByPathname = (
   pathname: string,
-  childrenItems: MenuItem[],
+  childItems: MenuItem[],
   item: MenuItem,
-  result: Result
+  searchResult: SearchResult
 ) => {
-  if (!childrenItems || !childrenItems.length || result.found) {
+  if (!childItems || !childItems.length || searchResult.found) {
     return;
   }
   if (item) {
     // level 1 none.
-    result.parents.push(item);
+    searchResult.parents.push(item);
   }
 
-  for (let menuItem of childrenItems) {
-    if (menuItem.route === pathname) {
-      result.parents.push(menuItem);
-      result.found = true;
+  for (let childItem of childItems) {
+    if (childItem.route === pathname) {
+      searchResult.parents.push(childItem);
+      searchResult.found = true;
       return;
     } else {
-      if (menuItem?.children) {
-        getPathnameAssociatedMenu(
+      if (Array.isArray(childItem?.children)) {
+        searchMenusByPathname(
           pathname,
-          menuItem?.children,
-          menuItem,
-          result
+          childItem?.children,
+          childItem,
+          searchResult
         );
       }
     }
   }
-  if (!result.found) {
-    result.parents.pop();
+  if (!searchResult.found) {
+    searchResult.parents.pop();
   }
 };
 
@@ -98,12 +99,12 @@ export const getLevelKeys = (items1: LevelKeysProps[]) => {
  * @param items the menu items to get
  * @returns all menu items
  */
-export const getAllMenuItems = (items: MenuItem[]) => {
+export const getFlatMenus = (items: MenuItem[]) => {
   const result: MenuItem[] = [];
 
   items.reduce((acc: MenuItem[], item: MenuItem) => {
     if (item.children) {
-      acc.push(...getAllMenuItems(item.children));
+      acc.push(...getFlatMenus(item.children));
     } else {
       acc.push(item);
     }
@@ -111,4 +112,55 @@ export const getAllMenuItems = (items: MenuItem[]) => {
   }, result);
 
   return result;
+};
+
+
+/**
+ * Check if the current user has the required permission
+ * @param operations The user's operations
+ * @param permissions The required operations
+ * @returns `true` if the user has the required permission, otherwise `false`
+ */
+export const hasPermission = (
+  operations: string[] | undefined,
+  permissions: string[] | undefined
+) => {
+  if (!Array.isArray(permissions) || !permissions?.length) {
+    return true;
+  }
+
+  if (!Array.isArray(operations) || !operations?.length) {
+    return false;
+  }
+
+  return permissions.every((item) => operations.includes(item));
+};
+
+/**
+ * Get the menu items according to the user's permissions and visible setting
+ * @param operations The user's operations
+ * @param menus The menu items to filter (default is allMenuData)
+ * @returns The menu items that the user can see
+ */
+export const getFilterMenus: (operations: string[], menus: MenuItem[]) => MenuItem[] = (operations, menus = []) => {
+  const filterMenus = (items: MenuItem[]) => {
+    return items.filter((item) => {
+      if (
+        hasPermission(operations, item.permissions) &&
+        item.visible !== false
+      ) {
+        if (Array.isArray(item.children)) {
+          item.children = filterMenus(item.children);
+
+          if (!item.children.length) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return false;
+    });
+  };
+
+  return filterMenus(cloneDeep(menus));
 };
