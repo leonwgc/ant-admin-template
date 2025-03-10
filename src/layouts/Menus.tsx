@@ -84,7 +84,6 @@ export default (props: Props) => {
         const menu = flatMenus.find((m) => m.key === item.key);
         if (menu?.route) {
           navigate(menu?.route);
-
           afterClick?.();
         }
       }}
