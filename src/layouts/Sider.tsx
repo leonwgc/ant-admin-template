@@ -2,6 +2,8 @@ import { Layout, SiderProps } from '@derbysoft/neat-design';
 import { useEffect, useState } from 'react';
 import SiderToggleButton from './SiderToggleButton';
 import Menus from './Menus';
+import { menus } from '~/config.menu';
+
 
 /**
  * Sider
@@ -28,7 +30,7 @@ export default (props: SiderProps) => {
       theme="light"
       {...props}
     >
-      <Menus collapsed={collapsed} />
+      <Menus collapsed={collapsed} menus={menus} />
       <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
     </Layout.Sider>
   );

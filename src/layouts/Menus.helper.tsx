@@ -16,7 +16,7 @@ export type SearchResult = {
 };
 
 /**
- * Get the associated menu item for a given pathname
+ * Get the associated menus for a given pathname
  * @param pathname the pathname to search
  * @param childItems the menu items to search
  * @param item the parent menu item

@@ -1,38 +1,33 @@
 import { Menu, MenuProps } from '@derbysoft/neat-design';
-import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useAppData } from 'simple-redux-store';
-import { menus } from '../config.menu';
+import type { MenuItem } from '../config.menu';
 import {
   getFlatMenus,
   getFilterMenus,
   getLevelKeys,
-  searchMenusByPathname, LevelKeysProps,
+  searchMenusByPathname,
+  LevelKeysProps,
   SearchResult
 } from './Menus.helper';
 import './Menus.scss';
 
-type Props = MenuProps & { afterClick?: () => void; collapsed?: boolean; };
+type Props = MenuProps & { afterClick?: () => void; collapsed?: boolean; menus: MenuItem[]; };
 
 export default (
   props: Props
 ) => {
-  const { afterClick, collapsed, ...menuProps } = props;
+  const { afterClick, collapsed, menus, ...menuProps } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { operations = [] } = useAppData();
 
-  const levelKeys = useMemo(() => {
-    return getLevelKeys(getFilterMenus(operations, menus) as LevelKeysProps[]);
-  }, [operations]);
-
-  const filterMenus = useMemo(() => getFilterMenus(operations, menus), [operations]);
-  const flatMenus = useMemo(() => {
-    return getFlatMenus(menus);
-  }, [operations]);
+  const filterMenus = useMemo(() => getFilterMenus(operations, menus), [operations, menus]);
+  const levelKeys = useMemo(() => getLevelKeys(filterMenus as LevelKeysProps[]), [filterMenus]);
+  const flatMenus = useMemo(() => getFlatMenus(menus), [menus]);
 
   useEffect(() => {
     const searchResult: SearchResult = {
@@ -86,9 +81,7 @@ export default (
 
   return (
     <Menu
-      className={classNames('app-menus', {
-        collapsed: props?.collapsed,
-      })}
+      style={{ borderInlineEnd: 'none' }}
       onClick={(item) => {
         const menu = flatMenus.find((m) => m.key === item.key);
         if (menu?.route) {
