@@ -2,7 +2,6 @@
   "name": "ant-admin-template",
   "version": "1.0.0",
   "description": "antd admin template",
-  "main": "index.js",
   "scripts": {
     "start": "node-dev --inspect  ./server/app.js",
     "start:fadada": "node-dev --inspect  ./server/fadadaApp.js"

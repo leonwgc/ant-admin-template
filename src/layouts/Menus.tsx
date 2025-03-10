@@ -9,15 +9,16 @@ import {
   getLevelKeys,
   getMenusByPathname,
   LevelKeysProps,
-  SearchResult
+  SearchResult,
 } from './Menus.helper';
-import './Menus.scss';
 
-type Props = MenuProps & { afterClick?: () => void; collapsed?: boolean; menus: MenuItem[]; };
+type Props = MenuProps & {
+  afterClick?: () => void;
+  collapsed?: boolean;
+  menus: MenuItem[];
+};
 
-export default (
-  props: Props
-) => {
+export default (props: Props) => {
   const { afterClick, collapsed, menus, ...menuProps } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -25,8 +26,14 @@ export default (
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { operations = [] } = useAppData();
 
-  const filterMenus = useMemo(() => getFilterMenus(operations, menus), [operations, menus]);
-  const levelKeys = useMemo(() => getLevelKeys(filterMenus as LevelKeysProps[]), [filterMenus]);
+  const filterMenus = useMemo(
+    () => getFilterMenus(operations, menus),
+    [operations, menus]
+  );
+  const levelKeys = useMemo(
+    () => getLevelKeys(filterMenus as LevelKeysProps[]),
+    [filterMenus]
+  );
   const flatMenus = useMemo(() => getFlatMenus(menus), [menus]);
 
   useEffect(() => {
@@ -58,23 +65,26 @@ export default (
   }, [pathname, filterMenus]);
 
   // only expand one level menu.
-  const onOpenChange: MenuProps['onOpenChange'] = useCallback((keys) => {
-    const currentOpenKey = keys.find((key) => !openKeys.includes(key));
+  const onOpenChange: MenuProps['onOpenChange'] = useCallback(
+    (keys) => {
+      const currentOpenKey = keys.find((key) => !openKeys.includes(key));
 
-    if (currentOpenKey !== undefined) {
-      const repeatIndex = keys
-        .filter((key) => key !== currentOpenKey)
-        .findIndex((key) => levelKeys[key] === levelKeys[currentOpenKey]);
+      if (currentOpenKey !== undefined) {
+        const repeatIndex = keys
+          .filter((key) => key !== currentOpenKey)
+          .findIndex((key) => levelKeys[key] === levelKeys[currentOpenKey]);
 
-      setOpenKeys(
-        keys
-          .filter((_, index) => index !== repeatIndex)
-          .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey])
-      );
-    } else {
-      setOpenKeys(keys);
-    }
-  }, [openKeys]);
+        setOpenKeys(
+          keys
+            .filter((_, index) => index !== repeatIndex)
+            .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey])
+        );
+      } else {
+        setOpenKeys(keys);
+      }
+    },
+    [openKeys]
+  );
 
   return (
     <Menu
