@@ -16,13 +16,43 @@ export type SearchResult = {
 };
 
 /**
+ * Retrieves the menu paths based on the provided pathname and menus.
+ *
+ * This function searches through the given menus to find the paths that match
+ * the provided pathname. It continues to search by progressively removing the
+ * last segment of the pathname until a match is found or the root is reached.
+ *
+ * @param {string} pathname - The current pathname to search for in the menus.
+ * @param {Array} menus - The list of menus to search through.
+ * @returns {Array} An array of paths that match the provided pathname.
+ */
+export const getMenuPaths = (pathname, menus) => {
+  const searchResult: SearchResult = {
+    paths: [],
+    found: false,
+  };
+
+  let currentPath = pathname;
+
+  while (!searchResult.found && currentPath) {
+    getMenusByPathname(currentPath, menus, null, searchResult);
+    if (searchResult.found || currentPath === '/' || !currentPath) {
+      break;
+    }
+    currentPath = currentPath.split('/').slice(0, -1).join('/');
+  }
+
+  return searchResult.paths;
+};
+
+/**
  * Get the associated menus for a given pathname
  * @param pathname the pathname to search
  * @param childItems the menu items to search
  * @param item the parent menu item
  * @param searchResult the result object
  */
-export const getMenusByPathname = (
+const getMenusByPathname = (
   pathname: string,
   childItems: MenuItem[],
   item: MenuItem,
@@ -114,7 +144,6 @@ export const getFlatMenus = (items: MenuItem[]) => {
   return result;
 };
 
-
 /**
  * Check if the current user has the required permission
  * @param operations The user's operations
@@ -142,12 +171,13 @@ export const hasPermission = (
  * @param menus The menu items to filter (default is allMenuData)
  * @returns The menu items that the user can see
  */
-export const getFilterMenus: (operations: string[], menus: MenuItem[]) => MenuItem[] = (operations, menus = []) => {
+export const getFilterMenus: (
+  operations: string[],
+  menus: MenuItem[]
+) => MenuItem[] = (operations, menus = []) => {
   const filterMenus = (items: MenuItem[]) => {
     return items.filter((item) => {
-      if (
-        hasPermission(operations, item.permissions)
-      ) {
+      if (hasPermission(operations, item.permissions)) {
         if (Array.isArray(item.children)) {
           item.children = filterMenus(item.children);
 

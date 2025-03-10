@@ -7,9 +7,8 @@ import {
   getFlatMenus,
   getFilterMenus,
   getLevelKeys,
-  getMenusByPathname,
   LevelKeysProps,
-  SearchResult,
+  getMenuPaths,
 } from './Menus.helper';
 
 type Props = MenuProps & {
@@ -18,6 +17,18 @@ type Props = MenuProps & {
   menus: MenuItem[];
 };
 
+/**
+ * Menus component renders a collapsible menu using the Neat Design library.
+ *
+ * @param {Props} props - The properties passed to the component.
+ * @param {Function} props.afterClick - A callback function to be called after a menu item is clicked.
+ * @param {boolean} props.collapsed - A boolean indicating whether the menu is collapsed.
+ * @param {Array} props.menus - An array of menu items to be displayed.
+ * @param {Object} props.menuProps - Additional properties to be passed to the Menu component.
+ *
+ * @returns {JSX.Element} The rendered Menu component.
+ *
+ */
 export default (props: Props) => {
   const { afterClick, collapsed, menus, ...menuProps } = props;
   const navigate = useNavigate();
@@ -37,34 +48,14 @@ export default (props: Props) => {
   const flatMenus = useMemo(() => getFlatMenus(menus), [menus]);
 
   useEffect(() => {
-    const searchResult: SearchResult = {
-      paths: [],
-      found: false,
-    };
-
-    let currentPath = pathname;
-
-    while (!searchResult.found && currentPath) {
-      getMenusByPathname(currentPath, filterMenus, null, searchResult);
-      if (searchResult.found) {
-        const parents = searchResult.paths;
-        const key = parents[parents.length - 1].key as string;
-        setSelectedKeys([key]);
-        setOpenKeys(parents.slice(0, -1).map((item) => item.key) as string[]);
-      }
-      if (searchResult.found || currentPath === '/' || !currentPath) {
-        break;
-      }
-      currentPath = currentPath.split('/').slice(0, -1).join('/');
-    }
-    if (!searchResult.found) {
-      // fallback to first menu
-      setSelectedKeys([filterMenus?.[0]?.children?.[0]?.key as string]);
-      setOpenKeys([filterMenus?.[0]?.key as string]);
+    const paths = getMenuPaths(pathname, filterMenus);
+    if (paths.length) {
+      const key = paths[paths.length - 1].key as string;
+      setSelectedKeys([key]);
+      setOpenKeys(paths.slice(0, -1).map((item) => item.key) as string[]);
     }
   }, [pathname, filterMenus]);
 
-  // only expand one level menu.
   const onOpenChange: MenuProps['onOpenChange'] = useCallback(
     (keys) => {
       const currentOpenKey = keys.find((key) => !openKeys.includes(key));
