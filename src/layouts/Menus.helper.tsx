@@ -1,30 +1,11 @@
-import { MenuProps } from '@derbysoft/neat-design';
 import cloneDeep from 'lodash/cloneDeep';
-
-export type MenuItem = Required<MenuProps>['items'][number] & {
-  /**
-   * menu item children
-   */
-  children?: MenuItem[];
-  /**
-   * menu item route
-   */
-  route?: string;
-  /**
-   * permissions needed to access this menu item
-   */
-  permissions?: string[];
-  /**
-   * whether this menu item is visible
-   */
-  visible?: boolean;
-};
+import { MenuItem } from '~/config.menu';
 
 export type SearchResult = {
   /**
    * The Menus paths, from parent to self
    */
-  parents: MenuItem[];
+  paths: MenuItem[];
   /**
    * Whether the associated menu item is found
    */
@@ -49,12 +30,12 @@ export const searchMenusByPathname = (
   }
   if (item) {
     // level 1 none.
-    searchResult.parents.push(item);
+    searchResult.paths.push(item);
   }
 
   for (let childItem of childItems) {
     if (childItem.route === pathname) {
-      searchResult.parents.push(childItem);
+      searchResult.paths.push(childItem);
       searchResult.found = true;
       return;
     } else {
@@ -69,7 +50,7 @@ export const searchMenusByPathname = (
     }
   }
   if (!searchResult.found) {
-    searchResult.parents.pop();
+    searchResult.paths.pop();
   }
 };
 
@@ -146,8 +127,7 @@ export const getFilterMenus: (operations: string[], menus: MenuItem[]) => MenuIt
   const filterMenus = (items: MenuItem[]) => {
     return items.filter((item) => {
       if (
-        hasPermission(operations, item.permissions) &&
-        item.visible !== false
+        hasPermission(operations, item.permissions)
       ) {
         if (Array.isArray(item.children)) {
           item.children = filterMenus(item.children);

@@ -8,10 +8,8 @@ import {
   getFlatMenus,
   getFilterMenus,
   getLevelKeys,
-  searchMenusByPathname,
-  hasPermission,
-  LevelKeysProps,
-  SearchResult,
+  searchMenusByPathname, LevelKeysProps,
+  SearchResult
 } from './Menus.helper';
 import './Menus.scss';
 
@@ -38,27 +36,16 @@ export default (
 
   useEffect(() => {
     const searchResult: SearchResult = {
-      parents: [],
+      paths: [],
       found: false,
     };
 
     let currentPath = pathname;
 
-    // permission check
-    if (
-      !hasPermission(
-        operations,
-        flatMenus.find((item) => item.route === pathname)?.permissions
-      )
-    ) {
-      navigate('/no-permission', { replace: true });
-      return;
-    }
-
     while (!searchResult.found && currentPath) {
       searchMenusByPathname(currentPath, filterMenus, null, searchResult);
       if (searchResult.found) {
-        const parents = searchResult.parents;
+        const parents = searchResult.paths;
         const key = parents[parents.length - 1].key as string;
         setSelectedKeys([key]);
         setOpenKeys(parents.slice(0, -1).map((item) => item.key) as string[]);

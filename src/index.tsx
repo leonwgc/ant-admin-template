@@ -18,6 +18,7 @@ const data: StoreData = {
     operations.CREATE_USER,
     operations.VIEW_TEMPLATE,
     operations.CREATE_TEMPLATE,
+    operations.VIEW_LOG
   ],
 };
 

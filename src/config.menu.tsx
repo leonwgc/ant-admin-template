@@ -6,8 +6,23 @@ import {
   CopyOutlined,
   RightOutlined,
 } from '@ant-design/icons';
-import { MenuItem } from './layouts/Menus.helper';
+import { MenuProps } from '@derbysoft/neat-design';
 import operations from './config.operations';
+
+export type MenuItem = Required<MenuProps>['items'][number] & {
+  /**
+   * menu item children
+   */
+  children?: MenuItem[];
+  /**
+   * menu item route
+   */
+  route?: string;
+  /**
+   * permissions needed to access this menu item
+   */
+  permissions?: string[];
+};
 
 export const menus: MenuItem[] = [
   {
@@ -72,23 +87,8 @@ export const menus: MenuItem[] = [
         route: '/app/users',
         permissions: [operations.VIEW_USER],
       },
-      {
-        key: 'user-2',
-        label: 'add',
-        route: '/app/users/add',
-        permissions: [operations.CREATE_USER],
-        visible: false,
-      },
-      {
-        key: 'user-3',
-        label: 'edit',
-        route: '/app/users/edit',
-        permissions: [operations.UPDATE_USER],
-        visible: false,
-      },
     ],
   },
-
   {
     key: 'template',
     label: 'Templates',
@@ -116,11 +116,19 @@ export const menus: MenuItem[] = [
     ],
   },
   {
-    key: 'log',
+    key: 'logs',
     label: 'Logs',
     icon: <AppstoreOutlined />,
-    // permissions: [operations.VIEW_LOG],
+    permissions: [operations.VIEW_LOG],
     route: '/app/logs',
+    children: [
+      {
+        key: 'log',
+        label: 'Log',
+        route: '/app/logs/log',
+        permissions: [operations.VIEW_LOG],
+      },
+    ]
   },
 ];
 

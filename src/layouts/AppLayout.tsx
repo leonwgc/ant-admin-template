@@ -1,11 +1,15 @@
 import React from 'react';
 import { Layout } from '@derbysoft/neat-design';
 import { Outlet } from 'react-router';
-import Sider from './Sider';
+import classNames from 'classnames';
+import { useAppData } from 'simple-redux-store';
+import { menus } from '~/config.menu';
+
 import Header from './Header';
+import Sider from './Sider';
+import RouteGuard from './RouteGuard';
 
 import './AppLayout.scss';
-import classNames from 'classnames';
 
 /**
  * AppLayout
@@ -17,6 +21,7 @@ const AppLayout: React.FC<{
   hasSider?: boolean;
   hasContentHeader?: boolean;
 }> = ({ hasSider = true, hasContentHeader = false }) => {
+  const { operations = [] } = useAppData();
   return (
     <Layout className={'app-layout'}>
       <Header className="app-layout__header" />
@@ -34,7 +39,9 @@ const AppLayout: React.FC<{
               </Layout.Header>
             )}
             <Layout.Content className="content-layout__content">
-              <Outlet />
+              <RouteGuard menus={menus} operations={operations}>
+                <Outlet />
+              </RouteGuard>
             </Layout.Content>
           </Layout>
         </Layout.Content>
