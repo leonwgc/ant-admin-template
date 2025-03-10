@@ -32,10 +32,40 @@ export const getMenuPaths = (pathname, menus) => {
     found: false,
   };
 
+  const func = (
+    pathname: string,
+    childItems: MenuItem[],
+    item: MenuItem,
+    searchResult: SearchResult
+  ) => {
+    if (!childItems || !childItems.length || searchResult.found) {
+      return;
+    }
+    if (item) {
+      // level 1 none.
+      searchResult.paths.push(item);
+    }
+
+    for (let childItem of childItems) {
+      if (childItem.route === pathname) {
+        searchResult.paths.push(childItem);
+        searchResult.found = true;
+        return;
+      } else {
+        if (Array.isArray(childItem?.children)) {
+          func(pathname, childItem?.children, childItem, searchResult);
+        }
+      }
+    }
+    if (!searchResult.found) {
+      searchResult.paths.pop();
+    }
+  };
+
   let currentPath = pathname;
 
   while (!searchResult.found && currentPath) {
-    getMenusByPathname(currentPath, menus, null, searchResult);
+    func(currentPath, menus, null, searchResult);
     if (searchResult.found || currentPath === '/' || !currentPath) {
       break;
     }
@@ -43,48 +73,6 @@ export const getMenuPaths = (pathname, menus) => {
   }
 
   return searchResult.paths;
-};
-
-/**
- * Get the associated menus for a given pathname
- * @param pathname the pathname to search
- * @param childItems the menu items to search
- * @param item the parent menu item
- * @param searchResult the result object
- */
-const getMenusByPathname = (
-  pathname: string,
-  childItems: MenuItem[],
-  item: MenuItem,
-  searchResult: SearchResult
-) => {
-  if (!childItems || !childItems.length || searchResult.found) {
-    return;
-  }
-  if (item) {
-    // level 1 none.
-    searchResult.paths.push(item);
-  }
-
-  for (let childItem of childItems) {
-    if (childItem.route === pathname) {
-      searchResult.paths.push(childItem);
-      searchResult.found = true;
-      return;
-    } else {
-      if (Array.isArray(childItem?.children)) {
-        getMenusByPathname(
-          pathname,
-          childItem?.children,
-          childItem,
-          searchResult
-        );
-      }
-    }
-  }
-  if (!searchResult.found) {
-    searchResult.paths.pop();
-  }
 };
 
 export type LevelKeysProps = {
@@ -97,16 +85,6 @@ export type LevelKeysProps = {
  *
  * @param items1 - An array of items, each containing a key and optionally children.
  * @returns A record where each key is mapped to its level in the nested structure.
- *
- * @example
- * ```typescript
- * const items = [
- *   { key: '1', children: [{ key: '1-1' }, { key: '1-2', children: [{ key: '1-2-1' }] }] },
- *   { key: '2' }
- * ];
- * const levels = getLevelKeys(items);
- * console.log(levels); // { '1': 1, '1-1': 2, '1-2': 2, '1-2-1': 3, '2': 1 }
- * ```
  */
 export const getLevelKeys = (items1: LevelKeysProps[]) => {
   const key: Record<string, number> = {};
@@ -125,7 +103,7 @@ export const getLevelKeys = (items1: LevelKeysProps[]) => {
 };
 
 /**
- * Get all menu items, nothing to do with permissions.
+ * Get flat menu items from a nested array of menu items.
  * @param items the menu items to get
  * @returns all menu items
  */
