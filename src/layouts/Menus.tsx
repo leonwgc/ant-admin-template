@@ -1,5 +1,5 @@
 import { Menu, MenuProps } from '@derbysoft/neat-design';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useAppData } from 'simple-redux-store';
 import type { MenuItem } from '../config.menu';
@@ -7,7 +7,7 @@ import {
   getFlatMenus,
   getFilterMenus,
   getLevelKeys,
-  searchMenusByPathname,
+  getMenusByPathname,
   LevelKeysProps,
   SearchResult
 } from './Menus.helper';
@@ -38,7 +38,7 @@ export default (
     let currentPath = pathname;
 
     while (!searchResult.found && currentPath) {
-      searchMenusByPathname(currentPath, filterMenus, null, searchResult);
+      getMenusByPathname(currentPath, filterMenus, null, searchResult);
       if (searchResult.found) {
         const parents = searchResult.paths;
         const key = parents[parents.length - 1].key as string;
@@ -52,13 +52,13 @@ export default (
     }
     if (!searchResult.found) {
       // fallback to first menu
-      setSelectedKeys([filterMenus[0].children[0].key as string]);
-      setOpenKeys([filterMenus[0].key as string]);
+      setSelectedKeys([filterMenus?.[0]?.children?.[0]?.key as string]);
+      setOpenKeys([filterMenus?.[0]?.key as string]);
     }
   }, [pathname, filterMenus]);
 
   // only expand one level menu.
-  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
+  const onOpenChange: MenuProps['onOpenChange'] = useCallback((keys) => {
     const currentOpenKey = keys.find((key) => !openKeys.includes(key));
 
     if (currentOpenKey !== undefined) {
@@ -68,16 +68,13 @@ export default (
 
       setOpenKeys(
         keys
-          // remove repeat key
           .filter((_, index) => index !== repeatIndex)
-          // remove current level all child
           .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey])
       );
     } else {
-      // close
       setOpenKeys(keys);
     }
-  };
+  }, [openKeys]);
 
   return (
     <Menu

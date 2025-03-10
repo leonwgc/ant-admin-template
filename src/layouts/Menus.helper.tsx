@@ -22,7 +22,7 @@ export type SearchResult = {
  * @param item the parent menu item
  * @param searchResult the result object
  */
-export const searchMenusByPathname = (
+export const getMenusByPathname = (
   pathname: string,
   childItems: MenuItem[],
   item: MenuItem,
@@ -43,7 +43,7 @@ export const searchMenusByPathname = (
       return;
     } else {
       if (Array.isArray(childItem?.children)) {
-        searchMenusByPathname(
+        getMenusByPathname(
           pathname,
           childItem?.children,
           childItem,
