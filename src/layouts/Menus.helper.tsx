@@ -1,13 +1,16 @@
 import cloneDeep from 'lodash/cloneDeep';
 import { MenuItem } from '~/config.menu';
 
+/**
+ * Represents the result of a search operation within the menu structure.
+ */
 export type SearchResult = {
   /**
-   * The Menus paths, from parent to self
+   * The paths of the menus, from the parent to the current item.
    */
   paths: MenuItem[];
   /**
-   * Whether the associated menu item is found
+   * Indicates whether the associated menu item was found.
    */
   found: boolean;
 };
@@ -59,6 +62,22 @@ export type LevelKeysProps = {
   children?: LevelKeysProps[];
 };
 
+/**
+ * Recursively generates a record of keys and their corresponding levels from a nested array of items.
+ *
+ * @param items1 - An array of items, each containing a key and optionally children.
+ * @returns A record where each key is mapped to its level in the nested structure.
+ *
+ * @example
+ * ```typescript
+ * const items = [
+ *   { key: '1', children: [{ key: '1-1' }, { key: '1-2', children: [{ key: '1-2-1' }] }] },
+ *   { key: '2' }
+ * ];
+ * const levels = getLevelKeys(items);
+ * console.log(levels); // { '1': 1, '1-1': 2, '1-2': 2, '1-2-1': 3, '2': 1 }
+ * ```
+ */
 export const getLevelKeys = (items1: LevelKeysProps[]) => {
   const key: Record<string, number> = {};
   const func = (items2: LevelKeysProps[], level = 1) => {

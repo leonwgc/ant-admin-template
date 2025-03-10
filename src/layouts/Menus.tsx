@@ -64,7 +64,7 @@ export default (
 
   // only expand one level menu.
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
-    const currentOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    const currentOpenKey = keys.find((key) => !openKeys.includes(key));
 
     if (currentOpenKey !== undefined) {
       const repeatIndex = keys
