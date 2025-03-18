@@ -1,12 +1,13 @@
 import React, { ReactNode, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import { hasPermission, getFlatMenus } from './Menus.helper';
+import { hasPermission } from './Menus.helper';
 import { MenuItem } from '~/config.menu';
+import routePermissions from '~/config.route.permissions';
 
 interface RouteGuardProps {
-    children: ReactNode;
-    operations: string[];
-    menus: MenuItem[];
+  children: ReactNode;
+  operations: string[];
+  menus: MenuItem[];
 }
 
 /**
@@ -18,23 +19,27 @@ interface RouteGuardProps {
  * @param {Array} [props.operations=[]] - The list of operations the user is allowed to perform.
  * @param {Array} props.menus - The list of menu items to check permissions against.
  */
-const RouteGuard: React.FC<RouteGuardProps> = ({ children, operations = [], menus }) => {
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const flatMenus = useMemo(() => getFlatMenus(menus), [menus]);
+const RouteGuard: React.FC<RouteGuardProps> = ({
+  children,
+  operations = [],
+}) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-    useEffect(() => {
-        if (
-            !hasPermission(
-                operations,
-                flatMenus.find((item) => item.route === pathname)?.permissions
-            )
-        ) {
-            navigate('/no-permission', { replace: true });
-        }
-    }, [pathname]);
+  useEffect(() => {
+    if (
+      !hasPermission(
+        operations,
+        routePermissions.find((item) => item.route === pathname)?.permissions
+      )
+    ) {
+      navigate('/no-permission', { replace: true });
+    } else {
+      console.log('authed');
+    }
+  }, [pathname]);
 
-    return children;
+  return children;
 };
 
 export default RouteGuard;
