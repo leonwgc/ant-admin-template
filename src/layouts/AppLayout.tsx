@@ -3,7 +3,6 @@ import { Layout } from '@derbysoft/neat-design';
 import { Outlet } from 'react-router';
 import classNames from 'classnames';
 import { useAppData } from 'simple-redux-store';
-import { menus } from '~/config.menu';
 
 import Header from './Header';
 import Sider from './Sider';
@@ -39,7 +38,7 @@ const AppLayout: React.FC<{
               </Layout.Header>
             )}
             <Layout.Content className="content-layout__content">
-              <RouteGuard menus={menus} operations={operations}>
+              <RouteGuard operations={operations}>
                 <Outlet />
               </RouteGuard>
             </Layout.Content>

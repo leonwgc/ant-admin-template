@@ -2,7 +2,7 @@ import { ConfigProvider, App as AntdApp } from '@derbysoft/neat-design';
 import zhCN from 'antd/es/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-import RouteConfig from './config.route';
+import RouteConfig from './RouteConfig';
 import './App.scss';
 import { useTitle } from 'ahooks';
 

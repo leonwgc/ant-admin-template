@@ -1,13 +1,10 @@
-import React, { ReactNode, useEffect, useMemo } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import { hasPermission } from './Menus.helper';
-import { MenuItem } from '~/config.menu';
-import routePermissions from '~/config.route.permissions';
-
+import routePermissions from '~/config.route';
 interface RouteGuardProps {
   children: ReactNode;
   operations: string[];
-  menus: MenuItem[];
 }
 
 /**
