@@ -5,6 +5,7 @@ import Menus from './Menus';
 import SiderToggleButton from './SiderToggleButton';
 import SkeletonLoading from './SkeletonLoading';
 import { menus } from '~/config.menu';
+import Footer from './Footer';
 
 type Props = SiderProps & {
   loading?: boolean;
@@ -57,6 +58,7 @@ export default ({ loading, ...props }: Props) => {
       >
         <Menus collapsed={collapsed} menus={menus} />
         <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
+        <Footer />
       </SkeletonLoading>
     </Layout.Sider>
   );
