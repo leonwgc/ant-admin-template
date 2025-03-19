@@ -1,27 +1,44 @@
-import { Layout, SiderProps, Skeleton } from '@derbysoft/neat-design';
+import { Layout, SiderProps } from '@derbysoft/neat-design';
 import { useEffect, useState } from 'react';
-import SiderToggleButton from './SiderToggleButton';
+import { useLocalStorageState } from 'ahooks';
 import Menus from './Menus';
-import { menus } from '~/config.menu';
+import SiderToggleButton from './SiderToggleButton';
 import SkeletonLoading from './SkeletonLoading';
+import { menus } from '~/config.menu';
 
 type Props = SiderProps & {
   loading?: boolean;
 };
 
+export const NAV_MENU_COLLAPSED_KEY = 'NAV_MENU_COLLAPSED';
+
 /**
- * Sider
- * @param {Props} props
- * @returns {JSX.Element}
+ * A functional component that renders a collapsible sidebar (Sider) with a toggle button.
+ * The sidebar's width and collapsed state are managed using local storage and React state.
+ *
+ * @param {Object} props - The props object.
+ * @param {boolean} props.loading - Indicates whether the content inside the sidebar is loading.
+ * @param {Object} props.rest - Additional props to be passed to the Layout.Sider component.
+ *
+ * @returns {JSX.Element} The rendered Sider component.
  */
 export default ({ loading, ...props }: Props) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [value, setValue] = useLocalStorageState<boolean>(
+    NAV_MENU_COLLAPSED_KEY,
+    {
+      defaultValue: false,
+    }
+  );
+
+  const [collapsed, setCollapsed] = useState(value);
 
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--menu-width',
       collapsed ? '56px' : '256px'
     );
+
+    setValue(collapsed);
   }, [collapsed]);
 
   return (
@@ -34,7 +51,10 @@ export default ({ loading, ...props }: Props) => {
       theme="light"
       {...props}
     >
-      <SkeletonLoading loading={loading} paragraph={{ rows: 2 }}>
+      <SkeletonLoading
+        loading={loading}
+        paragraph={{ rows: 2, width: value ? '100%' : ['50%', '100%'] }}
+      >
         <Menus collapsed={collapsed} menus={menus} />
         <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
       </SkeletonLoading>

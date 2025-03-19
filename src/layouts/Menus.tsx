@@ -10,6 +10,8 @@ import {
   LevelKeysProps,
   getMenuPaths,
 } from './Menus.helper';
+import { useLocalStorageState } from 'ahooks';
+import { NAV_MENU_COLLAPSED_KEY } from './Sider';
 
 type Props = MenuProps & {
   afterClick?: () => void;
@@ -33,6 +35,7 @@ export default (props: Props) => {
   const { afterClick, collapsed, menus, ...menuProps } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [menuCollapsed] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { operations = [] } = useAppData();
@@ -52,7 +55,9 @@ export default (props: Props) => {
     if (paths.length) {
       const key = paths[paths.length - 1].key as string;
       setSelectedKeys([key]);
-      setOpenKeys(paths.slice(0, -1).map((item) => item.key) as string[]);
+      if (!menuCollapsed) {
+        setOpenKeys(paths.slice(0, -1).map((item) => item.key) as string[]);
+      }
     }
   }, [pathname, filterMenus]);
 
