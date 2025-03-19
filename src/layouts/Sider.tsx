@@ -1,16 +1,20 @@
-import { Layout, SiderProps } from '@derbysoft/neat-design';
+import { Layout, SiderProps, Skeleton } from '@derbysoft/neat-design';
 import { useEffect, useState } from 'react';
 import SiderToggleButton from './SiderToggleButton';
 import Menus from './Menus';
 import { menus } from '~/config.menu';
+import SkeletonLoading from './SkeletonLoading';
 
+type Props = SiderProps & {
+  loading?: boolean;
+};
 
 /**
  * Sider
- * @param {SiderProps} props
+ * @param {Props} props
  * @returns {JSX.Element}
  */
-export default (props: SiderProps) => {
+export default ({ loading, ...props }: Props) => {
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
@@ -30,8 +34,10 @@ export default (props: SiderProps) => {
       theme="light"
       {...props}
     >
-      <Menus collapsed={collapsed} menus={menus} />
-      <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
+      <SkeletonLoading loading={loading} paragraph={{ rows: 2 }}>
+        <Menus collapsed={collapsed} menus={menus} />
+        <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
+      </SkeletonLoading>
     </Layout.Sider>
   );
 };
