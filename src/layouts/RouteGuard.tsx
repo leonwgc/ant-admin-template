@@ -1,5 +1,5 @@
-import React, { ReactNode, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import React, { ReactNode } from 'react';
+import { useLocation, Navigate } from 'react-router';
 import { hasPermission } from './Menus.helper';
 import routePermissions from '~/config.route';
 interface RouteGuardProps {
@@ -20,23 +20,16 @@ const RouteGuard: React.FC<RouteGuardProps> = ({
   children,
   operations = [],
 }) => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    if (
-      !hasPermission(
-        operations,
-        routePermissions.find((item) => item.route === pathname)?.permissions
-      )
-    ) {
-      navigate('/no-permission', { replace: true });
-    } else {
-      console.log('authed');
-    }
-  }, [pathname]);
-
-  return children;
+  return !hasPermission(
+    operations,
+    routePermissions.find((item) => item.route === pathname)?.permissions
+  ) ? (
+    <Navigate to="/no-permission" replace />
+  ) : (
+    children
+  );
 };
 
 export default RouteGuard;
