@@ -3,6 +3,7 @@ import './Footer.scss';
 import { useLocalStorageState } from 'ahooks';
 import { NAV_MENU_COLLAPSED_KEY } from './Sider';
 import { CommonUseOutlined } from '@derbysoft/neat-design-icons';
+import { AnimatePresence, motion } from 'motion/react';
 
 const Footer = () => {
   const [value, _] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY, {
@@ -10,14 +11,22 @@ const Footer = () => {
   });
   return (
     <div className="app-footer">
-      {value ? (
-        <CommonUseOutlined style={{ fontSize: 20 }} />
-      ) : (
-        <div>
-          <div>© 2002 - 2025 xxx Inc.</div>
-          <div>All rights reserved. </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {value ? (
+          <CommonUseOutlined
+            style={{ fontSize: 20, color: 'rgb(0, 19, 28)' }}
+          />
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div>© 2002 - 2025 xxx Inc.</div>
+            <div>All rights reserved. </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
