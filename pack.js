@@ -1,5 +1,5 @@
-const { run } = require('packrs');
-// import { run } from 'packrs';
+const {run} = require('packrs');
+
 
 run({
   proxy: [

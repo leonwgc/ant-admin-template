@@ -1,10 +1,8 @@
-import React from 'react';
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
   CopyOutlined,
-  RightOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import operations from './config.operations';
@@ -33,19 +31,16 @@ export const menus: MenuItem[] = [
       {
         key: 'fadada-eui',
         label: 'EUI',
-        icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/fadada',
       },
       {
         key: 'fadada-tpl-list',
         label: 'Template List',
-        icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/fadada/template-list',
       },
       {
         key: 'fadada-sign',
         label: 'Sign',
-        icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/fadada/sign',
       },
     ],
@@ -58,19 +53,16 @@ export const menus: MenuItem[] = [
       {
         key: 'docusign-login',
         label: 'Docusign Login',
-        icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/docusign/login',
       },
       {
         key: 'docusign-users',
         label: 'Docusign Users',
-        icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/docusign/users',
       },
       {
         key: 'docusign-forms',
         label: 'Create Envelope and send',
-        icon: <RightOutlined style={{ fontSize: 14 }} />,
         route: '/app/docusign/forms',
       },
     ],
@@ -128,8 +120,6 @@ export const menus: MenuItem[] = [
         route: '/app/logs/log',
         permissions: [operations.VIEW_LOG],
       },
-    ]
+    ],
   },
 ];
-
-
