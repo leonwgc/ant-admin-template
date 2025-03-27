@@ -37,5 +37,8 @@ run({
         docusignApiTag: '-d',
       },
     },
+    performance: {
+      buildCache: true
+    }
   },
 });
