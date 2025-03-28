@@ -37,6 +37,28 @@ type Props = {
   currentStep: number;
 } & HTMLAttributes<HTMLDivElement>;
 
+/**
+ * A React functional component that renders a step-by-step progress indicator.
+ *
+ * @component
+ * @param {Props} props - The props for the Steps component.
+ * @param {Array<{ icon?: React.ReactNode; title: string }>} props.steps - An array of step objects, each containing an optional `icon` and a `title`.
+ * @param {number} props.currentStep - The index of the current step in the progress indicator.
+ * @param {React.HTMLAttributes<HTMLDivElement>} [props.rest] - Additional props to be passed to the root div element.
+ *
+ * @returns {JSX.Element} A JSX element representing the steps component.
+ *
+ * @example
+ * ```tsx
+ * const steps = [
+ *   { title: 'Step 1' },
+ *   { title: 'Step 2' },
+ *   { title: 'Step 3' },
+ * ];
+ *
+ * <Steps steps={steps} currentStep={1} />
+ * ```
+ */
 const Steps: React.FC<Props> = ({ steps, currentStep, ...rest }) => {
   return (
     <div className={baseClassName} {...rest}>
