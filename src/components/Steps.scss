@@ -1,4 +1,4 @@
-.steps-container {
+.ds-steps-nav {
     position: relative;
     height: 64px;
     background-color: rgba(237, 238, 239, 1);
@@ -6,7 +6,7 @@
     width: 100%;
     max-width: 100%;
 
-    .step-item {
+    &__item {
         padding: 16px 0;
         display: flex;
         flex: 1;
@@ -16,7 +16,6 @@
         font-size: 16px;
         position: relative;
         color: rgba(0, 19, 28, 1);
-
 
         &.current {
             background-color: rgba(246, 247, 247, 1);

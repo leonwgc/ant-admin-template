@@ -1,16 +1,17 @@
 import React from 'react';
-import './Steps.scss';
 import classNames from 'classnames';
-import {
-  SuccessCircleOutlined,
-  SuccessCircleFilled,
-} from '@derbysoft/neat-design-icons';
-import { Flex, Space } from '@derbysoft/neat-design';
+import { SuccessCircleOutlined } from '@derbysoft/neat-design-icons';
+import { Space } from '@derbysoft/neat-design';
+import './Steps.scss';
 
 interface StepProps {
   icon?: React.ReactNode;
   title?: string;
 }
+
+const baseClassName = 'ds-steps-nav';
+
+const getElementClassName = (name) => baseClassName + '__' + name;
 
 const CircleWithNumber = ({ number }) => {
   return (
@@ -34,13 +35,14 @@ const CircleWithNumber = ({ number }) => {
 const Steps: React.FC<{ steps: StepProps[]; currentStep: number }> = ({
   steps,
   currentStep,
+  ...rest
 }) => {
   return (
-    <div className="steps-container">
+    <div className={baseClassName} {...rest}>
       {steps.map((step, index) => (
         <div
           key={index}
-          className={classNames('step-item', {
+          className={classNames(getElementClassName('item'), {
             current: index === currentStep,
             done: index < currentStep,
             wait: index > currentStep,
@@ -56,7 +58,7 @@ const Steps: React.FC<{ steps: StepProps[]; currentStep: number }> = ({
             ) : (
               <CircleWithNumber number={index + 1} />
             )}
-            <div className="step-title">{step.title}</div>
+            <span>{step.title}</span>
           </Space>
 
           {index < steps.length - 1 && <div className="arrow" />}
