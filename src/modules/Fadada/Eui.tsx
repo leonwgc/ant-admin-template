@@ -40,7 +40,7 @@ export default () => {
     <>
       <Button onClick={() => setOpen(true)}>Auth</Button>
 
-      <Steps steps={steps} currentStep={step} />
+      <Steps steps={steps} currentStep={step} style={{ margin: '48px 0' }} />
 
       <Button
         type="primary"

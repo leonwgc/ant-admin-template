@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { SuccessCircleOutlined } from '@derbysoft/neat-design-icons';
 import { Space } from '@derbysoft/neat-design';
@@ -32,11 +32,12 @@ const CircleWithNumber = ({ number }) => {
   );
 };
 
-const Steps: React.FC<{ steps: StepProps[]; currentStep: number }> = ({
-  steps,
-  currentStep,
-  ...rest
-}) => {
+type Props = {
+  steps: StepProps[];
+  currentStep: number;
+} & HTMLAttributes<HTMLDivElement>;
+
+const Steps: React.FC<Props> = ({ steps, currentStep, ...rest }) => {
   return (
     <div className={baseClassName} {...rest}>
       {steps.map((step, index) => (
