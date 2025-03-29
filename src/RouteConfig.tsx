@@ -13,6 +13,7 @@ import {
 
 import { Eui, TemplateList, Sign } from './modules/Fadada';
 import Callback from './modules/Common/Callback';
+import StepsDemo from './modules/Demo/Steps.demo';
 
 const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
 const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
@@ -41,6 +42,9 @@ const RouteConfig = () => {
         </Route>
         <Route path="app" element={<AppLayout />}>
           <Route index element={<Welcome />} />
+          <Route path="components">
+            <Route index path="steps" element={<StepsDemo />} />
+          </Route>
           <Route path="docusign">
             <Route index element={<DocuSignLogin />} />
             <Route path="login" element={<DocuSignLogin />} />

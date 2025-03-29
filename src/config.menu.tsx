@@ -24,6 +24,18 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
 
 export const menus: MenuItem[] = [
   {
+    key: 'components',
+    label: 'Components',
+    icon: <CopyOutlined />,
+    children: [
+      {
+        key: 'components-steps',
+        label: 'Steps',
+        route: '/app/components/steps',
+      },
+    ],
+  },
+  {
     key: 'fadada',
     label: 'Fadada',
     icon: <CopyOutlined />,
