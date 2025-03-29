@@ -1,0 +1,96 @@
+.ds-steps-nav {
+    position: relative;
+    height: 64px;
+    background-color: rgba(237, 238, 239, 1);
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+
+    &__item {
+        padding: 16px 0;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        line-height: 24px;
+        font-weight: 500;
+        font-size: 16px;
+        position: relative;
+        color: rgba(0, 19, 28, 1);
+
+        &.current {
+            background-color: rgba(246, 247, 247, 1);
+
+            .arrow {
+                &::after {
+                    border-left-color: rgba(246, 247, 247, 1);
+                }
+            }
+
+            .circle-with-number {
+                background-color: rgba(0, 19, 28, 1);
+                color: #fff;
+            }
+        }
+
+        &.done {
+            background-color: rgba(244, 251, 243, 1);
+
+            .arrow {
+                &::after {
+                    border-left-color: rgba(244, 251, 243, 1);
+                }
+            }
+        }
+
+        &.wait {
+            color: rgba(146, 154, 158, 1);
+
+            // as parent
+            .arrow {
+                &::after {
+                    border-left-color: rgba(237, 238, 239, 1);
+                }
+            }
+
+            .circle-with-number {
+                border: 1px solid rgba(209, 213, 214, 1);
+                color: rgba(209, 213, 214, 1);
+            }
+        }
+
+
+        .arrow {
+            position: absolute;
+            z-index: 1;
+            right: -24px; // width/2 + 2
+            top: 0;
+            width: 44px;
+            height: 64px;
+            background: transparent;
+            overflow: hidden;
+
+            &::before,
+            &::after {
+                position: absolute;
+                content: ' ';
+                display: block;
+            }
+
+            &::before {
+                border: 64px solid transparent;
+                border-left: 44px solid #fff; // affect angle
+                top: -32px;
+                left: -2px;
+                z-index: 1;
+            }
+
+            &::after {
+                border: 64px solid transparent;
+                border-left: 44px solid transparent;
+                top: -32px;
+                left: -10px; // thickness
+                z-index: 2;
+            }
+        }
+    }
+}
