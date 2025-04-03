@@ -50,6 +50,13 @@ function generateRandomString(length) {
   return result;
 }
 
+app.get('/corp/get-auth-url', (req, res) => {
+  return res.json({
+    authUrl:
+      'https://80002452.uat-e.fadada.com/authorizeui/corp/login?authSerial=d047bab52bd34ffeb21079d909f7cad3',
+  });
+});
+
 // 创建获取模板列表的GET API, 参考templateClientAgent 定义，获取模板列表
 app.get('/get-sign-template-list', async (req, res) => {
   try {
