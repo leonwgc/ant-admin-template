@@ -50,7 +50,7 @@ function generateRandomString(length) {
   return result;
 }
 
-app.get('/corp/get-auth-url', (req, res) => {
+app.post('/corp/get-auth-url', (req, res) => {
   return res.json({
     authUrl:
       'https://80002452.uat-e.fadada.com/authorizeui/corp/login?authSerial=d047bab52bd34ffeb21079d909f7cad3',
