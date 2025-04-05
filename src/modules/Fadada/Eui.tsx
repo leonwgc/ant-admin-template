@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React, { useEffect, useRef } from 'react';
 import { showAuthEUI, setEnv } from 'e-sign-1';
 
-setEnv('production');
+setEnv('dev');
 
 export default () => {
   const [open, setOpen] = React.useState(false);

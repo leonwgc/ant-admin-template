@@ -22,13 +22,16 @@ run({
       logLevel: 'silent',
     },
     {
+      // applied to /e-sign-dev, /e-sign-uat, and /e-sign
       context: ['/e-sign'],
       target: 'http://localhost:3002',
       pathRewrite: {
+        '^/e-sign-dev': '',
+        '^/e-sign-uat': '',
         '^/e-sign': '',
       },
       changeOrigin: true,
-      logLevel: 'silent',
+      logLevel: 'info'
     },
   ],
   rsConfig: {
