@@ -1,6 +1,8 @@
 import { Button } from 'antd';
 import React, { useEffect, useRef } from 'react';
-import { FullScreenModal } from 'e-sign';
+import { showAuthEUI, setEnv } from 'e-sign';
+
+setEnv('production');
 
 export default () => {
   const [open, setOpen] = React.useState(false);
@@ -16,9 +18,10 @@ export default () => {
   }, []);
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Auth</Button>
+      <Button onClick={() => showAuthEUI('123')}>show Auth</Button>
+      {/* <Button onClick={() => setOpen(true)}>Auth</Button> */}
 
-      <FullScreenModal
+      {/* <FullScreenModal
         open={open}
         onClose={() => {
           setOpen(false);
@@ -33,7 +36,7 @@ export default () => {
           }}
           src="https://80002452.uat-e.fadada.com/authorizeui/corp/login?authSerial=59cbdab84fec4f0791ccd0cdb417a275"
         />
-      </FullScreenModal>
+      </FullScreenModal> */}
     </>
   );
 };

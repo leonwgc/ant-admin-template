@@ -21,6 +21,15 @@ run({
       changeOrigin: true,
       logLevel: 'silent',
     },
+    {
+      context: ['/e-sign'],
+      target: 'http://localhost:3002',
+      pathRewrite: {
+        '^/e-sign': '',
+      },
+      changeOrigin: true,
+      logLevel: 'silent',
+    },
   ],
   rsConfig: {
     source: {
