@@ -167,6 +167,11 @@ app.post('/signature', async (req, res) => {
               fieldId: 'amount',
               fieldValue: req.body?.amount || 'contract amount: $100,0000',
             },
+            {
+              docId: '99125895',
+              fieldId: 'companyName',
+              fieldValue: 'test company name',
+            },
           ],
         });
 
