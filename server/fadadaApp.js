@@ -105,18 +105,25 @@ app.post('/signature', async (req, res) => {
         idType: 'corp',
         openId: 'e287b939b0f24099ba67c27bb2ddcd42',
       },
-      initiatorMemberId: '1879804313011265536',
-      signTaskSubject: 'pc合同-node-' + (req.body?.subject || '') + '-' + generateRandomString(2),
+      // 如不传表示该任务由APPID创建。
+      // 在企业主体发起任务时，客户可指定成员id，作为该任务的创建者，该成员可以在SaaS查看、删除、作废该任务等
+      // initiatorMemberId: '1879804313011265536',
+      signTaskSubject:
+        'pc合同-node-' +
+        (req.body?.subject || '') +
+        '-' +
+        generateRandomString(2),
       signDocType: 'contract',
       signTemplateId: '1741082402611146333', // PC 专业版合同
       autoStart: false, // fill some value first
-      "freeSignType": "business",
+      freeSignType: 'business',
       // 免验证签场景🐴
       businessId: '5986b781c9d0c68ac8956411d89abb15',
+      catalogId: '1744770356272160820', // 放入smile-pc 文件夹
       actors: [
         {
-          "signConfigInfo": {
-            "requestVerifyFree": true
+          signConfigInfo: {
+            requestVerifyFree: true,
           },
           actor: {
             actorId: '甲方',
@@ -133,7 +140,8 @@ app.post('/signature', async (req, res) => {
             //   },
             // ],
           },
-        }, {
+        },
+        {
           actor: {
             actorId: '乙方',
             actorType: 'corp',
@@ -148,7 +156,6 @@ app.post('/signature', async (req, res) => {
             //   },
             // ],
           },
-
         },
       ],
     });
@@ -184,11 +191,9 @@ app.post('/signature', async (req, res) => {
           message: 'Electronic signature initiated successfully!',
           data: response.data,
         });
-
       } catch (ex) {
         console.log(ex);
       }
-
     } else {
       res.status(400).json({
         message: 'Failed to initiate electronic signature.',
