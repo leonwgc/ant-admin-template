@@ -124,23 +124,23 @@ export const getFlatMenus = (items: MenuItem[]) => {
 
 /**
  * Check if the current user has the required permission
- * @param operations The user's operations
- * @param permissions The required operations
- * @returns `true` if the user has the required permission, otherwise `false`
+ * @param userPermissions
+ * @param menuPermissions
+ * @returns
  */
 export const hasPermission = (
-  operations: string[] | undefined,
-  permissions: string[] | undefined
+  userPermissions: string[] | undefined,
+  menuPermissions: string[] | undefined
 ) => {
-  if (!Array.isArray(permissions) || !permissions?.length) {
+  if (!Array.isArray(menuPermissions) || !menuPermissions?.length) {
     return true;
   }
 
-  if (!Array.isArray(operations) || !operations?.length) {
+  if (!Array.isArray(userPermissions) || !userPermissions?.length) {
     return false;
   }
 
-  return permissions.every((item) => operations.includes(item));
+  return menuPermissions.every((item) => userPermissions.includes(item));
 };
 
 /**
