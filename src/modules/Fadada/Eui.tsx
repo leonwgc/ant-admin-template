@@ -1,12 +1,12 @@
-import { Button } from 'antd';
 import React, { useEffect, useRef } from 'react';
-import { showAuthEUI, setEnv } from 'e-sign-1';
 
-setEnv('dev');
+import { FlexRender } from '@derbysoft/antd-form-builder';
+import { Form, Input, Button } from 'antd';
 
 export default () => {
   const [open, setOpen] = React.useState(false);
   const ref = useRef<HTMLIFrameElement>(null);
+  const [value, setValue] = React.useState('');
 
   useEffect(() => {
     // 授权成功 /callback postMessage to this window .
@@ -18,25 +18,18 @@ export default () => {
   }, []);
   return (
     <>
-      <Button onClick={() => showAuthEUI('123')}>show Auth</Button>
-      {/* <Button onClick={() => setOpen(true)}>Auth</Button> */}
+      <div style={{ margin: '16px 0' }}>current: {value}</div>
 
-      {/* <FullScreenModal
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
-      >
-        <iframe
-          ref={ref}
-          style={{
-            height: '100vh',
-            border: 'none',
-            width: '100%',
-          }}
-          src="https://80002452.uat-e.fadada.com/authorizeui/corp/login?authSerial=59cbdab84fec4f0791ccd0cdb417a275"
+      <Form layout="horizontal">
+        <FlexRender
+          justify="flex-end"
+          layout={[
+            { label: 'name', name: 'name', element: <Input /> },
+            { label: 'age', name: 'age', element: <Input /> },
+          ]}
+          gap={36}
         />
-      </FullScreenModal> */}
+      </Form>
     </>
   );
 };

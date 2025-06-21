@@ -60,7 +60,7 @@ const AppLayout: React.FC<{
 
             <SkeletonLoading loading={loading} paragraph={{ rows: 5 }}>
               <Layout.Content className="content-layout__content">
-                <RouteGuard operations={userOperations}>
+                <RouteGuard userPermissions={userOperations}>
                   <Outlet />
                 </RouteGuard>
               </Layout.Content>
