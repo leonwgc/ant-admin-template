@@ -31,7 +31,7 @@ run({
         '^/e-sign': '',
       },
       changeOrigin: true,
-      logLevel: 'info'
+      logLevel: 'silent',
     },
   ],
   rsConfig: {
