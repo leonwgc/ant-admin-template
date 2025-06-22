@@ -1,5 +1,4 @@
-const {run} = require('packrs');
-
+import { run } from 'packrs';
 
 run({
   proxy: [
@@ -50,7 +49,7 @@ run({
       },
     },
     performance: {
-      buildCache: true
-    }
+      buildCache: true,
+    },
   },
 });
