@@ -39,6 +39,7 @@ module.exports = {
         project: true,
       },
       rules: {
+        'react/display-name': 0,
         '@typescript-eslint/ban-ts-comment': 0,
         '@typescript-eslint/no-explicit-any': 0,
         '@typescript-eslint/no-unsafe-argument': 0,
