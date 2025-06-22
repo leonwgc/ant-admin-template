@@ -1,3 +1,9 @@
+/**
+ * ESLint configuration for this project.
+ * - Ignores build, dist, node_modules, git, and tsconfig.json.
+ * - Supports JavaScript, TypeScript, React, and Prettier integration.
+ * - Applies React and TypeScript specific rules for relevant files.
+ */
 import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import tseslint from '@typescript-eslint/eslint-plugin';
