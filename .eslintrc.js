@@ -16,6 +16,11 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
   },
+  settings: {
+    react: {
+      version: 'detect', // 自动检测已安装的 React 版本
+    },
+  },
   rules: {
     'no-prototype-builtins': 0,
     'quotes': [2, 'single', 'avoid-escape'],
