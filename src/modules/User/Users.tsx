@@ -21,7 +21,7 @@ interface User {
 }
 
 const getTableData = (
-  { current, pageSize, sorter, filters, extra },
+  { current, pageSize },
   formData: FormData
 ): Promise<TableDataResult<User>> => {
   const query = `page=${current}&size=${pageSize}`;
@@ -94,7 +94,7 @@ export default () => {
         },
       },
     ],
-    []
+    [submit, reset]
   );
 
   return (
