@@ -4,17 +4,12 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import { default as eslintPluginPrettierRecommended } from 'eslint-plugin-prettier/recommended';
 
 export default defineConfig([
   // Global configuration
   {
-    ignores: [
-      'node_modules/',
-      'build/',
-      'dist/',
-      '.git/',
-      'tsconfig.json',
-    ],
+    ignores: ['node_modules/', 'build/', 'dist/', '.git/', 'tsconfig.json'],
   },
   // Base config for all files
   {
@@ -38,6 +33,7 @@ export default defineConfig([
     plugins: {
       'react': reactPlugin,
       'react-hooks': reactHooksPlugin,
+      eslintPluginPrettierRecommended,
     },
     settings: {
       react: {
