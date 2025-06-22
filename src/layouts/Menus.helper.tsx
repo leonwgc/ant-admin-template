@@ -46,7 +46,7 @@ export const getMenuPaths = (pathname, menus) => {
       searchResult.paths.push(item);
     }
 
-    for (let childItem of childItems) {
+    for (const childItem of childItems) {
       if (childItem.route === pathname) {
         searchResult.paths.push(childItem);
         searchResult.found = true;

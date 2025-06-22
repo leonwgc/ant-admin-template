@@ -30,7 +30,7 @@ async function enableMocking() {
 }
 
 function start() {
-  createRoot(document.getElementById('app') as HTMLElement).render(
+  createRoot(document.getElementById('app')).render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
