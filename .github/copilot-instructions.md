@@ -33,6 +33,7 @@
 30. 使用 `React.lazy` 和 `Suspense` 实现代码分割，优化加载性能。
 31. 确保所有的异步操作（如 API 调用）都在 `useEffect` 中处理，并使用适当的错误处理机制。
 32. 使用 TypeScript 的 `Partial` 和 `Pick` 等工具类型来简化 props 类型定义。
+33. 本项目的UI组件库使用 Ant Design v5，确保遵循 Ant Design 的设计规范和组件使用方式。
 
 
 ---
