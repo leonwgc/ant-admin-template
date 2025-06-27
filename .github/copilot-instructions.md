@@ -20,6 +20,6 @@
 - 使用 `useCallback` 和 `useMemo` 优化性能，避免不必要的重新渲染。
 - 确保所有的副作用都在 `useEffect` 中处理，避免在组件渲染过程中直接调用副作用函数。
 - 本项目的UI组件库使用 Ant Design v5，确保遵循 Ant Design 的设计规范和组件使用方式。
-- commit message 必须符合规范,消息体使用中文并保持精简，使用英文小写，格式为 `feat: 添加新功能` 或 `fix: 修复问题` 等。
+- commit message 必须符合规范并保持字数精简，格式为 `feat: 添加新功能` 或 `fix: 修复问题` 等。
 
----ßßßß
+---
