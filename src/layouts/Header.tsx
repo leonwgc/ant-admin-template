@@ -1,13 +1,13 @@
 import React from 'react';
 import { Layout, Avatar, Space } from '@derbysoft/neat-design';
 import DerbySoftLogo from './Logo';
-import { useAppData } from 'simple-redux-store';
 import { MenuOutlined } from '@ant-design/icons';
 import { useToggle } from 'ahooks';
 import MobileMenus from './MobileMenus';
+import { useBookEngineStore } from '~/store';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
-  const { operations = [] } = useAppData();
+  const { operations = [] } = useBookEngineStore();
   const [open, { setRight, setLeft }] = useToggle(false);
   return (
     <>

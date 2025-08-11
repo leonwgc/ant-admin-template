@@ -8,7 +8,7 @@ import {
   Space,
   Table,
 } from '@derbysoft/neat-design';
-import { FlexRender, Item } from 'antd-form-render';
+import { FlexRender, Item } from '@derbysoft/antd-form-builder';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router';
 import { post } from '../../utils/fetch';

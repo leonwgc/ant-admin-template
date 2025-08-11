@@ -4,7 +4,7 @@ import { hasPermission } from './Menus.helper';
 import routePermissions from '~/config.route';
 interface RouteGuardProps {
   children: ReactNode;
-  userPermissions: string[];
+  userPermissions?: string[];
 }
 
 const RouteGuard: React.FC<RouteGuardProps> = ({
