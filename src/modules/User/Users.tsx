@@ -11,7 +11,7 @@ import {
 import { FlexRender, Item } from '@derbysoft/antd-form-builder';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router';
-import { post } from '../../utils/fetch';
+import req from '~/req';
 
 interface User {
   key: React.Key;
@@ -26,7 +26,7 @@ const getTableData = (
 ): Promise<TableDataResult<User>> => {
   const query = `page=${current}&size=${pageSize}`;
 
-  return post(`/users?${query}`, formData).then((res) => {
+  return req.post(`/users?${query}`, formData).then((res) => {
     return {
       total: res.data.total,
       list: res.data.list,
