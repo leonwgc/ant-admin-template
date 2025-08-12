@@ -2,6 +2,7 @@ import { menus } from './config.menu';
 import operations from './config.operations';
 
 // all routes which don't exist in menus.
+// TODO: remove
 const extraRoutes = [
   {
     route: '/app/users/add',
