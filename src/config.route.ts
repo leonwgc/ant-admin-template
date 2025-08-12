@@ -5,11 +5,11 @@ import operations from './config.operations';
 const extraRoutes = [
   {
     route: '/app/users/add',
-    permissions: [operations.CREATE_USER],
+    permissions: [],
   },
   {
     route: '/app/users/edit',
-    permissions: [operations.UPDATE_USER],
+    permissions: [],
   },
 ];
 
