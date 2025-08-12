@@ -23,7 +23,7 @@ const AppLayout: React.FC<{
   hasContentHeader?: boolean;
 }> = ({ hasSider = true, hasContentHeader = false }) => {
   const {} = useBookEngineStore();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   return (
     <Layout className={'app-layout'}>
