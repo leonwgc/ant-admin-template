@@ -1,0 +1,65 @@
+@import 'scss/common.scss';
+
+.form-profile {
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px 0 0 0;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: 0 32px 24px 32px;
+    border-bottom: 1px solid #f0f0f0;
+
+    .form-profile__email-block {
+      margin-left: 24px;
+
+      .form-profile__email {
+        font-size: 18px;
+        font-weight: 500;
+        color: #222;
+      }
+
+      .form-profile__tip {
+        font-size: 12px;
+        color: #888;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  &__form {
+    padding: 32px;
+  }
+
+  &__section {
+    margin-bottom: 32px;
+  }
+
+  &__section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #222;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  &__update-btn {
+    min-width: 120px;
+  }
+
+  &__icon-delete {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url('data:image/svg+xml;utf8,<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L4 12M4 4l8 8" stroke="%23BFBFBF" stroke-linecap="round" stroke-width="1.5"/></svg>')
+      center center no-repeat;
+    cursor: pointer;
+  }
+}

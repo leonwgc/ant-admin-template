@@ -31,4 +31,18 @@ export const menus: MenuItem[] = [
       },
     ],
   },
+  {
+    key: 'form',
+    label: 'Forms',
+    icon: <MailOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'form1',
+        label: 'Form1',
+        route: '/app/forms',
+        permissions: [],
+      },
+    ],
+  },
 ];

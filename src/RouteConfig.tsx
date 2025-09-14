@@ -6,6 +6,8 @@ import { Users, AddUser, EditUser } from './pages/User';
 const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
+const Form = lazy(() => import('./pages/Form/MyForm'));
+
 /**
  * RouteConfig
  *
@@ -31,7 +33,11 @@ const RouteConfig = () => {
             <Route path="add" element={<AddUser />} />
             <Route path="edit" element={<EditUser />} />
           </Route>
+          <Route path="forms">
+            <Route index element={<Form />} />
+          </Route>
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
