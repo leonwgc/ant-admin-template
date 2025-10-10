@@ -8,6 +8,7 @@ const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
 const Form = lazy(() => import('./pages/Form/MyForm'));
 const DynamicList = lazy(() => import('./pages/Form/DynamicList'));
+const VirtualList = lazy(() => import('./pages/Form/VirtualLists'));
 
 /**
  * RouteConfig
@@ -37,6 +38,7 @@ const RouteConfig = () => {
           <Route path="forms">
             <Route index element={<Form />} />
             <Route path="dynamic-list" element={<DynamicList />} />
+            <Route path="virtual-list" element={<VirtualList />} />
           </Route>
         </Route>
 

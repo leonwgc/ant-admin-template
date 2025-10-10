@@ -49,6 +49,12 @@ export const menus: MenuItem[] = [
         route: '/app/forms/dynamic-list',
         permissions: [],
       },
+      {
+        key: 'virtual-list',
+        label: 'Virtual List',
+        route: '/app/forms/virtual-list',
+        permissions: [],
+      },
     ],
   },
 ];
