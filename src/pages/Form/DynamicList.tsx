@@ -14,7 +14,7 @@ import { Button, Flex, Input, Space } from 'antd';
 
 export default () => {
   const { list, remove, batchRemove, getKey, insert, replace } =
-    useDynamicList<string>(['']);
+    useDynamicList<string>(['1']);
 
   const listIndexes = list.map((item, index) => index);
 
@@ -24,7 +24,7 @@ export default () => {
         style={{ width: 300 }}
         placeholder="Please enter name"
         onChange={(e) => replace(index, e.target.value)}
-        value={item.name}
+        value={item}
       />
 
       {list.length > 1 && (
