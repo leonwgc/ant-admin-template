@@ -12,20 +12,9 @@ import { MinusCircleOutlined } from '@derbysoft/neat-design-icons';
 import { useDynamicList } from 'ahooks';
 import { Button, Flex, Input, Space } from 'antd';
 
-type Item = {
-  id: number;
-  name: string;
-};
-
-let nextId = 2;
-
-const getId = () => {
-  return nextId++;
-};
-
 export default () => {
   const { list, remove, batchRemove, getKey, insert, replace } =
-    useDynamicList<Item>([{ id: 1, name: '' }]);
+    useDynamicList<string>(['']);
 
   const listIndexes = list.map((item, index) => index);
 
@@ -34,7 +23,7 @@ export default () => {
       <Input
         style={{ width: 300 }}
         placeholder="Please enter name"
-        onChange={(e) => replace(index, { ...item, name: e.target.value })}
+        onChange={(e) => replace(index, e.target.value)}
         value={item.name}
       />
 
@@ -57,8 +46,7 @@ export default () => {
         <Button
           type="primary"
           onClick={() => {
-            const id = getId();
-            insert(list.length, { id, name: '' });
+            insert(list.length, '');
           }}
         >
           Add
