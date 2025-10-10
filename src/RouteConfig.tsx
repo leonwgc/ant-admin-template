@@ -7,6 +7,7 @@ const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
 const Form = lazy(() => import('./pages/Form/MyForm'));
+const DynamicList = lazy(() => import('./pages/Form/DynamicList'));
 
 /**
  * RouteConfig
@@ -35,6 +36,7 @@ const RouteConfig = () => {
           </Route>
           <Route path="forms">
             <Route index element={<Form />} />
+            <Route path="dynamic-list" element={<DynamicList />} />
           </Route>
         </Route>
 

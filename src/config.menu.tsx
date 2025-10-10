@@ -43,6 +43,12 @@ export const menus: MenuItem[] = [
         route: '/app/forms',
         permissions: [],
       },
+      {
+        key: 'dynamic-list',
+        label: 'Dynamic List',
+        route: '/app/forms/dynamic-list',
+        permissions: [],
+      },
     ],
   },
 ];
