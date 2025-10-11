@@ -11,7 +11,7 @@ export default function useNavTo() {
   const nav = useNavigate();
 
   const navTo = useCallback(
-    (path, qs, keepSearch = true) => {
+    (path, qs = {}, keepSearch = true) => {
       const uri = URI();
       const search = uri.search(true) || {};
       nav(
@@ -22,7 +22,9 @@ export default function useNavTo() {
                   ...search,
                   ...qs,
                 }
-              : qs
+              : {
+                  ...qs,
+                }
           )
           .valueOf()
       );

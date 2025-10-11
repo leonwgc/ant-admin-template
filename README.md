@@ -1,6 +1,6 @@
 ## 项目简介
 
-book engine pc 是一个基于 React + TypeScript 的pc端预订引擎项目，采用 Ant Design v5 作为 UI 组件库，遵循高可维护性和可扩展性设计原则。
+ant admin template 是一个基于 React + TypeScript 的pc端预订引擎项目，采用 Ant Design v5 作为 UI 组件库，遵循高可维护性和可扩展性设计原则。
 
 ## 技术栈
 

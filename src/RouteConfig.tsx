@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router';
 import AppLayout from './layouts/AppLayout';
 import { lazy, Suspense } from 'react';
 import { Users, AddUser, EditUser } from './pages/User';
+import Redirect from './components/Redirect';
 
 const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
@@ -23,7 +24,7 @@ const RouteConfig = () => {
   return (
     <Suspense>
       <Routes>
-        <Route index element={<AppLayout />} />
+        <Route path="/" element={<Redirect to="/app/users/table" />} />
 
         <Route
           path="no-permission"

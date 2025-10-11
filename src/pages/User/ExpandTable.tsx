@@ -25,7 +25,7 @@ interface ExpandableTableProps {
 const columns: TableColumnsType<DataType> = [
   { title: 'Name', dataIndex: 'name', key: 'name', width: 200 },
   { title: 'Age', dataIndex: 'age', key: 'age', width: 100 },
-  { title: 'Address', dataIndex: 'address', key: 'address' },
+  { title: 'Address', dataIndex: 'address', key: 'address', width: 400 },
   {
     title: 'Action',
     dataIndex: '',
@@ -81,7 +81,7 @@ const expandColumns: TableColumnsType<ExpandableTableProps> = [
     width: 200,
   },
   { title: '价格', dataIndex: 'price', width: 100 },
-  { title: '状态', dataIndex: 'status' },
+  { title: '状态', dataIndex: 'status', width: 400 },
   { title: '操作', dataIndex: '', render: () => <a>停用</a>, width: 200 },
 ];
 
@@ -111,6 +111,8 @@ const App: React.FC = () => (
       }}
       tableLayout="fixed"
       dataSource={data}
+      // 固定像素值：直接指定一个具体的像素值，如 800，表示表格内容区域宽度固定为 800px，超出部分可横向滚动
+      scroll={{ x: 800 }}
     />
   </div>
 );
