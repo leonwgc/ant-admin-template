@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Avatar, Space } from '@derbysoft/neat-design';
+import { Layout, Avatar, Space, Flex } from '@derbysoft/neat-design';
 import DerbySoftLogo from './Logo';
 import { MenuOutlined } from '@ant-design/icons';
 import { useToggle } from 'ahooks';
@@ -12,7 +12,14 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   return (
     <>
       <Layout.Header {...props}>
-        <DerbySoftLogo />
+        <Flex
+          align="center"
+          gap={8}
+          style={{ fontSize: 14, fontWeight: 'bold' }}
+        >
+          <DerbySoftLogo />
+          Ant Admin
+        </Flex>
 
         <Space size={16}>
           <MenuOutlined className="mobile-menus" onClick={setRight} />
