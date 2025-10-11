@@ -1,4 +1,4 @@
-import { run } from '@derbysoft/pack';
+import { run } from 'packrs';
 
 run({
   port: 3001,
@@ -28,7 +28,7 @@ run({
   rsConfig: {
     html: {
       template: './index.html',
-      title: '',
+      title: 'ant admin template',
     },
   },
 });

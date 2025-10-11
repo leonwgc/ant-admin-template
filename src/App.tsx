@@ -4,13 +4,10 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import RouteConfig from './RouteConfig';
 import './App.scss';
-import { useTitle } from 'ahooks';
 
 dayjs.locale('zh-cn');
 
 const App = () => {
-  useTitle('App');
-
   return (
     <ConfigProvider
       locale={zhCN}
