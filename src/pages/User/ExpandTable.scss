@@ -1,0 +1,33 @@
+.expand-table {
+  .ds-table-expanded-row {
+    background: #f6f7f7;
+
+    & > td.ds-table-cell {
+      padding: 0 !important;
+      width: 100%;
+    }
+    .ds-table-middle {
+      margin-inline: unset !important;
+      margin-block: unset !important;
+      margin-inline-start: 52px !important;
+
+      & > thead > tr:first-child > th:first-child {
+        border-start-start-radius: 0 !important;
+      }
+    }
+
+    td:has(.ds-table-middle) {
+      background: #f6f7f7 !important;
+    }
+  }
+
+  .ds-table-thead {
+    background: #f6f7f7;
+
+    & tr {
+      & th {
+        background: #f6f7f7;
+      }
+    }
+  }
+}

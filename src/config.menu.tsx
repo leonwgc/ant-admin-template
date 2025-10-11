@@ -29,6 +29,12 @@ export const menus: MenuItem[] = [
         route: '/app/users',
         permissions: [],
       },
+      {
+        key: 'user-2',
+        label: 'Expand Table',
+        route: '/app/users/table',
+        permissions: [],
+      },
     ],
   },
   {

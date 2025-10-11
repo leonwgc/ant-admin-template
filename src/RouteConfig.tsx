@@ -10,6 +10,8 @@ const Form = lazy(() => import('./pages/Form/MyForm'));
 const DynamicList = lazy(() => import('./pages/Form/DynamicList'));
 const VirtualList = lazy(() => import('./pages/Form/VirtualLists'));
 
+const ExpandTable = lazy(() => import('./pages/User/ExpandTable'));
+
 /**
  * RouteConfig
  *
@@ -33,6 +35,7 @@ const RouteConfig = () => {
           <Route path="users">
             <Route index element={<Users />} />
             <Route path="add" element={<AddUser />} />
+            <Route path="table" element={<ExpandTable />} />
             <Route path="edit" element={<EditUser />} />
           </Route>
           <Route path="forms">
