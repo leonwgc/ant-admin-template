@@ -2,6 +2,10 @@ import React from 'react';
 import { Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 import './ExpandTable.scss';
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+} from '@derbysoft/neat-design-icons';
 
 interface DataType {
   key: React.Key;
@@ -95,6 +99,14 @@ const App: React.FC = () => (
           />
         ),
         rowExpandable: (record) => record.extra?.length > 0,
+        expandIcon: ({ expanded, onExpand, record }) =>
+          record.extra?.length > 0 ? (
+            expanded ? (
+              <ArrowDownOutlined onClick={(e) => onExpand(record, e)} />
+            ) : (
+              <ArrowUpOutlined onClick={(e) => onExpand(record, e)} />
+            )
+          ) : null,
       }}
       tableLayout="fixed"
       dataSource={data}
