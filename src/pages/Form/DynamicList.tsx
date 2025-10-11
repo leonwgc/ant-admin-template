@@ -17,7 +17,7 @@ import { useDynamicList } from 'ahooks';
 import { Button, Input, Space } from 'antd';
 
 export default () => {
-  const { list, remove, batchRemove, getKey, insert, replace, move } =
+  const { list, remove, batchRemove, getKey, insert, push, replace, move } =
     useDynamicList<string>(['1']);
 
   const listIndexes = list.map((item, index) => index);
@@ -67,7 +67,8 @@ export default () => {
         <Button
           type="primary"
           onClick={() => {
-            insert(list.length, '');
+            // insert(list.length, '');
+            push('');
           }}
         >
           Add
