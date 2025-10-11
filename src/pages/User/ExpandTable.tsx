@@ -98,6 +98,7 @@ const App: React.FC = () => (
             tableLayout="fixed"
           />
         ),
+        defaultExpandAllRows: true,
         rowExpandable: (record) => record.extra?.length > 0,
         expandIcon: ({ expanded, onExpand, record }) =>
           record.extra?.length > 0 ? (
