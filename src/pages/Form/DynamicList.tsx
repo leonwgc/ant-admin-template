@@ -8,12 +8,16 @@
  *
  * @returns {JSX.Element} The rendered dynamic list form.
  */
-import { MinusCircleOutlined } from '@derbysoft/neat-design-icons';
+import {
+  ArrowDownLineOutlined,
+  ArrowUpLineOutlined,
+  MinusCircleOutlined,
+} from '@derbysoft/neat-design-icons';
 import { useDynamicList } from 'ahooks';
-import { Button, Flex, Input, Space } from 'antd';
+import { Button, Input, Space } from 'antd';
 
 export default () => {
-  const { list, remove, batchRemove, getKey, insert, replace } =
+  const { list, remove, batchRemove, getKey, insert, replace, move } =
     useDynamicList<string>(['1']);
 
   const listIndexes = list.map((item, index) => index);
@@ -22,18 +26,35 @@ export default () => {
     <div key={getKey(index)} style={{ marginBottom: 16 }}>
       <Input
         style={{ width: 300 }}
-        placeholder="Please enter name"
+        placeholder="Please enter"
         onChange={(e) => replace(index, e.target.value)}
         value={item}
       />
 
       {list.length > 1 && (
-        <MinusCircleOutlined
-          style={{ marginLeft: 8 }}
-          onClick={() => {
-            remove(index);
-          }}
-        />
+        <Space style={{ marginLeft: 8 }}>
+          <MinusCircleOutlined
+            onClick={() => {
+              remove(index);
+            }}
+          />
+
+          <Button
+            size="small"
+            type="text"
+            icon={<ArrowUpLineOutlined />}
+            onClick={() => move(index, index - 1)}
+            disabled={index === 0}
+          />
+
+          <Button
+            size="small"
+            type="text"
+            icon={<ArrowDownLineOutlined />}
+            onClick={() => move(index, index + 1)}
+            disabled={index === list.length - 1}
+          />
+        </Space>
       )}
     </div>
   );
@@ -42,7 +63,7 @@ export default () => {
     <>
       {list.map((ele, index) => Row(index, ele))}
 
-      <Flex align="center" style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 16 }}>
         <Button
           type="primary"
           onClick={() => {
@@ -51,7 +72,7 @@ export default () => {
         >
           Add
         </Button>
-      </Flex>
+      </div>
 
       <Space style={{ marginBottom: 16 }}>
         <Button
