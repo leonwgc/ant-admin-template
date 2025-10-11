@@ -1,11 +1,5 @@
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-  CopyOutlined,
-} from '@ant-design/icons';
+import { MailOutlined } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
-import operations from './config.operations';
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
   /**
@@ -24,113 +18,48 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
 
 export const menus: MenuItem[] = [
   {
-    key: 'components',
-    label: 'Components',
-    icon: <CopyOutlined />,
-    children: [
-      {
-        key: 'components-steps',
-        label: 'Steps',
-        route: '/app/components/steps',
-      },
-    ],
-  },
-  {
-    key: 'fadada',
-    label: 'Fadada',
-    icon: <CopyOutlined />,
-    children: [
-      {
-        key: 'fadada-eui',
-        label: 'EUI',
-        route: '/app/fadada',
-      },
-      {
-        key: 'fadada-tpl-list',
-        label: 'Template List',
-        route: '/app/fadada/template-list',
-      },
-      {
-        key: 'fadada-sign',
-        label: 'Sign',
-        route: '/app/fadada/sign',
-      },
-    ],
-  },
-  {
-    key: 'docusign',
-    label: 'Docusign',
-    icon: <CopyOutlined />,
-    children: [
-      {
-        key: 'docusign-login',
-        label: 'Docusign Login',
-        route: '/app/docusign/login',
-      },
-      {
-        key: 'docusign-users',
-        label: 'Docusign Users',
-        route: '/app/docusign/users',
-      },
-      {
-        key: 'docusign-forms',
-        label: 'Create Envelope and send',
-        route: '/app/docusign/forms',
-      },
-    ],
-  },
-  {
     key: 'user',
     label: 'Users',
     icon: <MailOutlined />,
-    permissions: [operations.VIEW_USER],
+    permissions: [],
     children: [
       {
         key: 'user-1',
         label: 'User list',
         route: '/app/users',
-        permissions: [operations.VIEW_USER],
+        permissions: [],
+      },
+      {
+        key: 'user-2',
+        label: 'Expand Table',
+        route: '/app/users/table',
+        permissions: [],
       },
     ],
   },
   {
-    key: 'template',
-    label: 'Templates',
-    icon: <SettingOutlined />,
-    permissions: [operations.VIEW_TEMPLATE],
+    key: 'form',
+    label: 'Forms',
+    icon: <MailOutlined />,
+    permissions: [],
     children: [
       {
-        key: 'template-1',
-        label: 'List',
-        route: '/app/templates',
-        permissions: [operations.VIEW_TEMPLATE],
+        key: 'form1',
+        label: 'Form1',
+        route: '/app/forms',
+        permissions: [],
       },
       {
-        key: 'template-2',
-        label: 'Add',
-        route: '/app/templates/add',
-        permissions: [operations.CREATE_TEMPLATE],
+        key: 'dynamic-list',
+        label: 'Dynamic List',
+        route: '/app/forms/dynamic-list',
+        permissions: [],
       },
       {
-        key: 'template-3',
-        label: 'Edit',
-        route: '/app/templates/edit',
-        permissions: [operations.UPDATE_TEMPLATE],
-      },
-    ],
-  },
-  {
-    key: 'logs',
-    label: 'Logs',
-    icon: <AppstoreOutlined />,
-    permissions: [operations.VIEW_LOG],
-    route: '/app/logs',
-    children: [
-      {
-        key: 'log',
-        label: 'Log',
-        route: '/app/logs/log',
-        permissions: [operations.VIEW_LOG],
+        key: 'virtual-list',
+        label: 'Virtual List',
+        route: '/app/forms/virtual-list',
+        permissions: [],
       },
     ],
   },

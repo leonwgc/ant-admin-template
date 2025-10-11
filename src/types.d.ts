@@ -1,13 +1,4 @@
-declare global {
-  const MOCK: boolean;
-
-  interface TableDataResult<T> {
-    total: number;
-    list: T[];
-  }
-
-  interface FormData {
-    [key: string]: unknown;
-  }
+declare module '*.png' {
+  const value: string;
+  export default value;
 }
-export {};

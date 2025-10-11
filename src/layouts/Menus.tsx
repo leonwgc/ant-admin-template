@@ -1,7 +1,6 @@
 import { Menu, MenuProps } from '@derbysoft/neat-design';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { useAppData } from 'simple-redux-store';
 import type { MenuItem } from '../config.menu';
 import {
   getFlatMenus,
@@ -16,8 +15,10 @@ import { NAV_MENU_COLLAPSED_KEY } from './Sider';
 type Props = MenuProps & {
   afterClick?: () => void;
   collapsed?: boolean;
-  menus: MenuItem[];
+  menus?: MenuItem[];
 };
+
+const operations = [];
 
 /**
  * Menus component renders a collapsible menu using the Neat Design library.
@@ -38,7 +39,6 @@ export default (props: Props) => {
   const [menuCollapsed] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const { operations = [] } = useAppData();
 
   const filterMenus = useMemo(
     () => getFilterMenus(operations, menus),

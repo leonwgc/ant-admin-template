@@ -1,24 +1,16 @@
 import { Route, Routes } from 'react-router';
 import AppLayout from './layouts/AppLayout';
 import { lazy, Suspense } from 'react';
+import { Users, AddUser, EditUser } from './pages/User';
 
-import { Logs, Log } from './modules/Log';
-import { Users, AddUser, EditUser } from './modules/User';
-import { Templates, AddTemplate, EditTemplate } from './modules/Template';
-import {
-  Login as DocuSignLogin,
-  Users as DocuSignUsers,
-  Forms,
-} from './modules/DocuSign';
+const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
-import { Eui, TemplateList, Sign } from './modules/Fadada';
-import Callback from './modules/Common/Callback';
-import StepsDemo from './modules/Demo/Steps.demo';
+const Form = lazy(() => import('./pages/Form/MyForm'));
+const DynamicList = lazy(() => import('./pages/Form/DynamicList'));
+const VirtualList = lazy(() => import('./pages/Form/VirtualLists'));
 
-const NoPermission = lazy(() => import('./modules/NoPermission/NoPermission'));
-const Welcome = lazy(() => import('./modules/Welcome/Welcome'));
-const Login = lazy(() => import('./modules/Login/Login'));
-const NotFound = lazy(() => import('./modules/NotFound/NotFound'));
+const ExpandTable = lazy(() => import('./pages/User/ExpandTable'));
 
 /**
  * RouteConfig
@@ -31,9 +23,8 @@ const RouteConfig = () => {
   return (
     <Suspense>
       <Routes>
-        <Route path="callback" element={<Callback />} />
-        <Route index element={<AppLayout />} /> // TODO: change to Login
-        <Route path="register" element={<div>Register</div>} />
+        <Route index element={<AppLayout />} />
+
         <Route
           path="no-permission"
           element={<AppLayout hasSider={false} hasContentHeader={false} />}
@@ -41,36 +32,19 @@ const RouteConfig = () => {
           <Route index element={<NoPermission />}></Route>
         </Route>
         <Route path="app" element={<AppLayout />}>
-          <Route index element={<Welcome />} />
-          <Route path="components">
-            <Route index path="steps" element={<StepsDemo />} />
-          </Route>
-          <Route path="docusign">
-            <Route index element={<DocuSignLogin />} />
-            <Route path="login" element={<DocuSignLogin />} />
-            <Route path="users" element={<DocuSignUsers />} />
-            <Route path="forms" element={<Forms />} />
-          </Route>
-          <Route path="fadada">
-            <Route index element={<Eui />} />
-            <Route path="template-list" element={<TemplateList />} />
-            <Route path="sign" element={<Sign />} />
-          </Route>
           <Route path="users">
             <Route index element={<Users />} />
             <Route path="add" element={<AddUser />} />
+            <Route path="table" element={<ExpandTable />} />
             <Route path="edit" element={<EditUser />} />
           </Route>
-          <Route path="logs">
-            <Route index element={<Logs />} />
-            <Route path="log" element={<Log></Log>} />
-          </Route>
-          <Route path="templates">
-            <Route index element={<Templates />} />
-            <Route path="add" element={<AddTemplate />} />
-            <Route path="edit" element={<EditTemplate />} />
+          <Route path="forms">
+            <Route index element={<Form />} />
+            <Route path="dynamic-list" element={<DynamicList />} />
+            <Route path="virtual-list" element={<VirtualList />} />
           </Route>
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
