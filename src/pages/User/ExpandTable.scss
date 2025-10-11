@@ -18,15 +18,15 @@
 
     td:has(.ds-table-middle) {
       background: #f6f7f7 !important;
-    }
-  }
 
-  .ds-table-thead {
-    background: #f6f7f7;
-
-    & tr {
-      & th {
+      .ds-table-thead {
         background: #f6f7f7;
+
+        & tr {
+          & th {
+            background: #f6f7f7;
+          }
+        }
       }
     }
   }
