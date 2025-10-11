@@ -25,6 +25,10 @@
         & tr {
           & th {
             background: #f6f7f7;
+
+            &::before {
+              display: none;
+            }
           }
         }
       }
