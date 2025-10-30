@@ -28,7 +28,7 @@ run({
   rsConfig: {
     html: {
       template: './index.html',
-      title: 'ant admin template',
+      title: 'React admin template',
     },
   },
 });
