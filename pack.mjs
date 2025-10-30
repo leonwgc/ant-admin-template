@@ -1,7 +1,7 @@
 import { run } from 'packrs';
 
 run({
-  port: 3001,
+  port: 3002,
   proxy: [
     {
       context: ['/book-engine-dev'],
