@@ -1,4 +1,8 @@
-import { MailOutlined } from '@ant-design/icons';
+import {
+  ExperimentOutlined,
+  UserOutlined,
+  FormOutlined,
+} from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
@@ -18,9 +22,23 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
 
 export const menus: MenuItem[] = [
   {
+    key: 'css',
+    label: 'CSS Feature',
+    icon: <ExperimentOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'css-1',
+        label: 'CSS New Features',
+        route: '/app/css',
+        permissions: [],
+      },
+    ],
+  },
+  {
     key: 'user',
     label: 'Users',
-    icon: <MailOutlined />,
+    icon: <UserOutlined />,
     permissions: [],
     children: [
       {
@@ -40,7 +58,7 @@ export const menus: MenuItem[] = [
   {
     key: 'form',
     label: 'Forms',
-    icon: <MailOutlined />,
+    icon: <FormOutlined />,
     permissions: [],
     children: [
       {

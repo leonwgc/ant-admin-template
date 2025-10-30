@@ -13,6 +13,8 @@ const VirtualList = lazy(() => import('./pages/Form/VirtualLists'));
 
 const ExpandTable = lazy(() => import('./pages/User/ExpandTable'));
 
+const CssFeature = lazy(() => import('./pages/Form/CssFeature'));
+
 /**
  * RouteConfig
  *
@@ -33,6 +35,9 @@ const RouteConfig = () => {
           <Route index element={<NoPermission />}></Route>
         </Route>
         <Route path="app" element={<AppLayout />}>
+          <Route path="css">
+            <Route index element={<CssFeature />} />
+          </Route>
           <Route path="users">
             <Route index element={<Users />} />
             <Route path="add" element={<AddUser />} />

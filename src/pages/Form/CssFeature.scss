@@ -1,0 +1,42 @@
+@import 'scss/common.scss';
+
+.css-feature-demo {
+  &__accent {
+    accent-color: #ff4d4f;
+  }
+  &__caret {
+    caret-color: #52c41a;
+  }
+  &__market {
+    &::marker {
+      color: red;
+      content: '✝ ';
+    }
+  }
+  &__user-valid:valid {
+    border-color: #52c41a;
+  }
+  &__user-invalid:invalid {
+    border-color: #ff4d4f;
+  }
+  &__placeholder-shown:placeholder-shown {
+    background: yellow;
+  }
+  &__balance {
+    text-wrap: balance;
+  }
+  &__scroll-snap {
+    scroll-snap-type: x mandatory;
+    display: flex;
+    overflow-x: auto;
+    width: 500px;
+    gap: 16px;
+    &-item {
+      scroll-snap-align: start;
+      min-width: 200px;
+      background: #f0f0f0;
+      padding: 16px;
+      border-radius: 8px;
+    }
+  }
+}
