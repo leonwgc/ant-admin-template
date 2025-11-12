@@ -5,18 +5,24 @@
  * - Applies React and TypeScript specific rules for relevant files.
  */
 import eslint from '@eslint/js';
-import { defineConfig } from 'eslint/config';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import { default as eslintPluginPrettierRecommended } from 'eslint-plugin-prettier/recommended';
+import prettierConfig from 'eslint-config-prettier';
+import globals from 'globals';
 
-export default defineConfig([
+export default [
   // Global configuration
   {
-    ignores: ['node_modules/', 'build/', 'dist/', '.git/', 'tsconfig.json'],
+    ignores: ['node_modules/**', 'build/**', 'dist/**', '.git/**', 'tsconfig.json', '*.config.js', '*.config.mjs'],
   },
+
+  // ESLint recommended rules
+  eslint.configs.recommended,
+
+  // TypeScript recommended rules
+  ...tseslint.configs.recommended,
+
   // Base config for all files
   {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
@@ -24,7 +30,9 @@ export default defineConfig([
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
-        ...eslint.configs.recommended.globals,
+        ...globals.browser,
+        ...globals.node,
+        ...globals.es2021,
       },
       parserOptions: {
         ecmaFeatures: {
@@ -32,63 +40,60 @@ export default defineConfig([
         },
       },
     },
+    plugins: {
+      react: reactPlugin,
+      'react-hooks': reactHooksPlugin,
+    },
     rules: {
       'no-prototype-builtins': 0,
-      'quotes': [2, 'single', 'avoid-escape'],
-    },
-    plugins: {
-      'react': reactPlugin,
-      'react-hooks': reactHooksPlugin,
-      eslintPluginPrettierRecommended,
+      'quotes': ['error', 'single', { avoidEscape: true }],
+      'semi': ['error', 'always'],
+      'no-console': 'warn',
+      'no-debugger': 'warn',
     },
     settings: {
       react: {
-        version: 'detect', // 自动检测已安装的 React 版本
+        version: 'detect',
       },
     },
   },
+
   // React specific rules
   {
     files: ['**/*.jsx', '**/*.tsx'],
     rules: {
-      'react/react-in-jsx-scope': 0,
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      'react/display-name': 'off',
       'react/no-unknown-property': [
-        2,
+        'error',
         {
           ignore: ['css'],
         },
       ],
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
+
   // TypeScript specific rules
   {
     files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        project: true,
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
     rules: {
-      'react/display-name': 0,
-      '@typescript-eslint/ban-ts-comment': 0,
-      '@typescript-eslint/no-explicit-any': 0,
-      '@typescript-eslint/no-unsafe-argument': 0,
-      '@typescript-eslint/no-unsafe-assignment': 0,
-      '@typescript-eslint/no-unsafe-call': 0,
-      '@typescript-eslint/no-unsafe-member-access': 0,
-      '@typescript-eslint/no-unsafe-return': 0,
-      '@typescript-eslint/restrict-plus-operands': 0,
-      '@typescript-eslint/restrict-template-expressions': 0,
-      '@typescript-eslint/no-misused-promises': [
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': [
         'error',
         {
-          checksVoidReturn: false,
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
         },
       ],
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      'no-unused-vars': 'off',
     },
   },
-]);
+
+  // Prettier config (must be last to override formatting rules)
+  prettierConfig,
+];
