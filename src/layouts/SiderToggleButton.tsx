@@ -24,7 +24,7 @@ const SiderToggleButton = ({ onToggle, collapsed }) => {
       '--menu-width',
       !collapsed ? '56px' : '256px'
     );
-  }, [collapsed]);
+  }, [collapsed, onToggleRef]);
 
   return (
     <Button
