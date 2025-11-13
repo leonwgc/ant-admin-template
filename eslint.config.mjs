@@ -14,7 +14,15 @@ import globals from 'globals';
 export default [
   // Global configuration
   {
-    ignores: ['node_modules/**', 'build/**', 'dist/**', '.git/**', 'tsconfig.json', '*.config.js', '*.config.mjs'],
+    ignores: [
+      'node_modules/**',
+      'build/**',
+      'dist/**',
+      '.git/**',
+      'tsconfig.json',
+      '*.config.js',
+      '*.config.mjs',
+    ],
   },
 
   // ESLint recommended rules
@@ -41,7 +49,7 @@ export default [
       },
     },
     plugins: {
-      react: reactPlugin,
+      'react': reactPlugin,
       'react-hooks': reactHooksPlugin,
     },
     rules: {
@@ -82,13 +90,7 @@ export default [
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-        },
-      ],
+      '@typescript-eslint/no-unused-vars': ['error'],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       'no-unused-vars': 'off',
     },
