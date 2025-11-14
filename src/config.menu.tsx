@@ -2,6 +2,7 @@ import {
   ExperimentOutlined,
   UserOutlined,
   FormOutlined,
+  ApiOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 
@@ -77,6 +78,20 @@ export const menus: MenuItem[] = [
         key: 'virtual-list',
         label: 'Virtual List',
         route: '/app/forms/virtual-list',
+        permissions: [],
+      },
+    ],
+  },
+  {
+    key: 'hooks',
+    label: 'React Hooks',
+    icon: <ApiOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'use-transition',
+        label: 'useTransition',
+        route: '/app/hooks/use-transition',
         permissions: [],
       },
     ],

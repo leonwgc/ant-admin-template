@@ -15,6 +15,8 @@ const ExpandTable = lazy(() => import('./pages/User/ExpandTable'));
 
 const CssFeature = lazy(() => import('./pages/Form/CssFeature'));
 
+const UseTransition = lazy(() => import('./pages/Hooks/UseTransition'));
+
 /**
  * RouteConfig
  *
@@ -48,6 +50,9 @@ const RouteConfig = () => {
             <Route index element={<Form />} />
             <Route path="dynamic-list" element={<DynamicList />} />
             <Route path="virtual-list" element={<VirtualList />} />
+          </Route>
+          <Route path="hooks">
+            <Route path="use-transition" element={<UseTransition />} />
           </Route>
         </Route>
 

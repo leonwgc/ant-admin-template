@@ -30,5 +30,8 @@ run({
       template: './index.html',
       title: 'React admin template',
     },
+    server: {
+      open: true,
+    },
   },
 });
