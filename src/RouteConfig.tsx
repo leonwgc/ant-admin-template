@@ -17,6 +17,8 @@ const CssFeature = lazy(() => import('./pages/Form/CssFeature'));
 
 const UseTransition = lazy(() => import('./pages/Hooks/UseTransition'));
 
+const UseSuspense = lazy(() => import('./pages/Hooks/UseSuspense'));
+
 /**
  * RouteConfig
  *
@@ -53,6 +55,7 @@ const RouteConfig = () => {
           </Route>
           <Route path="hooks">
             <Route path="use-transition" element={<UseTransition />} />
+            <Route path="use-suspense" element={<UseSuspense />} />
           </Route>
         </Route>
 

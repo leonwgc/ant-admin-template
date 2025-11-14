@@ -94,6 +94,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-transition',
         permissions: [],
       },
+      {
+        key: 'use-suspense',
+        label: 'Suspense',
+        route: '/app/hooks/use-suspense',
+        permissions: [],
+      },
     ],
   },
 ];
