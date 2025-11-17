@@ -3,6 +3,7 @@ import {
   UserOutlined,
   FormOutlined,
   ApiOutlined,
+  AppstoreOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 
@@ -98,6 +99,20 @@ export const menus: MenuItem[] = [
         key: 'use-suspense',
         label: 'Suspense',
         route: '/app/hooks/use-suspense',
+        permissions: [],
+      },
+    ],
+  },
+  {
+    key: 'components',
+    label: 'Components',
+    icon: <AppstoreOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'dot-status',
+        label: 'DotStatus',
+        route: '/app/components/dot-status',
         permissions: [],
       },
     ],

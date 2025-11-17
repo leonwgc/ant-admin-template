@@ -19,6 +19,8 @@ const UseTransition = lazy(() => import('./pages/Hooks/UseTransition'));
 
 const UseSuspense = lazy(() => import('./pages/Hooks/UseSuspense'));
 
+const DotStatusExample = lazy(() => import('./pages/Components/DotStatusExample'));
+
 /**
  * RouteConfig
  *
@@ -56,6 +58,9 @@ const RouteConfig = () => {
           <Route path="hooks">
             <Route path="use-transition" element={<UseTransition />} />
             <Route path="use-suspense" element={<UseSuspense />} />
+          </Route>
+          <Route path="components">
+            <Route path="dot-status" element={<DotStatusExample />} />
           </Route>
         </Route>
 
