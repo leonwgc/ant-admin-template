@@ -21,6 +21,10 @@ const UseSuspense = lazy(() => import('./pages/Hooks/UseSuspense'));
 
 const DotStatusExample = lazy(() => import('./pages/Components/DotStatusExample'));
 
+const VerificationCodeExample = lazy(
+  () => import('./pages/Components/VerificationCodeExample')
+);
+
 /**
  * RouteConfig
  *
@@ -61,6 +65,7 @@ const RouteConfig = () => {
           </Route>
           <Route path="components">
             <Route path="dot-status" element={<DotStatusExample />} />
+            <Route path="verification-code" element={<VerificationCodeExample />} />
           </Route>
         </Route>
 

@@ -115,6 +115,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/dot-status',
         permissions: [],
       },
+      {
+        key: 'verification-code',
+        label: 'VerificationCode',
+        route: '/app/components/verification-code',
+        permissions: [],
+      },
     ],
   },
 ];
