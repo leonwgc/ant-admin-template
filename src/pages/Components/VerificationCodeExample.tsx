@@ -1,14 +1,21 @@
 import { useState } from 'react';
-import { Card, Space, Button, message, Alert, Divider } from '@derbysoft/neat-design';
+import {
+  Card,
+  Space,
+  Button,
+  message,
+  Alert,
+  Divider,
+} from '@derbysoft/neat-design';
 import VerificationCodeInput from '../../components/VerificationCodeInput';
 import './VerificationCodeExample.scss';
+import { useCountDown } from 'ahooks';
 
 /**
  * VerificationCodeInput 组件示例页面
  */
 const VerificationCodeExample = () => {
   const [code2, setCode2] = useState('');
-  const [countdown, setCountdown] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handleComplete1 = (code: string) => {
@@ -19,28 +26,35 @@ const VerificationCodeExample = () => {
     message.success(`验证码验证成功: ${code}`);
   };
 
+  // verification code countdown
+  const [leftSec, setLeftSec] = useState(0);
+  const [nth, setNth] = useState(0);
+
+  const [countdown] = useCountDown({
+    leftTime: leftSec * 1000, // leftTime、targetDate、interval、onEnd support dynamic change.
+    interval: 1000,
+    onEnd: () => {
+      setNth((prev) => prev + 1);
+      setLeftSec(0);
+    },
+  });
+
   const handleSendCode = () => {
     message.info('验证码已发送至 +86 13912345678');
-    setCountdown(60);
-
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    setLeftSec(6);
   };
 
   return (
     <div className="verification-code-example">
-      <Card title="验证码输入组件示例" className="verification-code-example__card">
+      <Card
+        title="验证码输入组件示例"
+        className="verification-code-example__card"
+      >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div className="verification-code-example__description">
             <p>
-              <strong>VerificationCodeInput</strong> 是一个用于输入验证码的组件。
+              <strong>VerificationCodeInput</strong>{' '}
+              是一个用于输入验证码的组件。
             </p>
             <p>
               支持自动跳转、粘贴、删除、键盘导航等功能，常用于手机验证码、邮箱验证码等场景。
@@ -50,7 +64,9 @@ const VerificationCodeExample = () => {
           <Card title="基础用法" type="inner">
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
               <div>
-                <p className="verification-code-example__label">请输入6位验证码：</p>
+                <p className="verification-code-example__label">
+                  请输入6位验证码：
+                </p>
                 <VerificationCodeInput
                   length={6}
                   onComplete={handleComplete1}
@@ -84,11 +100,11 @@ const VerificationCodeExample = () => {
               <div className="verification-code-example__countdown">
                 {countdown > 0 ? (
                   <span className="verification-code-example__countdown-text">
-                    {countdown}秒后重新获取
+                    {Math.round(countdown / 1000)}秒后重新获取
                   </span>
                 ) : (
                   <Button type="link" onClick={handleSendCode}>
-                    重新获取验证码
+                    {nth > 0 ? '重新' : ''}获取验证码
                   </Button>
                 )}
               </div>
@@ -132,10 +148,7 @@ const VerificationCodeExample = () => {
                   {isDisabled ? '启用' : '禁用'}
                 </Button>
               </div>
-              <VerificationCodeInput
-                length={6}
-                disabled={isDisabled}
-              />
+              <VerificationCodeInput length={6} disabled={isDisabled} />
             </Space>
           </Card>
 
@@ -143,13 +156,16 @@ const VerificationCodeExample = () => {
             <div className="verification-code-example__features">
               <ul>
                 <li>
-                  <strong>自动跳转</strong>：输入一个字符后自动跳转到下一个输入框
+                  <strong>自动跳转</strong>
+                  ：输入一个字符后自动跳转到下一个输入框
                 </li>
                 <li>
-                  <strong>粘贴支持</strong>：支持直接粘贴完整验证码，自动分配到各个输入框
+                  <strong>粘贴支持</strong>
+                  ：支持直接粘贴完整验证码，自动分配到各个输入框
                 </li>
                 <li>
-                  <strong>删除功能</strong>：按 Backspace 键删除当前字符，如果当前为空则删除前一个字符
+                  <strong>删除功能</strong>：按 Backspace
+                  键删除当前字符，如果当前为空则删除前一个字符
                 </li>
                 <li>
                   <strong>键盘导航</strong>：支持左右箭头键在输入框之间切换
@@ -167,7 +183,11 @@ const VerificationCodeExample = () => {
             </div>
           </Card>
 
-          <Card title="组件 API" type="inner" className="verification-code-example__api">
+          <Card
+            title="组件 API"
+            type="inner"
+            className="verification-code-example__api"
+          >
             <div className="verification-code-example__table">
               <table>
                 <thead>
@@ -180,39 +200,69 @@ const VerificationCodeExample = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td><code>length</code></td>
+                    <td>
+                      <code>length</code>
+                    </td>
                     <td>验证码长度</td>
-                    <td><code>number</code></td>
-                    <td><code>6</code></td>
+                    <td>
+                      <code>number</code>
+                    </td>
+                    <td>
+                      <code>6</code>
+                    </td>
                   </tr>
                   <tr>
-                    <td><code>onComplete</code></td>
+                    <td>
+                      <code>onComplete</code>
+                    </td>
                     <td>输入完成回调</td>
-                    <td><code>(code: string) =&gt; void</code></td>
+                    <td>
+                      <code>(code: string) =&gt; void</code>
+                    </td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td><code>onChange</code></td>
+                    <td>
+                      <code>onChange</code>
+                    </td>
                     <td>值变化回调</td>
-                    <td><code>(code: string) =&gt; void</code></td>
+                    <td>
+                      <code>(code: string) =&gt; void</code>
+                    </td>
                     <td>-</td>
                   </tr>
                   <tr>
-                    <td><code>disabled</code></td>
+                    <td>
+                      <code>disabled</code>
+                    </td>
                     <td>是否禁用</td>
-                    <td><code>boolean</code></td>
-                    <td><code>false</code></td>
+                    <td>
+                      <code>boolean</code>
+                    </td>
+                    <td>
+                      <code>false</code>
+                    </td>
                   </tr>
                   <tr>
-                    <td><code>autoFocus</code></td>
+                    <td>
+                      <code>autoFocus</code>
+                    </td>
                     <td>是否自动聚焦</td>
-                    <td><code>boolean</code></td>
-                    <td><code>true</code></td>
+                    <td>
+                      <code>boolean</code>
+                    </td>
+                    <td>
+                      <code>true</code>
+                    </td>
                   </tr>
                   <tr>
-                    <td><code>className</code></td>
+                    <td>
+                      <code>className</code>
+                    </td>
                     <td>自定义类名</td>
-                    <td><code>string</code></td>
+                    <td>
+                      <code>string</code>
+                    </td>
                     <td>-</td>
                   </tr>
                 </tbody>
@@ -220,7 +270,11 @@ const VerificationCodeExample = () => {
             </div>
           </Card>
 
-          <Card title="使用代码" type="inner" className="verification-code-example__usage">
+          <Card
+            title="使用代码"
+            type="inner"
+            className="verification-code-example__usage"
+          >
             <div className="verification-code-example__code">
               <pre>{`import VerificationCodeInput from '@/components/VerificationCodeInput';
 
