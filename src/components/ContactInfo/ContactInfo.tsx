@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { EmailOutlined, PhoneOutlined } from '@derbysoft/neat-design-icons';
+import { EmailOutlined, MobileOutlined } from '@derbysoft/neat-design-icons';
 import './ContactInfo.scss';
 
 export interface ContactInfoProps {
@@ -34,7 +34,7 @@ export const ContactInfo: FC<ContactInfoProps> = ({
   phone,
   className = '',
   showIcon = true,
-  iconSize = 16,
+  iconSize = 14,
 }) => {
   // At least one contact method is required
   if (!email && !phone) {
@@ -54,22 +54,18 @@ export const ContactInfo: FC<ContactInfoProps> = ({
               style={{ fontSize: iconSize }}
             />
           )}
-          <a href={`mailto:${email}`} className="contact-info__link">
-            {email}
-          </a>
+          {email}
         </div>
       )}
       {phone && (
         <div className="contact-info__item">
           {showIcon && (
-            <PhoneOutlined
+            <MobileOutlined
               className="contact-info__icon"
               style={{ fontSize: iconSize }}
             />
           )}
-          <a href={`tel:${phone}`} className="contact-info__link">
-            {phone}
-          </a>
+          {phone}
         </div>
       )}
     </div>
