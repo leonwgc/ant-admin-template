@@ -121,6 +121,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/verification-code',
         permissions: [],
       },
+      {
+        key: 'contact-info',
+        label: 'ContactInfo',
+        route: '/app/components/contact-info',
+        permissions: [],
+      },
     ],
   },
 ];
