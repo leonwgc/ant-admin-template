@@ -127,6 +127,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/contact-info',
         permissions: [],
       },
+      {
+        key: 'user-contact-card',
+        label: 'UserContactCard',
+        route: '/app/components/user-contact-card',
+        permissions: [],
+      },
     ],
   },
 ];

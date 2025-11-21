@@ -27,6 +27,10 @@ const VerificationCodeExample = lazy(
 
 const ContactInfoExample = lazy(() => import('./pages/Components/ContactInfoExample'));
 
+const UserContactCardExample = lazy(
+  () => import('./pages/Components/UserContactCardExample')
+);
+
 /**
  * RouteConfig
  *
@@ -69,6 +73,7 @@ const RouteConfig = () => {
             <Route path="dot-status" element={<DotStatusExample />} />
             <Route path="verification-code" element={<VerificationCodeExample />} />
             <Route path="contact-info" element={<ContactInfoExample />} />
+            <Route path="user-contact-card" element={<UserContactCardExample />} />
           </Route>
         </Route>
 
