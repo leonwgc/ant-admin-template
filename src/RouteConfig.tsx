@@ -35,6 +35,10 @@ const EmailSuccessModalExample = lazy(
   () => import('./pages/Components/EmailSuccessModalExample')
 );
 
+const VerificationCodePageExample = lazy(
+  () => import('./pages/Components/VerificationCodePageExample')
+);
+
 /**
  * RouteConfig
  *
@@ -79,6 +83,7 @@ const RouteConfig = () => {
             <Route path="contact-info" element={<ContactInfoExample />} />
             <Route path="user-contact-card" element={<UserContactCardExample />} />
             <Route path="email-success-modal" element={<EmailSuccessModalExample />} />
+            <Route path="verification-code-page" element={<VerificationCodePageExample />} />
           </Route>
         </Route>
 

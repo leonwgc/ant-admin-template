@@ -139,6 +139,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/email-success-modal',
         permissions: [],
       },
+      {
+        key: 'verification-code-page',
+        label: 'VerificationCodePage',
+        route: '/app/components/verification-code-page',
+        permissions: [],
+      },
     ],
   },
 ];

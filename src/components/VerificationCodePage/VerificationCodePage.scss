@@ -1,0 +1,109 @@
+/**
+ * @file src/components/VerificationCodePage/VerificationCodePage.scss
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+
+@import 'scss/common.scss';
+
+.verification-code-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f5f5f5;
+
+  &__content {
+    max-width: 680px;
+    width: 100%;
+    background: #ffffff;
+    padding: 48px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #333333;
+    margin: 0 0 32px 0;
+  }
+
+  &__contact {
+    font-weight: 600;
+    color: #1a1a1a;
+    font-style: italic;
+  }
+
+  &__input-section {
+    margin-bottom: 32px;
+  }
+
+  &__label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+    margin-bottom: 16px;
+  }
+
+  &__actions {
+    margin-bottom: 24px;
+
+    .ant-space {
+      width: 100%;
+    }
+  }
+
+  &__resend-button,
+  &__back-button {
+    min-width: 160px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  &__resend-button {
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  &__hint {
+    font-size: 14px;
+    line-height: 22px;
+    color: #999999;
+    margin: 0;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .verification-code-page {
+    &__content {
+      padding: 32px 24px;
+    }
+
+    &__title {
+      font-size: 14px;
+    }
+
+    &__actions {
+      .ant-space {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .ant-space-item {
+          width: 100%;
+        }
+      }
+    }
+
+    &__resend-button,
+    &__back-button {
+      width: 100%;
+    }
+  }
+}
