@@ -17,5 +17,12 @@ applyTo: '**'
 10. className 使用 BEM 命名规范，确保样式可读性和可维护性, 并使用双引号。
 11. 本项目UI框架为@derbysoft/neat-design, 需要使用@derbysoft/neat-design的组件和样式。
 12. 所有的注释请使用英文。
+13. - 在组件和样式文件的最顶部加上以下注释：
+```javascript
+/**
+ * @file 组件文件相对路径
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+```
 
 ---
