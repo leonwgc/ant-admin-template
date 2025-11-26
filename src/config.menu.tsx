@@ -133,6 +133,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/user-contact-card',
         permissions: [],
       },
+      {
+        key: 'email-success-modal',
+        label: 'EmailSuccessModal',
+        route: '/app/components/email-success-modal',
+        permissions: [],
+      },
     ],
   },
 ];

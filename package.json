@@ -21,6 +21,7 @@
     "@derbysoft/antd-form-builder": "^1.0.0",
     "@derbysoft/neat-design": "^2.2.2",
     "@derbysoft/neat-design-icons": "^1.1.9",
+    "@derbysoft/neat-design-illustrations": "^1.0.15",
     "ahooks": "^3.9.0",
     "antd": "^5.26.7",
     "axios": "^1.11.0",
