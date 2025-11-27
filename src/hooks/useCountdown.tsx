@@ -3,7 +3,7 @@
  * @author leon.wang(leon.wang@derbysoft.net)
  */
 
-import { useCountDown } from 'ahooks';
+import { useCountDown, useUnmount } from 'ahooks';
 import { useCallback, useMemo, useState } from 'react';
 
 /**
@@ -57,6 +57,8 @@ const useCountdown = ({
     setLeftSec(0);
     setRound(0);
   }, []);
+
+  useUnmount(reset);
 
   return {
     sec,
