@@ -19,6 +19,8 @@ const UseTransition = lazy(() => import('./pages/Hooks/UseTransition'));
 
 const UseSuspense = lazy(() => import('./pages/Hooks/UseSuspense'));
 
+const UseAHooksCountdown = lazy(() => import('./pages/Hooks/UseAHooksCountdown'));
+
 const DotStatusExample = lazy(() => import('./pages/Components/DotStatusExample'));
 
 const VerificationCodeExample = lazy(
@@ -76,6 +78,7 @@ const RouteConfig = () => {
           <Route path="hooks">
             <Route path="use-transition" element={<UseTransition />} />
             <Route path="use-suspense" element={<UseSuspense />} />
+            <Route path="use-ahooks-countdown" element={<UseAHooksCountdown />} />
           </Route>
           <Route path="components">
             <Route path="dot-status" element={<DotStatusExample />} />

@@ -101,6 +101,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-suspense',
         permissions: [],
       },
+      {
+        key: 'use-ahooks-countdown',
+        label: 'useAHooksCountdown',
+        route: '/app/hooks/use-ahooks-countdown',
+        permissions: [],
+      },
     ],
   },
   {

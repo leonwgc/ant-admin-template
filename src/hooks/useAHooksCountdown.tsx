@@ -1,0 +1,70 @@
+/**
+ * @file src/hooks/useAHooksCountdown.tsx
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+
+import { useCountDown } from 'ahooks';
+import { useCallback, useMemo, useState } from 'react';
+
+/**
+ * Countdown hook props
+ */
+export interface UseCountdownProps {
+  seconds: number;
+  onFinish?: () => void;
+}
+
+/**
+ * Countdown hook return type
+ */
+export interface UseCountdownResult {
+  sec: number;
+  start: () => void;
+  reset: () => void;
+  isRunning: boolean;
+  round: number;
+}
+
+/**
+ * useAHooksCountdown - a simple countdown hook
+ */
+const useAHooksCountdown = ({
+  seconds = 60,
+  onFinish,
+}: UseCountdownProps): UseCountdownResult => {
+  const [leftSec, setLeftSec] = useState(0);
+  const [round, setRound] = useState(0);
+
+  const [countdown] = useCountDown({
+    leftTime: leftSec * 1000,
+    interval: 1000,
+    onEnd: () => {
+      setLeftSec(0);
+      setRound((p) => p + 1);
+      onFinish?.();
+    },
+  });
+
+  const sec = useMemo(() => Math.round(countdown / 1000), [countdown]);
+
+  const isRunning = useMemo(() => sec > 0, [sec]);
+
+  const start = useCallback(() => {
+    setLeftSec(seconds);
+  }, [seconds]);
+
+  const reset = useCallback(() => {
+    setLeftSec(0);
+    setRound(0);
+  }, []);
+
+  return {
+    sec,
+    start,
+    reset,
+    isRunning,
+    round,
+  };
+};
+
+export default useAHooksCountdown;
