@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Button, Space, Card, Statistic, App } from '@derbysoft/neat-design';
-import useAHooksCountdown from '../../hooks/useAHooksCountdown';
+import useCountdown from '../../hooks/useCountdown';
 import './UseAHooksCountdown.scss';
 
 /**
@@ -15,7 +15,7 @@ const UseAHooksCountdown: React.FC = () => {
   const { message } = App.useApp();
 
   // Example 1: Basic countdown with 6 seconds
-  const countdown1 = useAHooksCountdown({
+  const countdown1 = useCountdown({
     seconds: 6,
     onFinish: () => {
       message.success('Countdown 1 finished!');
@@ -23,7 +23,7 @@ const UseAHooksCountdown: React.FC = () => {
   });
 
   // Example 2: Short countdown with 10 seconds
-  const countdown2 = useAHooksCountdown({
+  const countdown2 = useCountdown({
     seconds: 10,
     onFinish: () => {
       message.info('Countdown 2 finished!');
@@ -31,7 +31,7 @@ const UseAHooksCountdown: React.FC = () => {
   });
 
   // Example 3: Custom countdown with 30 seconds
-  const countdown3 = useAHooksCountdown({
+  const countdown3 = useCountdown({
     seconds: 30,
     onFinish: () => {
       message.warning('Countdown 3 finished!');
@@ -39,7 +39,7 @@ const UseAHooksCountdown: React.FC = () => {
   });
 
   // Example 4: Multiple rounds tracking
-  const countdown4 = useAHooksCountdown({
+  const countdown4 = useCountdown({
     seconds: 5,
     onFinish: () => {
       message.success(`Round ${countdown4.round + 1} completed!`);

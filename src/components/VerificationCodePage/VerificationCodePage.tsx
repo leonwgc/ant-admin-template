@@ -6,8 +6,9 @@
 import React, { useState } from 'react';
 import { Button, Space } from '@derbysoft/neat-design';
 import { VerificationCodeInput } from '../VerificationCodeInput/VerificationCodeInput';
-import useCountdown from '../../hooks/useCountdown';
+import useCountdown from '~/hooks/useCountdown';
 import './VerificationCodePage.scss';
+import { useMount } from 'ahooks';
 
 interface VerificationCodePageProps {
   /**
@@ -48,8 +49,10 @@ const VerificationCodePage: React.FC<VerificationCodePageProps> = ({
   onResend,
   onGoBack,
 }) => {
-  const { countdown, isRunning, start, reset } = useCountdown(countdownSeconds, true);
+  const { sec, isRunning, start, reset } = useCountdown(countdownSeconds, true);
   const [code, setCode] = useState('');
+
+  useMount(start);
 
   const handleResend = () => {
     if (isRunning) return;
@@ -76,7 +79,9 @@ const VerificationCodePage: React.FC<VerificationCodePageProps> = ({
         </h2>
 
         <div className="verification-code-page__input-section">
-          <label className="verification-code-page__label">Verification Code</label>
+          <label className="verification-code-page__label">
+            Verification Code
+          </label>
           <VerificationCodeInput
             length={codeLength}
             onComplete={handleComplete}
@@ -94,7 +99,7 @@ const VerificationCodePage: React.FC<VerificationCodePageProps> = ({
               disabled={isRunning}
               className="verification-code-page__resend-button"
             >
-              {isRunning ? `Resend Code (${countdown}s)` : 'Resend Code'}
+              {isRunning ? `Resend Code (${sec}s)` : 'Resend Code'}
             </Button>
             <Button
               type="secondary"

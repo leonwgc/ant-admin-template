@@ -3,70 +3,68 @@
  * @author leon.wang(leon.wang@derbysoft.net)
  */
 
-import { useUnmount } from 'ahooks';
-import { useEffect, useState, useCallback, useRef } from 'react';
-
-type CountdownHooksReturn = {
-  countdown: number;
-  isRunning: boolean;
-  isReStarted: boolean;
-  start: () => void;
-  reset: () => void;
-};
+import { useCountDown } from 'ahooks';
+import { useCallback, useMemo, useState } from 'react';
 
 /**
- * Custom React hook for managing a countdown timer.
- *
- * @param defaultCountdown - The initial countdown value in seconds. Defaults to 60.
- * @param defaultStarted - Whether the countdown should start immediately. Defaults to false.
- * @returns An object containing:
- *   - `countdown`: The current countdown value.
- *   - `isRunning`: Boolean indicating if the countdown is active.
- *   - `start`: Function to start the countdown.
- *   - `reset`: Function to reset and stop the countdown.
- *   - `isReStarted`: Boolean indicating if the countdown has completed and restarted.
- *
- * The countdown decreases every second when started. When it reaches zero, it resets to the default value.
- * Automatically cleans up on component unmount.
+ * Countdown hook props
  */
-const useCountdown = (
-  defaultCountdown = 60,
-  defaultStarted = false
-): CountdownHooksReturn => {
-  const [countdown, setCountdown] = useState(defaultCountdown);
-  const [started, setStarted] = useState(defaultStarted);
-  const [isReStarted, setIsReStarted] = useState(false);
-  const unmountRef = useRef(false);
+export interface UseCountdownProps {
+  seconds: number;
+  onFinish?: () => void;
+}
 
-  const start = useCallback(() => {
-    setStarted(true);
-  }, []);
+/**
+ * Countdown hook return type
+ */
+export interface UseCountdownResult {
+  sec: number;
+  start: () => void;
+  reset: () => void;
+  isRunning: boolean;
+  round: number;
+}
 
-  const reset = useCallback(() => {
-    setStarted(false);
-  }, []);
+/**
+ * useCountdown - a simple countdown hook
+ */
+const useCountdown = ({
+  seconds = 60,
+  onFinish,
+}: UseCountdownProps): UseCountdownResult => {
+  const [leftSec, setLeftSec] = useState(0);
+  const [round, setRound] = useState(0);
 
-  useUnmount(() => {
-    unmountRef.current = true;
+  const [countdown] = useCountDown({
+    leftTime: leftSec * 1000,
+    interval: 1000,
+    onEnd: () => {
+      setLeftSec(0);
+      setRound((p) => p + 1);
+      onFinish?.();
+    },
   });
 
-  useEffect(() => {
-    if (countdown > 0 && started) {
-      setTimeout(() => {
-        if (!unmountRef.current) {
-          setCountdown((cd) => --cd);
-        }
-      }, 1000);
-      if (countdown === 1) {
-        setIsReStarted(true);
-      }
-    } else {
-      setStarted(false);
-      setCountdown(defaultCountdown);
-    }
-  }, [countdown, started, defaultCountdown]);
+  const sec = useMemo(() => Math.round(countdown / 1000), [countdown]);
 
-  return { countdown, isRunning: started, start, reset, isReStarted };
+  const isRunning = useMemo(() => sec > 0, [sec]);
+
+  const start = useCallback(() => {
+    setLeftSec(seconds);
+  }, [seconds]);
+
+  const reset = useCallback(() => {
+    setLeftSec(0);
+    setRound(0);
+  }, []);
+
+  return {
+    sec,
+    start,
+    reset,
+    isRunning,
+    round,
+  };
 };
 
 export default useCountdown;
