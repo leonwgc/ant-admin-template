@@ -11,6 +11,7 @@ import {
 } from './Menus.helper';
 import { useLocalStorageState } from 'ahooks';
 import { NAV_MENU_COLLAPSED_KEY } from './Sider';
+import './Menus.scss';
 
 type Props = MenuProps & {
   afterClick?: () => void;
@@ -83,22 +84,24 @@ export default (props: Props) => {
   );
 
   return (
-    <Menu
-      style={{ borderInlineEnd: 'none' }}
-      onClick={(item) => {
-        const menu = flatMenus.find((m) => m.key === item.key);
-        if (menu?.route) {
-          navigate(menu?.route);
-          afterClick?.();
-        }
-      }}
-      selectedKeys={selectedKeys}
-      openKeys={openKeys}
-      onOpenChange={onOpenChange}
-      mode="inline"
-      items={filterMenus}
-      inlineCollapsed={collapsed}
-      {...menuProps}
-    />
+    <div className="menus__container">
+      <Menu
+        style={{ borderInlineEnd: 'none' }}
+        onClick={(item) => {
+          const menu = flatMenus.find((m) => m.key === item.key);
+          if (menu?.route) {
+            navigate(menu?.route);
+            afterClick?.();
+          }
+        }}
+        selectedKeys={selectedKeys}
+        openKeys={openKeys}
+        onOpenChange={onOpenChange}
+        mode="inline"
+        items={filterMenus}
+        inlineCollapsed={collapsed}
+        {...menuProps}
+      />
+    </div>
   );
 };

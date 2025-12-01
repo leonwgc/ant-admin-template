@@ -1,0 +1,14 @@
+/**
+ * @file src/layouts/Menus.scss
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+
+@import 'scss/common.scss';
+
+.menus__container {
+  height: 100%;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
