@@ -31,6 +31,15 @@ export default ({ loading, ...props }: Props) => {
 
   const [collapsed, setCollapsed] = useState(value);
 
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--menu-width',
+      collapsed ? '56px' : '256px'
+    );
+
+    setValue(collapsed);
+  }, [collapsed, setValue]);
+
   return (
     <Layout.Sider
       // trigger={null}
