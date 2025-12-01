@@ -85,15 +85,10 @@ const Masonry = <T,>({
       { length: currentColumns },
       () => []
     );
-    const columnHeights = Array(currentColumns).fill(0);
 
-    items.forEach((item, index) => {
-      // Find column with minimum height
-      const minHeightIndex = columnHeights.indexOf(Math.min(...columnHeights));
-      columnArrays[minHeightIndex].push(item);
-      // Estimate height increment (will be adjusted by actual rendering)
-      columnHeights[minHeightIndex] += 1;
-    });
+    for (let i = 0; i < items.length; i++) {
+      columnArrays[i % currentColumns].push(items[i]);
+    }
 
     return columnArrays;
   }, [items, currentColumns]);
