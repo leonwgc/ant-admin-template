@@ -1,5 +1,5 @@
 /**
- * @file src/pages/Hooks/IntlNumberFormatExample.tsx
+ * @file src/pages/Js/IntlNumberFormatExample.tsx
  * @author leon.wang(leon.wang@derbysoft.net)
  */
 

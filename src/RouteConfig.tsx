@@ -21,7 +21,7 @@ const UseSuspense = lazy(() => import('./pages/Hooks/UseSuspense'));
 
 const UseAHooksCountdown = lazy(() => import('./pages/Hooks/UseAHooksCountdown'));
 
-const IntlNumberFormatExample = lazy(() => import('./pages/Hooks/IntlNumberFormatExample'));
+const IntlNumberFormatExample = lazy(() => import('./pages/Js/IntlNumberFormatExample'));
 
 const DotStatusExample = lazy(() => import('./pages/Components/DotStatusExample'));
 
