@@ -4,10 +4,10 @@
  */
 
 import React, { useEffect, useRef, useState, ReactNode, useMemo } from 'react';
-import './Masonry.scss';
 import { useLatest } from 'ahooks';
+import './Masonry.scss';
 
-export interface MasonryProps<T = any> {
+export interface MasonryProps<T = unknown> {
   /**
    * Array of items to render
    */
@@ -113,7 +113,7 @@ const Masonry = <T,>({
     >
       {columnArrays.map((columnItems, columnIndex) => (
         <div key={columnIndex} className="masonry__column">
-          {columnItems.map((item, itemIndex) => {
+          {columnItems.map((item) => {
             const originalIndex = items.indexOf(item);
             return (
               <div
