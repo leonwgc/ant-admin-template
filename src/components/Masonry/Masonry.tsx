@@ -5,6 +5,7 @@
 
 import React, { useEffect, useRef, useState, ReactNode, useMemo } from 'react';
 import './Masonry.scss';
+import { useLatest } from 'ahooks';
 
 export interface MasonryProps<T = any> {
   /**
@@ -49,6 +50,7 @@ const Masonry = <T,>({
 }: MasonryProps<T>): JSX.Element => {
   const [currentColumns, setCurrentColumns] = useState(columns);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lColumnRef = useLatest(currentColumns);
 
   // Handle responsive columns
   useEffect(() => {
@@ -92,6 +94,12 @@ const Masonry = <T,>({
 
     return columnArrays;
   }, [items, currentColumns]);
+
+  useEffect(() => {
+    if (lColumnRef.current !== columns) {
+      setCurrentColumns(columns);
+    }
+  }, [columns, lColumnRef]);
 
   return (
     <div

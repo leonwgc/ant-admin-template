@@ -221,7 +221,7 @@ const MasonryExample: React.FC = () => {
         <p>Automatically adjust columns based on screen width</p>
         <Masonry
           items={items.slice(0, 12)}
-          columns={3}
+        //   columns={3}
           gap={16}
           responsive={{
             1200: 4,
