@@ -167,6 +167,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/verification-code-page',
         permissions: [],
       },
+      {
+        key: 'masonry',
+        label: 'Masonry',
+        route: '/app/components/masonry',
+        permissions: [],
+      },
     ],
   },
 ];
