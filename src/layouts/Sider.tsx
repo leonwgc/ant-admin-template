@@ -2,10 +2,8 @@ import { Layout, SiderProps } from '@derbysoft/neat-design';
 import { useEffect, useState } from 'react';
 import { useLocalStorageState } from 'ahooks';
 import Menus from './Menus';
-import SiderToggleButton from './SiderToggleButton';
 import SkeletonLoading from './SkeletonLoading';
 import { menus } from '~/config.menu';
-import Footer from './Footer';
 
 type Props = SiderProps & {
   loading?: boolean;
@@ -33,23 +31,15 @@ export default ({ loading, ...props }: Props) => {
 
   const [collapsed, setCollapsed] = useState(value);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--menu-width',
-      collapsed ? '56px' : '256px'
-    );
-
-    setValue(collapsed);
-  }, [collapsed]);
-
   return (
     <Layout.Sider
-      trigger={null}
+      // trigger={null}
       width={256}
       collapsedWidth={64}
       collapsible
       collapsed={collapsed}
       theme="light"
+      onCollapse={setCollapsed}
       {...props}
     >
       <SkeletonLoading
@@ -57,8 +47,7 @@ export default ({ loading, ...props }: Props) => {
         paragraph={{ rows: 2, width: value ? '100%' : ['50%', '100%'] }}
       >
         <Menus collapsed={collapsed} menus={menus} />
-        <SiderToggleButton collapsed={collapsed} onToggle={setCollapsed} />
-        <Footer />
+        {/* <Footer /> */}
       </SkeletonLoading>
     </Layout.Sider>
   );
