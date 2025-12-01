@@ -58,11 +58,18 @@ const Form: FC = () => {
     beforeUpload: () => false,
   };
 
+  const responsiveColDef = {
+    xs: 24,
+    sm: 12,
+    md: 8,
+    lg: 6,
+  };
+
   return (
     <div className="form-profile">
       <div className="form-profile__header">
         <Upload {...uploadProps}>
-          <Button type="default">Upload</Button>
+          <Button type="secondary">Upload</Button>
         </Upload>
         <div className="form-profile__email-block">
           <div className="form-profile__email">
@@ -73,6 +80,7 @@ const Form: FC = () => {
           </div>
         </div>
       </div>
+
       <NeatForm
         form={form}
         layout="vertical"
@@ -92,7 +100,7 @@ const Form: FC = () => {
         <div className="form-profile__section">
           <div className="form-profile__section-title">Basic Info</div>
           <Row gutter={24}>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item
                 label="First Name"
                 name="firstName"
@@ -101,7 +109,7 @@ const Form: FC = () => {
                 <Input />
               </NeatForm.Item>
             </Col>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item
                 label="Last Name"
                 name="lastName"
@@ -110,14 +118,14 @@ const Form: FC = () => {
                 <Input />
               </NeatForm.Item>
             </Col>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item label="Primary Language" name="primaryLanguage">
                 <Select options={languageOptions} />
               </NeatForm.Item>
             </Col>
           </Row>
           <Row gutter={24}>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item
                 label="Country/Region"
                 name="country"
@@ -128,7 +136,7 @@ const Form: FC = () => {
                 <Select options={countryOptions} />
               </NeatForm.Item>
             </Col>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item label="Time Zone" name="timeZone">
                 <Select options={timeZoneOptions} />
               </NeatForm.Item>
@@ -138,7 +146,7 @@ const Form: FC = () => {
         <div className="form-profile__section">
           <div className="form-profile__section-title">Contact Info</div>
           <Row gutter={24}>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item
                 label="Work Email"
                 name="workEmail"
@@ -147,19 +155,19 @@ const Form: FC = () => {
                 <Input disabled />
               </NeatForm.Item>
             </Col>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item label="Secondary Email" name="secondaryEmail">
                 <Input />
               </NeatForm.Item>
             </Col>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item label="Job Title" name="jobTitle">
                 <Input />
               </NeatForm.Item>
             </Col>
           </Row>
           <Row gutter={24}>
-            <Col span={6}>
+            <Col {...responsiveColDef}>
               <NeatForm.Item label="Phone Number" name="phoneNumber">
                 <Space>
                   <Input disabled />
@@ -174,7 +182,7 @@ const Form: FC = () => {
           </Row>
         </div>
         <div className="form-profile__actions">
-          <Button type="default">Cancel</Button>
+          <Button>Cancel</Button>
           <Button
             type="primary"
             onClick={handleUpdate}
