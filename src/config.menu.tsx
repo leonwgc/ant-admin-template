@@ -4,6 +4,7 @@ import {
   FormOutlined,
   ApiOutlined,
   AppstoreOutlined,
+  CodeOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 
@@ -23,6 +24,20 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
 };
 
 export const menus: MenuItem[] = [
+  {
+    key: 'js-feature',
+    label: 'JS Feature',
+    icon: <CodeOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'intl-number-format',
+        label: 'Intl.NumberFormat',
+        route: '/app/js-feature/intl-number-format',
+        permissions: [],
+      },
+    ],
+  },
   {
     key: 'css',
     label: 'CSS Feature',
@@ -109,6 +124,7 @@ export const menus: MenuItem[] = [
       },
     ],
   },
+
   {
     key: 'components',
     label: 'Components',

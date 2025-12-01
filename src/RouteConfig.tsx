@@ -21,6 +21,8 @@ const UseSuspense = lazy(() => import('./pages/Hooks/UseSuspense'));
 
 const UseAHooksCountdown = lazy(() => import('./pages/Hooks/UseAHooksCountdown'));
 
+const IntlNumberFormatExample = lazy(() => import('./pages/Hooks/IntlNumberFormatExample'));
+
 const DotStatusExample = lazy(() => import('./pages/Components/DotStatusExample'));
 
 const VerificationCodeExample = lazy(
@@ -79,6 +81,9 @@ const RouteConfig = () => {
             <Route path="use-transition" element={<UseTransition />} />
             <Route path="use-suspense" element={<UseSuspense />} />
             <Route path="use-ahooks-countdown" element={<UseAHooksCountdown />} />
+          </Route>
+          <Route path="js-feature">
+            <Route path="intl-number-format" element={<IntlNumberFormatExample />} />
           </Route>
           <Route path="components">
             <Route path="dot-status" element={<DotStatusExample />} />
