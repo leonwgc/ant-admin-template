@@ -43,7 +43,7 @@ export default (props: Props) => {
 
   const filterMenus = useMemo(
     () => getFilterMenus(operations, menus),
-    [operations, menus]
+    [menus]
   );
   const levelKeys = useMemo(
     () => getLevelKeys(filterMenus as LevelKeysProps[]),
@@ -60,7 +60,7 @@ export default (props: Props) => {
         setOpenKeys(paths.slice(0, -1).map((item) => item.key) as string[]);
       }
     }
-  }, [pathname, filterMenus]);
+  }, [pathname, filterMenus, menuCollapsed]);
 
   const onOpenChange: MenuProps['onOpenChange'] = useCallback(
     (keys) => {
@@ -80,7 +80,7 @@ export default (props: Props) => {
         setOpenKeys(keys);
       }
     },
-    [openKeys]
+    [levelKeys, openKeys]
   );
 
   return (
