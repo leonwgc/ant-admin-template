@@ -29,6 +29,7 @@ run({
     html: {
       template: './index.html',
       title: 'React admin template',
+      favicon:'./public/fv.svg'
     },
     server: {
       open: true,
