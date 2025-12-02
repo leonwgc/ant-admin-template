@@ -28,7 +28,7 @@ run({
   rsConfig: {
     html: {
       template: './index.html',
-      title: 'React admin template',
+      title: 'React Playground',
       favicon:'./public/fv.svg'
     },
     server: {
