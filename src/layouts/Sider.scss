@@ -1,0 +1,19 @@
+/**
+ * @file src/layouts/Sider.scss
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+@import 'scss/common.scss';
+
+.app__sider {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: calc(100vh - var(--nav-height));
+  margin-top: var(--nav-height);
+  z-index: 40;
+
+  &.ds-layout-sider {
+    padding: 0;
+  }
+}

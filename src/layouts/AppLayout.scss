@@ -23,20 +23,6 @@
       display: none;
     }
   }
-  &__sider {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    height: calc(100vh - var(--nav-height));
-    border-right: 1px solid #dfe4e8;
-    margin-top: var(--nav-height);
-    z-index: 40;
-    //   overflow-y: auto;
-    //   &::-webkit-scrollbar {
-    //     display: none;
-    //   }
-  }
 
   &__content {
     position: relative;
