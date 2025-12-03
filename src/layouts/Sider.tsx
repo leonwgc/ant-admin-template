@@ -41,10 +41,7 @@ const Sider: FC<Props> = ({ loading }) => {
       onCollapse={setCollapsed}
       className="app__sider"
     >
-      <SkeletonLoading
-        loading={loading}
-        paragraph={{ rows: 2, width: value ? '100%' : ['50%', '100%'] }}
-      >
+      <SkeletonLoading loading={loading}>
         <Menus collapsed={collapsed} menus={menus} />
         {/* <Footer /> */}
       </SkeletonLoading>
