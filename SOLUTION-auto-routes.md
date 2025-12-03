@@ -1,7 +1,3 @@
-/**
- * @file SOLUTION-ISSUE-9.md
- * @author leon.wang(leon.wang@derbysoft.net)
- */
 
 # 问题9解决方案：自动路由生成系统
 
