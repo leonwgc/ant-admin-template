@@ -28,6 +28,20 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
   hidden?: boolean;
 };
 
+/**
+ * Defines the application's sidebar menu configuration.
+ *
+ * Each menu item can have:
+ * - `key`: Unique identifier for the menu item.
+ * - `label`: Display name of the menu item.
+ * - `icon`: React element representing the menu icon.
+ * - `permissions`: Array of permissions required to view the menu item.
+ * - `children`: Nested menu items.
+ * - `route`: (Optional) Route path for navigation.
+ * - `hidden`: (Optional) If true, the item is excluded from the menu UI but included in routing.
+ *
+ * This structure is used to render navigation menus and control access based on permissions.
+ */
 export const menus: MenuItem[] = [
   {
     key: 'js-feature',
