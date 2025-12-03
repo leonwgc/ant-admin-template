@@ -168,3 +168,10 @@ Use search_components with keyword "verification"
 ## 👨‍💻 Author
 
 leon.wang@derbysoft.net
+
+## Visual testing tool for MCP servers
+https://github.com/modelcontextprotocol/inspector
+
+```
+npx @modelcontextprotocol/inspector
+```
