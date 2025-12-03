@@ -96,9 +96,9 @@ export const routeComponentMap: RouteComponentMap = {
 
   // User Management
   '/app/users': lazyLoad('pages/User/Users'),
-  '/app/users/add': lazyLoad('pages/User/AddUser'),
+  '/app/users/add': lazyLoad('pages/User/Add'),
   '/app/users/table': lazyLoad('pages/User/ExpandTable'),
-  '/app/users/edit': lazyLoad('pages/User/EditUser'),
+  '/app/users/edit': lazyLoad('pages/User/Edit'),
 
   // Forms
   '/app/forms': lazyLoad('pages/Form/MyForm'),
