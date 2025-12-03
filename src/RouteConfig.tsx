@@ -1,54 +1,26 @@
+/**
+ * @file src/RouteConfig.tsx
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+
 import { Route, Routes } from 'react-router';
 import AppLayout from './layouts/AppLayout';
 import { lazy, Suspense } from 'react';
-import { Users, AddUser, EditUser } from './pages/User';
 import Redirect from './components/Redirect';
+import { menus } from './config.menu';
+import { extractRoutesFromMenus, routeComponentMap, getRouteElement } from './utils/routeGenerator';
 
 const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
-const Form = lazy(() => import('./pages/Form/MyForm'));
-const DynamicList = lazy(() => import('./pages/Form/DynamicList'));
-const VirtualList = lazy(() => import('./pages/Form/VirtualLists'));
-
-const ExpandTable = lazy(() => import('./pages/User/ExpandTable'));
-
-const CssFeature = lazy(() => import('./pages/Form/CssFeature'));
-
-const UseTransition = lazy(() => import('./pages/Hooks/UseTransition'));
-
-const UseSuspense = lazy(() => import('./pages/Hooks/UseSuspense'));
-
-const UseAHooksCountdown = lazy(() => import('./pages/Hooks/UseAHooksCountdown'));
-
-const IntlNumberFormatExample = lazy(() => import('./pages/Js/IntlNumberFormatExample'));
-
-const DotStatusExample = lazy(() => import('./pages/Components/DotStatusExample'));
-
-const VerificationCodeExample = lazy(
-  () => import('./pages/Components/VerificationCodeExample')
-);
-
-const ContactInfoExample = lazy(() => import('./pages/Components/ContactInfoExample'));
-
-const UserContactCardExample = lazy(
-  () => import('./pages/Components/UserContactCardExample')
-);
-
-const EmailSuccessModalExample = lazy(
-  () => import('./pages/Components/EmailSuccessModalExample')
-);
-
-const VerificationCodePageExample = lazy(
-  () => import('./pages/Components/VerificationCodePageExample')
-);
-
-const MasonryExample = lazy(() => import('./pages/Components/MasonryExample'));
+// Extract all routes from menu configuration
+const menuRoutes = extractRoutesFromMenus(menus);
 
 /**
  * RouteConfig
  *
- * This component is used to define the routes of the application.
+ * This component automatically generates routes from menu configuration.
+ * Routes are dynamically created based on config.menu.tsx, avoiding duplication.
  *
  * @returns {JSX.Element} The routes of the application.
  */
@@ -62,40 +34,26 @@ const RouteConfig = () => {
           path="no-permission"
           element={<AppLayout hasSider={false} hasContentHeader={false} />}
         >
-          <Route index element={<NoPermission />}></Route>
+          <Route index element={<NoPermission />} />
         </Route>
+
         <Route path="app" element={<AppLayout />}>
-          <Route path="css">
-            <Route index element={<CssFeature />} />
-          </Route>
-          <Route path="users">
-            <Route index element={<Users />} />
-            <Route path="add" element={<AddUser />} />
-            <Route path="table" element={<ExpandTable />} />
-            <Route path="edit" element={<EditUser />} />
-          </Route>
-          <Route path="forms">
-            <Route index element={<Form />} />
-            <Route path="dynamic-list" element={<DynamicList />} />
-            <Route path="virtual-list" element={<VirtualList />} />
-          </Route>
-          <Route path="hooks">
-            <Route path="use-transition" element={<UseTransition />} />
-            <Route path="use-suspense" element={<UseSuspense />} />
-            <Route path="use-ahooks-countdown" element={<UseAHooksCountdown />} />
-          </Route>
-          <Route path="js-feature">
-            <Route path="intl-number-format" element={<IntlNumberFormatExample />} />
-          </Route>
-          <Route path="components">
-            <Route path="dot-status" element={<DotStatusExample />} />
-            <Route path="verification-code" element={<VerificationCodeExample />} />
-            <Route path="contact-info" element={<ContactInfoExample />} />
-            <Route path="user-contact-card" element={<UserContactCardExample />} />
-            <Route path="email-success-modal" element={<EmailSuccessModalExample />} />
-            <Route path="verification-code-page" element={<VerificationCodePageExample />} />
-            <Route path="masonry" element={<MasonryExample />} />
-          </Route>
+          {/* Auto-generated routes from menu configuration */}
+          {menuRoutes.map(({ path }) => {
+            const element = getRouteElement(path, routeComponentMap);
+            if (!element) return null;
+
+            // Extract the relative path (remove /app prefix)
+            const relativePath = path.replace(/^\/app\/?/, '');
+
+            return (
+              <Route
+                key={path}
+                path={relativePath}
+                element={element}
+              />
+            );
+          })}
         </Route>
 
         <Route path="*" element={<NotFound />} />

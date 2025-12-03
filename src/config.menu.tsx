@@ -21,6 +21,11 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
    * permissions needed to access this menu item
    */
   permissions?: string[];
+  /**
+   * whether to hide this menu item from menu display
+   * (but still generate route for it)
+   */
+  hidden?: boolean;
 };
 
 export const menus: MenuItem[] = [
@@ -69,6 +74,20 @@ export const menus: MenuItem[] = [
         label: 'Expand Table',
         route: '/app/users/table',
         permissions: [],
+      },
+      {
+        key: 'user-add',
+        label: 'Add User',
+        route: '/app/users/add',
+        permissions: [],
+        hidden: true, // Hidden from menu, but included in routes
+      },
+      {
+        key: 'user-edit',
+        label: 'Edit User',
+        route: '/app/users/edit',
+        permissions: [],
+        hidden: true, // Hidden from menu, but included in routes
       },
     ],
   },

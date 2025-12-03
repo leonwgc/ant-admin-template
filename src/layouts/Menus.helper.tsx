@@ -147,7 +147,7 @@ export const hasPermission = (
  * Get the menu items according to the user's permissions and visible setting
  * @param operations The user's operations
  * @param menus The menu items to filter (default is allMenuData)
- * @returns The menu items that the user can see
+ * @returns The menu items that the user can see (excluding hidden items)
  */
 export const getFilterMenus: (
   operations: string[],
@@ -155,6 +155,11 @@ export const getFilterMenus: (
 ) => MenuItem[] = (operations, menus = []) => {
   const filterMenus = (items: MenuItem[]) => {
     return items.filter((item) => {
+      // Filter out hidden menu items
+      if (item.hidden) {
+        return false;
+      }
+
       if (hasPermission(operations, item.permissions)) {
         if (Array.isArray(item.children)) {
           item.children = filterMenus(item.children);
