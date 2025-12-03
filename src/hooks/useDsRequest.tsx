@@ -7,7 +7,7 @@ import { useRequest } from 'ahooks';
 import { AxiosPromise } from 'axios';
 import { message } from 'antd';
 
-type RequestHandler = (data: any, params: any[]) => void;
+type RequestHandler = (data: unknown, params: unknown[]) => void;
 
 const onUseRequestSuccessHanlder =
   (onSuccess: RequestHandler, onFailed?: RequestHandler) => (data, params?) => {
@@ -17,7 +17,7 @@ const onUseRequestSuccessHanlder =
       onFailed?.(data?.data?.error, params);
     }
   };
-export type ObjectType = Record<string, any>;
+export type ObjectType = Record<string, unknown>;
 
 export type ListObjectType = {
   pageSize?: number;
@@ -33,7 +33,7 @@ export type ResponseDataType = {
   data?: ObjectType | ObjectType[] | ListObjectType;
 };
 
-type Options<TParams = any, TData = any> = {
+type Options<TParams = unknown, TData = unknown> = {
   manual?: boolean;
   onBefore?: (params: TParams) => void;
   onSuccess?: (data: TData, params: TParams) => void;
@@ -65,7 +65,7 @@ type Options<TParams = any, TData = any> = {
 };
 
 const useDsRequest = (
-  request: (...params: any[]) => AxiosPromise<ResponseDataType>,
+  request: (...params: unknown[]) => AxiosPromise<ResponseDataType>,
   options: Options = {}
 ) => {
   const onError = useCallback((error) => {
