@@ -1,12 +1,9 @@
 {
-	"servers": {
-		"ant-admin-template": {
-			"type": "stdio",
-			"command": "node",
-			"args": [
-				"/Users/leonwgc/ant-admin-template/mcp/index.js"
-			]
-		}
-	},
-	"inputs": []
+  "inputs": [],
+  "servers": {
+    "ant-design": {
+      "type": "stdio",
+      "command": "ant-design-mcp"
+    }
+  }
 }
