@@ -1,0 +1,24 @@
+{
+  "name": "ant-design-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Ant Design component library documentation and code generation",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ant-design",
+    "components",
+    "code-generation"
+  ],
+  "author": "leon.wang@derbysoft.net",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "node-fetch": "^3.3.2"
+  }
+}
