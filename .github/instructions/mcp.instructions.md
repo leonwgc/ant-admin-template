@@ -159,14 +159,6 @@ const formExample = await get_component_example({ componentName: "Form" });
 // - 使用 Form.Item 的 name, rules 等 props
 // - 使用 Input 的 placeholder, size 等 props
 // - 遵循示例代码的最佳实践
-
-// Step 5: 在代码注释中记录
-/**
- * MCP Services Used:
- * - search_components: "form"
- * - get_component_info: Form, Input, Select, Button
- * - get_component_example: Form
- */
 ```
 
 ### 9. 性能优化
@@ -193,9 +185,6 @@ const formExample = await get_component_example({ componentName: "Form" });
  * @file src/pages/YourPage/YourPage.tsx
  * @author leon.wang(leon.wang@derbysoft.net)
  * @description [页面描述]
- *
- * MCP Services Used:
- * - [列出所有调用的 MCP 服务]
  */
 
 import React from 'react';
