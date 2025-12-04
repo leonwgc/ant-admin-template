@@ -4,6 +4,11 @@
     "ant-design": {
       "type": "stdio",
       "command": "ant-design-mcp"
+    },
+    "memory": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
     }
   }
 }
