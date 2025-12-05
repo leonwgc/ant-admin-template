@@ -155,6 +155,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-ahooks-countdown',
         permissions: [],
       },
+      {
+        key: 'verification-code-countdown',
+        label: 'Verification Code Countdown',
+        route: '/app/hooks/verification-code-countdown',
+        permissions: [],
+      },
     ],
   },
 

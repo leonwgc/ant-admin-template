@@ -109,6 +109,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/use-transition': lazyLoad('pages/Hooks/UseTransition'),
   '/app/hooks/use-suspense': lazyLoad('pages/Hooks/UseSuspense'),
   '/app/hooks/use-ahooks-countdown': lazyLoad('pages/Hooks/UseAHooksCountdown'),
+  '/app/hooks/verification-code-countdown': lazyLoad('pages/Hooks/VerificationCodeCountdown'),
 
   // JavaScript Features
   '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormatExample'),
