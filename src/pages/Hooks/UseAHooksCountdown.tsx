@@ -1,6 +1,6 @@
 /**
  * @file src/pages/Hooks/UseAHooksCountdown.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import React from 'react';

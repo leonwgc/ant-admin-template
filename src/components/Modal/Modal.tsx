@@ -1,6 +1,6 @@
 /**
  * @file src/components/Modal/Modal.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 import React, {
   useRef,

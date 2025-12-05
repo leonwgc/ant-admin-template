@@ -21,7 +21,7 @@ applyTo: '**'
 ```javascript
 /**
  * @file 组件文件相对路径
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 ```
 

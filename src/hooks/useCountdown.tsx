@@ -1,6 +1,6 @@
 /**
  * @file src/hooks/useCountdown.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import { useCountDown, useUnmount } from 'ahooks';

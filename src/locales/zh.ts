@@ -1,6 +1,6 @@
 /**
  * @file src/locales/zh.ts
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 export default {

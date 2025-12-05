@@ -1,6 +1,6 @@
 /**
  * @file src/utils/routeGenerator.example.md
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 # Route Generator - Quick Start Example

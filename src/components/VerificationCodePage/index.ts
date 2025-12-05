@@ -1,6 +1,6 @@
 /**
  * @file src/components/VerificationCodePage/index.ts
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 export { default } from './VerificationCodePage';

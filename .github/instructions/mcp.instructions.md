@@ -109,7 +109,7 @@ mcp_ant-design_search_components({ keyword: "feedback" })
 ```typescript
 /**
  * @file src/pages/Login/Login.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  * @description Login page using Ant Design components and ahooks
  *
  * MCP Services Used:
@@ -323,7 +323,7 @@ mcp_ahooks-mcp_get_hook_info({ name: "useBoolean" });
 ```typescript
 /**
  * @file src/pages/YourPage/YourPage.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  * @description [页面描述]
  *
  * MCP Services Used:

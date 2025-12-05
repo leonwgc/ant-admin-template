@@ -1,6 +1,6 @@
 /**
  * @file src/components/Modal/Mask.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 import React, { useEffect, useRef } from 'react';
 import { AnimatePresence, HTMLMotionProps, motion } from 'motion/react';

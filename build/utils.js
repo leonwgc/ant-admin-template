@@ -1,6 +1,6 @@
 /**
  * @file build/utils.js
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 // Statics

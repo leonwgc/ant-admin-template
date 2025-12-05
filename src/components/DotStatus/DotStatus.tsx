@@ -1,6 +1,6 @@
 /**
  * @file src/components/DotStatus/DotStatus.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import React, { FC } from 'react';

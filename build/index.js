@@ -1,6 +1,6 @@
 /**
  * @file build/index.js
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 const fs = require('fs');

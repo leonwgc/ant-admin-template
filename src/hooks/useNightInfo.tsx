@@ -1,6 +1,6 @@
 /**
  * @file src/hooks/useNightInfo.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import dayjs from 'dayjs';

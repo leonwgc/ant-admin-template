@@ -1,6 +1,6 @@
 /**
  * @file src/components/Masonry/index.ts
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 export { default } from './Masonry';

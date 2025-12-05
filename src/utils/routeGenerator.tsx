@@ -1,6 +1,6 @@
 /**
  * @file src/utils/routeGenerator.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import { lazy, ComponentType, LazyExoticComponent } from 'react';

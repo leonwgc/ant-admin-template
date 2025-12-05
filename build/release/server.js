@@ -1,6 +1,6 @@
 /**
  * @file server.js
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 const config = require('./config.js');

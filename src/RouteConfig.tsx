@@ -1,6 +1,6 @@
 /**
  * @file src/RouteConfig.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import { Route, Routes } from 'react-router';

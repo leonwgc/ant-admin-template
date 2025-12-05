@@ -1,6 +1,6 @@
 /**
  * @file src/hooks/useRootRect.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import { useEventListener, useMount } from 'ahooks';

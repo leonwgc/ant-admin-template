@@ -1,6 +1,6 @@
 /**
  * @file src/hooks/useScrollToTop.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 import { useMount } from 'ahooks';
 

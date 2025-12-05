@@ -1,6 +1,6 @@
 /**
  * @file src/components/Masonry/Masonry.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import React, { useEffect, useRef, useState, ReactNode, useMemo } from 'react';

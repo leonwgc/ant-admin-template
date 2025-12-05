@@ -1,6 +1,6 @@
 /**
  * @file src/pages/Components/VerificationCodePageExample.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 import React, { useState } from 'react';

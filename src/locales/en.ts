@@ -1,6 +1,6 @@
 /**
  * @file src/locales/en.ts
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 const en = {
   '酒店地址': 'Hotel Address',

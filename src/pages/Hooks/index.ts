@@ -1,6 +1,6 @@
 /**
  * @file src/pages/Hooks/index.tsx
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @author leon.wang
  */
 
 export { default as VerificationCodeCountdown } from './VerificationCodeCountdown';
