@@ -5,6 +5,7 @@ import {
   ApiOutlined,
   AppstoreOutlined,
   CodeOutlined,
+  AndroidOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 
@@ -210,6 +211,20 @@ export const menus: MenuItem[] = [
         key: 'masonry',
         label: 'Masonry',
         route: '/app/components/masonry',
+        permissions: [],
+      },
+    ],
+  },
+  {
+    key: 'games',
+    label: 'Games',
+    icon: <AndroidOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'tetris-3d',
+        label: '3D Tetris',
+        route: '/app/games/tetris-3d',
         permissions: [],
       },
     ],
