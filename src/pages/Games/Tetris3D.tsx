@@ -154,74 +154,89 @@ const Tetris3D: React.FC = () => {
   };
 
   const playMoveSound = () => {
-    playSound(200, 0.05, 'square');
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+    const oscillator = context.createOscillator();
+    const gainNode = context.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    oscillator.type = 'sine';
+    // Playful bounce sound
+    oscillator.frequency.setValueAtTime(600, context.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(800, context.currentTime + 0.04);
+
+    gainNode.gain.setValueAtTime(0.15, context.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.08);
+
+    oscillator.start(context.currentTime);
+    oscillator.stop(context.currentTime + 0.08);
   };
 
   const playRotateSound = () => {
-    playSound(300, 0.1, 'triangle');
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+    const frequencies = [400, 600, 900];
+
+    frequencies.forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'triangle';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + index * 0.03;
+      gainNode.gain.setValueAtTime(0.12, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.1);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.1);
+    });
   };
 
   const playLockSound = () => {
-    playSound(150, 0.15, 'sawtooth');
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+
+    // Cute thud sound with two components
+    [300, 150].forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = index === 0 ? 'sine' : 'triangle';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + index * 0.02;
+      gainNode.gain.setValueAtTime(0.2, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.12);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.12);
+    });
   };
 
   const playClearSound = (lines: number) => {
     if (!isSoundEnabled || !audioContextRef.current) return;
 
     const context = audioContextRef.current;
-    const frequencies = [523.25, 659.25, 783.99, 1046.5]; // C, E, G, C notes
+    // Cheerful ascending notes with harmony
+    const melodyFreqs = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+    const harmonyFreqs = [392, 493.88, 587.33, 783.99]; // G4, B4, D5, G5
 
-    frequencies.slice(0, Math.min(lines, 4)).forEach((freq, index) => {
-      const oscillator = context.createOscillator();
-      const gainNode = context.createGain();
+    const linesToPlay = Math.min(lines, 4);
 
-      oscillator.connect(gainNode);
-      gainNode.connect(context.destination);
-
-      oscillator.type = 'sine';
-      oscillator.frequency.value = freq;
-
-      const startTime = context.currentTime + index * 0.1;
-      gainNode.gain.setValueAtTime(0.4, startTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
-
-      oscillator.start(startTime);
-      oscillator.stop(startTime + 0.3);
-    });
-  };
-
-  const playGameOverSound = () => {
-    if (!isSoundEnabled || !audioContextRef.current) return;
-
-    const context = audioContextRef.current;
-    const frequencies = [440, 415, 392, 370, 349]; // Descending notes
-
-    frequencies.forEach((freq, index) => {
-      const oscillator = context.createOscillator();
-      const gainNode = context.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(context.destination);
-
-      oscillator.type = 'sawtooth';
-      oscillator.frequency.value = freq;
-
-      const startTime = context.currentTime + index * 0.15;
-      gainNode.gain.setValueAtTime(0.3, startTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
-
-      oscillator.start(startTime);
-      oscillator.stop(startTime + 0.3);
-    });
-  };
-
-  const playLevelUpSound = () => {
-    if (!isSoundEnabled || !audioContextRef.current) return;
-
-    const context = audioContextRef.current;
-    const frequencies = [523.25, 659.25, 783.99, 1046.5, 1318.51]; // Ascending C major arpeggio
-
-    frequencies.forEach((freq, index) => {
+    // Play melody
+    melodyFreqs.slice(0, linesToPlay).forEach((freq, index) => {
       const oscillator = context.createOscillator();
       const gainNode = context.createGain();
 
@@ -232,11 +247,161 @@ const Tetris3D: React.FC = () => {
       oscillator.frequency.value = freq;
 
       const startTime = context.currentTime + index * 0.08;
-      gainNode.gain.setValueAtTime(0.3, startTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.2);
+      gainNode.gain.setValueAtTime(0.25, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.25);
 
       oscillator.start(startTime);
-      oscillator.stop(startTime + 0.2);
+      oscillator.stop(startTime + 0.25);
+    });
+
+    // Play harmony
+    harmonyFreqs.slice(0, linesToPlay).forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'triangle';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + index * 0.08;
+      gainNode.gain.setValueAtTime(0.15, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.25);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.25);
+    });
+
+    // Add sparkle effect for multiple lines
+    if (lines >= 2) {
+      const sparkleFreqs = [1568, 2093, 2637];
+      sparkleFreqs.forEach((freq, index) => {
+        const oscillator = context.createOscillator();
+        const gainNode = context.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(context.destination);
+
+        oscillator.type = 'sine';
+        oscillator.frequency.value = freq;
+
+        const startTime = context.currentTime + index * 0.05 + 0.15;
+        gainNode.gain.setValueAtTime(0.1, startTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.15);
+
+        oscillator.start(startTime);
+        oscillator.stop(startTime + 0.15);
+      });
+    }
+  };
+
+  const playGameOverSound = () => {
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+
+    // Comical descending wobble sound
+    const oscillator = context.createOscillator();
+    const gainNode = context.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    oscillator.type = 'sawtooth';
+
+    // Sliding down with wobble
+    oscillator.frequency.setValueAtTime(500, context.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(50, context.currentTime + 0.5);
+
+    gainNode.gain.setValueAtTime(0.25, context.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.15, context.currentTime + 0.25);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.5);
+
+    oscillator.start(context.currentTime);
+    oscillator.stop(context.currentTime + 0.5);
+
+    // Add comical boing at the end
+    const boingOsc = context.createOscillator();
+    const boingGain = context.createGain();
+
+    boingOsc.connect(boingGain);
+    boingGain.connect(context.destination);
+
+    boingOsc.type = 'sine';
+    boingOsc.frequency.setValueAtTime(200, context.currentTime + 0.5);
+    boingOsc.frequency.exponentialRampToValueAtTime(100, context.currentTime + 0.7);
+
+    boingGain.gain.setValueAtTime(0.2, context.currentTime + 0.5);
+    boingGain.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.7);
+
+    boingOsc.start(context.currentTime + 0.5);
+    boingOsc.stop(context.currentTime + 0.7);
+  };
+
+  const playLevelUpSound = () => {
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+    // Joyful ascending scale
+    const frequencies = [523.25, 587.33, 659.25, 783.99, 880, 1046.5]; // C-D-E-G-A-C
+
+    frequencies.forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'triangle';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + index * 0.06;
+      gainNode.gain.setValueAtTime(0.22, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.18);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.18);
+    });
+
+    // Add sparkly top notes
+    const sparkleFreqs = [1568, 2093, 2637, 3136]; // High octave sparkles
+    sparkleFreqs.forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + 0.25 + index * 0.04;
+      gainNode.gain.setValueAtTime(0.15, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.15);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.15);
+    });
+
+    // Victory chord at the end
+    const chordFreqs = [523.25, 659.25, 783.99]; // C major chord
+    chordFreqs.forEach((freq) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + 0.4;
+      gainNode.gain.setValueAtTime(0.18, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.3);
     });
   };
 
