@@ -111,6 +111,7 @@ const Tetris3D: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [combo, setCombo] = useState(0);
 
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
@@ -121,6 +122,8 @@ const Tetris3D: React.FC = () => {
   const gameLoopRef = useRef<number | null>(null);
   const lastMoveTimeRef = useRef<number>(0);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const comboCountRef = useRef<number>(0);
+  const lastClearTimeRef = useRef<number>(0);
 
   // Initialize audio context
   useEffect(() => {
@@ -225,15 +228,20 @@ const Tetris3D: React.FC = () => {
     });
   };
 
-  const playClearSound = (lines: number) => {
+  const playClearSound = (lines: number, combo: number) => {
     if (!isSoundEnabled || !audioContextRef.current) return;
 
     const context = audioContextRef.current;
-    // Cheerful ascending notes with harmony
-    const melodyFreqs = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
-    const harmonyFreqs = [392, 493.88, 587.33, 783.99]; // G4, B4, D5, G5
-
     const linesToPlay = Math.min(lines, 4);
+
+    // Calculate intensity based on combo
+    const intensity = Math.min(combo / 5, 1); // Max at 5 combo
+    const baseVolume = 0.25 + intensity * 0.15; // 0.25 to 0.4
+    const speedMultiplier = 1 - intensity * 0.3; // Faster with higher combo
+
+    // Base melody - gets higher pitched with combo
+    const melodyFreqs = [523.25, 659.25, 783.99, 1046.5].map(f => f * (1 + intensity * 0.2));
+    const harmonyFreqs = [392, 493.88, 587.33, 783.99].map(f => f * (1 + intensity * 0.2));
 
     // Play melody
     melodyFreqs.slice(0, linesToPlay).forEach((freq, index) => {
@@ -246,8 +254,8 @@ const Tetris3D: React.FC = () => {
       oscillator.type = 'sine';
       oscillator.frequency.value = freq;
 
-      const startTime = context.currentTime + index * 0.08;
-      gainNode.gain.setValueAtTime(0.25, startTime);
+      const startTime = context.currentTime + index * 0.08 * speedMultiplier;
+      gainNode.gain.setValueAtTime(baseVolume, startTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.25);
 
       oscillator.start(startTime);
@@ -265,18 +273,21 @@ const Tetris3D: React.FC = () => {
       oscillator.type = 'triangle';
       oscillator.frequency.value = freq;
 
-      const startTime = context.currentTime + index * 0.08;
-      gainNode.gain.setValueAtTime(0.15, startTime);
+      const startTime = context.currentTime + index * 0.08 * speedMultiplier;
+      gainNode.gain.setValueAtTime(baseVolume * 0.6, startTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.25);
 
       oscillator.start(startTime);
       oscillator.stop(startTime + 0.25);
     });
 
-    // Add sparkle effect for multiple lines
-    if (lines >= 2) {
-      const sparkleFreqs = [1568, 2093, 2637];
-      sparkleFreqs.forEach((freq, index) => {
+    // Add sparkle effect - more sparkles with higher combo
+    if (lines >= 2 || combo > 1) {
+      const sparkleCount = Math.min(3 + combo * 2, 10);
+      const sparkleFreqs = [1568, 2093, 2637, 3136, 3729, 4186];
+
+      for (let i = 0; i < sparkleCount; i++) {
+        const freq = sparkleFreqs[i % sparkleFreqs.length] * (1 + Math.random() * 0.1);
         const oscillator = context.createOscillator();
         const gainNode = context.createGain();
 
@@ -286,12 +297,74 @@ const Tetris3D: React.FC = () => {
         oscillator.type = 'sine';
         oscillator.frequency.value = freq;
 
-        const startTime = context.currentTime + index * 0.05 + 0.15;
-        gainNode.gain.setValueAtTime(0.1, startTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.15);
+        const startTime = context.currentTime + i * 0.03 + 0.1;
+        gainNode.gain.setValueAtTime(0.08 + intensity * 0.08, startTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.12);
 
         oscillator.start(startTime);
-        oscillator.stop(startTime + 0.15);
+        oscillator.stop(startTime + 0.12);
+      }
+    }
+
+    // Add bass boom for high combos
+    if (combo >= 3) {
+      const bassOsc = context.createOscillator();
+      const bassGain = context.createGain();
+
+      bassOsc.connect(bassGain);
+      bassGain.connect(context.destination);
+
+      bassOsc.type = 'sine';
+      bassOsc.frequency.setValueAtTime(80, context.currentTime);
+      bassOsc.frequency.exponentialRampToValueAtTime(40, context.currentTime + 0.2);
+
+      bassGain.gain.setValueAtTime(0.3 + intensity * 0.2, context.currentTime);
+      bassGain.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.2);
+
+      bassOsc.start(context.currentTime);
+      bassOsc.stop(context.currentTime + 0.2);
+    }
+
+    // Add explosion sound for very high combos
+    if (combo >= 5) {
+      for (let i = 0; i < 20; i++) {
+        const noiseOsc = context.createOscillator();
+        const noiseGain = context.createGain();
+
+        noiseOsc.connect(noiseGain);
+        noiseGain.connect(context.destination);
+
+        noiseOsc.type = 'sawtooth';
+        noiseOsc.frequency.value = 100 + Math.random() * 2000;
+
+        const startTime = context.currentTime + Math.random() * 0.15;
+        noiseGain.gain.setValueAtTime(0.05, startTime);
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.08);
+
+        noiseOsc.start(startTime);
+        noiseOsc.stop(startTime + 0.08);
+      }
+    }
+
+    // Add choir/fanfare for ultimate combos
+    if (combo >= 7) {
+      const fanfareFreqs = [523.25, 659.25, 783.99, 1046.5, 1318.51, 1568];
+      fanfareFreqs.forEach((freq, index) => {
+        const oscillator = context.createOscillator();
+        const gainNode = context.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(context.destination);
+
+        oscillator.type = 'square';
+        oscillator.frequency.value = freq;
+
+        const startTime = context.currentTime + 0.2 + index * 0.04;
+        gainNode.gain.setValueAtTime(0.15, startTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
+
+        oscillator.start(startTime);
+        oscillator.stop(startTime + 0.3);
       });
     }
   };
@@ -826,6 +899,21 @@ const Tetris3D: React.FC = () => {
     }
 
     if (linesToClear.length > 0) {
+      // Update combo counter
+      const currentTime = performance.now();
+      const timeSinceLastClear = currentTime - lastClearTimeRef.current;
+
+      // Reset combo if more than 3 seconds passed
+      if (timeSinceLastClear > 3000) {
+        comboCountRef.current = 0;
+      }
+
+      comboCountRef.current += 1;
+      lastClearTimeRef.current = currentTime;
+
+      const currentCombo = comboCountRef.current;
+      setCombo(currentCombo);
+
       // Create magical effects for each cleared line
       linesToClear.forEach((y) => {
         // Flash and glow effect
@@ -891,8 +979,20 @@ const Tetris3D: React.FC = () => {
         });
       }, 300);
 
-      playClearSound(linesCleared);
-      setScore((prev) => prev + linesCleared * 100 * level);
+      // Play clear sound with combo multiplier
+      playClearSound(linesCleared, currentCombo);
+
+      // Add combo bonus to score
+      const comboBonus = currentCombo > 1 ? (currentCombo - 1) * 50 : 0;
+      setScore((prev) => prev + linesCleared * 100 * level + comboBonus);
+    } else {
+      // Reset combo if no lines cleared
+      const currentTime = performance.now();
+      const timeSinceLastClear = currentTime - lastClearTimeRef.current;
+      if (timeSinceLastClear > 3000) {
+        comboCountRef.current = 0;
+        setCombo(0);
+      }
     }
   };
 
@@ -1016,6 +1116,14 @@ const Tetris3D: React.FC = () => {
             <Text strong>Level:</Text>
             <Text className="tetris-3d__stat-value">{level}</Text>
           </div>
+          {combo > 1 && (
+            <div className="tetris-3d__stat tetris-3d__stat--combo">
+              <Text strong>Combo:</Text>
+              <Text className="tetris-3d__stat-value tetris-3d__stat-value--combo">
+                {combo}x 🔥
+              </Text>
+            </div>
+          )}
         </div>
       </div>
 

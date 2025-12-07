@@ -36,6 +36,17 @@
     color: #1890ff;
     text-shadow: 0 0 10px rgba(24, 144, 255, 0.8);
     animation: score-pulse 1s ease-in-out infinite;
+
+    &--combo {
+      color: #ff4500;
+      font-size: 28px;
+      text-shadow: 0 0 15px rgba(255, 69, 0, 0.9);
+      animation: combo-pulse 0.5s ease-in-out infinite;
+    }
+  }
+
+  &__stat--combo {
+    animation: combo-shake 0.3s ease-in-out;
   }
 
   @keyframes score-pulse {
@@ -44,6 +55,27 @@
     }
     50% {
       transform: scale(1.05);
+    }
+  }
+
+  @keyframes combo-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.15);
+    }
+  }
+
+  @keyframes combo-shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px) rotate(-2deg);
+    }
+    75% {
+      transform: translateX(5px) rotate(2deg);
     }
   }
 
