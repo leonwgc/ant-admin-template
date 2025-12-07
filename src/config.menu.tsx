@@ -227,6 +227,12 @@ export const menus: MenuItem[] = [
         route: '/app/games/tetris-3d',
         permissions: [],
       },
+      {
+        key: 'flappy-birds-3d',
+        label: 'Flappy Birds 3D',
+        route: '/app/games/flappy-birds-3d',
+        permissions: [],
+      },
     ],
   },
 ];
