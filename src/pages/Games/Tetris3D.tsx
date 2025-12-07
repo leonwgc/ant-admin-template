@@ -110,6 +110,7 @@ const Tetris3D: React.FC = () => {
   const [level, setLevel] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
@@ -119,6 +120,125 @@ const Tetris3D: React.FC = () => {
   const gridRef = useRef<(THREE.Mesh | null)[][][]>([]);
   const gameLoopRef = useRef<number | null>(null);
   const lastMoveTimeRef = useRef<number>(0);
+  const audioContextRef = useRef<AudioContext | null>(null);
+
+  // Initialize audio context
+  useEffect(() => {
+    audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    return () => {
+      audioContextRef.current?.close();
+    };
+  }, []);
+
+  // Sound generation functions
+  const playSound = (frequency: number, duration: number, type: OscillatorType = 'sine') => {
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const oscillator = audioContextRef.current.createOscillator();
+    const gainNode = audioContextRef.current.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContextRef.current.destination);
+
+    oscillator.type = type;
+    oscillator.frequency.value = frequency;
+
+    gainNode.gain.setValueAtTime(0.3, audioContextRef.current.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.01,
+      audioContextRef.current.currentTime + duration
+    );
+
+    oscillator.start(audioContextRef.current.currentTime);
+    oscillator.stop(audioContextRef.current.currentTime + duration);
+  };
+
+  const playMoveSound = () => {
+    playSound(200, 0.05, 'square');
+  };
+
+  const playRotateSound = () => {
+    playSound(300, 0.1, 'triangle');
+  };
+
+  const playLockSound = () => {
+    playSound(150, 0.15, 'sawtooth');
+  };
+
+  const playClearSound = (lines: number) => {
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+    const frequencies = [523.25, 659.25, 783.99, 1046.5]; // C, E, G, C notes
+
+    frequencies.slice(0, Math.min(lines, 4)).forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + index * 0.1;
+      gainNode.gain.setValueAtTime(0.4, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.3);
+    });
+  };
+
+  const playGameOverSound = () => {
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+    const frequencies = [440, 415, 392, 370, 349]; // Descending notes
+
+    frequencies.forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'sawtooth';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + index * 0.15;
+      gainNode.gain.setValueAtTime(0.3, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.3);
+    });
+  };
+
+  const playLevelUpSound = () => {
+    if (!isSoundEnabled || !audioContextRef.current) return;
+
+    const context = audioContextRef.current;
+    const frequencies = [523.25, 659.25, 783.99, 1046.5, 1318.51]; // Ascending C major arpeggio
+
+    frequencies.forEach((freq, index) => {
+      const oscillator = context.createOscillator();
+      const gainNode = context.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = freq;
+
+      const startTime = context.currentTime + index * 0.08;
+      gainNode.gain.setValueAtTime(0.3, startTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.2);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 0.2);
+    });
+  };
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -255,6 +375,7 @@ const Tetris3D: React.FC = () => {
     if (!canMove(0, 0, 0)) {
       setGameOver(true);
       setIsPlaying(false);
+      playGameOverSound();
       return false;
     }
     return true;
@@ -293,6 +414,7 @@ const Tetris3D: React.FC = () => {
       currentPositionRef.current.x += dx;
       currentPositionRef.current.y += dy;
       currentPositionRef.current.z += dz;
+      playMoveSound();
     }
   };
 
@@ -330,6 +452,7 @@ const Tetris3D: React.FC = () => {
           block.position.z + BLOCK_SIZE / 2
         );
       });
+      playRotateSound();
     }
   };
 
@@ -339,6 +462,7 @@ const Tetris3D: React.FC = () => {
       gridRef.current[y][x][z] = block.mesh;
     });
 
+    playLockSound();
     clearLines();
     currentTetrominoRef.current = [];
   };
@@ -602,6 +726,7 @@ const Tetris3D: React.FC = () => {
         });
       }, 300);
 
+      playClearSound(linesCleared);
       setScore((prev) => prev + linesCleared * 100 * level);
     }
   };
@@ -671,6 +796,11 @@ const Tetris3D: React.FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isPlaying) return;
 
+      // Prevent default behavior for arrow keys and space to avoid page scrolling
+      if (['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', ' '].includes(e.key)) {
+        e.preventDefault();
+      }
+
       switch (e.key) {
         case 'ArrowLeft':
           moveTetromino(-1, 0, 0);
@@ -701,7 +831,10 @@ const Tetris3D: React.FC = () => {
 
   useEffect(() => {
     if (score > 0 && score % 500 === 0) {
-      setLevel((prev) => prev + 1);
+      setLevel((prev) => {
+        playLevelUpSound();
+        return prev + 1;
+      });
     }
   }, [score]);
 
@@ -745,6 +878,13 @@ const Tetris3D: React.FC = () => {
                 Restart
               </Button>
             )}
+            <Button
+              size="large"
+              onClick={() => setIsSoundEnabled(!isSoundEnabled)}
+              type={isSoundEnabled ? 'default' : 'dashed'}
+            >
+              {isSoundEnabled ? '🔊 Sound On' : '🔇 Sound Off'}
+            </Button>
             <div className="tetris-3d__instructions">
               <Title level={5}>Controls:</Title>
               <Text>← → : Move left/right</Text>
