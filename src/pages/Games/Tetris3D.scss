@@ -34,6 +34,17 @@
     font-size: 24px;
     font-weight: bold;
     color: #1890ff;
+    text-shadow: 0 0 10px rgba(24, 144, 255, 0.8);
+    animation: score-pulse 1s ease-in-out infinite;
+  }
+
+  @keyframes score-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
   }
 
   &__content {
@@ -47,12 +58,23 @@
     flex: 1;
     border: 2px solid #333;
     border-radius: 8px;
-    background: #1a1a2e;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     min-height: 600px;
     position: relative;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: canvas-glow 3s ease-in-out infinite alternate;
 
     canvas {
       border-radius: 8px;
+    }
+  }
+
+  @keyframes canvas-glow {
+    0% {
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.5);
     }
   }
 
@@ -92,20 +114,46 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 40, 0.95) 100%);
     padding: 48px;
     border-radius: 12px;
     text-align: center;
     color: white;
     z-index: 1000;
+    border: 2px solid rgba(255, 0, 100, 0.5);
+    box-shadow: 0 0 40px rgba(255, 0, 100, 0.6), inset 0 0 20px rgba(255, 0, 255, 0.2);
+    animation: game-over-appear 0.5s ease-out;
 
     h3 {
       color: #ff4d4f !important;
       margin-bottom: 16px !important;
+      text-shadow: 0 0 20px rgba(255, 77, 79, 0.8);
+      animation: text-flicker 2s ease-in-out infinite;
     }
 
     span {
       font-size: 18px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  @keyframes game-over-appear {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes text-flicker {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
     }
   }
 }

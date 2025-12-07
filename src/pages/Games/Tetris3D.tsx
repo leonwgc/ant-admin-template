@@ -343,8 +343,183 @@ const Tetris3D: React.FC = () => {
     currentTetrominoRef.current = [];
   };
 
+  const createParticleExplosion = (x: number, y: number, color: number) => {
+    const particleCount = 30;
+    const particles: THREE.Mesh[] = [];
+    const velocities: THREE.Vector3[] = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      const geometry = new THREE.SphereGeometry(0.1, 8, 8);
+      const material = new THREE.MeshPhongMaterial({
+        color,
+        emissive: color,
+        emissiveIntensity: 0.5,
+        transparent: true,
+        opacity: 1,
+      });
+      const particle = new THREE.Mesh(geometry, material);
+
+      particle.position.set(
+        x + BLOCK_SIZE / 2,
+        y + BLOCK_SIZE / 2,
+        0.5
+      );
+
+      // Random velocity for explosion effect
+      const velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.3,
+        (Math.random() - 0.5) * 0.3,
+        (Math.random() - 0.5) * 0.3
+      );
+
+      sceneRef.current?.add(particle);
+      particles.push(particle);
+      velocities.push(velocity);
+    }
+
+    // Animate particles
+    let frame = 0;
+    const maxFrames = 60;
+    const animateParticles = () => {
+      frame++;
+      particles.forEach((particle, i) => {
+        particle.position.add(velocities[i]);
+        velocities[i].y -= 0.01; // Gravity effect
+
+        const material = particle.material as THREE.MeshPhongMaterial;
+        material.opacity = 1 - frame / maxFrames;
+
+        particle.scale.setScalar(1 - frame / maxFrames);
+      });
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(animateParticles);
+      } else {
+        particles.forEach((particle) => {
+          sceneRef.current?.remove(particle);
+          particle.geometry.dispose();
+          (particle.material as THREE.Material).dispose();
+        });
+      }
+    };
+    animateParticles();
+  };
+
+  const createLightningEffect = (y: number) => {
+    const lightningCount = 5;
+    const lightnings: THREE.Line[] = [];
+
+    for (let i = 0; i < lightningCount; i++) {
+      const points: THREE.Vector3[] = [];
+      let currentX = Math.random() * GRID_WIDTH;
+      const startY = y + BLOCK_SIZE / 2;
+
+      points.push(new THREE.Vector3(currentX, startY, 0.5));
+
+      for (let j = 0; j < 8; j++) {
+        currentX += (Math.random() - 0.5) * 2;
+        currentX = Math.max(0, Math.min(GRID_WIDTH, currentX));
+        points.push(new THREE.Vector3(currentX, startY, 0.5 + (Math.random() - 0.5) * 0.5));
+      }
+
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({
+        color: 0x00ffff,
+        linewidth: 3,
+        transparent: true,
+        opacity: 1,
+      });
+      const lightning = new THREE.Line(geometry, material);
+      sceneRef.current?.add(lightning);
+      lightnings.push(lightning);
+    }
+
+    // Animate lightning fade out
+    let opacity = 1;
+    const fadeLightning = () => {
+      opacity -= 0.1;
+      lightnings.forEach((lightning) => {
+        (lightning.material as THREE.LineBasicMaterial).opacity = opacity;
+      });
+
+      if (opacity > 0) {
+        requestAnimationFrame(fadeLightning);
+      } else {
+        lightnings.forEach((lightning) => {
+          sceneRef.current?.remove(lightning);
+          lightning.geometry.dispose();
+          (lightning.material as THREE.Material).dispose();
+        });
+      }
+    };
+    fadeLightning();
+  };
+
+  const createShockwave = (y: number) => {
+    const geometry = new THREE.RingGeometry(0.5, 1, 32);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xff00ff,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.8,
+    });
+    const shockwave = new THREE.Mesh(geometry, material);
+    shockwave.position.set(GRID_WIDTH / 2, y + BLOCK_SIZE / 2, 0.5);
+    shockwave.rotation.x = Math.PI / 2;
+    sceneRef.current?.add(shockwave);
+
+    let scale = 1;
+    let opacity = 0.8;
+    const animateShockwave = () => {
+      scale += 0.5;
+      opacity -= 0.05;
+      shockwave.scale.set(scale, scale, 1);
+      material.opacity = opacity;
+
+      if (opacity > 0) {
+        requestAnimationFrame(animateShockwave);
+      } else {
+        sceneRef.current?.remove(shockwave);
+        geometry.dispose();
+        material.dispose();
+      }
+    };
+    animateShockwave();
+  };
+
+  const createGlowEffect = (y: number) => {
+    const glowGeometry = new THREE.PlaneGeometry(GRID_WIDTH, BLOCK_SIZE);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffd700,
+      transparent: true,
+      opacity: 0.6,
+      side: THREE.DoubleSide,
+    });
+    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    glow.position.set(GRID_WIDTH / 2, y + BLOCK_SIZE / 2, 0.3);
+    sceneRef.current?.add(glow);
+
+    let intensity = 0.6;
+    let pulseCount = 0;
+    const animateGlow = () => {
+      intensity = 0.6 + Math.sin(pulseCount * 0.3) * 0.3;
+      glowMaterial.opacity = intensity;
+      pulseCount++;
+
+      if (pulseCount < 20) {
+        requestAnimationFrame(animateGlow);
+      } else {
+        sceneRef.current?.remove(glow);
+        glowGeometry.dispose();
+        glowMaterial.dispose();
+      }
+    };
+    animateGlow();
+  };
+
   const clearLines = () => {
     let linesCleared = 0;
+    const linesToClear: number[] = [];
 
     for (let y = 0; y < GRID_HEIGHT; y++) {
       let isLineFull = true;
@@ -356,36 +531,77 @@ const Tetris3D: React.FC = () => {
       }
 
       if (isLineFull) {
+        linesToClear.push(y);
         linesCleared++;
-        // Remove line
-        for (let x = 0; x < GRID_WIDTH; x++) {
-          const mesh = gridRef.current[y][x][0];
-          if (mesh) {
-            sceneRef.current?.remove(mesh);
-          }
-        }
-
-        // Move lines down
-        for (let yy = y; yy < GRID_HEIGHT - 1; yy++) {
-          for (let x = 0; x < GRID_WIDTH; x++) {
-            gridRef.current[yy][x][0] = gridRef.current[yy + 1][x][0];
-            const mesh = gridRef.current[yy][x][0];
-            if (mesh) {
-              mesh.position.y -= BLOCK_SIZE;
-            }
-          }
-        }
-
-        // Clear top line
-        for (let x = 0; x < GRID_WIDTH; x++) {
-          gridRef.current[GRID_HEIGHT - 1][x][0] = null;
-        }
-
-        y--;
       }
     }
 
-    if (linesCleared > 0) {
+    if (linesToClear.length > 0) {
+      // Create magical effects for each cleared line
+      linesToClear.forEach((y) => {
+        // Flash and glow effect
+        createGlowEffect(y);
+
+        // Shockwave effect
+        createShockwave(y);
+
+        // Lightning effect
+        createLightningEffect(y);
+
+        // Particle explosion for each block
+        for (let x = 0; x < GRID_WIDTH; x++) {
+          const mesh = gridRef.current[y][x][0];
+          if (mesh) {
+            const color = (mesh.material as THREE.MeshPhongMaterial).color.getHex();
+            createParticleExplosion(mesh.position.x - BLOCK_SIZE / 2, y, color);
+
+            // Animate block disappearance
+            const startScale = 1;
+            let scaleDown = startScale;
+            const animateBlock = () => {
+              scaleDown -= 0.05;
+              mesh.scale.setScalar(scaleDown);
+              mesh.rotation.x += 0.1;
+              mesh.rotation.y += 0.1;
+              mesh.rotation.z += 0.1;
+
+              if (scaleDown > 0) {
+                requestAnimationFrame(animateBlock);
+              } else {
+                sceneRef.current?.remove(mesh);
+                mesh.geometry.dispose();
+                (mesh.material as THREE.Material).dispose();
+              }
+            };
+            animateBlock();
+          }
+        }
+      });
+
+      // Delay the grid update to show effects
+      setTimeout(() => {
+        linesToClear.sort((a, b) => a - b);
+        linesToClear.forEach((lineY, index) => {
+          const adjustedY = lineY - index;
+
+          // Move lines down
+          for (let yy = adjustedY; yy < GRID_HEIGHT - 1; yy++) {
+            for (let x = 0; x < GRID_WIDTH; x++) {
+              gridRef.current[yy][x][0] = gridRef.current[yy + 1][x][0];
+              const mesh = gridRef.current[yy][x][0];
+              if (mesh) {
+                mesh.position.y -= BLOCK_SIZE;
+              }
+            }
+          }
+
+          // Clear top line
+          for (let x = 0; x < GRID_WIDTH; x++) {
+            gridRef.current[GRID_HEIGHT - 1][x][0] = null;
+          }
+        });
+      }, 300);
+
       setScore((prev) => prev + linesCleared * 100 * level);
     }
   };
