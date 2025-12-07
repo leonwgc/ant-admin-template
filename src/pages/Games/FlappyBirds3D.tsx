@@ -4,7 +4,6 @@
  */
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Button } from '@derbysoft/neat-design';
 import './FlappyBirds3D.scss';
 
 // Game constants
@@ -38,7 +37,6 @@ const FlappyBirds3D: React.FC = () => {
   const [highScore, setHighScore] = useState(0);
 
   // Audio refs
-  const bgMusicRef = useRef<HTMLAudioElement | null>(null);
   const flapSoundRef = useRef<HTMLAudioElement | null>(null);
   const scoreSoundRef = useRef<HTMLAudioElement | null>(null);
   const hitSoundRef = useRef<HTMLAudioElement | null>(null);
@@ -56,13 +54,6 @@ const FlappyBirds3D: React.FC = () => {
 
   // Initialize audio
   useEffect(() => {
-    // Create audio context for better control
-    const bgMusic = new Audio();
-    bgMusic.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUKjk77dmHAU7k9nyz3wuBSl/zPDckUELEl+18OupUxMKR6Hh8sFuIgYtgs7y2Yo3CBtqvPDlnE4MDlCo5O+3ZhwFO5PZ8s98LgUpf8zw3JFBCxJftfDrqVMTCkeh4fLBbiIGLYLO8tmKNwgbarzw5ZxODA5QqOTvt2YcBTuT2fLPfC4FKX/M8NyRQQsSX7Xw66lTEwpHoeHywW4iBi2CzvLZijcIG2q88OWcTgwOUKjk77dmHAU7k9nyz3wuBSl/zPDckUELEl+18OupUxMKR6Hh8sFuIgYtgs7y2Yo3CBtqvPDlnE4MDlCo5O+3ZhwFO5PZ8s98LgUpf8zw3JFBCxJftfDrqVMTCkeh4fLBbiIGLYLO8tmKNwgbarzw5ZxODA5QqOTvt2YcBTuT2fLPfC4FKX/M8NyRQQsSX7Xw66lTEwpHoeHywW4iBi2CzvLZijcIG2q88OWcTgwOUKjk77dmHAU7k9nyz3wuBSl/zPDckUELEl+18OupUxMKR6Hh8sFuIgYtgs7y2Yo3CBtqvPDlnE4MDlCo5O+3ZhwFO5PZ8s98LgUpf8zw3JFBCxJftfDrqVMTCkeh4fLBbiIGLYLO8tmKNwgbarzw5ZxODA5QqOTvt2YcBTuT2fLPfC4FKX/M8NyRQQsSX7Xw66lTEwpHoeHywW4iBi2CzvLZijcIG2q88OWcTgwOUKjk77dmHAU7k9nyz3wuBSl/zPDckUELEl+18OupUxMKR6Hh8sFuIgYtgs7y2Yo3CBtqvPDlnE4MDlCo5O+3ZhwFO5PZ8s98LgUpf8zw3JFBCxJftfDrqVMTCkeh4fLBbiIGLYLO8tmKNwgbarzw5ZxODA5QqOTvt2YcBTuT2fLPfC4FKX/M8NyRQQsSX7Xw66lTEwpHoeHywW4iBi2CzvLZijcIG2q88OWcTgwOUKjk77dmHAU7k9nyz3wuBSl/zPDckUELEl+18OupUxMKR6Hh8sFuIgYtgs7y2Yo3CBtqvPDlnE4MDlCo5O+3Zg==';
-    bgMusic.loop = true;
-    bgMusic.volume = 0.3;
-    bgMusicRef.current = bgMusic;
-
     // Create simple sound effects using Web Audio API
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
 
@@ -119,9 +110,6 @@ const FlappyBirds3D: React.FC = () => {
     }
 
     return () => {
-      if (bgMusicRef.current) {
-        bgMusicRef.current.pause();
-      }
       audioContext.close();
     };
   }, []);
@@ -288,7 +276,6 @@ const FlappyBirds3D: React.FC = () => {
           if (birdTop < pipe.topHeight || birdBottom > pipe.topHeight + PIPE_GAP) {
             hitSoundRef.current?.play();
             setGameState('gameOver');
-            bgMusicRef.current?.pause();
           }
         }
 
@@ -299,7 +286,6 @@ const FlappyBirds3D: React.FC = () => {
       if (bird.y + BIRD_SIZE >= GAME_HEIGHT || bird.y - BIRD_SIZE <= 0) {
         hitSoundRef.current?.play();
         setGameState('gameOver');
-        bgMusicRef.current?.pause();
       }
     }
 
@@ -359,7 +345,6 @@ const FlappyBirds3D: React.FC = () => {
   const handleJump = useCallback(() => {
     if (gameState === 'ready') {
       setGameState('playing');
-      bgMusicRef.current?.play();
     }
 
     if (gameState === 'playing') {
@@ -399,23 +384,10 @@ const FlappyBirds3D: React.FC = () => {
     };
   }, [handleKeyPress]);
 
-  const toggleMusic = () => {
-    if (bgMusicRef.current) {
-      if (bgMusicRef.current.paused) {
-        bgMusicRef.current.play();
-      } else {
-        bgMusicRef.current.pause();
-      }
-    }
-  };
-
   return (
     <div className="flappy-birds-3d">
       <div className="flappy-birds-3d__header">
         <h1 className="flappy-birds-3d__title">Flappy Birds 3D</h1>
-        <Button onClick={toggleMusic} type="primary">
-          Toggle Music
-        </Button>
       </div>
       <div className="flappy-birds-3d__game-container">
         <canvas
