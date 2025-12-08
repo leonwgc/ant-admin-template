@@ -14,7 +14,7 @@ type Action = {
 export const useAppStore = create<State & Action>((set, get, store) => ({
   // Initial state
   language: language,
-  operations: [],
+  operations: ['js'],
 
   // Actions to update state
   setLanguage: (language) => set(() => ({ language })),

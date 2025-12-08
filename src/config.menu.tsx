@@ -48,7 +48,7 @@ export const menus: MenuItem[] = [
     key: 'js-feature',
     label: 'JS Feature',
     icon: <CodeOutlined />,
-    permissions: [],
+    permissions: ['js'],
     children: [
       {
         key: 'intl-number-format',

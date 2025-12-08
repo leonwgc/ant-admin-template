@@ -11,6 +11,7 @@ import {
 } from './Menus.helper';
 import { useLocalStorageState } from 'ahooks';
 import { NAV_MENU_COLLAPSED_KEY } from './Sider';
+import { useAppStore } from '~/store';
 import './Menus.scss';
 
 type Props = MenuProps & {
@@ -18,8 +19,6 @@ type Props = MenuProps & {
   collapsed?: boolean;
   menus?: MenuItem[];
 };
-
-const operations = [];
 
 /**
  * Menus component renders a collapsible menu using the Neat Design library.
@@ -40,11 +39,9 @@ export default (props: Props) => {
   const [menuCollapsed] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const { operations } = useAppStore();
 
-  const filterMenus = useMemo(
-    () => getFilterMenus(operations, menus),
-    [menus]
-  );
+  const filterMenus = useMemo(() => getFilterMenus(operations, menus), [menus]);
   const levelKeys = useMemo(
     () => getLevelKeys(filterMenus as LevelKeysProps[]),
     [filterMenus]
