@@ -55,7 +55,10 @@ const Match3: React.FC = () => {
 
   // Initialize audio context
   useEffect(() => {
-    audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const AudioContextClass = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (AudioContextClass) {
+      audioContextRef.current = new AudioContextClass();
+    }
 
     // Load best score from localStorage
     const savedBestScore = localStorage.getItem('match3-bestscore');
@@ -75,14 +78,14 @@ const Match3: React.FC = () => {
   const createExplosion = (row: number, col: number, color: string, matchCount: number) => {
     const centerX = col * (CELL_SIZE + 4) + 10 + CELL_SIZE / 2;
     const centerY = row * (CELL_SIZE + 4) + 10 + CELL_SIZE / 2;
-    const particleCount = Math.min(30 + matchCount * 5, 60); // More particles!
+    const particleCount = Math.min(15 + matchCount * 3, 30); // Reduced particles for better performance
     const newParticles: Particle[] = [];
 
     // Main explosion particles
     for (let i = 0; i < particleCount; i++) {
-      const angle = (Math.PI * 2 * i) / particleCount + Math.random() * 0.8;
-      const speed = 3 + Math.random() * 6; // Higher speed
-      const size = 4 + Math.random() * 8; // Larger particles
+      const angle = (Math.PI * 2 * i) / particleCount + Math.random() * 0.5;
+      const speed = 2 + Math.random() * 4;
+      const size = 3 + Math.random() * 5;
 
       newParticles.push({
         id: `particle-${Date.now()}-${i}-${Math.random()}`,
@@ -96,12 +99,12 @@ const Match3: React.FC = () => {
       });
     }
 
-    // Add extra sparks for more dramatic effect
-    const sparkCount = Math.min(15 + matchCount * 2, 30);
+    // Add sparks
+    const sparkCount = Math.min(8 + matchCount, 15);
     for (let i = 0; i < sparkCount; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = 5 + Math.random() * 8; // Very fast sparks
-      const size = 2 + Math.random() * 4;
+      const speed = 3 + Math.random() * 5;
+      const size = 2 + Math.random() * 3;
 
       newParticles.push({
         id: `spark-${Date.now()}-${i}-${Math.random()}`,
@@ -109,13 +112,13 @@ const Match3: React.FC = () => {
         y: centerY,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        color: '#ffffff', // White sparks
+        color: '#ffffff',
         size: size,
-        life: 0.8, // Shorter life for sparks
+        life: 0.7,
       });
     }
 
-    particlesRef.current = [...particlesRef.current, ...newParticles];
+    particlesRef.current.push(...newParticles);
 
     // Start animation loop if not already running
     if (!animationFrameRef.current) {
@@ -125,35 +128,63 @@ const Match3: React.FC = () => {
 
   // Particle animation loop
   const startParticleAnimation = () => {
+    let lastUpdate = Date.now();
+
     const updateParticles = () => {
+      const now = Date.now();
+      const delta = (now - lastUpdate) / 16.67; // Normalize to 60fps
+      lastUpdate = now;
+
       if (particlesRef.current.length === 0) {
         animationFrameRef.current = null;
         setParticles([]);
         return;
       }
 
-      particlesRef.current = particlesRef.current
-        .map(particle => ({
-          ...particle,
-          x: particle.x + particle.vx * 1.5, // Faster movement
-          y: particle.y + particle.vy * 1.5, // Faster movement
-          vy: particle.vy + 0.5, // Stronger gravity for faster falling
-          vx: particle.vx * 0.96, // More air resistance
-          life: particle.life - 0.04, // Faster decay
-          size: particle.size * 0.93, // Faster size reduction
-        }))
-        .filter(particle => particle.life > 0 && particle.size > 0.3);
+      // Update particles in place for better performance
+      const particles = particlesRef.current;
+      let aliveCount = 0;
 
-      setParticles([...particlesRef.current]);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
 
-      if (particlesRef.current.length > 0) {
+        // Update properties
+        p.x += p.vx * delta;
+        p.y += p.vy * delta;
+        p.vy += 0.3 * delta; // Gravity
+        p.vx *= Math.pow(0.97, delta); // Air resistance
+        p.life -= 0.025 * delta;
+        p.size *= Math.pow(0.95, delta);
+
+        // Keep alive particles
+        if (p.life > 0 && p.size > 0.5) {
+          if (aliveCount !== i) {
+            particles[aliveCount] = p;
+          }
+          aliveCount++;
+        }
+      }
+
+      // Trim dead particles
+      particles.length = aliveCount;
+
+      // Update state less frequently to reduce re-renders
+      if (Math.random() < 0.3) {
+        setParticles([...particles]);
+      }
+
+      if (particles.length > 0) {
         animationFrameRef.current = requestAnimationFrame(updateParticles);
       } else {
         animationFrameRef.current = null;
+        setParticles([]);
       }
     };
 
-    animationFrameRef.current = requestAnimationFrame(updateParticles);
+    if (!animationFrameRef.current) {
+      lastUpdate = Date.now();
+      animationFrameRef.current = requestAnimationFrame(updateParticles);
+    }
   };
 
   // Sound generation functions
@@ -598,7 +629,6 @@ const Match3: React.FC = () => {
             <Button
               size="large"
               onClick={() => setIsSoundEnabled(!isSoundEnabled)}
-              type={isSoundEnabled ? 'default' : 'dashed'}
             >
               {isSoundEnabled ? '🔊 Sound On' : '🔇 Sound Off'}
             </Button>
