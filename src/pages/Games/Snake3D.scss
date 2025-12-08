@@ -1,0 +1,188 @@
+/**
+ * @file src/pages/Games/Snake3D.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.snake-3d {
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 32px;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ff00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+    animation: score-pulse 1s ease-in-out infinite;
+
+    &--high {
+      color: #ffd700;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+    }
+  }
+
+  @keyframes score-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  &__content {
+    display: flex;
+    gap: 24px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__canvas {
+    flex: 1;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+    min-height: 600px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: canvas-glow 3s ease-in-out infinite alternate;
+
+    canvas {
+      border-radius: 8px;
+    }
+  }
+
+  @keyframes canvas-glow {
+    0% {
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &__controls {
+    width: 250px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  &__instructions {
+    padding: 16px;
+    background: rgba(0, 255, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+
+    h5 {
+      margin-bottom: 12px;
+      color: #00ff00;
+    }
+
+    span {
+      display: block;
+      margin: 8px 0;
+      font-size: 14px;
+      color: #ccc;
+      font-family: 'Courier New', monospace;
+    }
+  }
+
+  &__game-over {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 48px;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid #ff0000;
+    box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+    z-index: 1000;
+    animation: game-over-appear 0.5s ease-out;
+
+    h3 {
+      color: #ff0000;
+      margin-bottom: 16px;
+      font-size: 32px;
+      text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    }
+
+    span {
+      display: block;
+      margin: 8px 0;
+      font-size: 18px;
+      color: #fff;
+    }
+  }
+
+  &__new-record {
+    margin-top: 16px !important;
+    font-size: 20px !important;
+    color: #ffd700 !important;
+    font-weight: bold;
+    animation: record-flash 1s ease-in-out infinite;
+  }
+
+  @keyframes game-over-appear {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes record-flash {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(255, 215, 0, 1);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .snake-3d {
+    &__content {
+      flex-direction: column;
+    }
+
+    &__canvas {
+      min-height: 400px;
+    }
+
+    &__controls {
+      width: 100%;
+    }
+  }
+}

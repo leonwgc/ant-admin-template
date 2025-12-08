@@ -4,3 +4,5 @@
  */
 
 export { default as Tetris3D } from './Tetris3D';
+export { default as FlappyBirds3D } from './FlappyBirds3D';
+export { default as Snake3D } from './Snake3D';

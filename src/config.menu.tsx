@@ -233,6 +233,12 @@ export const menus: MenuItem[] = [
         route: '/app/games/flappy-birds-3d',
         permissions: [],
       },
+      {
+        key: 'snake-3d',
+        label: '3D Snake',
+        route: '/app/games/snake-3d',
+        permissions: [],
+      },
     ],
   },
 ];
