@@ -75,13 +75,14 @@ const Match3: React.FC = () => {
   const createExplosion = (row: number, col: number, color: string, matchCount: number) => {
     const centerX = col * (CELL_SIZE + 4) + 10 + CELL_SIZE / 2;
     const centerY = row * (CELL_SIZE + 4) + 10 + CELL_SIZE / 2;
-    const particleCount = Math.min(15 + matchCount * 3, 30); // Reduced particle count
+    const particleCount = Math.min(30 + matchCount * 5, 60); // More particles!
     const newParticles: Particle[] = [];
 
+    // Main explosion particles
     for (let i = 0; i < particleCount; i++) {
-      const angle = (Math.PI * 2 * i) / particleCount + Math.random() * 0.5;
-      const speed = 2 + Math.random() * 3;
-      const size = 3 + Math.random() * 4;
+      const angle = (Math.PI * 2 * i) / particleCount + Math.random() * 0.8;
+      const speed = 3 + Math.random() * 6; // Higher speed
+      const size = 4 + Math.random() * 8; // Larger particles
 
       newParticles.push({
         id: `particle-${Date.now()}-${i}-${Math.random()}`,
@@ -92,6 +93,25 @@ const Match3: React.FC = () => {
         color: color,
         size: size,
         life: 1,
+      });
+    }
+
+    // Add extra sparks for more dramatic effect
+    const sparkCount = Math.min(15 + matchCount * 2, 30);
+    for (let i = 0; i < sparkCount; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 5 + Math.random() * 8; // Very fast sparks
+      const size = 2 + Math.random() * 4;
+
+      newParticles.push({
+        id: `spark-${Date.now()}-${i}-${Math.random()}`,
+        x: centerX,
+        y: centerY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: '#ffffff', // White sparks
+        size: size,
+        life: 0.8, // Shorter life for sparks
       });
     }
 
@@ -115,14 +135,14 @@ const Match3: React.FC = () => {
       particlesRef.current = particlesRef.current
         .map(particle => ({
           ...particle,
-          x: particle.x + particle.vx,
-          y: particle.y + particle.vy,
-          vy: particle.vy + 0.2, // gravity
-          vx: particle.vx * 0.98, // air resistance
-          life: particle.life - 0.03, // Faster decay
-          size: particle.size * 0.96,
+          x: particle.x + particle.vx * 1.5, // Faster movement
+          y: particle.y + particle.vy * 1.5, // Faster movement
+          vy: particle.vy + 0.5, // Stronger gravity for faster falling
+          vx: particle.vx * 0.96, // More air resistance
+          life: particle.life - 0.04, // Faster decay
+          size: particle.size * 0.93, // Faster size reduction
         }))
-        .filter(particle => particle.life > 0 && particle.size > 0.5);
+        .filter(particle => particle.life > 0 && particle.size > 0.3);
 
       setParticles([...particlesRef.current]);
 
