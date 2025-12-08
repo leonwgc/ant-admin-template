@@ -129,4 +129,5 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/games/tetris-3d': lazyLoad('pages/Games/Tetris3D'),
   '/app/games/flappy-birds-3d': lazyLoad('pages/Games/FlappyBirds3D'),
   '/app/games/snake-3d': lazyLoad('pages/Games/Snake3D'),
+  '/app/games/match-3': lazyLoad('pages/Games/Match3'),
 };

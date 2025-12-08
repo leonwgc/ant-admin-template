@@ -239,6 +239,12 @@ export const menus: MenuItem[] = [
         route: '/app/games/snake-3d',
         permissions: [],
       },
+      {
+        key: 'match-3',
+        label: 'Match 3',
+        route: '/app/games/match-3',
+        permissions: [],
+      },
     ],
   },
 ];
