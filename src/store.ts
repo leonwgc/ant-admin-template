@@ -11,7 +11,7 @@ type Action = {
   setOperations: (operations: State['operations']) => void;
 };
 
-export const useBookEngineStore = create<State & Action>((set, get, store) => ({
+export const useAppStore = create<State & Action>((set, get, store) => ({
   // Initial state
   language: language,
   operations: [],
@@ -33,11 +33,11 @@ export const useBookEngineStore = create<State & Action>((set, get, store) => ({
 const savedState = localStorage.getItem('hotelStore');
 if (savedState) {
   const initialState = JSON.parse(savedState);
-  useBookEngineStore.setState(initialState);
+  useAppStore.setState(initialState);
   i18n.changeLanguage(initialState.language);
 }
 
-useBookEngineStore.subscribe((state, prevState) => {
+useAppStore.subscribe((state, prevState) => {
   // Sync to localStorage whenever the state changes
   // localStorage.setItem('hotelStore', JSON.stringify(state));
 

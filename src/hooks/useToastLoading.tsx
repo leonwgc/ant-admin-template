@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { useCallback } from 'react';
-import { useBookEngineStore } from '~/store';
+import { useAppStore } from '~/store';
 
 type Props = {
   content?: React.ReactNode;
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const useToastLoading = () => {
-  const { language } = useBookEngineStore();
+  const { language } = useAppStore();
 
   const showToast = useCallback(
     (props: Props) => {
