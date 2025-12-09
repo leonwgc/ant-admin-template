@@ -99,7 +99,7 @@ export default () => {
 
   return (
     <div>
-      <Flex justify="space-between">
+      <Flex justify="space-between" wrap>
         <h1>Users</h1>
         <Space>
           <Link to="./add">Add User</Link>
@@ -108,7 +108,7 @@ export default () => {
       </Flex>
 
       <Form form={form} layout="horizontal">
-        <FlexRender layout={layout} gap={16} justify="flex-end" />
+        <FlexRender wrap layout={layout} gap={16} />
       </Form>
 
       <Table
