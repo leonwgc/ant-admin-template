@@ -17,24 +17,24 @@ const AppLayout: React.FC<{
   const [loading] = useState(false);
 
   return (
-    <Layout className={'app-layout'}>
+    <Layout className="app-layout">
       <Header className="app-layout__header" />
-      <Layout>
+      <Layout className="app-layout__body">
         {hasSider && <Sider loading={loading} />}
         <Layout.Content
-          className={classNames('app-layout__content', {
-            'no-sider': !hasSider,
+          className={classNames('app-layout__main', {
+            'app-layout__main--no-sider': !hasSider,
           })}
         >
-          <Layout className="content-layout">
+          <Layout className="app-layout__inner">
             {hasContentHeader && (
-              <Layout.Header className="content-layout__header">
+              <Layout.Header className="app-layout__inner-header">
                 header
               </Layout.Header>
             )}
 
             <SkeletonLoading loading={loading} paragraph={{ rows: 5 }}>
-              <Layout.Content className="content-layout__content">
+              <Layout.Content className="app-layout__inner-content">
                 <RouteGuard>
                   <Outlet />
                 </RouteGuard>
