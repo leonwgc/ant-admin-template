@@ -39,11 +39,12 @@ const Sider: FC<Props> = ({ loading }) => {
       collapsed={collapsed}
       theme="light"
       onCollapse={setCollapsed}
-      className="app__sider"
+      className="app-sider"
     >
       <SkeletonLoading loading={loading}>
-        <Menus collapsed={collapsed} menus={menus} />
-        {/* <Footer /> */}
+        <div className="app-sider__content">
+          <Menus collapsed={collapsed} menus={menus} />
+        </div>
       </SkeletonLoading>
     </Layout.Sider>
   );

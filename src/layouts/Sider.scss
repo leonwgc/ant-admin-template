@@ -4,7 +4,7 @@
  */
 @import 'scss/common.scss';
 
-.app__sider {
+.app-sider {
   position: fixed;
   left: 0;
   top: 0;
@@ -13,13 +13,21 @@
   margin-top: var(--nav-height);
   z-index: 40;
 
+  &__content {
+    height: 100%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   &.ds-layout-sider {
     padding: 0;
   }
 }
 
 @media (max-width: 768px) {
-  .app__sider {
+  .app-sider {
     display: none;
   }
 }
