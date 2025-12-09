@@ -114,14 +114,22 @@
 
 @media (max-width: 768px) {
   .app-layout {
-    --menu-width: 0;
     &__header {
       .mobile-menus {
         display: block;
       }
     }
-    &__sider {
-      display: none;
+
+    &__content {
+      padding-left: 0;
+
+      .content-layout {
+        &__content {
+          padding: 16px;
+          max-width: 100%;
+          overflow: hidden;
+        }
+      }
     }
   }
 }
