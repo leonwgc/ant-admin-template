@@ -25,7 +25,7 @@ const Sider: FC<Props> = ({ loading }) => {
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--menu-width',
-      collapsed ? '56px' : '256px'
+      collapsed ? '64px' : '256px'
     );
 
     setValue(collapsed);
