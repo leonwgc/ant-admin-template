@@ -46,6 +46,14 @@ const UseAHooksCountdown: React.FC = () => {
     },
   });
 
+  // Example 5: Dynamic countdown with setLeft
+  const countdown5 = useCountdown({
+    seconds: 60,
+    onFinish: () => {
+      message.success('Dynamic countdown finished!');
+    },
+  });
+
   return (
     <div className="use-ahooks-countdown">
       <h2 className="use-ahooks-countdown__title">useAHooksCountdown Hook Examples</h2>
@@ -183,6 +191,78 @@ console.log('Rounds completed:', countdown.round);`}
       </div>
 
       <div className="use-ahooks-countdown__section">
+        <h3>Dynamic Countdown - setLeft Method</h3>
+        <p>Dynamically set remaining seconds during countdown</p>
+        <Card className="use-ahooks-countdown__card">
+          <div className="use-ahooks-countdown__demo">
+            <div className="use-ahooks-countdown__stats">
+              <Statistic
+                title="Time Left"
+                value={countdown5.sec}
+                suffix="s"
+                valueStyle={{ color: countdown5.isRunning ? '#52c41a' : '#d9d9d9' }}
+              />
+            </div>
+            <Space className="use-ahooks-countdown__actions" wrap>
+              <Button type="primary" onClick={countdown5.start} disabled={countdown5.isRunning}>
+                Start (60s)
+              </Button>
+              <Button onClick={countdown5.reset}>Reset</Button>
+              <Button
+                type="default"
+                onClick={() => countdown5.setLeft(30)}
+                disabled={!countdown5.isRunning}
+              >
+                Set to 30s
+              </Button>
+              <Button
+                type="default"
+                onClick={() => countdown5.setLeft(15)}
+                disabled={!countdown5.isRunning}
+              >
+                Set to 15s
+              </Button>
+              <Button
+                type="default"
+                onClick={() => countdown5.setLeft(5)}
+                disabled={!countdown5.isRunning}
+              >
+                Set to 5s
+              </Button>
+            </Space>
+            <div className="use-ahooks-countdown__info">
+              💡 Click "Set to Xs" buttons while countdown is running to dynamically change remaining time
+            </div>
+          </div>
+        </Card>
+        <div className="use-ahooks-countdown__code">
+          {`const countdown = useCountdown({
+  seconds: 60,
+  onFinish: () => {
+    message.success('Countdown finished!');
+  },
+});
+
+// Dynamically set remaining seconds
+<Button onClick={() => countdown.setLeft(30)}>
+  Set to 30s
+</Button>
+<Button onClick={() => countdown.setLeft(15)}>
+  Set to 15s
+</Button>
+
+// Use case: Extend or reduce countdown based on user actions
+const handleUserAction = () => {
+  if (userPremium) {
+    countdown.setLeft(120); // Extend to 2 minutes for premium users
+  } else {
+    countdown.setLeft(30);  // Standard 30 seconds
+  }
+};`}
+        </div>
+      </div>
+
+      <div className="use-ahooks-countdown__section">
         <h3>Hook API</h3>
         <table className="use-ahooks-countdown__table">
           <thead>
@@ -241,6 +321,11 @@ console.log('Rounds completed:', countdown.round);`}
               <td>number</td>
               <td>Number of times countdown has completed</td>
             </tr>
+            <tr>
+              <td>setLeft</td>
+              <td>(value: number) =&gt; void</td>
+              <td>Dynamically set remaining seconds (only accepts positive values)</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -254,6 +339,8 @@ console.log('Rounds completed:', countdown.round);`}
           <li>Track multiple rounds for repeated operations</li>
           <li>The countdown automatically stops when reaching 0</li>
           <li>Use `isRunning` to disable buttons during countdown</li>
+          <li>Use `setLeft()` to dynamically adjust countdown time based on user actions or conditions</li>
+          <li>`setLeft()` only accepts positive values; passing 0 or negative values will be ignored</li>
         </ul>
       </div>
     </div>

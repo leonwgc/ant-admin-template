@@ -23,6 +23,7 @@ export interface UseCountdownResult {
   reset: () => void;
   isRunning: boolean;
   round: number;
+  setLeft: (value: number) => void;
 }
 
 /**
@@ -58,6 +59,15 @@ const useCountdown = ({
     setRound(0);
   }, []);
 
+  const setLeft = useCallback(
+    (value: number) => {
+      if (value > 0) {
+        setLeftSec(value);
+      }
+    },
+    [setLeftSec]
+  );
+
   useUnmount(reset);
 
   return {
@@ -66,6 +76,7 @@ const useCountdown = ({
     reset,
     isRunning,
     round,
+    setLeft,
   };
 };
 
