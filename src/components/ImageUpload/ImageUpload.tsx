@@ -171,8 +171,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 progress < 30
                   ? Math.random() * 8 + 5
                   : progress < 60
-                    ? Math.random() * 5 + 3
-                    : Math.random() * 3 + 1;
+                  ? Math.random() * 5 + 3
+                  : Math.random() * 3 + 1;
 
               progress = Math.min(90, progress + step);
               const index = __images.findIndex(
@@ -345,7 +345,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     />
                   </div>
                   <div className="image-upload__dragger-progress-text">
-                    上传中 {value[0].percent || 0}%
+                    {value[0].percent || 0}%
                   </div>
                 </>
               )}
