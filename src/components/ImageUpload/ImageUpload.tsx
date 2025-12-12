@@ -143,90 +143,99 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       const __images = mode === 'dragger' ? [] : [...value];
 
       validFiles.map((file) => {
-        // Add uploading placeholder with 0% progress
-        const uploadingImage = {
-          url: '',
-          status: 'uploading' as const,
-          percent: 0,
-          id: `${Date.now()}-${Math.random()}`,
-        };
-        __images.push(uploadingImage);
-        onChange?.([...__images]);
+        // Read file as data URL for preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const previewUrl = e.target?.result as string;
 
-        taskExcutor.addTask(() => {
-          // Simulate progress with non-linear growth
-          let progress = 0;
-          let isCancelled = false;
-
-          const updateProgress = () => {
-            if (isCancelled || progress >= 90) return;
-
-            // Non-linear: fast → slow
-            const step =
-              progress < 30
-                ? Math.random() * 8 + 5
-                : progress < 60
-                ? Math.random() * 5 + 3
-                : Math.random() * 3 + 1;
-
-            progress = Math.min(90, progress + step);
-            const index = __images.findIndex(
-              (img) => img.id === uploadingImage.id
-            );
-            if (index !== -1) {
-              __images[index] = {
-                ...uploadingImage,
-                percent: Math.floor(progress),
-              };
-              onChange?.([...__images]);
-            }
-
-            setTimeout(updateProgress, 100);
+          // Add uploading placeholder with preview image
+          const uploadingImage = {
+            url: previewUrl,
+            status: 'uploading' as const,
+            percent: 0,
+            id: `${Date.now()}-${Math.random()}`,
           };
+          __images.push(uploadingImage);
+          onChange?.([...__images]);
 
-          updateProgress();
+          taskExcutor.addTask(() => {
+            // Simulate progress with non-linear growth
+            let progress = 0;
+            let isCancelled = false;
 
-          const upload = customUpload ? customUpload(file) : uploadImage(file);
+            const updateProgress = () => {
+              if (isCancelled || progress >= 90) return;
 
-          return upload
-            .then((imageUrl) => {
-              isCancelled = true;
+              // Non-linear: fast → slow
+              const step =
+                progress < 30
+                  ? Math.random() * 8 + 5
+                  : progress < 60
+                    ? Math.random() * 5 + 3
+                    : Math.random() * 3 + 1;
+
+              progress = Math.min(90, progress + step);
               const index = __images.findIndex(
                 (img) => img.id === uploadingImage.id
               );
               if (index !== -1) {
                 __images[index] = {
-                  url: imageUrl,
-                  status: 'done',
-                  percent: 100,
-                  id: imageUrl,
+                  ...uploadingImage,
+                  percent: Math.floor(progress),
                 };
                 onChange?.([...__images]);
               }
-            })
-            .catch(() => {
-              isCancelled = true;
-              const index = __images.findIndex(
-                (img) => img.id === uploadingImage.id
-              );
-              if (index !== -1) {
-                __images[index] = {
-                  url: '',
-                  status: 'error',
-                  percent: 0,
-                  id: uploadingImage.id,
-                };
-                onChange?.([...__images]);
-              }
-            })
-            .finally(() => {
-              finished += 1;
 
-              if (finished === validFiles.length) {
-                onUploadEnd?.();
-              }
-            });
-        });
+              setTimeout(updateProgress, 100);
+            };
+
+            updateProgress();
+
+            const upload = customUpload
+              ? customUpload(file)
+              : uploadImage(file);
+
+            return upload
+              .then((imageUrl) => {
+                isCancelled = true;
+                const index = __images.findIndex(
+                  (img) => img.id === uploadingImage.id
+                );
+                if (index !== -1) {
+                  __images[index] = {
+                    url: imageUrl,
+                    status: 'done',
+                    percent: 100,
+                    id: imageUrl,
+                  };
+                  onChange?.([...__images]);
+                }
+              })
+              .catch(() => {
+                isCancelled = true;
+                const index = __images.findIndex(
+                  (img) => img.id === uploadingImage.id
+                );
+                if (index !== -1) {
+                  __images[index] = {
+                    url: previewUrl,
+                    status: 'error',
+                    percent: 0,
+                    id: uploadingImage.id,
+                  };
+                  onChange?.([...__images]);
+                }
+              })
+              .finally(() => {
+                finished += 1;
+
+                if (finished === validFiles.length) {
+                  onUploadEnd?.();
+                }
+              });
+          });
+        };
+        reader.readAsDataURL(file);
       });
     },
     [
@@ -322,18 +331,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           ) : (
             <div className="image-upload__dragger-preview">
               {value[0].status === 'uploading' && (
-                <div className="image-upload__dragger-uploading">
-                  <div className="image-upload__item-progress-wrapper">
+                <>
+                  <img
+                    src={value[0].url}
+                    className="image-upload__dragger-image image-upload__dragger-image--uploading"
+                  />
+                  <div className="image-upload__dragger-progress">
                     <Progress
                       percent={value[0].percent || 0}
                       size="small"
                       status="active"
+                      showInfo={false}
                     />
-                    <span className="image-upload__item-progress-text">
-                      上传中 {value[0].percent || 0}%
-                    </span>
                   </div>
-                </div>
+                  <div className="image-upload__dragger-progress-text">
+                    上传中 {value[0].percent || 0}%
+                  </div>
+                </>
               )}
               {value[0].status === 'done' && (
                 <>
@@ -400,15 +414,20 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             <div key={image.id || image.url} className="image-upload__item">
               {image.status === 'uploading' && (
                 <div className="image-upload__item-uploading">
-                  <div className="image-upload__item-progress-wrapper">
+                  <img
+                    src={image.url}
+                    className="image-upload__item-image image-upload__item-image--uploading"
+                  />
+                  <div className="image-upload__item-progress">
                     <Progress
                       percent={image.percent || 0}
                       size="small"
                       status="active"
+                      showInfo={false}
                     />
-                    <span className="image-upload__item-progress-text">
-                      上传中 {image.percent || 0}%
-                    </span>
+                  </div>
+                  <div className="image-upload__item-progress-text">
+                    {image.percent || 0}%
                   </div>
                 </div>
               )}
