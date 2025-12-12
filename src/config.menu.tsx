@@ -6,6 +6,7 @@ import {
   AppstoreOutlined,
   CodeOutlined,
   AndroidOutlined,
+  CommentOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 
@@ -211,6 +212,12 @@ export const menus: MenuItem[] = [
         key: 'masonry',
         label: 'Masonry',
         route: '/app/components/masonry',
+        permissions: [],
+      },
+      {
+        key: 'chatbot',
+        label: 'ChatBot',
+        route: '/app/components/chatbot',
         permissions: [],
       },
     ],
