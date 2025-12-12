@@ -152,7 +152,7 @@ export const menus: MenuItem[] = [
       },
       {
         key: 'use-ahooks-countdown',
-        label: 'useAHooksCountdown',
+        label: 'useCountdown',
         route: '/app/hooks/use-ahooks-countdown',
         permissions: [],
       },

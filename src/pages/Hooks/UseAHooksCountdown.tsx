@@ -17,7 +17,7 @@ const UseAHooksCountdown: React.FC = () => {
   // Example 1: Basic countdown with 6 seconds
   const countdown1 = useCountdown({
     seconds: 6,
-    onFinish: () => {
+    onEnd: () => {
       message.success('Countdown 1 finished!');
     },
   });
@@ -25,7 +25,7 @@ const UseAHooksCountdown: React.FC = () => {
   // Example 2: Short countdown with 10 seconds
   const countdown2 = useCountdown({
     seconds: 10,
-    onFinish: () => {
+    onEnd: () => {
       message.info('Countdown 2 finished!');
     },
   });
@@ -33,7 +33,7 @@ const UseAHooksCountdown: React.FC = () => {
   // Example 3: Custom countdown with 30 seconds
   const countdown3 = useCountdown({
     seconds: 30,
-    onFinish: () => {
+    onEnd: () => {
       message.warning('Countdown 3 finished!');
     },
   });
@@ -41,7 +41,7 @@ const UseAHooksCountdown: React.FC = () => {
   // Example 4: Multiple rounds tracking
   const countdown4 = useCountdown({
     seconds: 5,
-    onFinish: () => {
+    onEnd: () => {
       message.success(`Round ${countdown4.round + 1} completed!`);
     },
   });
@@ -49,14 +49,14 @@ const UseAHooksCountdown: React.FC = () => {
   // Example 5: Dynamic countdown with setLeft
   const countdown5 = useCountdown({
     seconds: 60,
-    onFinish: () => {
+    onEnd: () => {
       message.success('Dynamic countdown finished!');
     },
   });
 
   return (
     <div className="use-ahooks-countdown">
-      <h2 className="use-ahooks-countdown__title">useAHooksCountdown Hook Examples</h2>
+      <h2 className="use-ahooks-countdown__title">useCountdown Hook Examples</h2>
 
       <div className="use-ahooks-countdown__section">
         <h3>Basic Usage - 6 Seconds Countdown</h3>

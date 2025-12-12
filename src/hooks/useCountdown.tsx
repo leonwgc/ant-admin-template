@@ -11,7 +11,7 @@ import { useCallback, useMemo, useState } from 'react';
  */
 export interface UseCountdownProps {
   seconds: number;
-  onFinish?: () => void;
+  onEnd?: () => void;
 }
 
 /**
@@ -26,12 +26,9 @@ export interface UseCountdownResult {
   setLeft: (value: number) => void;
 }
 
-/**
- * useCountdown - a simple countdown hook
- */
 const useCountdown = ({
   seconds = 60,
-  onFinish,
+  onEnd,
 }: UseCountdownProps): UseCountdownResult => {
   const [leftSec, setLeftSec] = useState(0);
   const [round, setRound] = useState(0);
@@ -42,7 +39,7 @@ const useCountdown = ({
     onEnd: () => {
       setLeftSec(0);
       setRound((p) => p + 1);
-      onFinish?.();
+      onEnd?.();
     },
   });
 
