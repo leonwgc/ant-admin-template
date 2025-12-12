@@ -14,7 +14,6 @@ import {
 } from '@ant-design/icons';
 import TaskExecutor from './TaskExecutor';
 import { uploadImage } from './api';
-import { useUpdateEffect } from 'ahooks';
 import './ImageUpload.scss';
 
 /**
@@ -97,28 +96,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [previewVisible, setPreviewVisible] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const mapValue = useCallback((value) => {
-    if (value.length > 0 && typeof value[0] === 'string') {
-      return (value as string[]).map((url: string) => ({
-        url,
-        status: 'done' as const,
-        percent: 100,
-        id: url,
-      }));
-    }
-    return (value as UploadedImage[]) || [];
-  }, []);
-
-  const [images, setImages] = useState<UploadedImage[]>(() => mapValue(value));
-
-  useUpdateEffect(() => {
-    onChange?.(images);
-  }, [images]);
-
-  useUpdateEffect(() => {
-    setImages(mapValue(value));
-  }, [value]);
-
   const beforeUploadCheck = useCallback(
     (file: File) => {
       const isAccepted = accept
@@ -150,7 +127,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         }
       } else {
         // For button mode, check total count
-        if (images.length + files.length > maxCount) {
+        if (value.length + files.length > maxCount) {
           message.error(`最多只能上传 ${maxCount} 张图片`);
           return;
         }
@@ -174,7 +151,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           id: `${Date.now()}-${Math.random()}`,
         };
         __images.push(uploadingImage);
-        setImages?.([...__images]);
+        onChange?.([...__images]);
 
         taskExcutor.addTask(() => {
           // Simulate progress with non-linear growth
@@ -189,8 +166,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               progress < 30
                 ? Math.random() * 8 + 5
                 : progress < 60
-                  ? Math.random() * 5 + 3
-                  : Math.random() * 3 + 1;
+                ? Math.random() * 5 + 3
+                : Math.random() * 3 + 1;
 
             progress = Math.min(90, progress + step);
             const index = __images.findIndex(
@@ -201,7 +178,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 ...uploadingImage,
                 percent: Math.floor(progress),
               };
-              setImages?.([...__images]);
+              onChange?.([...__images]);
             }
 
             setTimeout(updateProgress, 100);
@@ -224,7 +201,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   percent: 100,
                   id: imageUrl,
                 };
-                setImages?.([...__images]);
+                onChange?.([...__images]);
               }
             })
             .catch(() => {
@@ -239,7 +216,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   percent: 0,
                   id: uploadingImage.id,
                 };
-                setImages?.([...__images]);
+                onChange?.([...__images]);
               }
             })
             .finally(() => {
@@ -253,15 +230,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       });
     },
     [
-      images.length,
-      maxCount,
+      mode,
       beforeUploadCheck,
       onUploadStart,
       concurrentLimit,
       value,
-      onUploadEnd,
+      maxCount,
+      onChange,
       customUpload,
-      mode,
+      onUploadEnd,
     ]
   );
 
