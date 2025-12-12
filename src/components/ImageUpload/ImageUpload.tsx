@@ -141,11 +141,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     (files: FileList) => {
       if (!files || files.length === 0) return;
 
-      // For dragger mode, only allow single image
-      const maxAllowed = mode === 'dragger' ? 1 : maxCount;
-      if (images.length + files.length > maxAllowed) {
-        message.error(`最多只能上传 ${maxAllowed} 张图片`);
-        return;
+      // For dragger mode, allow replacement (will replace existing image)
+      if (mode === 'dragger') {
+        if (files.length > 1) {
+          message.error(`dragger 模式只能上传 1 张图片`);
+          return;
+        }
+      } else {
+        // For button mode, check total count
+        if (images.length + files.length > maxCount) {
+          message.error(`最多只能上传 ${maxCount} 张图片`);
+          return;
+        }
       }
 
       const validFiles = Array.from(files).filter(beforeUploadCheck);
@@ -154,7 +161,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       onUploadStart?.();
       const taskExcutor = new TaskExecutor(concurrentLimit);
       let finished = 0;
-      const __images = [...value];
+      // For dragger mode, replace existing image; for button mode, append
+      const __images = mode === 'dragger' ? [] : [...value];
 
       validFiles.map((file) => {
         // Add uploading placeholder with 0% progress
