@@ -10,6 +10,7 @@ import {
   PlusOutlined,
   DeleteOutlined,
   EyeOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import TaskExecutor from './TaskExecutor';
 import { uploadImage } from './api';
@@ -486,18 +487,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           className="image-upload__preview"
           onClick={() => setPreviewVisible(false)}
         >
+          <CloseOutlined className="image-upload__preview-close" />
           <div
             className="image-upload__preview-content"
             onClick={(e) => e.stopPropagation()}
           >
             <img src={previewImage} alt="Preview" />
-            <Button
-              className="image-upload__preview-close"
-              type="primary"
-              onClick={() => setPreviewVisible(false)}
-            >
-              关闭
-            </Button>
           </div>
         </div>
       )}

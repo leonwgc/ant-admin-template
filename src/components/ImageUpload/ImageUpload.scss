@@ -250,9 +250,18 @@
 
   &__preview-close {
     position: absolute;
-    bottom: -60px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 40px;
+    right: 40px;
+    font-size: 32px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #1890ff;
+      transform: scale(1.1);
+    }
   }
 }
 
