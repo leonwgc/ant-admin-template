@@ -15,6 +15,7 @@ const ImageUploadExample: React.FC = () => {
   const [draggerImages, setDraggerImages] = useState<UploadedImage[]>([]);
   const [buttonImages, setButtonImages] = useState<UploadedImage[]>([]);
   const [customImages, setCustomImages] = useState<UploadedImage[]>([]);
+  const [singleImage, setSingleImage] = useState<UploadedImage[]>([]);
 
   /**
    * Custom upload function (simulate API call)
@@ -57,11 +58,62 @@ const ImageUploadExample: React.FC = () => {
       <h2 className="image-upload-example__title">ImageUpload - 图片上传组件示例</h2>
 
       <div className="image-upload-example__section">
-        <Card title="基础用法 - 拖拽上传">
+        <Card title="基础用法 - 拖拽上传（单图模式）">
           <p className="image-upload-example__desc">
-            支持点击上传和拖拽上传，自动校验文件类型和大小，支持多张图片上传
+            dragger 模式下只能上传一张图片，上传完成后替换上传区域，支持预览、删除和重新上传
           </p>
           <ImageUpload
+            mode="dragger"
+            value={singleImage}
+            onChange={setSingleImage}
+            maxSize={5}
+            accept=".jpg,.jpeg,.png"
+          />
+          {singleImage.length > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <Tag color="green">已上传图片</Tag>
+              <Button
+                type="link"
+                onClick={() => console.log('Image URL:', singleImage[0]?.url)}
+              >
+                查看数据
+              </Button>
+            </div>
+          )}
+        </Card>
+      </div>
+
+      <div className="image-upload-example__section">
+        <Card title="按钮模式 - 多图上传">
+          <p className="image-upload-example__desc">
+            使用按钮触发上传，支持多张图片，适合表单场景，可设置最大上传数量
+          </p>
+          <ImageUpload
+            mode="button"
+            value={buttonImages}
+            onChange={setButtonImages}
+            maxCount={3}
+            maxSize={2}
+            accept=".jpg,.jpeg,.png"
+          />
+          {buttonImages.length > 0 && (
+            <Space style={{ marginTop: 16 }}>
+              <Tag color="blue">已上传 {buttonImages.length} 张</Tag>
+              <Button type="link" onClick={() => setButtonImages([])}>
+                清空全部
+              </Button>
+            </Space>
+          )}
+        </Card>
+      </div>
+
+      <div className="image-upload-example__section">
+        <Card title="进度条展示">
+          <p className="image-upload-example__desc">
+            上传过程中显示真实的进度条动画，模拟实际上传进度，非线性增长更加逼真
+          </p>
+          <ImageUpload
+            mode="button"
             value={draggerImages}
             onChange={setDraggerImages}
             maxCount={5}
@@ -80,25 +132,12 @@ const ImageUploadExample: React.FC = () => {
       </div>
 
       <div className="image-upload-example__section">
-        <Card title="按钮模式">
-          <p className="image-upload-example__desc">使用按钮触发上传，适合表单场景</p>
-          <ImageUpload
-            mode="button"
-            value={buttonImages}
-            onChange={setButtonImages}
-            maxCount={3}
-            maxSize={2}
-            accept=".jpg,.jpeg,.png"
-          />
-        </Card>
-      </div>
-
-      <div className="image-upload-example__section">
-        <Card title="自定义上传">
+        <Card title="自定义上传函数">
           <p className="image-upload-example__desc">
-            自定义上传逻辑，可以对接真实的后端接口
+            自定义上传逻辑，可以对接真实的后端接口，上传时间较长（2秒）以观察进度条效果
           </p>
           <ImageUpload
+            mode="button"
             value={customImages}
             onChange={setCustomImages}
             maxCount={3}
@@ -154,7 +193,7 @@ const ImageUploadExample: React.FC = () => {
               </tr>
               <tr>
                 <td>mode</td>
-                <td>上传模式</td>
+                <td>上传模式（dragger 模式仅支持单图）</td>
                 <td>'dragger' | 'button'</td>
                 <td>'dragger'</td>
               </tr>
@@ -169,6 +208,24 @@ const ImageUploadExample: React.FC = () => {
                 <td>自定义上传函数</td>
                 <td>(file: File) =&gt; Promise&lt;string&gt;</td>
                 <td>-</td>
+              </tr>
+              <tr>
+                <td>onUploadStart</td>
+                <td>上传开始回调</td>
+                <td>() =&gt; void</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>onUploadEnd</td>
+                <td>上传结束回调</td>
+                <td>() =&gt; void</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>concurrentLimit</td>
+                <td>并发上传数量限制</td>
+                <td>number</td>
+                <td>3</td>
               </tr>
             </tbody>
           </table>
@@ -186,13 +243,8 @@ const ImageUploadExample: React.FC = () => {
             </thead>
             <tbody>
               <tr>
-                <td>uid</td>
+                <td>id</td>
                 <td>唯一标识</td>
-                <td>string</td>
-              </tr>
-              <tr>
-                <td>name</td>
-                <td>文件名</td>
                 <td>string</td>
               </tr>
               <tr>
@@ -201,18 +253,13 @@ const ImageUploadExample: React.FC = () => {
                 <td>string</td>
               </tr>
               <tr>
-                <td>size</td>
-                <td>文件大小（字节）</td>
-                <td>number</td>
-              </tr>
-              <tr>
                 <td>status</td>
                 <td>上传状态</td>
                 <td>'uploading' | 'done' | 'error'</td>
               </tr>
               <tr>
                 <td>percent</td>
-                <td>上传进度</td>
+                <td>上传进度（0-100）</td>
                 <td>number</td>
               </tr>
             </tbody>
@@ -224,35 +271,43 @@ const ImageUploadExample: React.FC = () => {
         <Card title="功能特性">
           <ul className="image-upload-example__features">
             <li>
-              <Tag color="blue">拖拽上传</Tag>
+              <Tag color="blue">单图模式</Tag>
+              dragger 模式支持单图上传，上传完成后替换显示
+            </li>
+            <li>
+              <Tag color="green">多图上传</Tag>
+              button 模式支持多图上传，网格布局展示
+            </li>
+            <li>
+              <Tag color="orange">拖拽上传</Tag>
               支持拖拽文件到指定区域上传
             </li>
             <li>
-              <Tag color="green">点击上传</Tag>
-              点击区域或按钮选择文件上传
-            </li>
-            <li>
-              <Tag color="orange">文件校验</Tag>
-              自动校验文件类型、大小和数量
-            </li>
-            <li>
-              <Tag color="purple">进度显示</Tag>
-              实时显示上传进度
+              <Tag color="purple">逼真进度</Tag>
+              非线性进度条模拟，快→慢过渡更逼真
             </li>
             <li>
               <Tag color="cyan">图片预览</Tag>
-              点击查看大图，支持关闭
+              点击预览大图，右上角关闭按钮
             </li>
             <li>
-              <Tag color="red">删除功能</Tag>
-              支持删除已上传的图片
+              <Tag color="red">删除/重传</Tag>
+              支持删除和重新上传图片
             </li>
             <li>
-              <Tag color="geekblue">自定义上传</Tag>
+              <Tag color="blue">文件校验</Tag>
+              自动校验文件类型、大小和数量
+            </li>
+            <li>
+              <Tag color="red">自定义上传</Tag>
               支持自定义上传逻辑，对接真实 API
             </li>
             <li>
-              <Tag color="magenta">响应式设计</Tag>
+              <Tag color="orange">并发控制</Tag>
+              支持设置并发上传数量限制
+            </li>
+            <li>
+              <Tag color="green">响应式设计</Tag>
               适配移动端和桌面端
             </li>
           </ul>
@@ -264,11 +319,28 @@ const ImageUploadExample: React.FC = () => {
           <div className="image-upload-example__code">
             {`import ImageUpload, { UploadedImage } from '~/components/ImageUpload';
 
-const MyComponent = () => {
+// 示例 1: dragger 模式（单图）
+const SingleImageUpload = () => {
+  const [image, setImage] = useState<UploadedImage[]>([]);
+
+  return (
+    <ImageUpload
+      mode="dragger"
+      value={image}
+      onChange={setImage}
+      maxSize={5}
+      accept=".jpg,.jpeg,.png"
+    />
+  );
+};
+
+// 示例 2: button 模式（多图）
+const MultipleImageUpload = () => {
   const [images, setImages] = useState<UploadedImage[]>([]);
 
   return (
     <ImageUpload
+      mode="button"
       value={images}
       onChange={setImages}
       maxCount={5}
@@ -278,7 +350,7 @@ const MyComponent = () => {
   );
 };
 
-// 自定义上传
+// 示例 3: 自定义上传
 const customUpload = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append('file', file);
@@ -293,9 +365,13 @@ const customUpload = async (file: File): Promise<string> => {
 };
 
 <ImageUpload
+  mode="button"
   value={images}
   onChange={setImages}
   customUpload={customUpload}
+  onUploadStart={() => console.log('Upload started')}
+  onUploadEnd={() => console.log('Upload completed')}
+  concurrentLimit={2}
 />`}
           </div>
         </Card>
