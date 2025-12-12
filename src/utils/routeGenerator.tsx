@@ -125,6 +125,7 @@ export const routeComponentMap: RouteComponentMap = {
   ),
   '/app/components/masonry': lazyLoad('pages/Components/MasonryExample'),
   '/app/components/chatbot': lazyLoad('pages/Components/ChatBot'),
+  '/app/components/image-upload': lazyLoad('pages/Components/ImageUploadExample'),
 
   // Games
   '/app/games/tetris-3d': lazyLoad('pages/Games/Tetris3D'),

@@ -220,6 +220,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/chatbot',
         permissions: [],
       },
+      {
+        key: 'image-upload',
+        label: 'ImageUpload',
+        route: '/app/components/image-upload',
+        permissions: [],
+      },
     ],
   },
   {
