@@ -20,10 +20,10 @@ import './ImageUpload.scss';
  * Uploaded image info
  */
 export interface UploadedImage {
-  id?: string;
-  url?: string;
-  status?: 'uploading' | 'done' | 'error';
-  percent?: number;
+  id: string;
+  url: string;
+  status: 'uploading' | 'done' | 'error';
+  percent: number;
 }
 
 /**
