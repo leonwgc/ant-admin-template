@@ -177,46 +177,43 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         setImages?.([...__images]);
 
         taskExcutor.addTask(() => {
-          // Simulate realistic progress with non-linear growth
-          let currentProgress = 0;
-          let progressStep = 0;
+          // Simulate progress with non-linear growth
+          let progress = 0;
+          let isCancelled = false;
 
           const updateProgress = () => {
+            if (isCancelled || progress >= 90) return;
+
+            // Non-linear: fast → slow
+            const step =
+              progress < 30
+                ? Math.random() * 8 + 5
+                : progress < 60
+                  ? Math.random() * 5 + 3
+                  : Math.random() * 3 + 1;
+
+            progress = Math.min(90, progress + step);
             const index = __images.findIndex(
               (img) => img.id === uploadingImage.id
             );
-            if (index !== -1 && currentProgress < 90) {
-              // Non-linear progress: fast at start, slower near the end
-              if (currentProgress < 30) {
-                progressStep = Math.random() * 8 + 5; // 5-13%
-              } else if (currentProgress < 60) {
-                progressStep = Math.random() * 5 + 3; // 3-8%
-              } else if (currentProgress < 80) {
-                progressStep = Math.random() * 3 + 1; // 1-4%
-              } else {
-                progressStep = Math.random() * 2 + 0.5; // 0.5-2.5%
-              }
-
-              currentProgress = Math.min(90, currentProgress + progressStep);
+            if (index !== -1) {
               __images[index] = {
                 ...uploadingImage,
-                percent: Math.floor(currentProgress),
+                percent: Math.floor(progress),
               };
               setImages?.([...__images]);
-
-              // Random delay for more realistic effect (80-200ms)
-              const randomDelay = Math.random() * 120 + 80;
-              setTimeout(updateProgress, randomDelay);
             }
+
+            setTimeout(updateProgress, 100);
           };
 
-          // Start progress simulation
           updateProgress();
 
           const upload = customUpload ? customUpload(file) : uploadImage(file);
 
           return upload
             .then((imageUrl) => {
+              isCancelled = true;
               const index = __images.findIndex(
                 (img) => img.id === uploadingImage.id
               );
@@ -231,6 +228,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               }
             })
             .catch(() => {
+              isCancelled = true;
               const index = __images.findIndex(
                 (img) => img.id === uploadingImage.id
               );

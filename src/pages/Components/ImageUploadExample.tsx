@@ -4,7 +4,14 @@
  */
 
 import React, { useState } from 'react';
-import { Card, Space, Button, Divider, message, Tag } from '@derbysoft/neat-design';
+import {
+  Card,
+  Space,
+  Button,
+  Divider,
+  message,
+  Tag,
+} from '@derbysoft/neat-design';
 import ImageUpload, { UploadedImage } from '~/components/ImageUpload';
 import './ImageUploadExample.scss';
 
@@ -16,6 +23,16 @@ const ImageUploadExample: React.FC = () => {
   const [buttonImages, setButtonImages] = useState<UploadedImage[]>([]);
   const [customImages, setCustomImages] = useState<UploadedImage[]>([]);
   const [singleImage, setSingleImage] = useState<UploadedImage[]>([]);
+  const [errorImages, setErrorImages] = useState<UploadedImage[]>([]);
+  const [disabledImages, setDisabledImages] = useState<UploadedImage[]>([
+    {
+      id: 'demo-1',
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400',
+      status: 'done',
+      percent: 100,
+    },
+  ]);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   /**
    * Custom upload function (simulate API call)
@@ -38,11 +55,30 @@ const ImageUploadExample: React.FC = () => {
   };
 
   /**
+   * Upload function with random failure (simulate error scenario)
+   */
+  const uploadWithError = async (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // 50% chance of failure
+        if (Math.random() > 0.5) {
+          reject(new Error('Upload failed'));
+        } else {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            resolve(e.target?.result as string);
+          };
+          reader.readAsDataURL(file);
+        }
+      }, 1500);
+    });
+  };
+
+  /**
    * Handle submit
    */
   const handleSubmit = () => {
     message.success(`提交成功！共 ${draggerImages.length} 张图片`);
-    console.log('Uploaded images:', draggerImages);
   };
 
   /**
@@ -55,12 +91,15 @@ const ImageUploadExample: React.FC = () => {
 
   return (
     <div className="image-upload-example">
-      <h2 className="image-upload-example__title">ImageUpload - 图片上传组件示例</h2>
+      <h2 className="image-upload-example__title">
+        ImageUpload - 图片上传组件示例
+      </h2>
 
       <div className="image-upload-example__section">
         <Card title="基础用法 - 拖拽上传（单图模式）">
           <p className="image-upload-example__desc">
-            dragger 模式下只能上传一张图片，上传完成后替换上传区域，支持预览、删除和重新上传
+            dragger
+            模式下只能上传一张图片，上传完成后替换上传区域，支持预览、删除和重新上传
           </p>
           <ImageUpload
             mode="dragger"
@@ -74,7 +113,7 @@ const ImageUploadExample: React.FC = () => {
               <Tag color="green">已上传图片</Tag>
               <Button
                 type="link"
-                onClick={() => console.log('Image URL:', singleImage[0]?.url)}
+                onClick={() => message.info(`图片 URL: ${singleImage[0]?.url}`)}
               >
                 查看数据
               </Button>
@@ -121,7 +160,11 @@ const ImageUploadExample: React.FC = () => {
             accept=".jpg,.jpeg,.png"
           />
           <Space style={{ marginTop: 16 }}>
-            <Button type="primary" onClick={handleSubmit} disabled={draggerImages.length === 0}>
+            <Button
+              type="primary"
+              onClick={handleSubmit}
+              disabled={draggerImages.length === 0}
+            >
               提交 ({draggerImages.length})
             </Button>
             <Button onClick={handleClear} disabled={draggerImages.length === 0}>
@@ -145,6 +188,70 @@ const ImageUploadExample: React.FC = () => {
             accept=".jpg,.jpeg,.png"
             customUpload={customUpload}
           />
+        </Card>
+      </div>
+
+      <div className="image-upload-example__section">
+        <Card title="上传失败处理">
+          <p className="image-upload-example__desc">
+            模拟上传失败场景（50%
+            失败率），失败的图片会显示错误状态，可以删除后重试
+          </p>
+          <ImageUpload
+            mode="button"
+            value={errorImages}
+            onChange={setErrorImages}
+            maxCount={5}
+            maxSize={5}
+            accept=".jpg,.jpeg,.png"
+            customUpload={uploadWithError}
+          />
+          {errorImages.some((img) => img.status === 'error') && (
+            <div style={{ marginTop: 16 }}>
+              <Tag color="red">
+                有 {errorImages.filter((img) => img.status === 'error').length}{' '}
+                张图片上传失败
+              </Tag>
+              <Button
+                type="link"
+                danger
+                onClick={() =>
+                  setErrorImages(
+                    errorImages.filter((img) => img.status !== 'error')
+                  )
+                }
+              >
+                清除失败项
+              </Button>
+            </div>
+          )}
+        </Card>
+      </div>
+
+      <div className="image-upload-example__section">
+        <Card title="禁用状态">
+          <p className="image-upload-example__desc">
+            禁用状态下无法上传、删除图片，仅可预览。适用于只读或审核场景
+          </p>
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Space>
+              <Button onClick={() => setIsDisabled(!isDisabled)}>
+                {isDisabled ? '启用上传' : '禁用上传'}
+              </Button>
+              <Tag color={isDisabled ? 'red' : 'green'}>
+                当前状态: {isDisabled ? '禁用' : '启用'}
+              </Tag>
+            </Space>
+            <ImageUpload
+              mode="button"
+              value={disabledImages}
+              onChange={setDisabledImages}
+              maxCount={3}
+              maxSize={5}
+              accept=".jpg,.jpeg,.png"
+              disabled={isDisabled}
+            />
+          </Space>
         </Card>
       </div>
 
@@ -299,6 +406,14 @@ const ImageUploadExample: React.FC = () => {
               自动校验文件类型、大小和数量
             </li>
             <li>
+              <Tag color="red">错误处理</Tag>
+              上传失败显示错误状态，支持重试
+            </li>
+            <li>
+              <Tag color="orange">禁用状态</Tag>
+              支持禁用上传，适用于只读场景
+            </li>
+            <li>
               <Tag color="red">自定义上传</Tag>
               支持自定义上传逻辑，对接真实 API
             </li>
@@ -372,6 +487,30 @@ const customUpload = async (file: File): Promise<string> => {
   onUploadStart={() => console.log('Upload started')}
   onUploadEnd={() => console.log('Upload completed')}
   concurrentLimit={2}
+/>
+
+// 示例 4: 处理上传失败
+const uploadWithRetry = async (file: File): Promise<string> => {
+  try {
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: file,
+    });
+    if (!response.ok) throw new Error('Upload failed');
+    const data = await response.json();
+    return data.url;
+  } catch (error) {
+    console.error('Upload error:', error);
+    throw error;
+  }
+};
+
+// 示例 5: 禁用状态（只读模式）
+<ImageUpload
+  mode="button"
+  value={images}
+  onChange={setImages}
+  disabled={true}
 />`}
           </div>
         </Card>
