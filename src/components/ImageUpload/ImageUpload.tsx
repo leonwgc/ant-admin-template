@@ -96,7 +96,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [previewVisible, setPreviewVisible] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [images, setImages] = useState<UploadedImage[]>(() => {
+  const mapValue = useCallback((value) => {
     if (value.length > 0 && typeof value[0] === 'string') {
       return (value as string[]).map((url: string) => ({
         url,
@@ -106,11 +106,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       }));
     }
     return (value as UploadedImage[]) || [];
-  });
+  }, []);
+
+  const [images, setImages] = useState<UploadedImage[]>(() => mapValue(value));
 
   useUpdateEffect(() => {
     onChange?.(images);
   }, [images]);
+
+  useUpdateEffect(() => {
+    setImages(mapValue(value));
+  }, [value]);
 
   const beforeUploadCheck = useCallback(
     (file: File) => {
@@ -135,8 +141,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     (files: FileList) => {
       if (!files || files.length === 0) return;
 
-      if (images.length + files.length > maxCount) {
-        message.error(`最多只能上传 ${maxCount} 张图片`);
+      // For dragger mode, only allow single image
+      const maxAllowed = mode === 'dragger' ? 1 : maxCount;
+      if (images.length + files.length > maxAllowed) {
+        message.error(`最多只能上传 ${maxAllowed} 张图片`);
         return;
       }
 
@@ -246,6 +254,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       value,
       onUploadEnd,
       customUpload,
+      mode,
     ]
   );
 
@@ -301,29 +310,88 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         ref={fileInputRef}
         type="file"
         accept={accept}
-        multiple
+        multiple={mode !== 'dragger'}
         style={{ display: 'none' }}
         onChange={(e) => handleChange(e.target.files)}
         disabled={disabled}
       />
 
-      {mode === 'dragger' && canUpload && (
-        <div
-          className="image-upload__dragger"
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          onClick={triggerUpload}
-        >
-          <p className="image-upload__dragger-icon">
-            <InboxOutlined />
-          </p>
-          <p className="image-upload__dragger-text">
-            点击或拖拽文件到此区域上传
-          </p>
-          <p className="image-upload__dragger-hint">
-            支持上传 {accept} 格式的图片，单个文件不超过 {maxSize}MB，最多{' '}
-            {maxCount} 张
-          </p>
+      {mode === 'dragger' && (
+        <div className="image-upload__dragger-container">
+          {value.length === 0 ? (
+            <div
+              className="image-upload__dragger"
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={triggerUpload}
+            >
+              <p className="image-upload__dragger-icon">
+                <InboxOutlined />
+              </p>
+              <p className="image-upload__dragger-text">
+                点击或拖拽文件到此区域上传
+              </p>
+              <p className="image-upload__dragger-hint">
+                支持上传 {accept} 格式的图片，单个文件不超过 {maxSize}MB
+              </p>
+            </div>
+          ) : (
+            <div className="image-upload__dragger-preview">
+              {value[0].status === 'uploading' && (
+                <div className="image-upload__dragger-uploading">
+                  <div className="image-upload__item-progress-wrapper">
+                    <Progress
+                      percent={value[0].percent || 0}
+                      size="small"
+                      status="active"
+                    />
+                    <span className="image-upload__item-progress-text">
+                      上传中 {value[0].percent || 0}%
+                    </span>
+                  </div>
+                </div>
+              )}
+              {value[0].status === 'done' && (
+                <>
+                  <img
+                    src={value[0].url}
+                    className="image-upload__dragger-image"
+                  />
+                  <div className="image-upload__dragger-actions">
+                    <Space>
+                      <Button
+                        type="link"
+                        icon={<EyeOutlined />}
+                        onClick={() => handlePreview(value[0].url)}
+                      >
+                        预览
+                      </Button>
+                      <Button
+                        type="link"
+                        icon={<DeleteOutlined />}
+                        onClick={() => handleDelete(value[0].url)}
+                      >
+                        删除
+                      </Button>
+                      <Button
+                        type="link"
+                        icon={<PlusOutlined />}
+                        onClick={triggerUpload}
+                      >
+                        重新上传
+                      </Button>
+                    </Space>
+                  </div>
+                </>
+              )}
+              {value[0].status === 'error' && (
+                <div className="image-upload__dragger-error">
+                  <p>上传失败</p>
+                  <Button onClick={triggerUpload}>重新上传</Button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -342,7 +410,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         </div>
       )}
 
-      {value.length > 0 && (
+      {mode === 'button' && value.length > 0 && (
         <div className="image-upload__list">
           {value.map((image) => (
             <div key={image.id || image.url} className="image-upload__item">
