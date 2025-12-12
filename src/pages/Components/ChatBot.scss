@@ -189,17 +189,85 @@
     border-radius: 12px;
     word-wrap: break-word;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
   }
 
   &__message-text {
     font-size: 14px;
     line-height: 1.6;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    white-space: pre-wrap;
+  }
+
+  &__message-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 4px;
   }
 
   &__message-time {
     font-size: 12px;
     opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  &__message-actions {
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    .ant-btn {
+      padding: 0;
+      height: 20px;
+      width: 20px;
+      min-width: 20px;
+      border-radius: 4px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.06);
+      }
+
+      &.active-feedback {
+        color: #1890ff;
+      }
+    }
+  }
+
+  &__message:hover &__message-actions {
+    opacity: 1;
+  }
+
+  &__suggestions {
+    margin-top: 12px;
+    padding: 12px;
+    background: #f0f7ff;
+    border-radius: 8px;
+    border: 1px solid #d6e4ff;
+  }
+
+  &__suggestions-title {
+    font-size: 12px;
+    color: #1890ff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+
+  &__suggestion-btn {
+    display: block;
+    padding: 4px 0;
+    font-size: 13px;
+    height: auto;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.4;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__typing {
@@ -231,11 +299,23 @@
 
     .ant-input-affix-wrapper {
       padding-right: 8px;
+      border-radius: 12px;
+    }
+
+    .ant-input-show-count-suffix {
+      font-size: 12px;
+      color: #8c8c8c;
+      margin-right: 8px;
     }
 
     .ant-btn {
       border-radius: 8px;
     }
+  }
+
+  // Utility classes
+  .active-feedback {
+    color: #1890ff !important;
   }
 }
 

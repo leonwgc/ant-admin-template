@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
   Card,
   Input,
@@ -13,14 +13,23 @@ import {
   Tag,
   Empty,
   Divider,
+  Tooltip,
+  message,
+  App,
 } from '@derbysoft/neat-design';
 import {
   SendOutlined,
   RobotOutlined,
   UserOutlined,
   QuestionCircleOutlined,
+  DeleteOutlined,
+  CopyOutlined,
+  LikeOutlined,
+  DislikeOutlined,
+  DownloadOutlined,
+  BulbOutlined,
 } from '@ant-design/icons';
-import { useBoolean } from 'ahooks';
+import { useBoolean, useLocalStorageState } from 'ahooks';
 import './ChatBot.scss';
 
 /**
@@ -31,6 +40,8 @@ interface Message {
   type: 'user' | 'bot';
   content: string;
   timestamp: Date;
+  feedback?: 'like' | 'dislike';
+  relatedQuestions?: string[];
 }
 
 /**
@@ -150,18 +161,23 @@ const categories = [
  * ChatBot component
  */
 const ChatBot: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      type: 'bot',
-      content: 'Hello! I am your AI assistant. How can I help you today?',
-      timestamp: new Date(),
-    },
-  ]);
+  // Use localStorage to persist messages
+  const [messages, setMessages] = useLocalStorageState<Message[]>('chatbot-messages', {
+    defaultValue: [
+      {
+        id: '1',
+        type: 'bot',
+        content: 'Hello! I am your AI assistant. How can I help you today?',
+        timestamp: new Date(),
+      },
+    ],
+  });
   const [inputValue, setInputValue] = useState('');
   const [isTyping, { setTrue: startTyping, setFalse: stopTyping }] = useBoolean(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef(null);
+  const { modal } = App.useApp();
 
   /**
    * Scroll to bottom of messages
@@ -175,20 +191,72 @@ const ChatBot: React.FC = () => {
   }, [messages]);
 
   /**
-   * Find matching answer from database
+   * Calculate match score for a question
    */
-  const findAnswer = (question: string): string => {
+  const calculateMatchScore = (question: string, qa: QAPair): number => {
     const normalizedQuestion = question.toLowerCase().trim();
+    let score = 0;
 
-    // Find exact match
-    for (const qa of qaDatabase) {
-      if (qa.keywords.some((keyword) => normalizedQuestion.includes(keyword.toLowerCase()))) {
-        return qa.answer;
+    qa.keywords.forEach((keyword) => {
+      const normalizedKeyword = keyword.toLowerCase();
+      if (normalizedQuestion === normalizedKeyword) {
+        score += 10; // Exact match
+      } else if (normalizedQuestion.includes(normalizedKeyword)) {
+        score += 5; // Partial match
+      } else if (normalizedKeyword.includes(normalizedQuestion)) {
+        score += 3; // Keyword contains question
       }
+    });
+
+    return score;
+  };
+
+  /**
+   * Find matching answer from database with smart matching
+   */
+  const findAnswer = (
+    question: string
+  ): { answer: string; relatedQuestions: string[]; confidence: number } => {
+    // Calculate scores for all QA pairs
+    const scoredResults = qaDatabase.map((qa) => ({
+      qa,
+      score: calculateMatchScore(question, qa),
+    }));
+
+    // Sort by score
+    scoredResults.sort((a, b) => b.score - a.score);
+
+    // Get best match
+    const bestMatch = scoredResults[0];
+
+    if (bestMatch.score >= 5) {
+      // Good match found
+      // Get related questions (same category, different questions)
+      const relatedQuestions = qaDatabase
+        .filter((qa) => qa.category === bestMatch.qa.category && qa !== bestMatch.qa)
+        .slice(0, 3)
+        .map((qa) => qa.question);
+
+      return {
+        answer: bestMatch.qa.answer,
+        relatedQuestions,
+        confidence: Math.min(bestMatch.score / 10, 1),
+      };
     }
 
-    // Default response
-    return "I'm sorry, I don't have an answer to that question. Please try asking something else or contact our support team.";
+    // No good match - suggest related questions
+    const suggestions = scoredResults
+      .slice(0, 3)
+      .filter((result) => result.score > 0)
+      .map((result) => result.qa.question);
+
+    return {
+      answer:
+        "I'm sorry, I don't have an exact answer to that question. Here are some related topics I can help with:",
+      relatedQuestions:
+        suggestions.length > 0 ? suggestions : ['How can you help me?', 'What features do you offer?'],
+      confidence: 0,
+    };
   };
 
   /**
@@ -197,15 +265,17 @@ const ChatBot: React.FC = () => {
   const handleSend = () => {
     if (!inputValue.trim()) return;
 
+    const userInput = inputValue;
+
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       type: 'user',
-      content: inputValue,
+      content: userInput,
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev!, userMessage]);
     setInputValue('');
 
     // Simulate bot typing
@@ -213,15 +283,23 @@ const ChatBot: React.FC = () => {
 
     // Find and send bot response
     setTimeout(() => {
+      const { answer, relatedQuestions, confidence } = findAnswer(userInput);
+
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
         type: 'bot',
-        content: findAnswer(inputValue),
+        content: answer,
         timestamp: new Date(),
+        relatedQuestions: relatedQuestions.length > 0 ? relatedQuestions : undefined,
       };
 
-      setMessages((prev) => [...prev, botResponse]);
+      setMessages((prev) => [...prev!, botResponse]);
       stopTyping();
+
+      // Show suggestion if low confidence
+      if (confidence < 0.5 && relatedQuestions.length === 0) {
+        message.info('Tip: Try using keywords like "price", "feature", or "help"');
+      }
     }, 800 + Math.random() * 1200);
   };
 
@@ -230,6 +308,71 @@ const ChatBot: React.FC = () => {
    */
   const handleQuickQuestion = (question: string) => {
     setInputValue(question);
+    inputRef.current?.focus();
+  };
+
+  /**
+   * Clear chat history
+   */
+  const handleClearChat = () => {
+    modal.confirm({
+      title: 'Clear Chat History',
+      content: 'Are you sure you want to clear all chat messages? This action cannot be undone.',
+      okText: 'Clear',
+      cancelText: 'Cancel',
+      onOk: () => {
+        setMessages([
+          {
+            id: '1',
+            type: 'bot',
+            content: 'Chat history cleared. How can I help you today?',
+            timestamp: new Date(),
+          },
+        ]);
+        message.success('Chat history cleared');
+      },
+    });
+  };
+
+  /**
+   * Copy message content
+   */
+  const handleCopyMessage = (content: string) => {
+    navigator.clipboard.writeText(content).then(() => {
+      message.success('Message copied to clipboard');
+    });
+  };
+
+  /**
+   * Handle message feedback
+   */
+  const handleFeedback = (messageId: string, feedback: 'like' | 'dislike') => {
+    setMessages((prev) =>
+      prev!.map((msg) => (msg.id === messageId ? { ...msg, feedback } : msg))
+    );
+    message.success(feedback === 'like' ? 'Thanks for your feedback!' : 'We will improve!');
+  };
+
+  /**
+   * Export chat history
+   */
+  const handleExportChat = () => {
+    const chatText = messages!
+      .map((msg) => {
+        const sender = msg.type === 'bot' ? 'Bot' : 'You';
+        const time = formatTime(msg.timestamp);
+        return `[${time}] ${sender}: ${msg.content}`;
+      })
+      .join('\n\n');
+
+    const blob = new Blob([chatText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `chat-history-${new Date().toISOString().split('T')[0]}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    message.success('Chat history exported');
   };
 
   /**
@@ -245,12 +388,23 @@ const ChatBot: React.FC = () => {
   /**
    * Format timestamp
    */
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', {
+  const formatTime = (date: Date | string) => {
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    return dateObj.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
     });
   };
+
+  /**
+   * Get statistics
+   */
+  const stats = useMemo(() => {
+    const totalMessages = messages?.length || 0;
+    const userMessages = messages?.filter((m) => m.type === 'user').length || 0;
+    const botMessages = messages?.filter((m) => m.type === 'bot').length || 0;
+    return { totalMessages, userMessages, botMessages };
+  }, [messages]);
 
   return (
     <div className="chatbot">
@@ -261,7 +415,7 @@ const ChatBot: React.FC = () => {
               {categories.map((category) => (
                 <Tag
                   key={category.value}
-                  color={selectedCategory === category.value ? 'blue' : 'default'}
+                  color={selectedCategory === category.value ? 'blue' : undefined}
                   className="chatbot__category-tag"
                   onClick={() => setSelectedCategory(category.value)}
                   style={{ cursor: 'pointer' }}
@@ -302,25 +456,105 @@ const ChatBot: React.FC = () => {
                 <Tag color="green">Online</Tag>
               </Space>
             }
+            extra={
+              <Space>
+                <Tooltip title="Chat Statistics">
+                  <Tag color="blue">{stats.totalMessages} messages</Tag>
+                </Tooltip>
+                <Tooltip title="Export Chat">
+                  <Button
+                    type="link"
+                    icon={<DownloadOutlined />}
+                    onClick={handleExportChat}
+                    size="small"
+                  />
+                </Tooltip>
+                <Tooltip title="Clear Chat">
+                  <Button
+                    type="link"
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={handleClearChat}
+                    size="small"
+                  />
+                </Tooltip>
+              </Space>
+            }
           >
             <div className="chatbot__messages">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`chatbot__message chatbot__message--${message.type}`}
-                >
-                  <div className="chatbot__message-avatar">
-                    <Avatar
-                      icon={message.type === 'bot' ? <RobotOutlined /> : <UserOutlined />}
-                      style={{
-                        backgroundColor: message.type === 'bot' ? '#1890ff' : '#52c41a',
-                      }}
-                    />
-                  </div>
-                  <div className="chatbot__message-content">
-                    <div className="chatbot__message-bubble">
-                      <div className="chatbot__message-text">{message.content}</div>
-                      <div className="chatbot__message-time">{formatTime(message.timestamp)}</div>
+              {messages?.map((message) => (
+                <div key={message.id}>
+                  <div className={`chatbot__message chatbot__message--${message.type}`}>
+                    <div className="chatbot__message-avatar">
+                      <Avatar
+                        icon={message.type === 'bot' ? <RobotOutlined /> : <UserOutlined />}
+                        style={{
+                          backgroundColor: message.type === 'bot' ? '#1890ff' : '#52c41a',
+                        }}
+                      />
+                    </div>
+                    <div className="chatbot__message-content">
+                      <div className="chatbot__message-bubble">
+                        <div className="chatbot__message-text">{message.content}</div>
+                        <div className="chatbot__message-footer">
+                          <span className="chatbot__message-time">{formatTime(message.timestamp)}</span>
+                          <Space className="chatbot__message-actions" size={4}>
+                            <Tooltip title="Copy">
+                              <Button
+                                type="link"
+                                size="small"
+                                icon={<CopyOutlined />}
+                                onClick={() => handleCopyMessage(message.content)}
+                              />
+                            </Tooltip>
+                            {message.type === 'bot' && (
+                              <>
+                                <Tooltip title="Helpful">
+                                  <Button
+                                    type="link"
+                                    size="small"
+                                    icon={<LikeOutlined />}
+                                    onClick={() => handleFeedback(message.id, 'like')}
+                                    className={message.feedback === 'like' ? 'active-feedback' : ''}
+                                  />
+                                </Tooltip>
+                                <Tooltip title="Not helpful">
+                                  <Button
+                                    type="link"
+                                    size="small"
+                                    icon={<DislikeOutlined />}
+                                    onClick={() => handleFeedback(message.id, 'dislike')}
+                                    className={message.feedback === 'dislike' ? 'active-feedback' : ''}
+                                  />
+                                </Tooltip>
+                              </>
+                            )}
+                          </Space>
+                        </div>
+                      </div>
+
+                      {/* Related questions suggestions */}
+                      {message.type === 'bot' && message.relatedQuestions && (
+                        <div className="chatbot__suggestions">
+                          <div className="chatbot__suggestions-title">
+                            <BulbOutlined /> You might also ask:
+                          </div>
+                          {message.relatedQuestions.map((question, idx) => (
+                            <Button
+                              key={idx}
+                              type="link"
+                              size="small"
+                              className="chatbot__suggestion-btn"
+                              onClick={() => {
+                                setInputValue(question);
+                                inputRef.current?.focus();
+                              }}
+                            >
+                              {question}
+                            </Button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -348,17 +582,21 @@ const ChatBot: React.FC = () => {
 
             <div className="chatbot__input-area">
               <Input
-                placeholder="Type your message..."
+                ref={inputRef}
+                placeholder="Type your message... (Press Enter to send)"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onPressEnter={handleSend}
                 size="large"
+                maxLength={500}
+                showCount
                 suffix={
                   <Button
                     type="primary"
                     icon={<SendOutlined />}
                     onClick={handleSend}
-                    disabled={!inputValue.trim()}
+                    disabled={!inputValue.trim() || isTyping}
+                    loading={isTyping}
                   >
                     Send
                   </Button>
