@@ -40,7 +40,7 @@ ant admin template 是一个基于 React + TypeScript 的后台管理项目，�
 
 ```bash
 git clone --depth 1 https://github.com/leonwgc/ant-admin-template.git my-new-project
-cd <new-project-name>
+cd my-new-project
 rm -rf .git
 git init
 pnpm install
