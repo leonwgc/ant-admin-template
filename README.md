@@ -14,6 +14,8 @@ ant admin template 是一个基于 React + TypeScript 的后台管理项目，�
 
 ## 快速开始
 
+### 方式一：使用现有项目
+
 1. 安装依赖
 
     ```bash
@@ -31,6 +33,21 @@ ant admin template 是一个基于 React + TypeScript 的后台管理项目，�
     ```bash
     npm run build
     ```
+
+### 方式二：使用模板创建新项目
+
+使用提供的脚本快速创建新项目：
+
+```bash
+./create-project.sh
+```
+
+执行后输入新项目名称，脚本将自动：
+- 从 GitHub 下载模板代码
+- 安装项目依赖
+- 完成项目初始化
+
+**注意：** 使用前需先将此项目推送到 GitHub，并在 `create-project.sh` 中配置正确的 GitHub 仓库地址。
 
 ## 代码规范
 
