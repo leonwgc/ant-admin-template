@@ -39,11 +39,11 @@ ant admin template 是一个基于 React + TypeScript 的后台管理项目，�
 使用提供的脚本快速创建新项目：
 
 ```bash
-git clone --depth 1 https://github.com/leonwgc/ant-admin-template.git my-new-project
+git clone --depth 1 git@github.com:leonwgc/ant-admin-template.git my-new-project
 cd my-new-project
 rm -rf .git
 git init
-pnpm install
+npm install
 ```
 
 **注意：** 使用前需先将此项目推送到 GitHub，并在 `create-project.sh` 中配置正确的 GitHub 仓库地址。
