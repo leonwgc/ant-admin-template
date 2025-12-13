@@ -29,7 +29,7 @@ run({
     html: {
       template: './index.html',
       title: 'React Playground',
-      favicon:'./public/fv.svg'
+      favicon:'./public/favicon.ico'
     },
     server: {
       open: true,
