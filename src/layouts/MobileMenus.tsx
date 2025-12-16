@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Avatar, Drawer, DrawerProps } from '@derbysoft/neat-design';
 import Menus from './Menus';
 import { menus } from '~/config.menu';
 import './MobileMenus.scss';
 
 const MobileMenus: React.FC<DrawerProps> = (props) => {
-  const afterClick = () => {
+  const onMenuClick = useCallback(() => {
     props.onClose?.(null);
-  };
+  }, [props]);
 
   return (
     <Drawer
@@ -22,7 +22,7 @@ const MobileMenus: React.FC<DrawerProps> = (props) => {
       width={320}
       {...props}
     >
-      <Menus afterClick={afterClick} menus={menus} />
+      <Menus onClick={onMenuClick} menus={menus} />
     </Drawer>
   );
 };

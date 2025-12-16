@@ -14,25 +14,13 @@ import { NAV_MENU_COLLAPSED_KEY } from './Sider';
 import { useAppStore } from '~/store';
 
 type Props = MenuProps & {
-  afterClick?: () => void;
+  onClick?: () => void;
   collapsed?: boolean;
   menus?: MenuItem[];
 };
 
-/**
- * Menus component renders a collapsible menu using the Neat Design library.
- *
- * @param {Props} props - The properties passed to the component.
- * @param {Function} props.afterClick - A callback function to be called after a menu item is clicked.
- * @param {boolean} props.collapsed - A boolean indicating whether the menu is collapsed.
- * @param {Array} props.menus - An array of menu items to be displayed.
- * @param {Object} props.menuProps - Additional properties to be passed to the Menu component.
- *
- * @returns {JSX.Element} The rendered Menu component.
- *
- */
 export default (props: Props) => {
-  const { afterClick, collapsed, menus, ...menuProps } = props;
+  const { onClick, collapsed, menus, ...menuProps } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [menuCollapsed] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY);
@@ -90,7 +78,7 @@ export default (props: Props) => {
           const menu = flatMenus.find((m) => m.key === item.key);
           if (menu?.route) {
             navigate(menu?.route);
-            afterClick?.();
+            onClick?.();
           }
         }}
         selectedKeys={selectedKeys}
