@@ -12,24 +12,12 @@ run({
       changeOrigin: true,
       logLevel: 'silent',
     },
-    {
-      context: ['/book-engine-qa'],
-      target: 'https://unifyplatform.qa.derbysoft-test.com/',
-      changeOrigin: true,
-      logLevel: 'silent',
-    },
-    {
-      context: ['/book-engine-uat'],
-      target: 'https://api-gateway2.derbysoft-test.com/',
-      changeOrigin: true,
-      logLevel: 'silent',
-    },
   ],
   rsConfig: {
     html: {
       template: './index.html',
       title: 'React Playground',
-      favicon:'./public/favicon.ico'
+      favicon: './public/favicon.svg',
     },
     server: {
       open: true,
