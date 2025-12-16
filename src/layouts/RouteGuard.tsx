@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useLocation, Navigate } from 'react-router';
 import { hasPermission } from './Menus.helper';
-import routePermissions from '~/config.route';
+import allMenuRoutes from '~/config.route';
 import { useAppStore } from '~/store';
 interface RouteGuardProps {
   children: ReactNode;
@@ -14,7 +14,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
 
   return !hasPermission(
     operations,
-    routePermissions.find((item) => item.route === pathname)?.permissions
+    allMenuRoutes.find((item) => item.route === pathname)?.permissions
   ) ? (
     <Navigate to="/no-permission" replace />
   ) : (
