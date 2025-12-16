@@ -1,8 +1,7 @@
 import React from 'react';
-import './Footer.scss';
 import { useLocalStorageState } from 'ahooks';
 import { NAV_MENU_COLLAPSED_KEY } from './Sider';
-import { CommonUseOutlined } from '@derbysoft/neat-design-icons';
+import './Footer.scss';
 
 const Footer = () => {
   const [value, _] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY, {

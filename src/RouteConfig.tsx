@@ -4,7 +4,7 @@
  */
 
 import { Route, Routes } from 'react-router';
-import AppLayout from './layouts/AppLayout';
+import App from './layouts/App';
 import { lazy, Suspense } from 'react';
 import Redirect from './components/Redirect';
 import { menus } from './config.menu';
@@ -32,12 +32,12 @@ const RouteConfig = () => {
 
         <Route
           path="no-permission"
-          element={<AppLayout hasSider={false} hasContentHeader={false} />}
+          element={<App hasSider={false} hasContentHeader={false} />}
         >
           <Route index element={<NoPermission />} />
         </Route>
 
-        <Route path="app" element={<AppLayout />}>
+        <Route path="app" element={<App />}>
           {/* Auto-generated routes from menu configuration */}
           {menuRoutes.map(({ path }) => {
             const element = getRouteElement(path, routeComponentMap);

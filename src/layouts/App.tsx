@@ -8,9 +8,9 @@ import Sider from './Sider';
 import RouteGuard from './RouteGuard';
 
 import SkeletonLoading from './SkeletonLoading';
-import './AppLayout.scss';
+import './App.scss';
 
-const AppLayout: React.FC<{
+const App: React.FC<{
   hasSider?: boolean;
   hasContentHeader?: boolean;
 }> = ({ hasSider = true, hasContentHeader = false }) => {
@@ -47,4 +47,4 @@ const AppLayout: React.FC<{
   );
 };
 
-export default AppLayout;
+export default App;
