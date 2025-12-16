@@ -1,7 +1,7 @@
 {
-  "name": "book-engine-pc",
+  "name": "neat-admin-template",
   "version": "1.0.0",
-  "description": "book engine pc",
+  "description": "neat-admin-template",
   "scripts": {
     "scan": "npm run start & npx react-scan localhost:3002",
     "start": "node pack.mjs",
@@ -15,7 +15,7 @@
     "build:uat": "npm i && npm run clean  && npm run package:uat",
     "build:prod": "npm i && npm run clean  && npm run package:prod"
   },
-  "author": "leon.wang@derbysfot.net",
+  "author": "leon.wang",
   "license": "ISC",
   "dependencies": {
     "@derbysoft/antd-form-builder": "^1.0.0",

@@ -4,10 +4,10 @@ run({
   port: 3002,
   proxy: [
     {
-      context: ['/book-engine-dev'],
+      context: ['/neat-api-dev'],
       target: 'localhost:3001',
       pathRewrite: {
-        '^/book-engine-dev': '',
+        '^/neat-api-dev': '',
       },
       changeOrigin: true,
       logLevel: 'silent',
@@ -16,7 +16,7 @@ run({
   rsConfig: {
     html: {
       template: './index.html',
-      title: 'React Playground',
+      title: 'Neat Admin Template',
       favicon: './public/favicon.svg',
     },
     server: {
