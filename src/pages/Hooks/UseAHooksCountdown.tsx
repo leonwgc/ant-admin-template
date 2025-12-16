@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Button, Space, Card, Statistic, App } from '@derbysoft/neat-design';
+import { Button, Space, Card, Statistic, App } from 'antd';
 import useCountdown from '../../hooks/useCountdown';
 import './UseAHooksCountdown.scss';
 

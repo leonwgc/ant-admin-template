@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { App, Button, Space, Card } from '@derbysoft/neat-design';
+import { App, Button, Space, Card } from 'antd';
 import VerificationCodePage from '../../components/VerificationCodePage';
 import './VerificationCodePageExample.scss';
 
@@ -170,7 +170,7 @@ const VerificationCodePageExample: React.FC = () => {
             <h3>Complete Example</h3>
             <div className="verification-code-page-example__code">
               {`import VerificationCodePage from '@/components/VerificationCodePage';
-import { message } from '@derbysoft/neat-design';
+import { message } from 'antd';
 
 const MyPage = () => {
   const handleComplete = (code: string) => {

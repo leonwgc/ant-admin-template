@@ -1,5 +1,5 @@
 import { useState, useTransition } from 'react';
-import { Card, Input, Button, Space, Spin, Tag } from '@derbysoft/neat-design';
+import { Card, Input, Button, Space, Spin, Tag } from 'antd';
 import './UseTransition.scss';
 
 /**

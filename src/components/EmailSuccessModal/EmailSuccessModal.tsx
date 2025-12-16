@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Button } from '@derbysoft/neat-design';
-import { SuccessGeneralDefaultMedium } from '@derbysoft/neat-design-illustrations';
+import { Modal, Button } from 'antd';
+import { SuccessGeneralDefaultMedium } from 'antd-illustrations';
 import './EmailSuccessModal.scss';
 
 interface EmailSuccessModalProps {

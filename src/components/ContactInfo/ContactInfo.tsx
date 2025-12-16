@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { EmailOutlined, MobileOutlined } from '@derbysoft/neat-design-icons';
+import { EmailOutlined, MobileOutlined } from '@ant-design/icons';
 import './ContactInfo.scss';
 
 export interface ContactInfoProps {

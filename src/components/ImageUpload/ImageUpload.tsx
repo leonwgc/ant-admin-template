@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useRef, useCallback } from 'react';
-import { message, Button, Progress, Space } from '@derbysoft/neat-design';
+import { message, Button, Progress, Space } from 'antd';
 import {
   InboxOutlined,
   PlusOutlined,

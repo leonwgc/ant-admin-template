@@ -1,4 +1,4 @@
-import { Card, Space, Divider } from '@derbysoft/neat-design';
+import { Card, Space, Divider } from 'antd';
 import DotStatus from '../../components/DotStatus';
 import './DotStatusExample.scss';
 

@@ -16,7 +16,7 @@ import {
   Tooltip,
   message,
   App,
-} from '@derbysoft/neat-design';
+} from 'antd';
 import {
   SendOutlined,
   RobotOutlined,

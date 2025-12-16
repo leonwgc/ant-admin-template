@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Result } from '@derbysoft/neat-design';
+import { Button, Result } from 'antd';
 import { useNavigate } from 'react-router';
 
 const App: React.FC = () => {

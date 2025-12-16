@@ -11,7 +11,7 @@ import {
   Divider,
   message,
   Tag,
-} from '@derbysoft/neat-design';
+} from 'antd';
 import ImageUpload, { UploadedImage } from '~/components/ImageUpload';
 import './ImageUploadExample.scss';
 

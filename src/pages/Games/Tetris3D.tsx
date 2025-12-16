@@ -5,7 +5,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Button, Space, Typography } from '@derbysoft/neat-design';
+import { Button, Space, Typography } from 'antd';
 import './Tetris3D.scss';
 
 const { Title, Text } = Typography;

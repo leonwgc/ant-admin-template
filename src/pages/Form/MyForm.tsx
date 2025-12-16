@@ -9,8 +9,8 @@ import {
   Col,
   Tag,
   Space,
-} from '@derbysoft/neat-design';
-import type { UploadProps } from '@derbysoft/neat-design';
+} from 'antd';
+import type { UploadProps } from 'antd';
 import './Form.scss';
 
 interface FormValues {

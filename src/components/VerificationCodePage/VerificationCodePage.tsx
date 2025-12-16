@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button, Space } from '@derbysoft/neat-design';
+import { Button, Space } from 'antd';
 import { VerificationCodeInput } from '../VerificationCodeInput/VerificationCodeInput';
 import useCountdown from '~/hooks/useCountdown';
 import './VerificationCodePage.scss';

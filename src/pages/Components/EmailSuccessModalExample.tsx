@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Space, App } from '@derbysoft/neat-design';
+import { Button, Space, App } from 'antd';
 import EmailSuccessModal from '../../components/EmailSuccessModal';
 import './EmailSuccessModalExample.scss';
 

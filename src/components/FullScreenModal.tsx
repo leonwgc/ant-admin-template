@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalProps } from '@derbysoft/neat-design';
+import { Modal, ModalProps } from 'antd';
 import useModalStyle from './FullScreenModal.style';
 
 interface FullScreenModalProps {

@@ -12,7 +12,7 @@ import {
   ArrowDownLineOutlined,
   ArrowUpLineOutlined,
   MinusCircleOutlined,
-} from '@derbysoft/neat-design-icons';
+} from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 import { Button, Input, Space } from 'antd';
 

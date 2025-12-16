@@ -1,14 +1,7 @@
 import { useAntdTable } from 'ahooks';
-import type { TableColumnsType } from '@derbysoft/neat-design';
-import {
-  Button,
-  Flex,
-  Form,
-  Input,
-  Space,
-  Table,
-} from '@derbysoft/neat-design';
-import { FlexRender, Item } from '@derbysoft/antd-form-builder';
+import type { TableColumnsType } from 'antd';
+import { Button, Flex, Form, Input, Space, Table } from 'antd';
+import { FlexRender, Item } from 'antd-form-render';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router';
 import req from '~/req';

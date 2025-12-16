@@ -1,9 +1,8 @@
 import React from 'react';
-import { Layout, Space, Flex } from '@derbysoft/neat-design';
-import { MenuOutlined } from '@ant-design/icons';
+import { Layout, Space, Flex } from 'antd';
+import { MenuOutlined, RobotFilled } from '@ant-design/icons';
 import { useBoolean } from 'ahooks';
 import MobileMenus from './MobileMenus';
-import { AIRelatedFilled } from '@derbysoft/neat-design-icons';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [open, { setTrue, setFalse }] = useBoolean(false);
@@ -15,7 +14,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
           gap={8}
           style={{ fontSize: 32, fontWeight: 'bold' }}
         >
-          <AIRelatedFilled />
+          <RobotFilled />
         </Flex>
 
         <Space size={16}>

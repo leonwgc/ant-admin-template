@@ -5,7 +5,7 @@ import './ExpandTable.scss';
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
-} from '@derbysoft/neat-design-icons';
+} from '@ant-design/icons';
 
 interface DataType {
   key: React.Key;

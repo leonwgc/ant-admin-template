@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Space, Typography } from '@derbysoft/neat-design';
+import { Button, Space, Typography } from 'antd';
 import './Match3.scss';
 
 const { Title, Text } = Typography;

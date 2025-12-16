@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
-import { Avatar, message } from '@derbysoft/neat-design';
-import { EmailOutlined, MobileOutlined, CopyOutlined } from '@derbysoft/neat-design-icons';
+import { Avatar, message } from 'antd';
+import { EmailOutlined, MobileOutlined, CopyOutlined } from '@ant-design/icons';
 import './UserContactCard.scss';
 
 export interface UserContactCardProps {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Skeleton } from '@derbysoft/neat-design';
+import { Layout, Skeleton } from 'antd';
 import { Outlet } from 'react-router';
 import classNames from 'classnames';
 import Header from './Header';

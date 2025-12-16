@@ -1,5 +1,5 @@
 import { Suspense, useState, lazy } from 'react';
-import { Card, Button, Space, Spin, Alert, Tabs } from '@derbysoft/neat-design';
+import { Card, Button, Space, Spin, Alert, Tabs } from 'antd';
 import './UseSuspense.scss';
 
 // 模拟一个需要加载的组件

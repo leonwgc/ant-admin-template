@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Card, Input, Select, Space, Typography, Divider } from '@derbysoft/neat-design';
+import { Card, Input, Select, Space, Typography, Divider } from 'antd';
 import './IntlNumberFormatExample.scss';
 
 const { Title, Text, Paragraph } = Typography;

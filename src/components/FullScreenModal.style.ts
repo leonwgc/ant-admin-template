@@ -1,19 +1,16 @@
-import { useCreateStyles } from '@derbysoft/neat-design';
+/**
+ * @file src/components/FullScreenModal.style.ts
+ * @author leon.wang
+ */
 
+// antd doesn't have useCreateStyles, use plain CSS classNames instead
 const useModalStyle = () => {
-  const createStyles = useCreateStyles();
-
-  return createStyles(({ css }) => ({
-    body: css`
-      max-height: 100vh !important;
-      overflow-y: auto;
-      padding: 0 !important;
-    `,
-    content: css`
-      height: 100vh;
-      border-radius: 0 !important;
-    `,
-  }));
+  return {
+    styles: {
+      body: 'fullscreen-modal-body',
+      content: 'fullscreen-modal-content',
+    },
+  };
 };
 
 export default useModalStyle;

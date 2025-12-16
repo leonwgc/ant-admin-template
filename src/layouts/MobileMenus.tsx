@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Avatar, Drawer, DrawerProps } from '@derbysoft/neat-design';
+import { Avatar, Drawer, DrawerProps } from 'antd';
 import Menus from './Menus';
 import { menus } from '~/config.menu';
 import './MobileMenus.scss';

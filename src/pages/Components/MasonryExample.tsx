@@ -12,7 +12,7 @@ import {
   InputNumber,
   Row,
   Col,
-} from '@derbysoft/neat-design';
+} from 'antd';
 import Masonry from '../../components/Masonry';
 import './MasonryExample.scss';
 

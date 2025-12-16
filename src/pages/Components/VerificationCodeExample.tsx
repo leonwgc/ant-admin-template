@@ -6,7 +6,7 @@ import {
   message,
   Alert,
   Divider,
-} from '@derbysoft/neat-design';
+} from 'antd';
 import VerificationCodeInput from '../../components/VerificationCodeInput';
 import './VerificationCodeExample.scss';
 import { useCountDown } from 'ahooks';

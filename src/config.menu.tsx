@@ -7,7 +7,7 @@ import {
   CodeOutlined,
   AndroidOutlined,
 } from '@ant-design/icons';
-import { MenuProps } from '@derbysoft/neat-design';
+import { MenuProps } from 'antd';
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
   /**

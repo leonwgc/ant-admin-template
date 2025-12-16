@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import classNames from 'classnames';
-import { SuccessCircleOutlined } from '@derbysoft/neat-design-icons';
-import { Space } from '@derbysoft/neat-design';
+import { SuccessCircleOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 import './Steps.scss';
 
 interface StepProps {

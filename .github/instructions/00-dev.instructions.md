@@ -15,7 +15,7 @@ applyTo: '**'
 8. 组件应尽量小而专注，遵循单一职责原则。
 9. 添加组件或组件模版生成后，自动生成同名的scss文件，在scss文件头加上一行 @import 'scss/common.scss'，并确保样式文件与组件文件在同一目录下。
 10. className 使用 BEM 命名规范，确保样式可读性和可维护性, 并使用双引号。
-11. 本项目UI框架为@derbysoft/neat-design, 需要使用@derbysoft/neat-design的组件和样式。
+11. 本项目UI框架为 antd (Ant Design), 需要使用 antd 的组件和样式。
 12. 所有的注释请使用英文。
 13. - 在组件和样式文件的最顶部加上以下注释：
 ```javascript

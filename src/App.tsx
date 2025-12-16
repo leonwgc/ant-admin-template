@@ -1,4 +1,4 @@
-import { ConfigProvider, App as AntdApp } from '@derbysoft/neat-design';
+import { ConfigProvider, App as AntdApp } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';

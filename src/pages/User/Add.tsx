@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Input, Select, Space } from '@derbysoft/neat-design';
+import { Button, Form, Input, Select, Space } from 'antd';
 import { useTitle } from 'ahooks';
 
 const { Option } = Select;

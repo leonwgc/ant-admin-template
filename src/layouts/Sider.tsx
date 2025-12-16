@@ -1,4 +1,4 @@
-import { Layout, SiderProps } from '@derbysoft/neat-design';
+import { Layout, SiderProps } from 'antd';
 import { FC, useEffect, useState } from 'react';
 import { useLocalStorageState } from 'ahooks';
 import Menus from './Menus';
