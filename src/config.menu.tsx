@@ -6,7 +6,6 @@ import {
   AppstoreOutlined,
   CodeOutlined,
   AndroidOutlined,
-  CommentOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 
