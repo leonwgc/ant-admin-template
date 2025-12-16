@@ -1,4 +1,4 @@
-import { Menu, MenuProps } from '@derbysoft/neat-design';
+import { Menu, MenuProps, Skeleton } from '@derbysoft/neat-design';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import type { MenuItem } from '../config.menu';
@@ -40,7 +40,10 @@ export default (props: Props) => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { operations } = useAppStore();
 
-  const filterMenus = useMemo(() => getFilterMenus(operations, menus), [menus]);
+  const filterMenus = useMemo(
+    () => getFilterMenus(operations, menus),
+    [menus, operations]
+  );
   const levelKeys = useMemo(
     () => getLevelKeys(filterMenus as LevelKeysProps[]),
     [filterMenus]
@@ -80,22 +83,24 @@ export default (props: Props) => {
   );
 
   return (
-    <Menu
-      style={{ borderInlineEnd: 'none' }}
-      onClick={(item) => {
-        const menu = flatMenus.find((m) => m.key === item.key);
-        if (menu?.route) {
-          navigate(menu?.route);
-          afterClick?.();
-        }
-      }}
-      selectedKeys={selectedKeys}
-      openKeys={openKeys}
-      onOpenChange={onOpenChange}
-      mode="inline"
-      items={filterMenus}
-      inlineCollapsed={collapsed}
-      {...menuProps}
-    />
+    <Skeleton active loading={false} style={{ padding: 12 }}>
+      <Menu
+        style={{ borderInlineEnd: 'none' }}
+        onClick={(item) => {
+          const menu = flatMenus.find((m) => m.key === item.key);
+          if (menu?.route) {
+            navigate(menu?.route);
+            afterClick?.();
+          }
+        }}
+        selectedKeys={selectedKeys}
+        openKeys={openKeys}
+        onOpenChange={onOpenChange}
+        mode="inline"
+        items={filterMenus}
+        inlineCollapsed={collapsed}
+        {...menuProps}
+      />
+    </Skeleton>
   );
 };

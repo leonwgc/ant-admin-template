@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Layout } from '@derbysoft/neat-design';
+import { Layout, Skeleton } from '@derbysoft/neat-design';
 import { Outlet } from 'react-router';
 import classNames from 'classnames';
-
 import Header from './Header';
 import Sider from './Sider';
 import RouteGuard from './RouteGuard';
 
-import SkeletonLoading from './SkeletonLoading';
 import './App.scss';
 
 const App: React.FC<{
@@ -33,13 +31,13 @@ const App: React.FC<{
               </Layout.Header>
             )}
 
-            <SkeletonLoading loading={loading} paragraph={{ rows: 5 }}>
-              <Layout.Content className="app-layout__inner-content">
-                <RouteGuard>
+            <Layout.Content className="app-layout__inner-content">
+              <RouteGuard>
+                <Skeleton loading={loading}>
                   <Outlet />
-                </RouteGuard>
-              </Layout.Content>
-            </SkeletonLoading>
+                </Skeleton>
+              </RouteGuard>
+            </Layout.Content>
           </Layout>
         </Layout.Content>
       </Layout>

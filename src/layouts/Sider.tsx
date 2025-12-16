@@ -2,7 +2,6 @@ import { Layout, SiderProps } from '@derbysoft/neat-design';
 import { FC, useEffect, useState } from 'react';
 import { useLocalStorageState } from 'ahooks';
 import Menus from './Menus';
-import SkeletonLoading from './SkeletonLoading';
 import { menus } from '~/config.menu';
 import './Sider.scss';
 
@@ -12,7 +11,7 @@ type Props = SiderProps & {
 
 export const NAV_MENU_COLLAPSED_KEY = 'NAV_MENU_COLLAPSED';
 
-const Sider: FC<Props> = ({ loading }) => {
+const Sider: FC<Props> = () => {
   const [value, setValue] = useLocalStorageState<boolean>(
     NAV_MENU_COLLAPSED_KEY,
     {
@@ -41,11 +40,9 @@ const Sider: FC<Props> = ({ loading }) => {
       onCollapse={setCollapsed}
       className="app-sider"
     >
-      <SkeletonLoading loading={loading}>
-        <div className="app-sider__content">
-          <Menus collapsed={collapsed} menus={menus} />
-        </div>
-      </SkeletonLoading>
+      <div className="app-sider__content">
+        <Menus collapsed={collapsed} menus={menus} />
+      </div>
     </Layout.Sider>
   );
 };
