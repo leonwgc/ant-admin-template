@@ -46,8 +46,6 @@ git init
 npm install
 ```
 
-**注意：** 使用前需先将此项目推送到 GitHub，并在 `create-project.sh` 中配置正确的 GitHub 仓库地址。
-
 ## 代码规范
 
 - 所有组件均使用 TypeScript 的类型系统，Props 和 State 必须定义接口或类型别名。
