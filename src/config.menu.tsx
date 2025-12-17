@@ -162,6 +162,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/verification-code-countdown',
         permissions: [],
       },
+      {
+        key: 'use-responsive',
+        label: 'useResponsive',
+        route: '/app/hooks/use-responsive',
+        permissions: [],
+      },
     ],
   },
 
