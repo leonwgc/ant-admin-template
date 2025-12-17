@@ -74,6 +74,10 @@ export interface ImageUploadProps {
    * Maximum number of concurrent uploads
    */
   concurrentLimit?: number;
+  /**
+   * Whether to show progress bar
+   */
+  showProgress?: boolean;
 }
 
 /**
@@ -91,6 +95,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onUploadStart,
   onUploadEnd,
   concurrentLimit = 3,
+  showProgress = false,
 }) => {
   const [previewImage, setPreviewImage] = useState<string>('');
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -336,17 +341,21 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     src={value[0].url}
                     className="image-upload__dragger-image image-upload__dragger-image--uploading"
                   />
-                  <div className="image-upload__dragger-progress">
-                    <Progress
-                      percent={value[0].percent || 0}
-                      size="small"
-                      status="active"
-                      showInfo={false}
-                    />
-                  </div>
-                  <div className="image-upload__dragger-progress-text">
-                    {value[0].percent || 0}%
-                  </div>
+                  {showProgress && (
+                    <>
+                      <div className="image-upload__dragger-progress">
+                        <Progress
+                          percent={value[0].percent || 0}
+                          size="small"
+                          status="active"
+                          showInfo={false}
+                        />
+                      </div>
+                      <div className="image-upload__dragger-progress-text">
+                        {value[0].percent || 0}%
+                      </div>
+                    </>
+                  )}
                 </>
               )}
               {value[0].status === 'done' && (
@@ -418,17 +427,21 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     src={image.url}
                     className="image-upload__item-image image-upload__item-image--uploading"
                   />
-                  <div className="image-upload__item-progress">
-                    <Progress
-                      percent={image.percent || 0}
-                      size="small"
-                      status="active"
-                      showInfo={false}
-                    />
-                  </div>
-                  <div className="image-upload__item-progress-text">
-                    {image.percent || 0}%
-                  </div>
+                  {showProgress && (
+                    <>
+                      <div className="image-upload__item-progress">
+                        <Progress
+                          percent={image.percent || 0}
+                          size="small"
+                          status="active"
+                          showInfo={false}
+                        />
+                      </div>
+                      <div className="image-upload__item-progress-text">
+                        {image.percent || 0}%
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 

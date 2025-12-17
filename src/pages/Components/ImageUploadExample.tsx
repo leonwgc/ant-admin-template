@@ -24,6 +24,7 @@ const ImageUploadExample: React.FC = () => {
   const [customImages, setCustomImages] = useState<UploadedImage[]>([]);
   const [singleImage, setSingleImage] = useState<UploadedImage[]>([]);
   const [errorImages, setErrorImages] = useState<UploadedImage[]>([]);
+  const [image, setImage] = useState<UploadedImage[]>([]);
   const [disabledImages, setDisabledImages] = useState<UploadedImage[]>([
     {
       id: 'demo-1',
@@ -158,6 +159,7 @@ const ImageUploadExample: React.FC = () => {
             maxCount={5}
             maxSize={5}
             accept=".jpg,.jpeg,.png"
+            showProgress
           />
           <Space style={{ marginTop: 16 }}>
             <Button
@@ -256,6 +258,24 @@ const ImageUploadExample: React.FC = () => {
       </div>
 
       <div className="image-upload-example__section">
+        <Card title="隐藏进度条">
+          <p className="image-upload-example__desc">
+            设置 showProgress=false
+            可以隐藏上传进度条，适用于不需要展示上传进度的场景
+          </p>
+          <ImageUpload
+            mode="button"
+            value={image}
+            onChange={setImage}
+            maxCount={5}
+            maxSize={5}
+            accept=".jpg,.jpeg,.png"
+            showProgress={false}
+          />
+        </Card>
+      </div>
+
+      <div className="image-upload-example__section">
         <Card title="组件 API">
           <h3>Props</h3>
           <table className="image-upload-example__table">
@@ -333,6 +353,12 @@ const ImageUploadExample: React.FC = () => {
                 <td>并发上传数量限制</td>
                 <td>number</td>
                 <td>3</td>
+              </tr>
+              <tr>
+                <td>showProgress</td>
+                <td>是否显示进度条</td>
+                <td>boolean</td>
+                <td>true</td>
               </tr>
             </tbody>
           </table>
