@@ -93,6 +93,7 @@ export const getRouteElement = (
 export const routeComponentMap: RouteComponentMap = {
   // CSS Features
   '/app/css': lazyLoad('pages/Form/CssFeature'),
+  '/app/css/render-optimization': lazyLoad('pages/Css/CssRenderOptimization'),
 
   // User Management
   '/app/users': lazyLoad('pages/User/Users'),

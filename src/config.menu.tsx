@@ -70,6 +70,12 @@ export const menus: MenuItem[] = [
         route: '/app/css',
         permissions: [],
       },
+      {
+        key: 'css-render-optimization',
+        label: 'CSS Render Optimization',
+        route: '/app/css/render-optimization',
+        permissions: [],
+      },
     ],
   },
   {
