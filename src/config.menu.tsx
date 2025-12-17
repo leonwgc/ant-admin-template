@@ -76,6 +76,12 @@ export const menus: MenuItem[] = [
         route: '/app/css/render-optimization',
         permissions: [],
       },
+      {
+        key: 'css-grid',
+        label: 'CSS Grid Layout',
+        route: '/app/css/grid',
+        permissions: [],
+      },
     ],
   },
   {

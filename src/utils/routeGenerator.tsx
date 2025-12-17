@@ -94,6 +94,7 @@ export const routeComponentMap: RouteComponentMap = {
   // CSS Features
   '/app/css': lazyLoad('pages/Form/CssFeature'),
   '/app/css/render-optimization': lazyLoad('pages/Css/CssRenderOptimization'),
+  '/app/css/grid': lazyLoad('pages/Css/CssGridExample'),
 
   // User Management
   '/app/users': lazyLoad('pages/User/Users'),
