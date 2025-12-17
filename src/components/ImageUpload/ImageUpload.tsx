@@ -194,7 +194,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               setTimeout(updateProgress, 100);
             };
 
-            updateProgress();
+            // Only run progress simulation if showProgress is true
+            if (showProgress) {
+              updateProgress();
+            }
 
             const upload = customUpload
               ? customUpload(file)
@@ -253,6 +256,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       onChange,
       customUpload,
       onUploadEnd,
+      showProgress,
     ]
   );
 
