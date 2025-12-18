@@ -341,7 +341,135 @@ const CssGridExample: React.FC = () => {
                   size="large"
                   style={{ width: '100%' }}
                 >
-                  <Card title="对齐属性 - 控制网格和项目的对齐">
+                  <Card title="对齐属性概览">
+                    <p className="css-grid-example__desc">
+                      <Tag color="blue">容器对齐 vs 项目对齐</Tag>
+                      理解 justify-content 和 justify-items 的根本区别
+                    </p>
+
+                    <div className="css-grid-example__code">
+                      {`/* 🔵 justify-content - 控制整个网格在容器中的对齐 */
+/* 作用对象: 整个网格（作为一个整体） */
+/* 使用场景: 网格总宽度 < 容器宽度时有效 */
+.container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;  /* 固定宽度，总共 300px */
+  width: 600px;  /* 容器宽度 > 网格宽度，有剩余空间 */
+
+  justify-content: start;         /* 网格靠左（默认） */
+  justify-content: center;        /* 网格居中 */
+  justify-content: end;           /* 网格靠右 */
+  justify-content: space-between; /* 网格分散对齐 */
+  justify-content: space-around;  /* 周围留有间距 */
+  justify-content: space-evenly;  /* 均匀间距 */
+}
+
+/* 🟢 justify-items - 控制项目在网格单元格内的对齐 */
+/* 作用对象: 每个网格项目 */
+/* 使用场景: 项目宽度 < 单元格宽度时有效 */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;  /* 每列平均分配空间 */
+
+  justify-items: start;    /* 所有项目在单元格内靠左 */
+  justify-items: center;   /* 所有项目在单元格内居中 */
+  justify-items: end;      /* 所有项目在单元格内靠右 */
+  justify-items: stretch;  /* 所有项目拉伸填满单元格（默认） */
+}
+
+/* 🔴 关键区别总结：
+ * justify-content: 移动整个网格（网格整体在容器中的位置）
+ * justify-items:   移动项目内容（项目在各自单元格中的位置）
+ */
+
+/* 垂直方向同理：
+ * align-content: 控制整个网格的垂直对齐
+ * align-items:   控制项目在单元格内的垂直对齐
+ */`}
+                    </div>
+                  </Card>
+
+                  <Card title="justify-content 演示 - 控制网格整体对齐">
+                    <p className="css-grid-example__desc">
+                      <Tag color="blue">整个网格</Tag>
+                      容器宽度 600px，网格总宽度 300px（3列×100px），观察网格整体的移动
+                    </p>
+
+                    <div className="grid-demo__justify-content-wrapper">
+                      <div className="grid-demo__justify-content-label">
+                        justify-content: start
+                      </div>
+                      <div className="grid-demo__justify-content-container grid-demo__justify-content-container--start">
+                        <div className="grid-demo__justify-content-item">Item 1</div>
+                        <div className="grid-demo__justify-content-item">Item 2</div>
+                        <div className="grid-demo__justify-content-item">Item 3</div>
+                      </div>
+                    </div>
+
+                    <div className="grid-demo__justify-content-wrapper">
+                      <div className="grid-demo__justify-content-label">
+                        justify-content: center
+                      </div>
+                      <div className="grid-demo__justify-content-container grid-demo__justify-content-container--center">
+                        <div className="grid-demo__justify-content-item">Item 1</div>
+                        <div className="grid-demo__justify-content-item">Item 2</div>
+                        <div className="grid-demo__justify-content-item">Item 3</div>
+                      </div>
+                    </div>
+
+                    <div className="grid-demo__justify-content-wrapper">
+                      <div className="grid-demo__justify-content-label">
+                        justify-content: space-between
+                      </div>
+                      <div className="grid-demo__justify-content-container grid-demo__justify-content-container--between">
+                        <div className="grid-demo__justify-content-item">Item 1</div>
+                        <div className="grid-demo__justify-content-item">Item 2</div>
+                        <div className="grid-demo__justify-content-item">Item 3</div>
+                      </div>
+                    </div>
+                  </Card>
+
+                  <Card title="justify-items 演示 - 控制项目在单元格内对齐">
+                    <p className="css-grid-example__desc">
+                      <Tag color="green">单元格内的项目</Tag>
+                      每列平均分配空间（1fr），项目宽度固定 80px，观察项目在各自单元格内的移动
+                    </p>
+
+                    <div className="grid-demo__justify-items-wrapper">
+                      <div className="grid-demo__justify-items-label">
+                        justify-items: start
+                      </div>
+                      <div className="grid-demo__justify-items-container grid-demo__justify-items-container--start">
+                        <div className="grid-demo__justify-items-item">Item 1</div>
+                        <div className="grid-demo__justify-items-item">Item 2</div>
+                        <div className="grid-demo__justify-items-item">Item 3</div>
+                      </div>
+                    </div>
+
+                    <div className="grid-demo__justify-items-wrapper">
+                      <div className="grid-demo__justify-items-label">
+                        justify-items: center
+                      </div>
+                      <div className="grid-demo__justify-items-container grid-demo__justify-items-container--center">
+                        <div className="grid-demo__justify-items-item">Item 1</div>
+                        <div className="grid-demo__justify-items-item">Item 2</div>
+                        <div className="grid-demo__justify-items-item">Item 3</div>
+                      </div>
+                    </div>
+
+                    <div className="grid-demo__justify-items-wrapper">
+                      <div className="grid-demo__justify-items-label">
+                        justify-items: end
+                      </div>
+                      <div className="grid-demo__justify-items-container grid-demo__justify-items-container--end">
+                        <div className="grid-demo__justify-items-item">Item 1</div>
+                        <div className="grid-demo__justify-items-item">Item 2</div>
+                        <div className="grid-demo__justify-items-item">Item 3</div>
+                      </div>
+                    </div>
+                  </Card>
+
+                  <Card title="完整对齐属性 - 控制网格和项目的对齐">
                     <div className="css-grid-example__code">
                       {`/* 容器对齐 - 控制整个网格 */
 .container {
@@ -392,7 +520,7 @@ const CssGridExample: React.FC = () => {
                     </div>
                   </Card>
 
-                  <Card title="对齐演示" size="small">
+                  <Card title="justify-self 演示 - 单个项目对齐" size="small">
                     <div className="grid-demo__align-container">
                       <div className="grid-demo__align-item grid-demo__align-item--1">
                         justify-self: start

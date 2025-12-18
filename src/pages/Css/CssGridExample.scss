@@ -200,6 +200,102 @@
     }
   }
 
+  // justify-content demo - control grid alignment
+  &__justify-content-wrapper {
+    margin-bottom: 24px;
+  }
+
+  &__justify-content-label {
+    font-weight: bold;
+    color: #1890ff;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  &__justify-content-container {
+    display: grid;
+    grid-template-columns: 100px 100px 100px; // Fixed width, total 300px
+    width: 100%;
+    max-width: 600px; // Container width > grid width
+    height: 80px;
+    background: #f0f0f0;
+    border: 2px dashed #1890ff;
+    border-radius: 8px;
+    gap: 0;
+
+    &--start {
+      justify-content: start;
+    }
+
+    &--center {
+      justify-content: center;
+    }
+
+    &--between {
+      justify-content: space-between;
+    }
+  }
+
+  &__justify-content-item {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  // justify-items demo - control items alignment in cells
+  &__justify-items-wrapper {
+    margin-bottom: 24px;
+  }
+
+  &__justify-items-label {
+    font-weight: bold;
+    color: #52c41a;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  &__justify-items-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; // Each column takes equal space
+    width: 100%;
+    height: 80px;
+    background: #f0f0f0;
+    border: 2px dashed #52c41a;
+    border-radius: 8px;
+    gap: 16px;
+    padding: 8px;
+
+    &--start {
+      justify-items: start;
+    }
+
+    &--center {
+      justify-items: center;
+    }
+
+    &--end {
+      justify-items: end;
+    }
+  }
+
+  &__justify-items-item {
+    width: 80px; // Fixed width, smaller than cell width
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+
   // Span demo
   &__span-container {
     display: grid;
