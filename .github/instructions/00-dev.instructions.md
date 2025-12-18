@@ -24,6 +24,4 @@ applyTo: '**'
  * @author leon.wang
  */
 ```
-14. 代码生成后使用prittier进行格式化。
-
 ---
