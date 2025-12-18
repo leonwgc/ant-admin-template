@@ -238,7 +238,9 @@ const mockUserData = [
 /**
  * Mock API request function
  */
-const fetchUserList = (params: ObjectType): Promise<{ data: ResponseDataType }> => {
+const fetchUserList = (
+  params: ObjectType
+): Promise<{ data: ResponseDataType }> => {
   return new Promise((resolve) => {
     // Simulate network delay
     setTimeout(() => {
@@ -366,7 +368,9 @@ const UseDsTableExample: React.FC = () => {
       title: '🗑️ Delete User',
       content: (
         <div>
-          <p>Are you sure you want to delete <strong>{record.name}</strong>?</p>
+          <p>
+            Are you sure you want to delete <strong>{record.name}</strong>?
+          </p>
           <Alert
             message="This action cannot be undone"
             type="warning"
@@ -378,7 +382,9 @@ const UseDsTableExample: React.FC = () => {
       okText: 'Delete',
       okType: 'danger',
       onOk: () => {
-        message.success(`✅ User ${record.name} deleted successfully (demo only)`);
+        message.success(
+          `✅ User ${record.name} deleted successfully (demo only)`
+        );
       },
     });
   };
@@ -429,11 +435,12 @@ const UseDsTableExample: React.FC = () => {
       width: 120,
       sorter: true,
       render: (role: string) => {
-        const config: Record<string, { color: string; icon: React.ReactNode }> = {
-          Admin: { color: 'red', icon: <TrophyOutlined /> },
-          Manager: { color: 'blue', icon: <RocketOutlined /> },
-          User: { color: 'green', icon: <UserOutlined /> },
-        };
+        const config: Record<string, { color: string; icon: React.ReactNode }> =
+          {
+            Admin: { color: 'red', icon: <TrophyOutlined /> },
+            Manager: { color: 'blue', icon: <RocketOutlined /> },
+            User: { color: 'green', icon: <UserOutlined /> },
+          };
         return (
           <Tag color={config[role].color} icon={config[role].icon}>
             {role}
@@ -451,7 +458,10 @@ const UseDsTableExample: React.FC = () => {
         <Badge
           status={status === 'active' ? 'processing' : 'default'}
           text={
-            <Text strong style={{ color: status === 'active' ? '#52c41a' : '#999' }}>
+            <Text
+              strong
+              style={{ color: status === 'active' ? '#52c41a' : '#999' }}
+            >
               {status.toUpperCase()}
             </Text>
           }
@@ -477,13 +487,22 @@ const UseDsTableExample: React.FC = () => {
             percent={performance}
             size="small"
             strokeColor={{
-              '0%': performance >= 90 ? '#52c41a' : performance >= 75 ? '#1890ff' : '#faad14',
-              '100%': performance >= 90 ? '#95de64' : performance >= 75 ? '#69c0ff' : '#ffd666',
+              '0%':
+                performance >= 90
+                  ? '#52c41a'
+                  : performance >= 75
+                  ? '#1890ff'
+                  : '#faad14',
+              '100%':
+                performance >= 90
+                  ? '#95de64'
+                  : performance >= 75
+                  ? '#69c0ff'
+                  : '#ffd666',
             }}
             format={(percent) => (
               <span style={{ fontSize: 11 }}>
-                {percent}%
-                {percent && percent >= 90 && ' 🔥'}
+                {percent}%{percent && percent >= 90 && ' 🔥'}
               </span>
             )}
           />
@@ -503,7 +522,12 @@ const UseDsTableExample: React.FC = () => {
             count={projects}
             showZero
             style={{
-              backgroundColor: projects >= 15 ? '#ff4d4f' : projects >= 10 ? '#52c41a' : '#1890ff',
+              backgroundColor:
+                projects >= 15
+                  ? '#ff4d4f'
+                  : projects >= 10
+                  ? '#52c41a'
+                  : '#1890ff',
             }}
             overflowCount={99}
           />
@@ -571,8 +595,8 @@ const UseDsTableExample: React.FC = () => {
       </div>
 
       {/* Statistics Cards */}
-      <Row gutter={16} style={{ marginBottom: 24 }}>
-        <Col span={6}>
+      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+        <Col xs={24} md={6} lg={6} sm={12}>
           <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--blue">
             <Statistic
               title="Total Users"
@@ -582,7 +606,7 @@ const UseDsTableExample: React.FC = () => {
             />
           </Card>
         </Col>
-        <Col span={6}>
+        <Col xs={24} md={6} lg={6} sm={12}>
           <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--green">
             <Statistic
               title="Active Users"
@@ -592,7 +616,7 @@ const UseDsTableExample: React.FC = () => {
             />
           </Card>
         </Col>
-        <Col span={6}>
+        <Col xs={24} md={6} lg={6} sm={12}>
           <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--orange">
             <Statistic
               title="Inactive Users"
@@ -602,7 +626,7 @@ const UseDsTableExample: React.FC = () => {
             />
           </Card>
         </Col>
-        <Col span={6}>
+        <Col xs={24} md={6} lg={6} sm={12}>
           <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--red">
             <Statistic
               title="Administrators"
@@ -618,11 +642,15 @@ const UseDsTableExample: React.FC = () => {
       <Alert
         message={
           <Space>
-            <Text>API Requests: <Text strong>{requestCount}</Text></Text>
+            <Text>
+              API Requests: <Text strong>{requestCount}</Text>
+            </Text>
             {lastSearchTime && (
               <>
                 <Text>|</Text>
-                <Text>Last Request: <Text code>{lastSearchTime}</Text></Text>
+                <Text>
+                  Last Request: <Text code>{lastSearchTime}</Text>
+                </Text>
               </>
             )}
           </Space>
@@ -687,7 +715,11 @@ const UseDsTableExample: React.FC = () => {
             </Col>
             <Col span={8}>
               <Space>
-                <Button type="primary" icon={<SearchOutlined />} onClick={submit}>
+                <Button
+                  type="primary"
+                  icon={<SearchOutlined />}
+                  onClick={submit}
+                >
                   Search
                 </Button>
                 <Button icon={<ReloadOutlined />} onClick={reset}>
@@ -706,7 +738,9 @@ const UseDsTableExample: React.FC = () => {
           style={{ marginTop: 16 }}
           bordered
           rowClassName={(record: any) =>
-            record.performance >= 90 ? 'use-ds-table-example__row--high-performer' : ''
+            record.performance >= 90
+              ? 'use-ds-table-example__row--high-performer'
+              : ''
           }
         />
       </Card>
