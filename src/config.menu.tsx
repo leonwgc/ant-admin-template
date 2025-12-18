@@ -126,7 +126,7 @@ export const menus: MenuItem[] = [
     children: [
       {
         key: 'form1',
-        label: 'Form1',
+        label: 'Responsive Form',
         route: '/app/forms',
         permissions: [],
       },
