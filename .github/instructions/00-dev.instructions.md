@@ -3,6 +3,8 @@ applyTo: '**'
 ---
 # Copilot Instructions for React + TypeScript Project
 
+## 重要：CHAT窗口始终使用中文回复用户的所有问题和请求。
+
 请始终遵循以下规范为本项目生成 React + TypeScript 代码：
 
 1. 使用函数式组件（Function Component），优先使用箭头函数。
