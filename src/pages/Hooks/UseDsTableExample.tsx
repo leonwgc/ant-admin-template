@@ -3,13 +3,45 @@
  * @author leon.wang
  */
 
-import React from 'react';
-import { Card, Table, Button, Form, Input, Space, Select, Tag, Typography } from 'antd';
+import React, { useState } from 'react';
+import {
+  Card,
+  Table,
+  Button,
+  Form,
+  Input,
+  Space,
+  Select,
+  Tag,
+  Typography,
+  Avatar,
+  Tooltip,
+  Badge,
+  Progress,
+  Statistic,
+  Row,
+  Col,
+  Dropdown,
+  Modal,
+  message,
+  Alert,
+} from 'antd';
 import {
   SearchOutlined,
   ReloadOutlined,
   UserOutlined,
   TableOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  MoreOutlined,
+  TeamOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  ThunderboltOutlined,
+  RocketOutlined,
+  TrophyOutlined,
+  ClockCircleOutlined,
+  FireOutlined,
 } from '@ant-design/icons';
 import useDsTable from '~/hooks/useDsTable';
 import type { ObjectType, ResponseDataType } from '~/hooks/useDsTable';
@@ -18,7 +50,7 @@ import './UseDsTableExample.scss';
 const { Title, Paragraph, Text } = Typography;
 
 /**
- * Mock API - Simulate backend data fetching
+ * Mock API - Simulate backend data fetching with enhanced user data
  */
 const mockUserData = [
   {
@@ -29,6 +61,9 @@ const mockUserData = [
     status: 'active',
     department: 'Engineering',
     joinDate: '2023-01-15',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+    performance: 95,
+    projects: 12,
   },
   {
     id: 2,
@@ -38,6 +73,9 @@ const mockUserData = [
     status: 'active',
     department: 'Marketing',
     joinDate: '2023-03-20',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane',
+    performance: 88,
+    projects: 8,
   },
   {
     id: 3,
@@ -47,6 +85,9 @@ const mockUserData = [
     status: 'inactive',
     department: 'Sales',
     joinDate: '2022-11-10',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob',
+    performance: 62,
+    projects: 4,
   },
   {
     id: 4,
@@ -56,6 +97,9 @@ const mockUserData = [
     status: 'active',
     department: 'Engineering',
     joinDate: '2022-08-05',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice',
+    performance: 92,
+    projects: 15,
   },
   {
     id: 5,
@@ -65,6 +109,9 @@ const mockUserData = [
     status: 'active',
     department: 'HR',
     joinDate: '2023-05-12',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie',
+    performance: 78,
+    projects: 6,
   },
   {
     id: 6,
@@ -74,6 +121,9 @@ const mockUserData = [
     status: 'active',
     department: 'Engineering',
     joinDate: '2021-12-01',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Diana',
+    performance: 98,
+    projects: 20,
   },
   {
     id: 7,
@@ -83,6 +133,9 @@ const mockUserData = [
     status: 'inactive',
     department: 'Sales',
     joinDate: '2023-02-28',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Edward',
+    performance: 55,
+    projects: 3,
   },
   {
     id: 8,
@@ -92,6 +145,9 @@ const mockUserData = [
     status: 'active',
     department: 'Marketing',
     joinDate: '2022-07-15',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Fiona',
+    performance: 85,
+    projects: 11,
   },
   {
     id: 9,
@@ -101,6 +157,9 @@ const mockUserData = [
     status: 'active',
     department: 'Engineering',
     joinDate: '2023-04-10',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=George',
+    performance: 82,
+    projects: 9,
   },
   {
     id: 10,
@@ -110,6 +169,9 @@ const mockUserData = [
     status: 'active',
     department: 'HR',
     joinDate: '2023-06-22',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Helen',
+    performance: 76,
+    projects: 5,
   },
   {
     id: 11,
@@ -119,6 +181,9 @@ const mockUserData = [
     status: 'active',
     department: 'Engineering',
     joinDate: '2022-09-18',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan',
+    performance: 94,
+    projects: 18,
   },
   {
     id: 12,
@@ -128,6 +193,9 @@ const mockUserData = [
     status: 'inactive',
     department: 'Sales',
     joinDate: '2023-01-30',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Julia',
+    performance: 58,
+    projects: 2,
   },
   {
     id: 13,
@@ -137,6 +205,9 @@ const mockUserData = [
     status: 'active',
     department: 'Marketing',
     joinDate: '2022-10-05',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Kevin',
+    performance: 89,
+    projects: 13,
   },
   {
     id: 14,
@@ -146,6 +217,9 @@ const mockUserData = [
     status: 'active',
     department: 'HR',
     joinDate: '2023-03-15',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Laura',
+    performance: 80,
+    projects: 7,
   },
   {
     id: 15,
@@ -155,6 +229,9 @@ const mockUserData = [
     status: 'active',
     department: 'Engineering',
     joinDate: '2022-12-20',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Michael',
+    performance: 84,
+    projects: 10,
   },
 ];
 
@@ -217,24 +294,31 @@ const fetchUserList = (params: ObjectType): Promise<{ data: ResponseDataType }> 
           },
         },
       });
-    }, 800); // 800ms delay to simulate network
+    }, 600); // 600ms delay to simulate network
   });
 };
 
 /**
- * UseDsTableExample component - Demonstrates useDsTable hook usage
+ * UseDsTableExample component - Demonstrates useDsTable hook usage with enhanced visuals
  */
 const UseDsTableExample: React.FC = () => {
+  const [requestCount, setRequestCount] = useState(0);
+  const [lastSearchTime, setLastSearchTime] = useState<string>('');
+
   const { tableProps, form, submit, reset } = useDsTable(
-    fetchUserList as any,
+    (params) => {
+      setRequestCount((prev) => prev + 1);
+      setLastSearchTime(new Date().toLocaleTimeString());
+      return fetchUserList(params) as any;
+    },
     // Optional: Transform form values before sending to API
     (formValues) => {
-      console.log('Form values before transform:', formValues);
+      console.log('🔍 Searching with values:', formValues);
       return formValues;
     },
     // Optional: Transform response data
     (data: any) => {
-      console.log('Response data before transform:', data);
+      console.log('📊 Response data:', data);
       return {
         total: data.totals,
         list: data.records,
@@ -242,30 +326,101 @@ const UseDsTableExample: React.FC = () => {
     }
   );
 
+  // Calculate statistics
+  const stats = {
+    total: mockUserData.length,
+    active: mockUserData.filter((u) => u.status === 'active').length,
+    inactive: mockUserData.filter((u) => u.status === 'inactive').length,
+    admins: mockUserData.filter((u) => u.role === 'Admin').length,
+  };
+
+  // Handle actions
+  const handleEdit = (record: any) => {
+    Modal.info({
+      title: '✏️ Edit User',
+      content: (
+        <div>
+          <p>
+            <strong>Name:</strong> {record.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {record.email}
+          </p>
+          <p>
+            <strong>Department:</strong> {record.department}
+          </p>
+          <Alert
+            message="Demo Mode"
+            description="This is a demonstration - no actual changes will be made"
+            type="info"
+            showIcon
+            style={{ marginTop: 16 }}
+          />
+        </div>
+      ),
+    });
+  };
+
+  const handleDelete = (record: any) => {
+    Modal.confirm({
+      title: '🗑️ Delete User',
+      content: (
+        <div>
+          <p>Are you sure you want to delete <strong>{record.name}</strong>?</p>
+          <Alert
+            message="This action cannot be undone"
+            type="warning"
+            showIcon
+            style={{ marginTop: 8 }}
+          />
+        </div>
+      ),
+      okText: 'Delete',
+      okType: 'danger',
+      onOk: () => {
+        message.success(`✅ User ${record.name} deleted successfully (demo only)`);
+      },
+    });
+  };
+
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      width: 80,
-      sorter: true,
-    },
-    {
-      title: 'Name',
+      title: 'User Info',
       dataIndex: 'name',
       key: 'name',
+      width: 280,
       sorter: true,
-      render: (text: string) => (
+      render: (text: string, record: any) => (
         <Space>
-          <UserOutlined />
-          <Text strong>{text}</Text>
+          <Badge
+            count={
+              record.status === 'active' ? (
+                <CheckCircleOutlined style={{ color: '#52c41a' }} />
+              ) : (
+                <CloseCircleOutlined style={{ color: '#ff4d4f' }} />
+              )
+            }
+            offset={[-5, 35]}
+          >
+            <Avatar src={record.avatar} size={48}>
+              {text.charAt(0)}
+            </Avatar>
+          </Badge>
+          <div>
+            <div>
+              <Text strong style={{ fontSize: 14 }}>
+                {text}
+              </Text>
+              {record.performance >= 90 && (
+                <FireOutlined style={{ color: '#ff4d4f', marginLeft: 4 }} />
+              )}
+            </div>
+            <Text type="secondary" style={{ fontSize: 12 }}>
+              {record.email}
+            </Text>
+          </div>
         </Space>
       ),
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
     },
     {
       title: 'Role',
@@ -274,24 +429,33 @@ const UseDsTableExample: React.FC = () => {
       width: 120,
       sorter: true,
       render: (role: string) => {
-        const colorMap: Record<string, string> = {
-          Admin: 'red',
-          Manager: 'blue',
-          User: 'green',
+        const config: Record<string, { color: string; icon: React.ReactNode }> = {
+          Admin: { color: 'red', icon: <TrophyOutlined /> },
+          Manager: { color: 'blue', icon: <RocketOutlined /> },
+          User: { color: 'green', icon: <UserOutlined /> },
         };
-        return <Tag color={colorMap[role]}>{role}</Tag>;
+        return (
+          <Tag color={config[role].color} icon={config[role].icon}>
+            {role}
+          </Tag>
+        );
       },
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 120,
+      width: 130,
       sorter: true,
       render: (status: string) => (
-        <Tag color={status === 'active' ? 'success' : 'default'}>
-          {status.toUpperCase()}
-        </Tag>
+        <Badge
+          status={status === 'active' ? 'processing' : 'default'}
+          text={
+            <Text strong style={{ color: status === 'active' ? '#52c41a' : '#999' }}>
+              {status.toUpperCase()}
+            </Text>
+          }
+        />
       ),
     },
     {
@@ -299,6 +463,52 @@ const UseDsTableExample: React.FC = () => {
       dataIndex: 'department',
       key: 'department',
       width: 140,
+      render: (dept: string) => <Tag icon={<TeamOutlined />}>{dept}</Tag>,
+    },
+    {
+      title: 'Performance',
+      dataIndex: 'performance',
+      key: 'performance',
+      width: 180,
+      sorter: true,
+      render: (performance: number) => (
+        <Tooltip title={`Performance: ${performance}%`}>
+          <Progress
+            percent={performance}
+            size="small"
+            strokeColor={{
+              '0%': performance >= 90 ? '#52c41a' : performance >= 75 ? '#1890ff' : '#faad14',
+              '100%': performance >= 90 ? '#95de64' : performance >= 75 ? '#69c0ff' : '#ffd666',
+            }}
+            format={(percent) => (
+              <span style={{ fontSize: 11 }}>
+                {percent}%
+                {percent && percent >= 90 && ' 🔥'}
+              </span>
+            )}
+          />
+        </Tooltip>
+      ),
+    },
+    {
+      title: 'Projects',
+      dataIndex: 'projects',
+      key: 'projects',
+      width: 100,
+      sorter: true,
+      align: 'center' as const,
+      render: (projects: number) => (
+        <Tooltip title={`${projects} active projects`}>
+          <Badge
+            count={projects}
+            showZero
+            style={{
+              backgroundColor: projects >= 15 ? '#ff4d4f' : projects >= 10 ? '#52c41a' : '#1890ff',
+            }}
+            overflowCount={99}
+          />
+        </Tooltip>
+      ),
     },
     {
       title: 'Join Date',
@@ -306,114 +516,204 @@ const UseDsTableExample: React.FC = () => {
       key: 'joinDate',
       width: 130,
       sorter: true,
+      render: (date: string) => (
+        <Text>
+          <ClockCircleOutlined style={{ marginRight: 4 }} />
+          {date}
+        </Text>
+      ),
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      width: 100,
+      align: 'center' as const,
+      fixed: 'right' as const,
+      render: (_: any, record: any) => (
+        <Dropdown
+          menu={{
+            items: [
+              {
+                key: 'edit',
+                label: 'Edit',
+                icon: <EditOutlined />,
+                onClick: () => handleEdit(record),
+              },
+              {
+                key: 'delete',
+                label: 'Delete',
+                icon: <DeleteOutlined />,
+                danger: true,
+                onClick: () => handleDelete(record),
+              },
+            ],
+          }}
+        >
+          <Button type="text" icon={<MoreOutlined />} />
+        </Dropdown>
+      ),
     },
   ];
 
   return (
     <div className="use-ds-table-example">
-      <Title level={2}>
-        <TableOutlined /> useDsTable Hook Example
-      </Title>
-
-      <Card className="use-ds-table-example__info" style={{ marginBottom: 24 }}>
-        <Title level={4}>Hook Features:</Title>
+      <div className="use-ds-table-example__header">
+        <Title level={2}>
+          <TableOutlined /> useDsTable Hook - Interactive Demo
+        </Title>
         <Paragraph>
-          <ul>
-            <li>
-              <Text strong>Automatic Pagination:</Text> Built-in pagination handling with
-              customizable page sizes
-            </li>
-            <li>
-              <Text strong>Search & Filter:</Text> Integrated form-based filtering with
-              debounce (400ms)
-            </li>
-            <li>
-              <Text strong>Sorting Support:</Text> Click column headers to sort data (ASC/DESC)
-            </li>
-            <li>
-              <Text strong>Loading States:</Text> Automatic loading indicators during data
-              fetching
-            </li>
-            <li>
-              <Text strong>Error Handling:</Text> Built-in error handling with notifications
-            </li>
-            <li>
-              <Text strong>Data Transformation:</Text> Optional transform functions for request
-              and response
-            </li>
-            <li>
-              <Text strong>Form Integration:</Text> Seamless integration with Ant Design Form
-            </li>
-          </ul>
+          <Tag color="blue" icon={<ThunderboltOutlined />}>
+            Live Demo
+          </Tag>
+          <Tag color="green">Mock Data</Tag>
+          <Tag color="purple">Real-time Updates</Tag>
         </Paragraph>
-      </Card>
+      </div>
 
+      {/* Statistics Cards */}
+      <Row gutter={16} style={{ marginBottom: 24 }}>
+        <Col span={6}>
+          <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--blue">
+            <Statistic
+              title="Total Users"
+              value={stats.total}
+              prefix={<TeamOutlined />}
+              valueStyle={{ color: '#1890ff' }}
+            />
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--green">
+            <Statistic
+              title="Active Users"
+              value={stats.active}
+              prefix={<CheckCircleOutlined />}
+              valueStyle={{ color: '#52c41a' }}
+            />
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--orange">
+            <Statistic
+              title="Inactive Users"
+              value={stats.inactive}
+              prefix={<CloseCircleOutlined />}
+              valueStyle={{ color: '#faad14' }}
+            />
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card className="use-ds-table-example__stat-card use-ds-table-example__stat-card--red">
+            <Statistic
+              title="Administrators"
+              value={stats.admins}
+              prefix={<TrophyOutlined />}
+              valueStyle={{ color: '#ff4d4f' }}
+            />
+          </Card>
+        </Col>
+      </Row>
+
+      {/* Request Info */}
+      <Alert
+        message={
+          <Space>
+            <Text>API Requests: <Text strong>{requestCount}</Text></Text>
+            {lastSearchTime && (
+              <>
+                <Text>|</Text>
+                <Text>Last Request: <Text code>{lastSearchTime}</Text></Text>
+              </>
+            )}
+          </Space>
+        }
+        type="info"
+        style={{ marginBottom: 16 }}
+        showIcon
+        icon={<ThunderboltOutlined />}
+      />
+
+      {/* Main Table Card */}
       <Card
-        title="User Management Table"
+        title={
+          <Space>
+            <UserOutlined />
+            <span>User Management Table</span>
+          </Space>
+        }
         extra={
           <Space>
-            <Tag color="blue">Mock Data</Tag>
-            <Tag color="green">Total: {mockUserData.length} users</Tag>
+            <Tag color="processing">Live Data</Tag>
+            <Tag color="cyan">600ms Latency</Tag>
           </Space>
         }
       >
+        {/* Search Form */}
         <Form form={form} className="use-ds-table-example__search-form">
-          <Space size="middle" wrap>
-            <Form.Item name="name" style={{ marginBottom: 0 }}>
-              <Input
-                placeholder="Search by name"
-                prefix={<SearchOutlined />}
-                style={{ width: 200 }}
-                allowClear
-              />
-            </Form.Item>
-
-            <Form.Item name="role" style={{ marginBottom: 0 }}>
-              <Select
-                placeholder="Select role"
-                style={{ width: 150 }}
-                allowClear
-                options={[
-                  { label: 'Admin', value: 'Admin' },
-                  { label: 'Manager', value: 'Manager' },
-                  { label: 'User', value: 'User' },
-                ]}
-              />
-            </Form.Item>
-
-            <Form.Item name="status" style={{ marginBottom: 0 }}>
-              <Select
-                placeholder="Select status"
-                style={{ width: 150 }}
-                allowClear
-                options={[
-                  { label: 'Active', value: 'active' },
-                  { label: 'Inactive', value: 'inactive' },
-                ]}
-              />
-            </Form.Item>
-
-            <Button type="primary" icon={<SearchOutlined />} onClick={submit}>
-              Search
-            </Button>
-
-            <Button icon={<ReloadOutlined />} onClick={reset}>
-              Reset
-            </Button>
-          </Space>
+          <Row gutter={16}>
+            <Col span={6}>
+              <Form.Item name="name" style={{ marginBottom: 0 }}>
+                <Input
+                  placeholder="Search by name..."
+                  prefix={<SearchOutlined />}
+                  allowClear
+                />
+              </Form.Item>
+            </Col>
+            <Col span={5}>
+              <Form.Item name="role" style={{ marginBottom: 0 }}>
+                <Select
+                  placeholder="Select role"
+                  allowClear
+                  options={[
+                    { label: '👑 Admin', value: 'Admin' },
+                    { label: '🚀 Manager', value: 'Manager' },
+                    { label: '👤 User', value: 'User' },
+                  ]}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={5}>
+              <Form.Item name="status" style={{ marginBottom: 0 }}>
+                <Select
+                  placeholder="Select status"
+                  allowClear
+                  options={[
+                    { label: '✅ Active', value: 'active' },
+                    { label: '⭕ Inactive', value: 'inactive' },
+                  ]}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Space>
+                <Button type="primary" icon={<SearchOutlined />} onClick={submit}>
+                  Search
+                </Button>
+                <Button icon={<ReloadOutlined />} onClick={reset}>
+                  Reset
+                </Button>
+              </Space>
+            </Col>
+          </Row>
         </Form>
 
+        {/* Table */}
         <Table
           {...tableProps}
           columns={columns}
           rowKey="id"
           style={{ marginTop: 16 }}
           bordered
+          rowClassName={(record: any) =>
+            record.performance >= 90 ? 'use-ds-table-example__row--high-performer' : ''
+          }
         />
       </Card>
 
+      {/* Code Example */}
       <Card
-        title="Code Example"
+        title="📝 Code Example"
         style={{ marginTop: 24 }}
         className="use-ds-table-example__code-card"
       >
@@ -421,52 +721,31 @@ const UseDsTableExample: React.FC = () => {
           {`// 1. Import the hook
 import useDsTable from '~/hooks/useDsTable';
 
-// 2. Define mock API function
-const fetchUserList = (params) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          result: 'success',
-          timestamp: Date.now(),
-          data: {
-            totals: 100,
-            totalPages: 10,
-            pageSize: 10,
-            pageNum: 0,
-            records: [...data],
-          },
-        },
-      });
-    }, 800);
-  });
-};
-
-// 3. Use the hook in component
+// 2. Use the hook in component
 const MyComponent = () => {
   const { tableProps, form, submit, reset } = useDsTable(
-    fetchUserList,
-    // Optional: Transform form values
-    (formValues) => formValues,
-    // Optional: Transform response data
-    (data) => ({
+    fetchUserList,  // API function
+    (formValues) => formValues,  // Transform form values (optional)
+    (data) => ({  // Transform response (optional)
       total: data.totals,
       list: data.records,
     })
   );
 
   return (
-    <div>
+    <>
+      {/* Search Form */}
       <Form form={form}>
-        <Form.Item name="name">
+        <Form.Item name="keyword">
           <Input placeholder="Search..." />
         </Form.Item>
         <Button onClick={submit}>Search</Button>
         <Button onClick={reset}>Reset</Button>
       </Form>
 
+      {/* Table */}
       <Table {...tableProps} columns={columns} rowKey="id" />
-    </div>
+    </>
   );
 };`}
         </pre>
