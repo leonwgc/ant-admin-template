@@ -1,4 +1,3 @@
 {
-  "github.copilot.chat.localeOverride": "zh-CN",
-  "github.copilot.editor.enableAutoCompletions": true
+  "github.copilot.chat.localeOverride": "en"
 }
