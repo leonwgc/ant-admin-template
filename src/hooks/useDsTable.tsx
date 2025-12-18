@@ -6,7 +6,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Form, message, notification } from 'antd';
 import { useAntdTable, useLatest } from 'ahooks';
-import { AxiosPromise } from 'axios';
+import type { Data, Params, Service } from 'ahooks/lib/useAntdTable/types';
+import { AxiosPromise, AxiosError } from 'axios';
 
 export type ObjectType = Record<string, unknown>;
 
@@ -29,7 +30,7 @@ type ListResult<T> = {
   total: number;
 };
 
-export const errorHandler = (error, toastDefaultError) => {
+export const errorHandler = (error: AxiosError, toastDefaultError: boolean): void => {
   if (
     error.response &&
     error.response.status === 401 &&
@@ -62,7 +63,7 @@ const useTable = (
   const [loading, setLoading] = useState(true);
 
   const service = useCallback(
-    ({ current, pageSize, sorter }, formData = {}) => {
+    ({ current, pageSize, sorter }: Params[0], formData: ObjectType = {}) => {
       setLoading(true);
       const params: ObjectType = {
         pageNum: current - 1,
@@ -112,8 +113,12 @@ const useTable = (
             };
           }
         })
-        .catch((error) => {
+        .catch((error: AxiosError) => {
           errorHandler(error, true);
+          return {
+            total: 0,
+            list: [],
+          };
         });
     },
     [formValuesTransform, req, responseDataTransform]
@@ -122,7 +127,7 @@ const useTable = (
   const {
     tableProps,
     search: { submit, reset },
-  } = useAntdTable(service as any, {
+  } = useAntdTable<Data, Params>(service as Service<Data, Params>, {
     debounceWait: 400,
     form,
     onFinally() {
