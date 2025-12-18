@@ -9,28 +9,10 @@ import { useAntdTable, useLatest } from 'ahooks';
 import type { Data, Params, Service } from 'ahooks/lib/useAntdTable/types';
 import { AxiosPromise, AxiosError } from 'axios';
 
-export type ObjectType = Record<string, unknown>;
-
-export type ListObjectType = {
-  pageSize?: number;
-  pageNum?: number;
-  totals: number;
-  totalPages?: number;
-  records: ObjectType[];
-};
-
-export type ResponseDataType = {
-  result: 'success' | 'fail';
-  timestamp: number;
-  data: ObjectType | ObjectType[] | ListObjectType;
-};
-
-type ListResult<T> = {
-  list: T[];
-  total: number;
-};
-
-export const errorHandler = (error: AxiosError, toastDefaultError: boolean): void => {
+export const errorHandler = (
+  error: AxiosError,
+  toastDefaultError: boolean
+): void => {
   if (
     error.response &&
     error.response.status === 401 &&
