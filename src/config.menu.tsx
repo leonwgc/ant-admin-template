@@ -180,6 +180,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-responsive',
         permissions: [],
       },
+      {
+        key: 'use-ds-table',
+        label: 'useDsTable',
+        route: '/app/hooks/use-ds-table',
+        permissions: [],
+      },
     ],
   },
 

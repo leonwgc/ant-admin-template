@@ -113,6 +113,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/use-ahooks-countdown': lazyLoad('pages/Hooks/UseAHooksCountdown'),
   '/app/hooks/verification-code-countdown': lazyLoad('pages/Hooks/VerificationCodeCountdown'),
   '/app/hooks/use-responsive': lazyLoad('pages/Hooks/UseResponsiveExample'),
+  '/app/hooks/use-ds-table': lazyLoad('pages/Hooks/UseDsTableExample'),
 
   // JavaScript Features
   '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormatExample'),
