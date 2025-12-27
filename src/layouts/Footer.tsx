@@ -1,16 +1,19 @@
-import React from 'react';
-import { useLocalStorageState } from 'ahooks';
-import { NAV_MENU_COLLAPSED_KEY } from './Sider';
+import FadeIn from '~/components/FadeIn';
 import './Footer.scss';
 
-const Footer = () => {
-  const [value, _] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY, {
-    listenStorageChange: true,
-  });
+const Footer = ({ menuCollapsed }) => {
   return (
     <div className="app-footer">
-      <div>© 2002 - 2025 xxx Inc.</div>
-      <div>All rights reserved. </div>
+      {menuCollapsed ? (
+        <div className="symbol" style={{ fontSize: 20 }}>
+          ©
+        </div>
+      ) : (
+        <FadeIn>
+          <div>© 2002 - feature</div>
+          <div>All rights reserved. </div>
+        </FadeIn>
+      )}
     </div>
   );
 };

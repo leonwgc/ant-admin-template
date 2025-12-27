@@ -4,6 +4,8 @@ import { useLocalStorageState } from 'ahooks';
 import Menus from './Menus';
 import { menus } from '~/config.menu';
 import './Sider.scss';
+import Footer from './Footer';
+import FadeIn from '~/components/FadeIn';
 
 type Props = SiderProps & {
   loading?: boolean;
@@ -43,6 +45,9 @@ const Sider: FC<Props> = () => {
       <div className="app-sider__content">
         <Menus collapsed={collapsed} menus={menus} />
       </div>
+      <FadeIn>
+        <Footer menuCollapsed={collapsed} />
+      </FadeIn>
     </Layout.Sider>
   );
 };

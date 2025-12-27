@@ -249,6 +249,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/image-upload',
         permissions: [],
       },
+      {
+        key: 'fade-in',
+        label: 'FadeIn',
+        route: '/app/components/fade-in',
+        permissions: [],
+      },
     ],
   },
   {
