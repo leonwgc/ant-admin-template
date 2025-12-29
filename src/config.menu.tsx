@@ -82,6 +82,12 @@ export const menus: MenuItem[] = [
         route: '/app/css/grid',
         permissions: [],
       },
+      {
+        key: 'css-filter',
+        label: 'CSS Filter',
+        route: '/app/components/css-filter',
+        permissions: [],
+      },
     ],
   },
   {
