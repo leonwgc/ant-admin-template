@@ -79,6 +79,7 @@
   &[data-fixed-columns='3'] {
     .date-table__th:nth-child(1),
     .date-table__td:nth-child(1) {
+      border: none;
       position: sticky;
       left: 0;
       z-index: 3;
@@ -91,6 +92,7 @@
   &[data-fixed-columns='3'] {
     .date-table__th:nth-child(2),
     .date-table__td:nth-child(2) {
+      border: none;
       position: sticky;
       left: 120px;
       z-index: 3;
@@ -102,6 +104,7 @@
   &[data-fixed-columns='3'] {
     .date-table__th:nth-child(3),
     .date-table__td:nth-child(3) {
+      border: none;
       position: sticky;
       left: 240px;
       z-index: 3;
