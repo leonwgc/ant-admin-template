@@ -107,6 +107,12 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'css-animation',
+        label: 'CSS Animation',
+        route: '/app/css/animation',
+        permissions: [],
+      },
+      {
         key: 'css-filter',
         label: 'CSS Filter',
         route: '/app/components/css-filter',

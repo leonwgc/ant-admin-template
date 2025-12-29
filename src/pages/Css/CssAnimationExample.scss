@@ -1,0 +1,1126 @@
+/**
+ * @file src/pages/Css/CssAnimationExample.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.css-animation-example {
+  padding: 24px;
+
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #1890ff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__section {
+    margin-bottom: 24px;
+  }
+
+  &__desc {
+    margin-bottom: 16px;
+    color: #666;
+    line-height: 1.8;
+  }
+
+  &__code {
+    background: #f5f5f5;
+    padding: 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: pre;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  &__info {
+    padding: 16px;
+    background: #f0f5ff;
+    border-left: 4px solid #1890ff;
+    border-radius: 4px;
+    margin-bottom: 16px;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    ul {
+      margin-bottom: 12px;
+      padding-left: 24px;
+
+      li {
+        margin-bottom: 8px;
+        line-height: 1.6;
+
+        code {
+          background: rgba(0, 0, 0, 0.06);
+          padding: 2px 8px;
+          border-radius: 3px;
+          font-family: 'Courier New', monospace;
+        }
+      }
+    }
+  }
+
+  h3 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  h4 {
+    margin-top: 20px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+// Animation Demo Styles
+.animation-demo {
+  &__preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    padding: 40px;
+    margin-top: 16px;
+  }
+
+  &__box {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #667eea;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    // Fade animation
+    &--fade {
+      animation-name: fade;
+      animation-fill-mode: both;
+    }
+
+    // Slide animation
+    &--slide {
+      animation-name: slide;
+      animation-fill-mode: both;
+    }
+
+    // Scale animation
+    &--scale {
+      animation-name: scale;
+      animation-fill-mode: both;
+    }
+
+    // Rotate animation
+    &--rotate {
+      animation-name: rotate;
+      animation-fill-mode: both;
+    }
+
+    // Bounce animation
+    &--bounce {
+      animation-name: bounce;
+      animation-fill-mode: both;
+    }
+
+    // Shake animation
+    &--shake {
+      animation-name: shake;
+      animation-fill-mode: both;
+    }
+
+    // Flip animation
+    &--flip {
+      animation-name: flip;
+      animation-fill-mode: both;
+      transform-style: preserve-3d;
+    }
+
+    // Swing animation
+    &--swing {
+      animation-name: swing;
+      animation-fill-mode: both;
+      transform-origin: top center;
+    }
+  }
+
+  &__timing-functions,
+  &__direction {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  &__timing-item,
+  &__direction-item {
+    text-align: center;
+  }
+
+  &__timing-box,
+  &__direction-box {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0 auto 8px;
+    cursor: pointer;
+
+    &:hover {
+      animation-duration: 2s;
+      animation-iteration-count: 1;
+      animation-fill-mode: both;
+    }
+  }
+
+  &__timing-box {
+    &--linear:hover {
+      animation-name: slideRight;
+      animation-timing-function: linear;
+    }
+
+    &--ease:hover {
+      animation-name: slideRight;
+      animation-timing-function: ease;
+    }
+
+    &--ease-in:hover {
+      animation-name: slideRight;
+      animation-timing-function: ease-in;
+    }
+
+    &--ease-out:hover {
+      animation-name: slideRight;
+      animation-timing-function: ease-out;
+    }
+
+    &--ease-in-out:hover {
+      animation-name: slideRight;
+      animation-timing-function: ease-in-out;
+    }
+  }
+
+  &__direction-box {
+    &--normal:hover {
+      animation-name: slideRight;
+      animation-direction: normal;
+    }
+
+    &--reverse:hover {
+      animation-name: slideRight;
+      animation-direction: reverse;
+    }
+
+    &--alternate:hover {
+      animation-name: slideRight;
+      animation-direction: alternate;
+      animation-iteration-count: 2;
+    }
+
+    &--alternate-reverse:hover {
+      animation-name: slideRight;
+      animation-direction: alternate-reverse;
+      animation-iteration-count: 2;
+    }
+  }
+
+  &__showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 24px;
+    margin: 16px 0;
+  }
+
+  &__showcase-item {
+    text-align: center;
+  }
+
+  &__showcase-box {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    margin: 0 auto 12px;
+    cursor: pointer;
+
+    &:hover {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+    }
+
+    &--fade:hover {
+      animation-name: fade;
+    }
+
+    &--slide:hover {
+      animation-name: slide;
+    }
+
+    &--scale:hover {
+      animation-name: scale;
+    }
+
+    &--rotate:hover {
+      animation-name: rotate;
+    }
+
+    &--bounce:hover {
+      animation-name: bounce;
+    }
+
+    &--shake:hover {
+      animation-name: shake;
+      animation-duration: 0.5s;
+    }
+
+    &--flip:hover {
+      animation-name: flip;
+      transform-style: preserve-3d;
+    }
+
+    &--swing:hover {
+      animation-name: swing;
+      transform-origin: top center;
+    }
+  }
+}
+
+// Animation Keyframes
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100px);
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes flip {
+  from {
+    transform: perspective(400px) rotateY(0deg);
+    opacity: 0;
+  }
+  to {
+    transform: perspective(400px) rotateY(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(15deg);
+  }
+  40% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+// Use Case Styles
+.animation-usecase {
+  &__demo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    min-height: 120px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  // Loading Animations
+  &__loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top-color: #1890ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  &__loading-dots {
+    display: flex;
+    gap: 8px;
+
+    span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #1890ff;
+      border-radius: 50%;
+      animation: dotBounce 1.4s infinite ease-in-out both;
+
+      &:nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  &__loading-pulse {
+    width: 40px;
+    height: 40px;
+    background: #1890ff;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  // Button Animations
+  &__button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    background: #1890ff;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #40a9ff;
+    }
+
+    &--bounce:hover {
+      animation: buttonBounce 0.5s ease;
+    }
+
+    &--wobble:hover {
+      animation: wobble 0.5s ease;
+    }
+
+    &--pulse:hover {
+      animation: buttonPulse 0.8s ease-in-out;
+    }
+
+    &--glow:hover {
+      animation: glow 1s ease-in-out infinite;
+    }
+  }
+
+  // Card Animations
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  &__card {
+    padding: 32px;
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  // Notification Animation
+  &__notification {
+    padding: 12px 24px;
+    background: #52c41a;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    &--slide {
+      animation: slideInRight 0.3s ease-out;
+    }
+  }
+
+  // Progress Bar
+  &__progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1890ff, #40a9ff);
+    border-radius: 10px;
+    animation: progressFill 2s ease-out forwards;
+  }
+
+  &__progress-stripe {
+    width: 100%;
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  &__progress-fill-stripe {
+    height: 100%;
+    background: linear-gradient(90deg, #1890ff, #40a9ff);
+    background-image: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+    );
+    background-size: 40px 40px;
+    width: 70%;
+    border-radius: 10px;
+    animation: stripeScroll 1s linear infinite;
+  }
+
+  // Skeleton Animation
+  &__skeleton {
+    padding: 16px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e8e8e8;
+  }
+
+  &__skeleton-line {
+    height: 16px;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    border-radius: 4px;
+    animation: shimmer 2s infinite;
+  }
+
+  // Scroll Indicator
+  &__scroll-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(24, 144, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  &__scroll-arrow {
+    font-size: 24px;
+    color: #1890ff;
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+
+  // Counter Animation
+  &__counter {
+    font-size: 48px;
+    font-weight: bold;
+    color: #1890ff;
+  }
+
+  &__counter-number {
+    display: inline-block;
+    animation: counterPulse 0.5s ease-out;
+  }
+
+  // Heart Animation
+  &__heart {
+    font-size: 48px;
+    cursor: pointer;
+    animation: heartbeat 1s ease-in-out infinite;
+
+    &:active {
+      animation: heartClick 0.3s ease-out;
+    }
+  }
+}
+
+// Additional Keyframes for Use Cases
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dotBounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes buttonBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px #1890ff;
+  }
+  50% {
+    box-shadow: 0 0 20px #1890ff, 0 0 30px #1890ff;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 75%;
+  }
+}
+
+@keyframes stripeScroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes scrollBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+@keyframes counterPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10%,
+  30% {
+    transform: scale(0.9);
+  }
+  20%,
+  40% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes heartClick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Advanced Animation Styles
+.animation-advanced {
+  &__demo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    min-height: 200px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 32px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    perspective: 1000px;
+  }
+
+  // CSS Variables Animation
+  &__variable-box {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    --animation-scale: 1.3;
+    animation: variableScale 2s ease-in-out infinite alternate;
+  }
+
+  // Sprite & Typing Animation
+  &__sprite-animation {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 8px;
+    animation: spriteMove 1.5s steps(6) infinite;
+  }
+
+  &__typing {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1890ff;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #1890ff;
+    width: 0;
+    animation: typing 3s steps(13) forwards, blink 0.7s step-end infinite;
+  }
+
+  // 3D Flip Card
+  &__flip-card {
+    perspective: 1000px;
+    width: 160px;
+    height: 160px;
+    cursor: pointer;
+
+    &:hover &-inner {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &__flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+
+  &__flip-card-front,
+  &__flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  &__flip-card-front {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  &__flip-card-back {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    transform: rotateY(180deg);
+  }
+
+  // 3D Cube
+  &__cube {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCube 10s linear infinite;
+  }
+
+  &__cube-face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: white;
+    opacity: 0.9;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+
+    &--front {
+      background: rgba(102, 126, 234, 0.9);
+      transform: translateZ(50px);
+    }
+
+    &--back {
+      background: rgba(118, 75, 162, 0.9);
+      transform: rotateY(180deg) translateZ(50px);
+    }
+
+    &--right {
+      background: rgba(240, 147, 251, 0.9);
+      transform: rotateY(90deg) translateZ(50px);
+    }
+
+    &--left {
+      background: rgba(245, 87, 108, 0.9);
+      transform: rotateY(-90deg) translateZ(50px);
+    }
+
+    &--top {
+      background: rgba(24, 144, 255, 0.9);
+      transform: rotateX(90deg) translateZ(50px);
+    }
+
+    &--bottom {
+      background: rgba(82, 196, 26, 0.9);
+      transform: rotateX(-90deg) translateZ(50px);
+    }
+  }
+
+  // Chain Animation
+  &__chain-box {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    animation: complexSequence 4s ease-in-out infinite;
+  }
+
+  // Bezier Easing Demo
+  &__bezier-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 0;
+  }
+
+  &__bezier-box {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    animation: moveRight 2s infinite;
+
+    &--1 {
+      animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    &--2 {
+      animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &--3 {
+      animation-timing-function: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+    }
+  }
+
+  // SVG Animation
+  &__svg {
+    display: block;
+  }
+
+  &__svg-circle {
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    animation: drawCircle 3s ease-out infinite;
+  }
+
+  // Pause/Resume Box
+  &__pause-box {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    margin-right: 16px;
+    animation: rotate 3s linear infinite;
+  }
+}
+
+// Advanced Keyframes
+@keyframes variableScale {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(var(--animation-scale, 1.3));
+  }
+}
+
+@keyframes spriteMove {
+  to {
+    transform: translateX(60px);
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 13ch;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes rotateCube {
+  0% {
+    transform: rotateX(0) rotateY(0);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+@keyframes complexSequence {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translateX(100px) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(100px) scale(1.5);
+    opacity: 1;
+  }
+  75% {
+    transform: translateX(0) scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(360deg);
+    opacity: 0.5;
+  }
+}
+
+@keyframes moveRight {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(200px);
+  }
+}
+
+@keyframes drawCircle {
+  0% {
+    stroke-dashoffset: 283;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
