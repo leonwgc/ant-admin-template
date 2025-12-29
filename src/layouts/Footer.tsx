@@ -9,7 +9,7 @@ const Footer = ({ menuCollapsed }) => {
           ©
         </div>
       ) : (
-        <FadeIn>
+        <FadeIn duration={300}>
           <div>© 2002 - feature</div>
           <div>All rights reserved. </div>
         </FadeIn>
