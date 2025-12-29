@@ -62,6 +62,12 @@ export const menus: MenuItem[] = [
         route: '/app/js-feature/element-height',
         permissions: [],
       },
+      {
+        key: 'weakmap',
+        label: 'WeakMap',
+        route: '/app/js-feature/weakmap',
+        permissions: [],
+      },
     ],
   },
   {

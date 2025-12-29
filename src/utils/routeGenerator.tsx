@@ -94,6 +94,7 @@ export const routeComponentMap: RouteComponentMap = {
   // JS Features
   '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormat'),
   '/app/js-feature/element-height': lazyLoad('pages/Js/ElementHeightDemo'),
+  '/app/js-feature/weakmap': lazyLoad('pages/Js/WeakMapDemo'),
 
   // CSS Features
   '/app/css': lazyLoad('pages/Form/CssFeature'),
