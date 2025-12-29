@@ -83,6 +83,12 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'css-flex',
+        label: 'CSS Flexbox',
+        route: '/app/css/flexbox',
+        permissions: [],
+      },
+      {
         key: 'css-filter',
         label: 'CSS Filter',
         route: '/app/components/css-filter',
