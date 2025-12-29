@@ -131,6 +131,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/chatbot': lazyLoad('pages/Components/ChatBot'),
   '/app/components/image-upload': lazyLoad('pages/Components/ImageUploadExample'),
   '/app/components/fade-in': lazyLoad('pages/Components/FadeInExample'),
+  '/app/components/date-table': lazyLoad('pages/Components/DateTable'),
 
   // Games
   '/app/games/tetris-3d': lazyLoad('pages/Games/Tetris3D'),

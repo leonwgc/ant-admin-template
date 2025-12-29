@@ -255,6 +255,12 @@ export const menus: MenuItem[] = [
         route: '/app/components/fade-in',
         permissions: [],
       },
+      {
+        key: 'date-table',
+        label: 'DateTable',
+        route: '/app/components/date-table',
+        permissions: [],
+      },
     ],
   },
   {
