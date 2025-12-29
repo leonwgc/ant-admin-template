@@ -35,16 +35,6 @@
   font-size: 14px;
   background: #fff;
 
-  &__caption {
-    padding: 12px 16px;
-    text-align: left;
-    font-size: 16px;
-    font-weight: 600;
-    color: #262626;
-    border-bottom: 2px solid #e8e8e8;
-    caption-side: top;
-  }
-
   &__col {
     &--fixed {
       width: 120px;
@@ -84,9 +74,9 @@
   }
 
   // Dynamic sticky columns based on data-fixed-columns attribute
-  &[data-fixed-columns="1"],
-  &[data-fixed-columns="2"],
-  &[data-fixed-columns="3"] {
+  &[data-fixed-columns='1'],
+  &[data-fixed-columns='2'],
+  &[data-fixed-columns='3'] {
     .date-table__th:nth-child(1),
     .date-table__td:nth-child(1) {
       position: sticky;
@@ -97,8 +87,8 @@
     }
   }
 
-  &[data-fixed-columns="2"],
-  &[data-fixed-columns="3"] {
+  &[data-fixed-columns='2'],
+  &[data-fixed-columns='3'] {
     .date-table__th:nth-child(2),
     .date-table__td:nth-child(2) {
       position: sticky;
@@ -109,7 +99,7 @@
     }
   }
 
-  &[data-fixed-columns="3"] {
+  &[data-fixed-columns='3'] {
     .date-table__th:nth-child(3),
     .date-table__td:nth-child(3) {
       position: sticky;
@@ -121,22 +111,22 @@
   }
 
   // Adjust z-index for td to be lower than th
-  &[data-fixed-columns="1"],
-  &[data-fixed-columns="2"],
-  &[data-fixed-columns="3"] {
+  &[data-fixed-columns='1'],
+  &[data-fixed-columns='2'],
+  &[data-fixed-columns='3'] {
     .date-table__td:nth-child(1) {
       z-index: 2;
     }
   }
 
-  &[data-fixed-columns="2"],
-  &[data-fixed-columns="3"] {
+  &[data-fixed-columns='2'],
+  &[data-fixed-columns='3'] {
     .date-table__td:nth-child(2) {
       z-index: 2;
     }
   }
 
-  &[data-fixed-columns="3"] {
+  &[data-fixed-columns='3'] {
     .date-table__td:nth-child(3) {
       z-index: 2;
     }
