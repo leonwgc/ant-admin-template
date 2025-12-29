@@ -68,7 +68,7 @@ const DateTable: React.FC<DateTableProps> = ({
         </Space>
 
         <div className="date-table-container">
-          <table className="date-table">
+          <table className="date-table" data-fixed-columns={fixedColumns}>
             <caption className="date-table__caption">
               30-Day Schedule Table with {fixedColumns} Fixed Column(s)
             </caption>
@@ -82,27 +82,9 @@ const DateTable: React.FC<DateTableProps> = ({
             </colgroup>
             <thead className="date-table__header">
               <tr>
-                <th
-                  className={`date-table__th date-table__th--fixed ${
-                    fixedColumns >= 1 ? 'date-table__th--sticky-1' : ''
-                  }`}
-                >
-                  ID
-                </th>
-                <th
-                  className={`date-table__th date-table__th--fixed ${
-                    fixedColumns >= 2 ? 'date-table__th--sticky-2' : ''
-                  }`}
-                >
-                  Name
-                </th>
-                <th
-                  className={`date-table__th date-table__th--fixed ${
-                    fixedColumns >= 3 ? 'date-table__th--sticky-3' : ''
-                  }`}
-                >
-                  Category
-                </th>
+                <th className="date-table__th date-table__th--fixed">ID</th>
+                <th className="date-table__th date-table__th--fixed">Name</th>
+                <th className="date-table__th date-table__th--fixed">Category</th>
                 {dateColumns.map((col, index) => (
                   <th
                     key={index}
@@ -123,27 +105,9 @@ const DateTable: React.FC<DateTableProps> = ({
             <tbody className="date-table__body">
               {dataRows.map((row) => (
                 <tr key={row.id} className="date-table__row">
-                  <td
-                    className={`date-table__td date-table__td--fixed ${
-                      fixedColumns >= 1 ? 'date-table__td--sticky-1' : ''
-                    }`}
-                  >
-                    {row.id}
-                  </td>
-                  <td
-                    className={`date-table__td date-table__td--fixed ${
-                      fixedColumns >= 2 ? 'date-table__td--sticky-2' : ''
-                    }`}
-                  >
-                    {row.name}
-                  </td>
-                  <td
-                    className={`date-table__td date-table__td--fixed ${
-                      fixedColumns >= 3 ? 'date-table__td--sticky-3' : ''
-                    }`}
-                  >
-                    {row.category}
-                  </td>
+                  <td className="date-table__td date-table__td--fixed">{row.id}</td>
+                  <td className="date-table__td date-table__td--fixed">{row.name}</td>
+                  <td className="date-table__td date-table__td--fixed">{row.category}</td>
                   {row.values.map((value, index) => {
                     const isWeekend =
                       dateColumns[index].dayOfWeek === 0 || dateColumns[index].dayOfWeek === 6;

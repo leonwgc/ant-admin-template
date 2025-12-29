@@ -74,33 +74,71 @@
       background-color: #f0f0f0;
     }
 
-    &--sticky-1 {
-      position: sticky;
-      left: 0;
-      z-index: 3;
-      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.08);
-    }
-
-    &--sticky-2 {
-      position: sticky;
-      left: 120px;
-      z-index: 3;
-      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.08);
-    }
-
-    &--sticky-3 {
-      position: sticky;
-      left: 240px;
-      z-index: 3;
-      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.08);
-    }
-
     &--weekend {
       background-color: #fffbe6;
     }
 
     &--date {
       padding: 8px 12px;
+    }
+  }
+
+  // Dynamic sticky columns based on data-fixed-columns attribute
+  &[data-fixed-columns="1"],
+  &[data-fixed-columns="2"],
+  &[data-fixed-columns="3"] {
+    .date-table__th:nth-child(1),
+    .date-table__td:nth-child(1) {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      box-shadow: none;
+      transition: box-shadow 0.2s ease;
+    }
+  }
+
+  &[data-fixed-columns="2"],
+  &[data-fixed-columns="3"] {
+    .date-table__th:nth-child(2),
+    .date-table__td:nth-child(2) {
+      position: sticky;
+      left: 120px;
+      z-index: 3;
+      box-shadow: none;
+      transition: box-shadow 0.2s ease;
+    }
+  }
+
+  &[data-fixed-columns="3"] {
+    .date-table__th:nth-child(3),
+    .date-table__td:nth-child(3) {
+      position: sticky;
+      left: 240px;
+      z-index: 3;
+      box-shadow: none;
+      transition: box-shadow 0.2s ease;
+    }
+  }
+
+  // Adjust z-index for td to be lower than th
+  &[data-fixed-columns="1"],
+  &[data-fixed-columns="2"],
+  &[data-fixed-columns="3"] {
+    .date-table__td:nth-child(1) {
+      z-index: 2;
+    }
+  }
+
+  &[data-fixed-columns="2"],
+  &[data-fixed-columns="3"] {
+    .date-table__td:nth-child(2) {
+      z-index: 2;
+    }
+  }
+
+  &[data-fixed-columns="3"] {
+    .date-table__td:nth-child(3) {
+      z-index: 2;
     }
   }
 
@@ -154,27 +192,6 @@
       background-color: #fafafa;
     }
 
-    &--sticky-1 {
-      position: sticky;
-      left: 0;
-      z-index: 2;
-      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.08);
-    }
-
-    &--sticky-2 {
-      position: sticky;
-      left: 120px;
-      z-index: 2;
-      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.08);
-    }
-
-    &--sticky-3 {
-      position: sticky;
-      left: 240px;
-      z-index: 2;
-      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.08);
-    }
-
     &--weekend {
       background-color: #fffbe6;
     }
@@ -182,6 +199,24 @@
     &--date {
       padding: 8px 12px;
       min-width: 80px;
+    }
+  }
+
+  // Add shadow when scrolled
+  &--scrolled {
+    .date-table__th:nth-child(1),
+    .date-table__td:nth-child(1) {
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .date-table__th:nth-child(2),
+    .date-table__td:nth-child(2) {
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .date-table__th:nth-child(3),
+    .date-table__td:nth-child(3) {
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
     }
   }
 }
