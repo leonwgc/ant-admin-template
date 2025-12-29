@@ -56,6 +56,12 @@ export const menus: MenuItem[] = [
         route: '/app/js-feature/intl-number-format',
         permissions: [],
       },
+      {
+        key: 'element-height',
+        label: 'Element Height',
+        route: '/app/js-feature/element-height',
+        permissions: [],
+      },
     ],
   },
   {
