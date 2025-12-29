@@ -68,6 +68,12 @@ export const menus: MenuItem[] = [
         route: '/app/js-feature/weakmap',
         permissions: [],
       },
+      {
+        key: 'proxy',
+        label: 'Proxy',
+        route: '/app/js-feature/proxy',
+        permissions: [],
+      },
     ],
   },
   {
