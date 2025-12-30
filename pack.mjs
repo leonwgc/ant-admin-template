@@ -17,7 +17,7 @@ run({
     html: {
       template: './index.html',
       title: 'Neat Admin Template',
-      favicon: './public/favicon.svg',
+      favicon: './public/favicon.ico',
     },
     server: {
       open: true,
