@@ -4,7 +4,16 @@
  */
 
 import React, { useState } from 'react';
-import { Card, Button, Space, Divider, Tag, Alert, Input, InputNumber } from '@derbysoft/neat-design';
+import {
+  Card,
+  Button,
+  Space,
+  Divider,
+  Tag,
+  Alert,
+  Input,
+  InputNumber,
+} from '@derbysoft/neat-design';
 import './ProxyDemo.scss';
 
 /**
@@ -17,7 +26,11 @@ const ProxyDemo: React.FC = () => {
   const [arrayIndex, setArrayIndex] = useState(-1);
 
   const addLog = (message: string) => {
-    setLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] ${message}`]);
+    setLogs((prev) => [
+      ...prev,
+      `[${new Date().toLocaleTimeString()}] ${message}`,
+    ]);
+    console.log(message);
   };
 
   const clearLogs = () => {
@@ -113,7 +126,9 @@ const ProxyDemo: React.FC = () => {
         const index = Number(prop);
         if (index < 0) {
           const actualIndex = target.length + index;
-          addLog(`📍 Negative index [${index}] → actual index [${actualIndex}]`);
+          addLog(
+            `📍 Negative index [${index}] → actual index [${actualIndex}]`
+          );
           return target[actualIndex];
         }
         return target[prop];
@@ -173,7 +188,10 @@ const ProxyDemo: React.FC = () => {
       });
     }
 
-    const config = createReadOnly({ apiUrl: 'https://api.example.com', timeout: 5000 });
+    const config = createReadOnly({
+      apiUrl: 'https://api.example.com',
+      timeout: 5000,
+    });
 
     try {
       addLog('--- Testing read-only object ---');
@@ -192,18 +210,27 @@ const ProxyDemo: React.FC = () => {
     function createTrackedFunction(fn: Function, name: string) {
       return new Proxy(fn, {
         apply(target, thisArg, args) {
-          addLog(`🎯 Calling function "${name}" with args: ${JSON.stringify(args)}`);
+          addLog(
+            `🎯 Calling function "${name}" with args: ${JSON.stringify(args)}`
+          );
           const startTime = performance.now();
           const result = Reflect.apply(target, thisArg, args);
           const endTime = performance.now();
-          addLog(`✅ Function "${name}" returned: ${result} (${(endTime - startTime).toFixed(2)}ms)`);
+          addLog(
+            `✅ Function "${name}" returned: ${result} (${(
+              endTime - startTime
+            ).toFixed(2)}ms)`
+          );
           return result;
         },
       });
     }
 
     const add = createTrackedFunction((a: number, b: number) => a + b, 'add');
-    const multiply = createTrackedFunction((a: number, b: number) => a * b, 'multiply');
+    const multiply = createTrackedFunction(
+      (a: number, b: number) => a * b,
+      'multiply'
+    );
 
     addLog('--- Testing function tracking ---');
     add(5, 3);
@@ -255,7 +282,8 @@ const ProxyDemo: React.FC = () => {
           description={
             <div>
               <p>
-                Proxy 对象用于创建一个对象的代理，从而实现对基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
+                Proxy
+                对象用于创建一个对象的代理，从而实现对基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
               </p>
               <ul>
                 <li>
@@ -265,7 +293,8 @@ const ProxyDemo: React.FC = () => {
                   <strong>handler：</strong>包含拦截器（traps）的对象
                 </li>
                 <li>
-                  <strong>13 种拦截器：</strong>get、set、has、deleteProperty、apply、construct 等
+                  <strong>13 种拦截器：</strong>
+                  get、set、has、deleteProperty、apply、construct 等
                 </li>
                 <li>
                   <strong>与 Reflect 配合：</strong>Reflect 提供默认行为的方法
@@ -368,7 +397,9 @@ proxy.age = 31;   // Logs: Setting age = 31`}
             <h3>
               <Tag color="blue">Demo 1</Tag> 基本拦截操作
             </h3>
-            <p className="proxy-demo__desc">演示 get、set、has、deleteProperty 拦截器</p>
+            <p className="proxy-demo__desc">
+              演示 get、set、has、deleteProperty 拦截器
+            </p>
             <Button type="primary" onClick={demoBasicProxy}>
               运行演示
             </Button>
@@ -485,7 +516,9 @@ proxy.age = 31;   // Logs: Setting age = 31`}
           </div>
           <div className="proxy-demo__console-content">
             {logs.length === 0 ? (
-              <div className="proxy-demo__console-empty">运行上面的演示查看输出...</div>
+              <div className="proxy-demo__console-empty">
+                运行上面的演示查看输出...
+              </div>
             ) : (
               logs.map((log, index) => (
                 <div key={index} className="proxy-demo__console-line">
@@ -767,13 +800,15 @@ console.log(db1 === db2);  // true`}
                 <strong>浏览器兼容性：</strong>不支持 IE，无法完全 polyfill
               </li>
               <li>
-                <strong>this 指向：</strong>注意拦截器中的 this 指向问题，建议使用 Reflect
+                <strong>this 指向：</strong>注意拦截器中的 this
+                指向问题，建议使用 Reflect
               </li>
               <li>
                 <strong>内置对象：</strong>某些内置对象（如 Date）无法被代理
               </li>
               <li>
-                <strong>相等性：</strong>proxy !== target，需要保持代理对象的引用
+                <strong>相等性：</strong>proxy !==
+                target，需要保持代理对象的引用
               </li>
               <li>
                 <strong>递归代理：</strong>嵌套对象需要递归创建代理
