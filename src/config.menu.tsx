@@ -113,6 +113,12 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'css-blend-modes',
+        label: 'CSS Blend Modes',
+        route: '/app/css/blend-modes',
+        permissions: [],
+      },
+      {
         key: 'css-animation',
         label: 'CSS Animation',
         route: '/app/css/animation',

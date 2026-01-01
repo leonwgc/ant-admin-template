@@ -103,6 +103,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/css/grid': lazyLoad('pages/Css/CssGridExample'),
   '/app/css/flexbox': lazyLoad('pages/Css/CssFlexExample'),
   '/app/css/container-queries': lazyLoad('pages/Css/CssContainerQueriesExample'),
+  '/app/css/blend-modes': lazyLoad('pages/Css/CssBlendModesExample'),
   '/app/css/animation': lazyLoad('pages/Css/CssAnimationExample'),
 
   // User Management

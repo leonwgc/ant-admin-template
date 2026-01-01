@@ -1,0 +1,332 @@
+/**
+ * @file src/pages/Css/CssBlendModesExample.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.css-blend-modes-example {
+  padding: 24px;
+
+  &__title {
+    margin-bottom: 24px;
+    font-size: 28px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__section {
+    padding: 20px 0;
+  }
+
+  &__desc {
+    margin-bottom: 16px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #666;
+  }
+
+  &__code {
+    background: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre;
+    color: #24292e;
+  }
+}
+
+/* Blend Demo */
+.blend-demo {
+  position: relative;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+  &__background {
+    position: absolute;
+    inset: 0;
+  }
+
+  &__gradient1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 50%;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  &__gradient2 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  &__foreground {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 40px;
+  }
+
+  &__circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    &--red {
+      background: #ff6b6b;
+    }
+
+    &--blue {
+      background: #4dabf7;
+    }
+
+    &--green {
+      background: #51cf66;
+    }
+  }
+}
+
+/* Background Blend Grid */
+.bg-blend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.bg-blend-box {
+  height: 300px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000" fill-opacity="0.2"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+  background-color: #ff6b6b;
+  background-size: 60px 60px;
+
+  &--blue {
+    background-color: #4dabf7;
+  }
+
+  &--green {
+    background-color: #51cf66;
+  }
+
+  &--purple {
+    background-color: #9775fa;
+  }
+
+  &__label {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+/* Blend Comparison */
+.blend-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+
+  &__item {
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__demo {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, #ff6b6b 0%, #4dabf7 100%);
+  }
+
+  &__info {
+    padding: 12px;
+    background: white;
+
+    strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: #1890ff;
+    }
+
+    p {
+      margin: 0;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+    }
+  }
+}
+
+/* Practical Examples */
+.practical-example {
+  margin-top: 16px;
+  padding: 24px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* Image Filter */
+.image-filter {
+  height: 300px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+
+  &--duotone {
+    background-image: url('data:image/svg+xml,%3Csvg width="400" height="300" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="400" height="300" fill="%23333"/%3E%3Cg opacity="0.5"%3E%3Ccircle cx="100" cy="100" r="50" fill="%23fff"/%3E%3Ccircle cx="300" cy="200" r="60" fill="%23fff"/%3E%3Crect x="150" y="150" width="100" height="80" fill="%23fff"/%3E%3C/g%3E%3C/svg%3E');
+    background-size: cover;
+    background-position: center;
+    background-color: #4158d0;
+    background-blend-mode: screen;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #c850c0;
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    z-index: 1;
+  }
+}
+
+/* Text Blend */
+.text-blend {
+  height: 200px;
+  background: linear-gradient(90deg, #ff6b6b 0%, #4dabf7 50%, #51cf66 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+
+  &__title {
+    margin: 0;
+    font-size: clamp(32px, 6vw, 80px);
+    font-weight: 900;
+    color: white;
+    mix-blend-mode: difference;
+    letter-spacing: 2px;
+  }
+}
+
+/* Hover Cards */
+.hover-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.hover-card {
+  position: relative;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: url('data:image/svg+xml,%3Csvg width="400" height="400" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3ClinearGradient id="grad1" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%23667eea;stop-opacity:1" /%3E%3Cstop offset="100%25" style="stop-color:%23764ba2;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="400" height="400" fill="url(%23grad1)"/%3E%3C/svg%3E');
+  background-size: cover;
+  cursor: pointer;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #ff6b6b;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &:hover &__overlay::before {
+    opacity: 0.7;
+  }
+
+  &--multiply &__overlay::before {
+    mix-blend-mode: multiply;
+  }
+
+  &--screen &__overlay::before {
+    mix-blend-mode: screen;
+  }
+}
