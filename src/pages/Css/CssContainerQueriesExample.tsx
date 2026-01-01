@@ -244,8 +244,11 @@ const CssContainerQueriesExample: React.FC = () => {
 
                   <div className="css-container-queries-example__code" style={{ marginTop: 24 }}>
                     {`/* 响应式网格 - 使用 Container Query */
+.grid-demo-wrapper {
+  container-type: inline-size;  /* 在外层容器设置查询类型 */
+}
+
 .grid-container {
-  container-type: inline-size;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 16px;
