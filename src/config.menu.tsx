@@ -107,6 +107,12 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'css-container-queries',
+        label: 'CSS Container Queries',
+        route: '/app/css/container-queries',
+        permissions: [],
+      },
+      {
         key: 'css-animation',
         label: 'CSS Animation',
         route: '/app/css/animation',
