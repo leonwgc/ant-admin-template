@@ -6,8 +6,9 @@
 import React from 'react';
 import { Card, Button, Space, Input, Typography, Divider } from '@derbysoft/neat-design';
 import { create } from 'zustand';
-import { persist, devtools } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { useShallow } from 'zustand/react/shallow';
 import './ZustandDemo.scss';
 
 const { Title, Paragraph, Text } = Typography;
@@ -124,17 +125,105 @@ const useAnimalStore = create<AnimalState>()((set) => ({
   ...createFishSlice(set),
 }));
 
+// Performance Demo Store
+interface PerformanceStore {
+  count: number;
+  name: string;
+  age: number;
+  incrementCount: () => void;
+  updateName: (name: string) => void;
+  updateAge: (age: number) => void;
+}
+
+const usePerformanceStore = create<PerformanceStore>((set) => ({
+  count: 0,
+  name: 'John',
+  age: 25,
+  incrementCount: () => set((state) => ({ count: state.count + 1 })),
+  updateName: (name) => set({ name }),
+  updateAge: (age) => set({ age }),
+}));
+
+// Component without shallow (re-renders on any state change)
+const WithoutShallow: React.FC = () => {
+  const renderCount = React.useRef(0);
+  renderCount.current++;
+
+  const { count, incrementCount } = usePerformanceStore();
+
+  return (
+    <div className="zustand-demo__performance-item">
+      <div>
+        <Text strong>Without Shallow:</Text>
+        <Text type="danger"> Renders: {renderCount.current}</Text>
+      </div>
+      <div>Count: {count}</div>
+      <Button onClick={incrementCount} size="small">
+        Increment Count
+      </Button>
+    </div>
+  );
+};
+
+// Component with shallow (only re-renders when selected state changes)
+const WithShallow: React.FC = () => {
+  const renderCount = React.useRef(0);
+  renderCount.current++;
+
+  const count = usePerformanceStore((state) => state.count);
+  const incrementCount = usePerformanceStore((state) => state.incrementCount);
+
+  return (
+    <div className="zustand-demo__performance-item">
+      <div>
+        <Text strong>With Selector:</Text>
+        <Text type="success"> Renders: {renderCount.current}</Text>
+      </div>
+      <div>Count: {count}</div>
+      <Button onClick={incrementCount} size="small">
+        Increment Count
+      </Button>
+    </div>
+  );
+};
+
+// Component with shallow comparison (multiple values)
+const WithShallowComparison: React.FC = () => {
+  const renderCount = React.useRef(0);
+  renderCount.current++;
+
+  const { count, incrementCount } = usePerformanceStore(
+    useShallow((state) => ({ count: state.count, incrementCount: state.incrementCount }))
+  );
+
+  return (
+    <div className="zustand-demo__performance-item">
+      <div>
+        <Text strong>With Shallow:</Text>
+        <Text type="success"> Renders: {renderCount.current}</Text>
+      </div>
+      <div>Count: {count}</div>
+      <Button onClick={incrementCount} size="small">
+        Increment Count
+      </Button>
+    </div>
+  );
+};
+
 // Component
 const ZustandDemo: React.FC = () => {
   const { count, increment, decrement, reset } = useCounterStore();
   const { todos, addTodo, toggleTodo, removeTodo } = useTodoStore();
   const { user, setUser, clearUser } = useUserStore();
   const { bears, addBear, fishes, addFish } = useAnimalStore();
+  const { name, age, updateName, updateAge } = usePerformanceStore();
 
   const [todoInput, setTodoInput] = React.useState('');
   const [userName, setUserName] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [userAge, setUserAge] = React.useState('');
+  const [perfName, setPerfName] = React.useState('');
+  const [perfAge, setPerfAge] = React.useState('');
 
   const handleAddTodo = () => {
     if (todoInput.trim()) {
@@ -283,6 +372,56 @@ const ZustandDemo: React.FC = () => {
         </Space>
       </Card>
 
+      {/* Performance Optimization with Shallow */}
+      <Card title="5. Performance Optimization with Shallow" className="zustand-demo__card">
+        <Paragraph>
+          <Text strong>Features:</Text> Prevent unnecessary re-renders using shallow comparison
+        </Paragraph>
+
+        <div className="zustand-demo__performance-demo">
+          <Paragraph>
+            Current Store State: Name = "{name}", Age = {age}
+          </Paragraph>
+
+          <Space style={{ marginBottom: 16 }}>
+            <Input
+              placeholder="Update Name"
+              value={perfName}
+              onChange={(e) => setPerfName(e.target.value)}
+              style={{ width: 150 }}
+            />
+            <Button onClick={() => { updateName(perfName); setPerfName(''); }}>
+              Update Name
+            </Button>
+            <Input
+              placeholder="Update Age"
+              type="number"
+              value={perfAge}
+              onChange={(e) => setPerfAge(e.target.value)}
+              style={{ width: 100 }}
+            />
+            <Button onClick={() => { updateAge(Number(perfAge)); setPerfAge(''); }}>
+              Update Age
+            </Button>
+          </Space>
+
+          <Divider />
+
+          <div className="zustand-demo__performance-compare">
+            <WithoutShallow />
+            <WithShallow />
+            <WithShallowComparison />
+          </div>
+
+          <Paragraph style={{ marginTop: 16 }}>
+            <Text type="warning">
+              💡 Try updating Name or Age: The components with selector/shallow will only re-render when count changes,
+              but the component without optimization will re-render every time!
+            </Text>
+          </Paragraph>
+        </div>
+      </Card>
+
       {/* Best Practices */}
       <Card title="Zustand Best Practices" className="zustand-demo__card">
         <ul>
@@ -418,16 +557,23 @@ const { user, login, items, addItem } = useStore();`}
             {`// Bad: Component re-renders on any state change
 const { count, user, todos } = useStore();
 
-// Good: Only re-renders when count changes
+// Good: Single selector - only re-renders when count changes
 const count = useStore((state) => state.count);
 
-// Good: Memoized selector with shallow comparison
-import { shallow } from 'zustand/shallow';
+// Best: Multiple values with useShallow hook (Zustand v4+)
+// Re-renders only when count or increment changes (shallow compares the object)
+import { useShallow } from 'zustand/react/shallow';
 
 const { count, increment } = useStore(
-  (state) => ({ count: state.count, increment: state.increment }),
-  shallow
-);`}
+  useShallow((state) => ({
+    count: state.count,
+    increment: state.increment
+  }))
+);
+
+// Without useShallow, selecting multiple values would re-render on every state change
+// because it returns a new object reference each time
+// useShallow performs a shallow equality check on the returned object`}
           </Text>
         </Paragraph>
       </Card>

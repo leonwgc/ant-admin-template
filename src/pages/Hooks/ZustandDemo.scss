@@ -71,6 +71,29 @@
     border-left: 4px solid #1e80ff;
   }
 
+  &__performance-demo {
+    margin-top: 16px;
+  }
+
+  &__performance-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  &__performance-item {
+    padding: 16px;
+    background-color: #f6f8fa;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .ant-btn {
+      align-self: flex-start;
+    }
+  }
+
   ul {
     margin: 0;
     padding-left: 24px;
