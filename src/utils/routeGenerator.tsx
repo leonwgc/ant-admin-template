@@ -92,7 +92,7 @@ export const getRouteElement = (
  */
 export const routeComponentMap: RouteComponentMap = {
   // JS Features
-  '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormat'),
+  '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormatExample'),
   '/app/js-feature/element-height': lazyLoad('pages/Js/ElementHeightDemo'),
   '/app/js-feature/weakmap': lazyLoad('pages/Js/WeakMapDemo'),
   '/app/js-feature/proxy': lazyLoad('pages/Js/ProxyDemo'),
@@ -124,9 +124,6 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/verification-code-countdown': lazyLoad('pages/Hooks/VerificationCodeCountdown'),
   '/app/hooks/use-responsive': lazyLoad('pages/Hooks/UseResponsiveExample'),
   '/app/hooks/use-ds-table': lazyLoad('pages/Hooks/UseDsTableExample'),
-
-  // JavaScript Features
-  '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormatExample'),
 
   // Component Examples
   '/app/components/dot-status': lazyLoad('pages/Components/DotStatusExample'),
