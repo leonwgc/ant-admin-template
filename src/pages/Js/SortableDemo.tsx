@@ -97,7 +97,7 @@ const SortableDemo: React.FC = () => {
         animation: 150,
         ghostClass: 'sortable-demo__ghost',
         onEnd: () => {
-          updateMultipleLists();
+        //   updateMultipleLists();
         },
       });
 
@@ -106,7 +106,7 @@ const SortableDemo: React.FC = () => {
         animation: 150,
         ghostClass: 'sortable-demo__ghost',
         onEnd: () => {
-          updateMultipleLists();
+        //   updateMultipleLists();
         },
       });
     }
