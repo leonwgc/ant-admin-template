@@ -125,6 +125,9 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/use-responsive': lazyLoad('pages/Hooks/UseResponsiveExample'),
   '/app/hooks/use-ds-table': lazyLoad('pages/Hooks/UseDsTableExample'),
 
+  // JavaScript/Library Examples
+  '/app/js/sortable-demo': lazyLoad('pages/Js/SortableDemo'),
+
 
   // Component Examples
   '/app/components/dot-status': lazyLoad('pages/Components/DotStatusExample'),

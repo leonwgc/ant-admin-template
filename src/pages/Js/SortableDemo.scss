@@ -1,0 +1,132 @@
+/**
+ * @file src/pages/Js/SortableDemo.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.sortable-demo {
+  padding: 24px;
+
+  &__card {
+    margin-bottom: 24px;
+  }
+
+  &__list {
+    min-height: 60px;
+    padding: 12px;
+    background: #f5f5f5;
+    border: 2px dashed #d9d9d9;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+
+    &:hover {
+      border-color: #40a9ff;
+    }
+  }
+
+  &__item {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: #40a9ff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__item-with-handle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    user-select: none;
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: #40a9ff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__handle {
+    font-size: 20px;
+    color: #8c8c8c;
+    cursor: move;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  &__ghost {
+    opacity: 0.4;
+    background: #e6f7ff;
+    border-color: #1890ff;
+  }
+
+  &__multiple {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__source {
+    border-color: #52c41a;
+    background: #f6ffed;
+  }
+
+  &__target {
+    border-color: #1890ff;
+    background: #e6f7ff;
+    min-height: 200px;
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 176px;
+    color: #8c8c8c;
+    font-size: 14px;
+  }
+
+  ul {
+    margin: 8px 0;
+    padding-left: 24px;
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.8;
+    }
+  }
+}

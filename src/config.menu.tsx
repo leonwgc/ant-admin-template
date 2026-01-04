@@ -323,6 +323,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/zustand-demo',
         permissions: [],
       },
+      {
+        key: 'sortable-demo',
+        label: 'Sortable.js',
+        route: '/app/js/sortable-demo',
+        permissions: [],
+      },
     ],
   },
   {
