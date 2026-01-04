@@ -319,7 +319,7 @@ export const menus: MenuItem[] = [
     children: [
       {
         key: 'zustand-demo',
-        label: 'Zustand Demo',
+        label: 'Zustand',
         route: '/app/hooks/zustand-demo',
         permissions: [],
       },
