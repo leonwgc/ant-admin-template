@@ -312,6 +312,20 @@ export const menus: MenuItem[] = [
     ],
   },
   {
+    key: 'libs',
+    label: 'Libraries',
+    icon: <CodeOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'zustand-demo',
+        label: 'Zustand Demo',
+        route: '/app/hooks/zustand-demo',
+        permissions: [],
+      },
+    ],
+  },
+  {
     key: 'games',
     label: 'Games',
     icon: <AndroidOutlined />,

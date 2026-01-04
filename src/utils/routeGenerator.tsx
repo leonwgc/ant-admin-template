@@ -125,6 +125,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/use-responsive': lazyLoad('pages/Hooks/UseResponsiveExample'),
   '/app/hooks/use-ds-table': lazyLoad('pages/Hooks/UseDsTableExample'),
 
+
   // Component Examples
   '/app/components/dot-status': lazyLoad('pages/Components/DotStatusExample'),
   '/app/components/verification-code': lazyLoad('pages/Components/VerificationCodeExample'),
@@ -140,6 +141,9 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/fade-in': lazyLoad('pages/Components/FadeInExample'),
   '/app/components/date-table': lazyLoad('pages/Components/DateTable'),
   '/app/components/css-filter': lazyLoad('pages/Components/CssFilterExample'),
+
+  // libs
+  '/app/hooks/zustand-demo': lazyLoad('pages/Hooks/ZustandDemo'),
 
   // Games
   '/app/games/tetris-3d': lazyLoad('pages/Games/Tetris3D'),
