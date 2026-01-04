@@ -363,6 +363,73 @@ const useStore = create(() => initialState);
 const reset = () => useStore.setState(initialState);`}
           </Text>
         </Paragraph>
+
+        <Title level={5}>5. Slice Patterns (Advanced)</Title>
+        <Paragraph>
+          <Text code>
+            {`// Define slice interfaces
+interface UserSlice {
+  user: User | null;
+  login: (user: User) => void;
+  logout: () => void;
+}
+
+interface CartSlice {
+  items: Item[];
+  addItem: (item: Item) => void;
+  removeItem: (id: string) => void;
+}
+
+// Define combined state type
+type StoreState = UserSlice & CartSlice;
+type SetState = (partial: Partial<StoreState>) => void;
+
+// Create separate slices
+const createUserSlice = (set: SetState): UserSlice => ({
+  user: null,
+  login: (user) => set({ user }),
+  logout: () => set({ user: null }),
+});
+
+const createCartSlice = (set: SetState): CartSlice => ({
+  items: [],
+  addItem: (item) => set((state) => ({
+    items: [...state.items, item]
+  })),
+  removeItem: (id) => set((state) => ({
+    items: state.items.filter(i => i.id !== id)
+  })),
+});
+
+// Combine slices into single store
+const useStore = create<StoreState>()((set) => ({
+  ...createUserSlice(set),
+  ...createCartSlice(set),
+}));
+
+// Usage: Access any slice's state/actions
+const { user, login, items, addItem } = useStore();`}
+          </Text>
+        </Paragraph>
+
+        <Title level={5}>6. Selectors for Performance</Title>
+        <Paragraph>
+          <Text code>
+            {`// Bad: Component re-renders on any state change
+const { count, user, todos } = useStore();
+
+// Good: Only re-renders when count changes
+const count = useStore((state) => state.count);
+
+// Good: Memoized selector with shallow comparison
+import { shallow } from 'zustand/shallow';
+
+const { count, increment } = useStore(
+  (state) => ({ count: state.count, increment: state.increment }),
+  shallow
+);`}
+          </Text>
+        </Paragraph>
       </Card>
     </div>
   );
