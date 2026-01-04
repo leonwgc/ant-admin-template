@@ -69,21 +69,17 @@ const SortableDemo: React.FC = () => {
   // Basic Sortable
   useEffect(() => {
     if (basicRef.current) {
-      Sortable.create(basicRef.current, {
+      const intance = Sortable.create(basicRef.current, {
         animation: 150,
         ghostClass: 'sortable-demo__ghost',
         dataIdAttr: 'data-id',
-        store: {
-          set: function (ss) {
-            const ar = ss.toArray();
-            const newList = basicListLRef.current.sort(
-              (a, b) => ar.indexOf(String(a.id)) - ar.indexOf(String(b.id))
-            );
-            setBasicList(newList);
-          },
-          get: function () {
-            return basicListLRef.current.map((item) => String(item.id));
-          },
+        onEnd: function () {
+          // 序列化可排序的列表单元的data-id（可通过配置项中dataIdAttr修改）放入一个数组，并返回这个数组中
+          const ar = intance.toArray();
+          const newList = basicListLRef.current.sort(
+            (a, b) => ar.indexOf(String(a.id)) - ar.indexOf(String(b.id))
+          );
+          setBasicList(newList);
         },
       });
     }
@@ -97,7 +93,7 @@ const SortableDemo: React.FC = () => {
         animation: 150,
         ghostClass: 'sortable-demo__ghost',
         onEnd: () => {
-        //   updateMultipleLists();
+          //   updateMultipleLists();
         },
       });
 
@@ -106,7 +102,7 @@ const SortableDemo: React.FC = () => {
         animation: 150,
         ghostClass: 'sortable-demo__ghost',
         onEnd: () => {
-        //   updateMultipleLists();
+          //   updateMultipleLists();
         },
       });
     }
