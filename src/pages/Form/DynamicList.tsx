@@ -15,6 +15,19 @@ import {
 } from '@derbysoft/neat-design-icons';
 import { useDynamicList } from 'ahooks';
 import { Button, Input, Space } from 'antd';
+import Steps from '~/components/Steps';
+
+const steps = [
+  {
+    title: 'step1',
+  },
+  {
+    title: 'step2',
+  },
+  {
+    title: 'step3',
+  },
+];
 
 export default () => {
   const { list, remove, batchRemove, getKey, insert, push, replace, move } =
@@ -61,6 +74,7 @@ export default () => {
 
   return (
     <>
+      <Steps currentStep={1} steps={steps} style={{ marginBottom: 24 }}></Steps>
       {list.map((ele, index) => Row(index, ele))}
 
       <div style={{ marginBottom: 16 }}>
