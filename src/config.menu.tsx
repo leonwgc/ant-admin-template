@@ -185,6 +185,12 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'form-validation',
+        label: 'Form Validation',
+        route: '/app/forms/validation',
+        permissions: [],
+      },
+      {
         key: 'virtual-list',
         label: 'Virtual List',
         route: '/app/forms/virtual-list',

@@ -1,0 +1,103 @@
+/**
+ * @file src/pages/Form/FormValidation.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.form-validation {
+  padding: 24px;
+
+  &__card {
+    margin-bottom: 24px;
+  }
+
+  &__form {
+    max-width: 600px;
+    margin-top: 24px;
+
+    &--styled {
+      // Match screenshot styling
+      .ant-form-item-label > label {
+        font-size: 14px;
+        color: #595959;
+        font-weight: 400;
+      }
+
+      .ant-input {
+        border-radius: 4px;
+
+        &-status-error {
+          border-color: #ff4d4f;
+          border-width: 2px;
+        }
+      }
+
+      .ant-form-item-explain-error {
+        font-size: 13px;
+        color: #ff4d4f;
+        margin-top: 8px;
+      }
+    }
+  }
+
+  &__actions {
+    margin-top: 32px;
+
+    .ant-space {
+      width: 100%;
+      justify-content: space-between;
+
+      .ant-btn {
+        min-width: 120px;
+      }
+    }
+  }
+
+  ul {
+    margin: 8px 0;
+    padding-left: 24px;
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.8;
+    }
+  }
+
+  // Error state animation
+  .ant-form-item-has-error {
+    .ant-input,
+    .ant-input-password {
+      animation: shake 0.3s;
+    }
+  }
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+
+  // Success feedback
+  .ant-form-item-has-success {
+    .ant-input,
+    .ant-input-password {
+      border-color: #52c41a;
+    }
+  }
+
+  // Validating feedback
+  .ant-form-item-is-validating {
+    .ant-input,
+    .ant-input-password {
+      border-color: #1890ff;
+    }
+  }
+}
