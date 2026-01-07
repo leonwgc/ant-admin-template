@@ -4,6 +4,7 @@
  */
 
 import { create, StoreApi, UseBoundStore } from 'zustand';
+import { useMemo } from 'react';
 
 /**
  * Global state storage
@@ -12,6 +13,8 @@ const globalStates = new Map<string, UseBoundStore<StoreApi<unknown>>>();
 
 /**
  * Universal global state hook - supports both simple values and objects
+ * Performance optimized with selector pattern
+ *
  * @param key - Unique key for the state
  * @param initialState - Initial state (any type)
  * @returns [state, setState, resetState]
@@ -28,11 +31,6 @@ const globalStates = new Map<string, UseBoundStore<StoreApi<unknown>>>();
  *   email: 'john@example.com',
  * });
  * setUser({ name: 'Jane' }); // Partial update
- * setUser(prev => ({ ...prev, email: 'jane@example.com' }));
- *
- * // Array state
- * const [items, setItems] = useGlobalState('items', [1, 2, 3]);
- * setItems([...items, 4]);
  */
 export function useGlobalState<T>(
   key: string,
@@ -68,13 +66,68 @@ export function useGlobalState<T>(
   const store = globalStates.get(key) as UseBoundStore<
     StoreApi<{ value: T; setValue: (value: unknown) => void; reset: () => void }>
   >;
-  const state = store();
 
-  return [state.value, state.setValue, state.reset] as [
+  // Performance optimization: use selector to only subscribe to value
+  const value = store((state) => state.value);
+
+  // Memoize actions to prevent unnecessary re-renders
+  const setValue = useMemo(() => store.getState().setValue, [store]);
+  const reset = useMemo(() => store.getState().reset, [store]);
+
+  return [value, setValue, reset] as [
     T,
     (value: T extends Record<string, unknown> ? Partial<T> | ((prev: T) => T) : T | ((prev: T) => T)) => void,
     () => void
   ];
+}
+
+/**
+ * Advanced hook with custom selector for fine-grained subscriptions
+ * Only re-renders when selected value changes
+ *
+ * @example
+ * // Only subscribe to user name, not the whole user object
+ * const userName = useGlobalSelector('user', (state) => state.name);
+ *
+ * // Multiple values
+ * const { name, email } = useGlobalSelector(
+ *   'user',
+ *   (state) => ({ name: state.name, email: state.email })
+ * );
+ */
+export function useGlobalSelector<T, R>(
+  key: string,
+  selector: (state: T) => R
+): R {
+  const store = globalStates.get(key) as UseBoundStore<StoreApi<{ value: T }>>;
+
+  if (!store) {
+    throw new Error(`Global state with key "${key}" not found. Initialize it with useGlobalState first.`);
+  }
+
+  return store((state) => selector(state.value));
+}
+
+/**
+ * Hook to get setter function only (doesn't subscribe to state changes)
+ * Useful when you only need to update state without reading it
+ *
+ * @example
+ * const setCount = useGlobalSetter<number>('counter');
+ * setCount(5);
+ * setCount(prev => prev + 1);
+ */
+export function useGlobalSetter<T>(
+  key: string
+): (value: T extends Record<string, unknown> ? Partial<T> | ((prev: T) => T) : T | ((prev: T) => T)) => void {
+  const store = globalStates.get(key) as UseBoundStore<StoreApi<{ value: T; setValue: (value: unknown) => void }>>;
+
+  if (!store) {
+    throw new Error(`Global state with key "${key}" not found. Initialize it with useGlobalState first.`);
+  }
+
+  // Return memoized setter function to prevent re-renders
+  return useMemo(() => store.getState().setValue, [store]);
 }
 
 export default useGlobalState;

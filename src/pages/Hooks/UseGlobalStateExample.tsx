@@ -3,9 +3,9 @@
  * @author leon.wang
  */
 
-import React from 'react';
-import { Card, Button, Space, Input, Typography, Divider } from '@derbysoft/neat-design';
-import { useGlobalState } from '~/hooks/useGlobalState';
+import React, { useState } from 'react';
+import { Card, Button, Space, Input, Typography, Divider, Badge } from '@derbysoft/neat-design';
+import { useGlobalState, useGlobalSelector, useGlobalSetter } from '~/hooks/useGlobalState';
 import './UseGlobalStateExample.scss';
 
 const { Title, Paragraph, Text } = Typography;
@@ -220,12 +220,82 @@ const ShoppingCart: React.FC = () => {
   );
 };
 
+// Example 4: Performance optimization with useGlobalSelector
+let renderCountSelector = 0;
+const UserNameDisplay: React.FC = () => {
+  renderCountSelector++;
+  // Only subscribes to name field, won't re-render when email or age changes
+  const userName = useGlobalSelector<{ name: string; email: string; age: number }, string>(
+    'user',
+    (state) => state.name
+  );
+
+  return (
+    <Card title="Component C - Optimized Selector" className="use-global-state-example__card">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Badge count={renderCountSelector} style={{ backgroundColor: '#52c41a' }}>
+          <Text strong>Render Count</Text>
+        </Badge>
+        <div style={{ marginTop: 12 }}>
+          <Text>User Name (selector): </Text>
+          <Text strong style={{ fontSize: 18, color: '#1890ff' }}>{userName}</Text>
+        </div>
+        <Divider />
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          💡 This component only subscribes to the "name" field.
+          <br />
+          Try changing email or age in Component A - this won't re-render!
+        </Text>
+      </Space>
+    </Card>
+  );
+};
+
+// Example 5: Performance optimization with useGlobalSetter
+let renderCountSetter = 0;
+const CounterButtons: React.FC = () => {
+  renderCountSetter++;
+  // Only gets setter, doesn't subscribe to count changes - won't re-render
+  const setCount = useGlobalSetter<number>('counter');
+
+  return (
+    <Card title="Component C - Setter Only" className="use-global-state-example__card">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Badge count={renderCountSetter} style={{ backgroundColor: '#52c41a' }}>
+          <Text strong>Render Count</Text>
+        </Badge>
+        <Space style={{ marginTop: 12 }}>
+          <Button type="primary" onClick={() => setCount(prev => (prev as number) + 10)}>
+            +10
+          </Button>
+          <Button onClick={() => setCount(prev => (prev as number) * 3)}>
+            ×3
+          </Button>
+          <Button danger onClick={() => setCount(0)}>
+            Reset
+          </Button>
+        </Space>
+        <Divider />
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          💡 This component only updates state, doesn't read it.
+          <br />
+          Check Component A/B - it won't re-render when count changes!
+        </Text>
+      </Space>
+    </Card>
+  );
+};
+
 const UseGlobalStateExample: React.FC = () => {
+  const [showOptimized, setShowOptimized] = useState(false);
+
   return (
     <div className="use-global-state-example">
       <Title level={2}>useGlobalState Hook - 全局状态共享</Title>
       <Paragraph>
         基于 Zustand 实现的轻量级全局状态管理 Hook，支持跨组件状态共享，无需 Context 或 Provider。
+        <br />
+        <Text strong style={{ color: '#1890ff' }}>✨ 新增性能优化 Hooks：useGlobalSelector 和 useGlobalSetter</Text>
       </Paragraph>
 
       <Title level={3}>1. Simple Value - useGlobalState</Title>
@@ -235,6 +305,7 @@ const UseGlobalStateExample: React.FC = () => {
       <div className="use-global-state-example__row">
         <CounterComponentA />
         <CounterComponentB />
+        {showOptimized && <CounterButtons />}
       </div>
 
       <Divider style={{ margin: '32px 0' }} />
@@ -246,11 +317,36 @@ const UseGlobalStateExample: React.FC = () => {
       <div className="use-global-state-example__row">
         <UserComponentA />
         <UserComponentB />
+        {showOptimized && <UserNameDisplay />}
       </div>
 
       <Divider style={{ margin: '32px 0' }} />
 
-      <Title level={3}>3. Shopping Cart Example</Title>
+      <Title level={3}>3. Performance Optimization</Title>
+      <Paragraph>
+        <Text strong>优化重渲染：</Text>使用 <Text code>useGlobalSelector</Text> 和 <Text code>useGlobalSetter</Text> 减少不必要的组件重渲染
+      </Paragraph>
+      <Space style={{ marginBottom: 16 }}>
+        <Button
+          type="primary"
+          onClick={() => {
+            renderCountSelector = 0;
+            renderCountSetter = 0;
+            setShowOptimized(!showOptimized);
+          }}
+        >
+          {showOptimized ? 'Hide' : 'Show'} Optimized Components
+        </Button>
+        {showOptimized && (
+          <Text type="secondary">
+            观察 Render Count - 优化组件不会因为无关状态变化而重渲染
+          </Text>
+        )}
+      </Space>
+
+      <Divider style={{ margin: '32px 0' }} />
+
+      <Title level={3}>4. Shopping Cart Example</Title>
       <Paragraph>
         实际场景示例：购物车状态在商品列表和购物车组件间共享
       </Paragraph>
@@ -261,8 +357,8 @@ const UseGlobalStateExample: React.FC = () => {
 
       <Divider style={{ margin: '32px 0' }} />
 
-      <Card title="Usage Examples" className="use-global-state-example__card">
-        <Title level={5}>统一 API - 所有类型使用相同语法:</Title>
+      <Card title="API Reference" className="use-global-state-example__card">
+        <Title level={5}>1. useGlobalState - 基础 Hook</Title>
         <Paragraph>
           <pre className="use-global-state-example__code">
 {`import { useGlobalState } from '~/hooks/useGlobalState';
@@ -279,16 +375,61 @@ const [user, setUser, resetUser] = useGlobalState('user', {
   age: 25,
 });
 setUser({ name: 'Jane' });      // 部分更新（自动合并）
-setUser(prev => ({ ...prev, age: 26 })); // 函数式更新
+setUser(prev => ({ ...prev, age: 26 })); // 函数式更新`}
+          </pre>
+        </Paragraph>
 
-// 数组类型
-const [items, setItems] = useGlobalState('items', [1, 2, 3]);
-setItems([...items, 4]);        // 添加元素
-setItems(prev => prev.filter(x => x > 1)); // 过滤
+        <Title level={5}>2. useGlobalSelector - 细粒度订阅（性能优化）</Title>
+        <Paragraph>
+          <pre className="use-global-state-example__code">
+{`import { useGlobalSelector } from '~/hooks/useGlobalState';
 
-// 重置到初始值
-resetCount();
-resetUser();`}
+// 只订阅特定字段，其他字段变化不会触发重渲染
+const userName = useGlobalSelector('user', state => state.name);
+
+// 订阅多个字段
+const userInfo = useGlobalSelector('user', state => ({
+  name: state.name,
+  email: state.email
+}));
+
+// ⚡ 性能优势：只有 name 变化时才重渲染
+// 修改 age 或 email 字段不会影响此组件`}
+          </pre>
+        </Paragraph>
+
+        <Title level={5}>3. useGlobalSetter - 只写模式（性能优化）</Title>
+        <Paragraph>
+          <pre className="use-global-state-example__code">
+{`import { useGlobalSetter } from '~/hooks/useGlobalState';
+
+// 只获取 setter，不订阅状态变化
+const setCount = useGlobalSetter<number>('counter');
+const setUser = useGlobalSetter<UserType>('user');
+
+setCount(5);
+setCount(prev => prev + 1);
+setUser({ name: 'Jane' });
+
+// ⚡ 性能优势：状态变化不会导致此组件重渲染
+// 适用于只需要更新状态的场景（如工具栏按钮）`}
+          </pre>
+        </Paragraph>
+
+        <Title level={5}>性能对比:</Title>
+        <Paragraph>
+          <pre className="use-global-state-example__code">
+{`// ❌ 传统方式 - 每次状态变化都会重渲染
+const [user, setUser] = useGlobalState('user', initialUser);
+// 修改任何字段（name/email/age）都会触发重渲染
+
+// ✅ 优化方式 1 - 只订阅需要的字段
+const userName = useGlobalSelector('user', s => s.name);
+// 只有 name 变化才重渲染，email/age 变化不影响
+
+// ✅ 优化方式 2 - 只需要修改，不需要读取
+const setUser = useGlobalSetter('user');
+// 永远不会因为状态变化而重渲染`}
           </pre>
         </Paragraph>
 
@@ -302,6 +443,8 @@ resetUser();`}
           <li>✅ 无需 Provider 包裹</li>
           <li>✅ 按 key 隔离状态</li>
           <li>✅ 自动跨组件同步</li>
+          <li>✨ 细粒度订阅（useGlobalSelector）</li>
+          <li>✨ 只写模式优化（useGlobalSetter）</li>
         </ul>
       </Card>
     </div>
