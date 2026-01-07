@@ -3,9 +3,17 @@
  * @author leon.wang
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, Button, Space, Input, Typography, Divider, Badge } from '@derbysoft/neat-design';
-import { useGlobalState, useGlobalSelector, useGlobalSetter } from '~/hooks/useGlobalState';
+import {
+  useGlobalState,
+  useGlobalSelector,
+  useGlobalSetter,
+  getGlobalState,
+  setGlobalState,
+  subscribeGlobalState,
+  resetGlobalState,
+} from '~/hooks/useGlobalState';
 import './UseGlobalStateExample.scss';
 
 const { Title, Paragraph, Text } = Typography;
@@ -426,6 +434,142 @@ const SessionData: React.FC = () => {
   );
 };
 
+// Example 8: Non-React usage - Pure JavaScript/TypeScript
+const NonReactUsageExample: React.FC = () => {
+  const [counter] = useGlobalState('non-react-counter', 0);
+  const [logs, setLogs] = useState<string[]>([]);
+  const unsubscribeRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    // Subscribe to state changes
+    unsubscribeRef.current = subscribeGlobalState<number>('non-react-counter', (newValue, prevValue) => {
+      const log = `Counter changed: ${prevValue} → ${newValue}`;
+      setLogs((prev) => [...prev, log]);
+    });
+
+    return () => {
+      unsubscribeRef.current?.();
+    };
+  }, []);
+
+  // Simulate non-React code updating the state
+  const simulateServiceCall = () => {
+    // This could be in any utility function, service, or event handler
+    setTimeout(() => {
+      const current = getGlobalState<number>('non-react-counter') || 0;
+      setGlobalState('non-react-counter', current + 1);
+    }, 100);
+  };
+
+  const simulateMultipleUpdates = () => {
+    // Simulate rapid updates from external source
+    let count = 0;
+    const interval = setInterval(() => {
+      setGlobalState('non-react-counter', (prev: number) => prev + 1);
+      count++;
+      if (count >= 5) {
+        clearInterval(interval);
+      }
+    }, 200);
+  };
+
+  const handleReset = () => {
+    resetGlobalState('non-react-counter');
+    setLogs([]);
+  };
+
+  return (
+    <Card title="Non-React Usage (Pure JS/TS)" className="use-global-state-example__card">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          🔧 Use in utility functions, services, event handlers, timers, etc.
+        </Text>
+        <Divider />
+        <div>
+          <Text strong>Current Counter: </Text>
+          <Text style={{ fontSize: 18, color: '#1890ff' }}>{counter}</Text>
+        </div>
+        <Space>
+          <Button type="primary" onClick={simulateServiceCall}>
+            Simulate Service Call (+1)
+          </Button>
+          <Button onClick={simulateMultipleUpdates}>
+            Simulate Rapid Updates (+5)
+          </Button>
+          <Button danger onClick={handleReset}>
+            Reset & Clear Logs
+          </Button>
+        </Space>
+        <Divider />
+        <div>
+          <Text strong>Change Logs:</Text>
+          <div
+            style={{
+              maxHeight: 150,
+              overflowY: 'auto',
+              background: '#f5f5f5',
+              padding: 8,
+              borderRadius: 4,
+              marginTop: 8,
+            }}
+          >
+            {logs.length === 0 ? (
+              <Text type="secondary">No changes yet...</Text>
+            ) : (
+              logs.map((log, index) => (
+                <div key={index} style={{ fontSize: 12, fontFamily: 'monospace' }}>
+                  {log}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+        <Divider />
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          💡 Code example:
+        </Text>
+        <pre style={{ background: '#f5f5f5', padding: 12, borderRadius: 4, fontSize: 12 }}>
+          {`// In any utility or service file
+import { getGlobalState, setGlobalState } from '~/hooks/useGlobalState';
+
+// Get current value
+const count = getGlobalState<number>('counter');
+
+// Update value
+setGlobalState('counter', count + 1);
+
+// Subscribe to changes
+const unsubscribe = subscribeGlobalState('counter', (newVal, prevVal) => {
+  console.log('Changed:', prevVal, '->', newVal);
+});`}
+        </pre>
+      </Space>
+    </Card>
+  );
+};
+
+// Example 9: Display state from non-React updates
+const NonReactStateDisplay: React.FC = () => {
+  const [counter] = useGlobalState('non-react-counter', 0);
+
+  return (
+    <Card title="React Component (Auto Synced)" className="use-global-state-example__card">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          🔄 This component automatically updates when non-React code modifies the state
+        </Text>
+        <Divider />
+        <div style={{ textAlign: 'center', padding: '20px 0' }}>
+          <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1890ff' }}>{counter}</Text>
+        </div>
+        <Text type="secondary" style={{ textAlign: 'center' }}>
+          Counter value synchronized from non-React code
+        </Text>
+      </Space>
+    </Card>
+  );
+};
+
 const UseGlobalStateExample: React.FC = () => {
   const [showOptimized, setShowOptimized] = useState(false);
 
@@ -504,6 +648,17 @@ const UseGlobalStateExample: React.FC = () => {
       <div className="use-global-state-example__row">
         <ProductList />
         <ShoppingCart />
+      </div>
+
+      <Divider style={{ margin: '32px 0' }} />
+
+      <Title level={3}>6. Non-React Usage - Pure JavaScript/TypeScript</Title>
+      <Paragraph>
+        <Text strong>在非 React 代码中使用：</Text>工具函数、服务类、事件监听器、定时器等场景
+      </Paragraph>
+      <div className="use-global-state-example__row">
+        <NonReactUsageExample />
+        <NonReactStateDisplay />
       </div>
 
       <Divider style={{ margin: '32px 0' }} />
@@ -593,6 +748,47 @@ const [volatileData] = useGlobalState('volatile', { data: [] });
 // ⚡ none: 页面刷新后数据重置`}
           </pre>
         </Paragraph>
+
+        <Title level={5}>5. Non-React Usage - 纯 JS/TS 代码中使用</Title>
+        <Paragraph>
+          <pre className="use-global-state-example__code">
+            {`import {
+  getGlobalState,
+  setGlobalState,
+  subscribeGlobalState,
+  resetGlobalState
+} from '~/hooks/useGlobalState';
+
+// 1. 获取状态值
+const count = getGlobalState<number>('counter');
+const user = getGlobalState<UserType>('user');
+
+// 2. 设置状态值
+setGlobalState('counter', 5);
+setGlobalState('counter', prev => prev + 1);
+setGlobalState('user', { name: 'Jane' }); // 对象部分更新
+
+// 3. 订阅状态变化
+const unsubscribe = subscribeGlobalState<number>(
+  'counter',
+  (newValue, prevValue) => {
+    console.log(\`Changed from \${prevValue} to \${newValue}\`);
+  }
+);
+// 取消订阅
+unsubscribe();
+
+// 4. 重置状态
+resetGlobalState('counter');
+
+// 使用场景：
+// - 工具函数、服务类
+// - 事件监听器、WebSocket 回调
+// - 定时器任务
+// - 第三方库集成`}
+          </pre>
+        </Paragraph>
+
         <Title level={5}>性能对比:</Title>
         <Paragraph>
           <pre className="use-global-state-example__code">
@@ -612,17 +808,13 @@ const setUser = useGlobalSetter('user');
 
         <Title level={5}>特性:</Title>
         <ul>
-          <li>✅ 统一 API，不区分类型</li>
-          <li>✅ 对象类型自动支持部分更新</li>
-          <li>✅ 支持函数式更新</li>
-          <li>✅ 基于 Zustand，性能优秀</li>
-          <li>✅ TypeScript 类型安全</li>
-          <li>✅ 无需 Provider 包裹</li>
-          <li>✅ 按 key 隔离状态</li>
-          <li>✅ 自动跨组件同步</li>
-          <li>✨ 细粒度订阅（useGlobalSelector）</li>
-          <li>✨ 只写模式优化（useGlobalSetter）</li>
-          <li>💾 数据持久化（localStorage / sessionStorage）</li>
+          <li>🎯 <Text strong>统一 API</Text> - 自动识别类型，对象支持部分更新</li>
+          <li>⚡ <Text strong>性能优化</Text> - 细粒度订阅（useGlobalSelector）、只写模式（useGlobalSetter）</li>
+          <li>💾 <Text strong>数据持久化</Text> - 支持 localStorage / sessionStorage</li>
+          <li>🔧 <Text strong>非 React 支持</Text> - 可在工具函数、服务类、事件监听器中使用</li>
+          <li>✨ <Text strong>零配置</Text> - 无需 Provider、自动跨组件同步、按 key 隔离</li>
+          <li>🛡️ <Text strong>类型安全</Text> - 完整 TypeScript 支持、函数式更新</li>
+          <li>🚀 <Text strong>轻量高效</Text> - 基于 Zustand、内置性能优化</li>
         </ul>
       </Card>
     </div>
