@@ -13,6 +13,7 @@ import {
   message,
   Typography,
   Divider,
+  Checkbox,
 } from '@derbysoft/neat-design';
 import type { FormInstance } from '@derbysoft/neat-design';
 import './FormValidation.scss';
@@ -35,6 +36,8 @@ const FormValidation: React.FC = () => {
   const [loading2, setLoading2] = useState(false);
   const [loading3, setLoading3] = useState(false);
   const [loading4, setLoading4] = useState(false);
+
+  const isValidateFirst = Form.useWatch('isValidateFirst', form1);
 
   // Basic email validation
   const handleSubmit1 = async (values: { email: string }) => {
@@ -162,10 +165,21 @@ const FormValidation: React.FC = () => {
           className="form-validation__form"
         >
           <Form.Item
+            label="Simple Required Example"
+            name="isValidateFirst"
+            valuePropName="checked"
+          >
+            <Checkbox>validateFirst</Checkbox>
+          </Form.Item>
+          <Form.Item
             label="validateFirst Example"
-            name="nb"
-            validateFirst
+            name="validateFirst"
+            validateFirst={isValidateFirst}
             rules={[
+              {
+                required: true,
+                message: 'Please enter a value',
+              },
               {
                 max: 2,
                 message: 'Maximum length is 2',
@@ -177,6 +191,10 @@ const FormValidation: React.FC = () => {
               {
                 max: 4,
                 message: 'Maximum length is 4',
+              },
+              {
+                pattern: /^\d+$/,
+                message: 'Only numeric characters are allowed',
               },
             ]}
           >
