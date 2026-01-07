@@ -240,6 +240,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-ds-table',
         permissions: [],
       },
+      {
+        key: 'use-global-state',
+        label: 'useGlobalState',
+        route: '/app/hooks/use-global-state',
+        permissions: [],
+      },
     ],
   },
 

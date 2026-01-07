@@ -125,6 +125,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/verification-code-countdown': lazyLoad('pages/Hooks/VerificationCodeCountdown'),
   '/app/hooks/use-responsive': lazyLoad('pages/Hooks/UseResponsiveExample'),
   '/app/hooks/use-ds-table': lazyLoad('pages/Hooks/UseDsTableExample'),
+  '/app/hooks/use-global-state': lazyLoad('pages/Hooks/UseGlobalStateExample'),
 
   // JavaScript/Library Examples
   '/app/js/sortable-demo': lazyLoad('pages/Js/SortableDemo'),
