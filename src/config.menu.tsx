@@ -205,6 +205,12 @@ export const menus: MenuItem[] = [
     permissions: [],
     children: [
       {
+        key: 'use-global-state',
+        label: 'useGlobalState',
+        route: '/app/hooks/use-global-state',
+        permissions: [],
+      },
+      {
         key: 'use-transition',
         label: 'useTransition',
         route: '/app/hooks/use-transition',
@@ -238,12 +244,6 @@ export const menus: MenuItem[] = [
         key: 'use-ds-table',
         label: 'useDsTable',
         route: '/app/hooks/use-ds-table',
-        permissions: [],
-      },
-      {
-        key: 'use-global-state',
-        label: 'useGlobalState',
-        route: '/app/hooks/use-global-state',
         permissions: [],
       },
     ],
