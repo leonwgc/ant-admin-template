@@ -286,6 +286,146 @@ const CounterButtons: React.FC = () => {
   );
 };
 
+// Example 6: Persistent state with localStorage
+const PersistentSettings: React.FC = () => {
+  const [settings, setSettings] = useGlobalState(
+    'app-settings',
+    {
+      theme: 'light' as 'light' | 'dark',
+      language: 'en' as 'en' | 'zh',
+      notifications: true,
+    },
+    { storage: 'localStorage', storageKey: 'demo-app' }
+  );
+
+  return (
+    <Card title="Persistent Settings (localStorage)" className="use-global-state-example__card">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          🔄 These settings persist across page refreshes
+        </Text>
+        <Divider />
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <div>
+            <Text strong>Theme: </Text>
+            <Space>
+              <Button
+                type={settings.theme === 'light' ? 'primary' : undefined}
+                onClick={() => setSettings({ theme: 'light' })}
+              >
+                Light
+              </Button>
+              <Button
+                type={settings.theme === 'dark' ? 'primary' : undefined}
+                onClick={() => setSettings({ theme: 'dark' })}
+              >
+                Dark
+              </Button>
+            </Space>
+          </div>
+          <div>
+            <Text strong>Language: </Text>
+            <Space>
+              <Button
+                type={settings.language === 'en' ? 'primary' : undefined}
+                onClick={() => setSettings({ language: 'en' })}
+              >
+                English
+              </Button>
+              <Button
+                type={settings.language === 'zh' ? 'primary' : undefined}
+                onClick={() => setSettings({ language: 'zh' })}
+              >
+                中文
+              </Button>
+            </Space>
+          </div>
+          <div>
+            <Text strong>Notifications: </Text>
+            <Button
+              type={settings.notifications ? 'primary' : undefined}
+              onClick={() => setSettings({ notifications: !settings.notifications })}
+            >
+              {settings.notifications ? 'Enabled' : 'Disabled'}
+            </Button>
+          </div>
+        </Space>
+        <Divider />
+        <Text strong>Current Settings:</Text>
+        <pre style={{ background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+          {JSON.stringify(settings, null, 2)}
+        </pre>
+      </Space>
+    </Card>
+  );
+};
+
+// Example 7: Session-only state with sessionStorage
+const SessionData: React.FC = () => {
+  const [sessionInfo, setSessionInfo] = useGlobalState(
+    'session-info',
+    {
+      visitCount: 0,
+      lastVisit: new Date().toISOString(),
+      tabId: Math.random().toString(36).substring(7),
+    },
+    { storage: 'sessionStorage' }
+  );
+
+  return (
+    <Card title="Session Data (sessionStorage)" className="use-global-state-example__card">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          🕐 This data persists only during the browser session
+        </Text>
+        <Divider />
+        <div>
+          <Text strong>Visit Count: </Text>
+          <Text style={{ fontSize: 18, color: '#1890ff' }}>{sessionInfo.visitCount}</Text>
+        </div>
+        <div>
+          <Text strong>Tab ID: </Text>
+          <Text code>{sessionInfo.tabId}</Text>
+        </div>
+        <div>
+          <Text strong>Last Visit: </Text>
+          <Text type="secondary">{new Date(sessionInfo.lastVisit).toLocaleString()}</Text>
+        </div>
+        <Space style={{ marginTop: 12 }}>
+          <Button
+            type="primary"
+            onClick={() =>
+              setSessionInfo({
+                visitCount: sessionInfo.visitCount + 1,
+                lastVisit: new Date().toISOString(),
+              })
+            }
+          >
+            Record Visit
+          </Button>
+          <Button
+            onClick={() =>
+              setSessionInfo({
+                visitCount: 0,
+                lastVisit: new Date().toISOString(),
+                tabId: Math.random().toString(36).substring(7),
+              })
+            }
+          >
+            Reset Session
+          </Button>
+        </Space>
+        <Divider />
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          💡 Try refreshing the page - data persists!
+          <br />
+          Close the tab and reopen - data will be reset.
+        </Text>
+      </Space>
+    </Card>
+  );
+};
+
 const UseGlobalStateExample: React.FC = () => {
   const [showOptimized, setShowOptimized] = useState(false);
 
@@ -346,7 +486,18 @@ const UseGlobalStateExample: React.FC = () => {
 
       <Divider style={{ margin: '32px 0' }} />
 
-      <Title level={3}>4. Shopping Cart Example</Title>
+      <Title level={3}>4. Persistent State - localStorage & sessionStorage</Title>
+      <Paragraph>
+        <Text strong>数据持久化：</Text>使用 <Text code>storage</Text> 选项实现跨页面刷新的状态保存
+      </Paragraph>
+      <div className="use-global-state-example__row">
+        <PersistentSettings />
+        <SessionData />
+      </div>
+
+      <Divider style={{ margin: '32px 0' }} />
+
+      <Title level={3}>5. Shopping Cart Example</Title>
       <Paragraph>
         实际场景示例：购物车状态在商品列表和购物车组件间共享
       </Paragraph>
@@ -415,7 +566,33 @@ setUser({ name: 'Jane' });
 // 适用于只需要更新状态的场景（如工具栏按钮）`}
           </pre>
         </Paragraph>
+        <Title level={5}>4. Persistence - localStorage / sessionStorage</Title>
+        <Paragraph>
+          <pre className="use-global-state-example__code">
+            {`import { useGlobalState } from '~/hooks/useGlobalState';
 
+// localStorage - 持久化存储，跨浏览器会话
+const [settings, setSettings] = useGlobalState(
+  'settings',
+  { theme: 'dark', lang: 'en' },
+  { storage: 'localStorage', storageKey: 'my-app' }
+);
+
+// sessionStorage - 会话存储，仅在当前标签页有效
+const [tempData, setTempData] = useGlobalState(
+  'temp',
+  { count: 0 },
+  { storage: 'sessionStorage' }
+);
+
+// 无持久化（默认）
+const [volatileData] = useGlobalState('volatile', { data: [] });
+
+// 💾 localStorage: 关闭浏览器后数据仍存在
+// 🕐 sessionStorage: 关闭标签页后数据清除
+// ⚡ none: 页面刷新后数据重置`}
+          </pre>
+        </Paragraph>
         <Title level={5}>性能对比:</Title>
         <Paragraph>
           <pre className="use-global-state-example__code">
@@ -445,6 +622,7 @@ const setUser = useGlobalSetter('user');
           <li>✅ 自动跨组件同步</li>
           <li>✨ 细粒度订阅（useGlobalSelector）</li>
           <li>✨ 只写模式优化（useGlobalSetter）</li>
+          <li>💾 数据持久化（localStorage / sessionStorage）</li>
         </ul>
       </Card>
     </div>

@@ -4,6 +4,7 @@
  */
 
 import { create, StoreApi, UseBoundStore } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { useMemo } from 'react';
 
 /**
@@ -12,11 +13,33 @@ import { useMemo } from 'react';
 const globalStates = new Map<string, UseBoundStore<StoreApi<unknown>>>();
 
 /**
+ * Storage type for persistence
+ */
+export type StorageType = 'localStorage' | 'sessionStorage' | 'none';
+
+/**
+ * Options for useGlobalState
+ */
+export interface UseGlobalStateOptions {
+  /**
+   * Enable persistence and specify storage type
+   * @default 'none'
+   */
+  storage?: StorageType;
+  /**
+   * Custom storage key prefix
+   * @default 'global-state'
+   */
+  storageKey?: string;
+}
+
+/**
  * Universal global state hook - supports both simple values and objects
  * Performance optimized with selector pattern
  *
  * @param key - Unique key for the state
  * @param initialState - Initial state (any type)
+ * @param options - Configuration options including persistence
  * @returns [state, setState, resetState]
  *
  * @example
@@ -31,19 +54,35 @@ const globalStates = new Map<string, UseBoundStore<StoreApi<unknown>>>();
  *   email: 'john@example.com',
  * });
  * setUser({ name: 'Jane' }); // Partial update
+ *
+ * // With localStorage persistence
+ * const [settings, setSettings] = useGlobalState('settings', { theme: 'dark' }, {
+ *   storage: 'localStorage'
+ * });
+ *
+ * // With sessionStorage persistence
+ * const [tempData, setTempData] = useGlobalState('temp', { foo: 'bar' }, {
+ *   storage: 'sessionStorage',
+ *   storageKey: 'my-app'
+ * });
  */
 export function useGlobalState<T>(
   key: string,
-  initialState: T
+  initialState: T,
+  options?: UseGlobalStateOptions
 ): [
   T,
   (value: T extends Record<string, unknown> ? Partial<T> | ((prev: T) => T) : T | ((prev: T) => T)) => void,
   () => void
 ] {
+  const { storage = 'none', storageKey = 'global-state' } = options || {};
+
   if (!globalStates.has(key)) {
     const isObject = typeof initialState === 'object' && initialState !== null && !Array.isArray(initialState);
 
-    const store = create<{ value: T; setValue: (value: unknown) => void; reset: () => void }>((set) => ({
+    type StoreState = { value: T; setValue: (value: unknown) => void; reset: () => void };
+
+    const stateCreator = (set: (partial: Partial<StoreState> | ((state: StoreState) => Partial<StoreState>)) => void): StoreState => ({
       value: initialState,
       setValue: (value) => {
         if (typeof value === 'function') {
@@ -58,7 +97,24 @@ export function useGlobalState<T>(
         }
       },
       reset: () => set({ value: initialState }),
-    }));
+    });
+
+    let store: UseBoundStore<StoreApi<StoreState>>;
+
+    if (storage !== 'none') {
+      // Create store with persistence
+      const storageImpl = storage === 'localStorage' ? localStorage : sessionStorage;
+
+      store = create<StoreState>()(
+        persist(stateCreator, {
+          name: `${storageKey}-${key}`,
+          storage: createJSONStorage(() => storageImpl),
+        })
+      );
+    } else {
+      // Create store without persistence
+      store = create<StoreState>(stateCreator);
+    }
 
     globalStates.set(key, store as UseBoundStore<StoreApi<unknown>>);
   }
