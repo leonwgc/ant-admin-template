@@ -4,14 +4,27 @@
  */
 
 import React, { useState } from 'react';
-import { Form, Input, Button, Card, Space, message, Typography, Divider } from '@derbysoft/neat-design';
+import {
+  Form,
+  Input,
+  Button,
+  Card,
+  Space,
+  message,
+  Typography,
+  Divider,
+} from '@derbysoft/neat-design';
 import type { FormInstance } from '@derbysoft/neat-design';
 import './FormValidation.scss';
 
 const { Title, Paragraph, Text } = Typography;
 
 // Simulated occupied emails
-const OCCUPIED_EMAILS = ['test@example.com', 'admin@example.com', 'user@derbysoft.com'];
+const OCCUPIED_EMAILS = [
+  'test@example.com',
+  'admin@example.com',
+  'user@derbysoft.com',
+];
 
 const FormValidation: React.FC = () => {
   const [form1] = Form.useForm();
@@ -81,16 +94,24 @@ const FormValidation: React.FC = () => {
       return Promise.reject(new Error('Please enter your password'));
     }
     if (value.length < 8) {
-      return Promise.reject(new Error('Password must be at least 8 characters'));
+      return Promise.reject(
+        new Error('Password must be at least 8 characters')
+      );
     }
     if (!/[A-Z]/.test(value)) {
-      return Promise.reject(new Error('Password must contain at least one uppercase letter'));
+      return Promise.reject(
+        new Error('Password must contain at least one uppercase letter')
+      );
     }
     if (!/[a-z]/.test(value)) {
-      return Promise.reject(new Error('Password must contain at least one lowercase letter'));
+      return Promise.reject(
+        new Error('Password must contain at least one lowercase letter')
+      );
     }
     if (!/[0-9]/.test(value)) {
-      return Promise.reject(new Error('Password must contain at least one number'));
+      return Promise.reject(
+        new Error('Password must contain at least one number')
+      );
     }
     return Promise.resolve();
   };
@@ -104,7 +125,11 @@ const FormValidation: React.FC = () => {
     },
   });
 
-  const handleSubmit4 = async (values: { email: string; password: string; confirmPassword: string }) => {
+  const handleSubmit4 = async (values: {
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => {
     setLoading4(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -120,14 +145,15 @@ const FormValidation: React.FC = () => {
     <div className="form-validation">
       <Title level={2}>Form Validation Examples</Title>
       <Paragraph>
-        Comprehensive examples of form validation in Ant Design, including required fields, format
-        validation, async validation, and custom rules.
+        Comprehensive examples of form validation in Ant Design, including
+        required fields, format validation, async validation, and custom rules.
       </Paragraph>
 
       {/* Example 1: Basic Required & Format Validation */}
       <Card title="1. Basic Email Validation" className="form-validation__card">
         <Paragraph>
-          <Text strong>Features:</Text> Required field validation and email format check
+          <Text strong>Features:</Text> Required field validation and email
+          format check
         </Paragraph>
         <Form
           form={form1}
@@ -135,6 +161,28 @@ const FormValidation: React.FC = () => {
           onFinish={handleSubmit1}
           className="form-validation__form"
         >
+          <Form.Item
+            label="validateFirst Example"
+            name="nb"
+            validateFirst
+            rules={[
+              {
+                max: 2,
+                message: 'Maximum length is 2',
+              },
+              {
+                max: 3,
+                message: 'Maximum length is 3',
+              },
+              {
+                max: 4,
+                message: 'Maximum length is 4',
+              },
+            ]}
+          >
+            <Input placeholder="please input" size="large" />
+          </Form.Item>
+
           <Form.Item
             label="Email Address"
             name="email"
@@ -160,17 +208,26 @@ const FormValidation: React.FC = () => {
         <Paragraph>
           <Text strong>Try:</Text>
           <ul>
-            <li>Leave empty and submit (shows "Please enter your email address")</li>
-            <li>Enter invalid format like "test" (shows "Please enter a valid email address")</li>
+            <li>
+              Leave empty and submit (shows "Please enter your email address")
+            </li>
+            <li>
+              Enter invalid format like "test" (shows "Please enter a valid
+              email address")
+            </li>
             <li>Enter valid email like "test@example.com" (success)</li>
           </ul>
         </Paragraph>
       </Card>
 
       {/* Example 2: Custom Error Messages (Like the Screenshot) */}
-      <Card title="2. Work Email Validation (UI Design Example)" className="form-validation__card">
+      <Card
+        title="2. Work Email Validation (UI Design Example)"
+        className="form-validation__card"
+      >
         <Paragraph>
-          <Text strong>Features:</Text> Custom styled validation matching the provided screenshot
+          <Text strong>Features:</Text> Custom styled validation matching the
+          provided screenshot
         </Paragraph>
         <Form
           form={form2}
@@ -182,7 +239,10 @@ const FormValidation: React.FC = () => {
             label="Work Email"
             name="workEmail"
             rules={[
-              { required: true, message: 'Please enter your work email address.' },
+              {
+                required: true,
+                message: 'Please enter your work email address.',
+              },
               { type: 'email', message: 'Please enter a valid email address.' },
             ]}
           >
@@ -194,7 +254,12 @@ const FormValidation: React.FC = () => {
               <Button size="large" onClick={() => form2.resetFields()}>
                 Cancel
               </Button>
-              <Button type="primary" htmlType="submit" size="large" loading={loading2}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={loading2}
+              >
                 Next
               </Button>
             </Space>
@@ -203,15 +268,19 @@ const FormValidation: React.FC = () => {
 
         <Divider />
         <Paragraph>
-          <Text strong>Screenshot Simulation:</Text> This example matches the UI design in your
-          screenshot with custom error styling.
+          <Text strong>Screenshot Simulation:</Text> This example matches the UI
+          design in your screenshot with custom error styling.
         </Paragraph>
       </Card>
 
       {/* Example 3: Async Validation - Check Email Occupied */}
-      <Card title="3. Async Validation - Email Availability Check" className="form-validation__card">
+      <Card
+        title="3. Async Validation - Email Availability Check"
+        className="form-validation__card"
+      >
         <Paragraph>
-          <Text strong>Features:</Text> Asynchronous validation to check if email is already taken
+          <Text strong>Features:</Text> Asynchronous validation to check if
+          email is already taken
         </Paragraph>
         <Form
           form={form3}
@@ -261,16 +330,20 @@ const FormValidation: React.FC = () => {
             </li>
           </ul>
           <Text type="secondary">
-            Note: Validation is triggered on blur (when you leave the input field)
+            Note: Validation is triggered on blur (when you leave the input
+            field)
           </Text>
         </Paragraph>
       </Card>
 
       {/* Example 4: Complex Validation with Multiple Rules */}
-      <Card title="4. Complex Validation - Registration Form" className="form-validation__card">
+      <Card
+        title="4. Complex Validation - Registration Form"
+        className="form-validation__card"
+      >
         <Paragraph>
-          <Text strong>Features:</Text> Multiple validation rules including password strength and
-          confirmation
+          <Text strong>Features:</Text> Multiple validation rules including
+          password strength and confirmation
         </Paragraph>
         <Form
           form={form4}
@@ -336,7 +409,10 @@ const FormValidation: React.FC = () => {
       </Card>
 
       {/* Validation Rules Reference */}
-      <Card title="Validation Rules Reference" className="form-validation__card">
+      <Card
+        title="Validation Rules Reference"
+        className="form-validation__card"
+      >
         <Title level={5}>Common Rule Types:</Title>
         <Paragraph>
           <Text code>
@@ -378,16 +454,19 @@ const FormValidation: React.FC = () => {
             <Text code>rules</Text> - Array of validation rules
           </li>
           <li>
-            <Text code>validateTrigger</Text> - When to trigger validation (onChange, onBlur, etc.)
+            <Text code>validateTrigger</Text> - When to trigger validation
+            (onChange, onBlur, etc.)
           </li>
           <li>
             <Text code>hasFeedback</Text> - Show validation status icon
           </li>
           <li>
-            <Text code>dependencies</Text> - Re-validate when dependent fields change
+            <Text code>dependencies</Text> - Re-validate when dependent fields
+            change
           </li>
           <li>
-            <Text code>validateStatus</Text> - Manual control: 'success' | 'warning' | 'error' | 'validating'
+            <Text code>validateStatus</Text> - Manual control: 'success' |
+            'warning' | 'error' | 'validating'
           </li>
         </ul>
 
