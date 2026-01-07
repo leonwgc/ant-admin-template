@@ -65,6 +65,8 @@ export interface UseGlobalStateOptions {
  *   storage: 'sessionStorage',
  *   storageKey: 'my-app'
  * });
+ *
+ * // For non-React usage, see: getGlobalState, setGlobalState, subscribeGlobalState, resetGlobalState
  */
 export function useGlobalState<T>(
   key: string,
@@ -184,6 +186,95 @@ export function useGlobalSetter<T>(
 
   // Return memoized setter function to prevent re-renders
   return useMemo(() => store.getState().setValue, [store]);
+}
+
+/**
+ * Get global state value (for non-React usage)
+ * @example
+ * const count = getGlobalState<number>('counter');
+ */
+export function getGlobalState<T>(key: string): T | undefined {
+  const store = globalStates.get(key) as UseBoundStore<StoreApi<{ value: T }>>;
+  return store?.getState().value;
+}
+
+/**
+ * Set global state value (for non-React usage)
+ * @example
+ * setGlobalState('counter', 5);
+ * setGlobalState('counter', prev => prev + 1);
+ * setGlobalState('user', { name: 'Jane' }); // Partial update for objects
+ */
+export function setGlobalState<T>(
+  key: string,
+  value: T extends Record<string, unknown> ? Partial<T> | ((prev: T) => T) : T | ((prev: T) => T)
+): void {
+  const store = globalStates.get(key) as UseBoundStore<
+    StoreApi<{ value: T; setValue: (value: unknown) => void }>
+  >;
+
+  if (!store) {
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.warn(`Global state with key "${key}" not found. Initialize it with useGlobalState first.`);
+    }
+    return;
+  }
+
+  store.getState().setValue(value);
+}
+
+/**
+ * Subscribe to global state changes (for non-React usage)
+ * Returns unsubscribe function
+ * @example
+ * const unsubscribe = subscribeGlobalState('counter', (newValue, prevValue) => {
+ *   console.log('Counter changed from', prevValue, 'to', newValue);
+ * });
+ * // Later: unsubscribe();
+ */
+export function subscribeGlobalState<T>(
+  key: string,
+  callback: (newValue: T, prevValue: T) => void
+): () => void {
+  const store = globalStates.get(key) as UseBoundStore<StoreApi<{ value: T }>>;
+
+  if (!store) {
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.warn(`Global state with key "${key}" not found. Initialize it with useGlobalState first.`);
+    }
+    return () => {};
+  }
+
+  let prevValue = store.getState().value;
+
+  return store.subscribe((state) => {
+    const newValue = state.value;
+    if (newValue !== prevValue) {
+      callback(newValue, prevValue);
+      prevValue = newValue;
+    }
+  });
+}
+
+/**
+ * Reset global state to initial value (for non-React usage)
+ * @example
+ * resetGlobalState('counter');
+ */
+export function resetGlobalState(key: string): void {
+  const store = globalStates.get(key) as UseBoundStore<StoreApi<{ reset: () => void }>>;
+
+  if (!store) {
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.warn(`Global state with key "${key}" not found. Initialize it with useGlobalState first.`);
+    }
+    return;
+  }
+
+  store.getState().reset();
 }
 
 export default useGlobalState;
