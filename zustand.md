@@ -107,17 +107,18 @@ function App() {
 
 ```typescript
 // ❌ 每次都返回新对象 - 导致不必要的 re-render
-const user = store((state) => ({ 
-  name: state.user.name, 
-  email: state.user.email 
+const user = store((state) => ({
+  name: state.user.name,
+  email: state.user.email
 }));
 
-// ✅ 使用 shallow 比较
-import { shallow } from 'zustand/shallow';
-const user = store(
-  (state) => ({ name: state.user.name, email: state.user.email }),
-  shallow
-);
+// ✅ 使用 useShallow 进行浅比较
+import { useShallow } from 'zustand/react/shallow';
+
+const user = store(useShallow((state) => ({
+  name: state.user.name,
+  email: state.user.email
+})));
 
 // ✅ 或使用我们的 useGlobalSelector（已内置优化）
 const userName = useGlobalSelector('user', (state) => state.name);
@@ -167,12 +168,12 @@ export function create<T>(createState) {
   const listeners = new Set<Function>();
 
   const setState = (partial, replace) => {
-    const nextState = replace 
-      ? partial 
+    const nextState = replace
+      ? partial
       : Object.assign({}, state, partial);
-    
+
     if (Object.is(state, nextState)) return;
-    
+
     state = nextState;
     listeners.forEach(listener => listener(state));
   };
