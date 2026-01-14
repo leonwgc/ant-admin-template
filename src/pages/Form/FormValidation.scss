@@ -101,3 +101,9 @@
     }
   }
 }
+// Hide error message when focused
+.ds-form-item-focused {
+  .ds-form-item-explain-error {
+    display: none;
+  }
+}
