@@ -102,13 +102,15 @@
   }
 }
 // Hide error message when focused
-.ds-form-item-focused {
+.ds-form-item-focused,
+.ds-form-item:focus-within {
   .ds-form-item-explain-error {
     display: none;
   }
 }
 
-.ant-form-item-focused {
+.ant-form-item-focused,
+.ant-form-item:focus-within {
   .ant-form-item-explain-error {
     display: none;
   }
