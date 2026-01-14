@@ -24,7 +24,7 @@
     "@derbysoft/neat-design-illustrations": "^1.0.15",
     "@types/three": "^0.181.0",
     "ahooks": "^3.9.0",
-    "antd": "^5.26.7",
+    "antd": "^5.29.2",
     "axios": "^1.11.0",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
