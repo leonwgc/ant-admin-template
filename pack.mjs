@@ -16,7 +16,7 @@ run({
   rsConfig: {
     html: {
       template: './index.html',
-      title: 'Waw...',
+      title: 'React Neat Starter',
       favicon: './public/favicon.ico',
     },
     server: {
