@@ -205,12 +205,6 @@ export const menus: MenuItem[] = [
     permissions: [],
     children: [
       {
-        key: 'use-global-state',
-        label: 'useGlobalState',
-        route: '/app/hooks/use-global-state',
-        permissions: [],
-      },
-      {
         key: 'use-transition',
         label: 'useTransition',
         route: '/app/hooks/use-transition',
@@ -333,6 +327,12 @@ export const menus: MenuItem[] = [
         key: 'zustand-demo',
         label: 'Zustand',
         route: '/app/hooks/zustand-demo',
+        permissions: [],
+      },
+      {
+        key: 'use-global-state',
+        label: 'zustand-kit',
+        route: '/app/hooks/use-global-state',
         permissions: [],
       },
       {
