@@ -212,6 +212,18 @@ const FormValidation: React.FC = () => {
             <Input placeholder="Enter your email" size="large" />
           </Form.Item>
 
+          <Form.Item
+            label="Email Address Skip focus hiding Error"
+            name="email1"
+            className="skip"
+            rules={[
+              { required: true, message: 'Please enter your email address' },
+              { type: 'email', message: 'Please enter a valid email address' },
+            ]}
+          >
+            <Input placeholder="Enter your email" size="large" />
+          </Form.Item>
+
           <Form.Item>
             <Space>
               <Button type="primary" htmlType="submit" loading={loading1}>
