@@ -27,6 +27,8 @@ const OCCUPIED_EMAILS = [
   'user@derbysoft.com',
 ];
 
+const emailRegex = /^\S+@\S+\.\S+$/;
+
 const FormValidation: React.FC = () => {
   const [form1] = Form.useForm();
   const [form2] = Form.useForm();
@@ -38,6 +40,8 @@ const FormValidation: React.FC = () => {
   const [loading4, setLoading4] = useState(false);
 
   const isValidateFirst = Form.useWatch('isValidateFirst', form1);
+
+  const email2 = Form.useWatch('email2', form1);
 
   // Basic email validation
   const handleSubmit1 = async (values: { email: string }) => {
@@ -216,6 +220,29 @@ const FormValidation: React.FC = () => {
               { required: true, message: 'Please enter your email address' },
               { type: 'email', message: 'Please enter a valid email address' },
             ]}
+          >
+            <Input placeholder="Enter your email" size="large" />
+          </Form.Item>
+
+          <Form.Item
+            label="Email Address with help message"
+            name="email2"
+            className="skip"
+            validateTrigger={['onBlur', 'onChange']} // neat won't work
+            rules={[
+              {
+                required: true,
+                message: 'Please enter your email address',
+              },
+              {
+                type: 'email',
+                message: 'Please enter a valid email address',
+              },
+            ]}
+            help={
+              (email2 && emailRegex.test(email2)) || !email2 ? 'help' : void 0
+            }
+            tooltip="Tooltip: Please enter a valid email."
           >
             <Input placeholder="Enter your email" size="large" />
           </Form.Item>
