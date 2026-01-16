@@ -189,10 +189,6 @@ const FormValidation: React.FC = () => {
                 message: 'Maximum length is 3',
               },
               {
-                max: 4,
-                message: 'Maximum length is 4',
-              },
-              {
                 pattern: /^\d+$/,
                 message: 'Only numeric characters are allowed',
               },
@@ -202,7 +198,7 @@ const FormValidation: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            label="Email Address"
+            label="Email Address focus hiding Error"
             name="email"
             rules={[
               { required: true, message: 'Please enter your email address' },
