@@ -128,6 +128,8 @@ export interface FieldActions<T = string> {
     show: boolean;
     message: string | null;
   };
+  /** Render error message (returns JSX or null) */
+  renderError: (className?: string) => React.ReactNode;
 }
 
 /**
@@ -426,6 +428,17 @@ export function useFormField<T = string>(
   );
 
   /**
+   * Render error message (returns JSX or null)
+   */
+  const renderError = useCallback(
+    (className = 'form-field-error') => {
+      if (!touched || !invalid || !error) return null;
+      return <div className={className}>{error}</div>;
+    },
+    [touched, invalid, error]
+  );
+
+  /**
    * Cleanup on unmount
    */
   useEffect(() => {
@@ -460,5 +473,6 @@ export function useFormField<T = string>(
     getHTMLInputProps,
     getAntdInputProps,
     getErrorProps,
+    renderError,
   };
 }

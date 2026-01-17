@@ -86,9 +86,7 @@ const AsyncValidationExample: React.FC = () => {
             {...usernameField.getAntdInputProps()}
             suffix={usernameField.validating ? 'Validating...' : undefined}
           />
-          {usernameField.getErrorProps().show && (
-            <div className="form-field-hook__error">{usernameField.getErrorProps().message}</div>
-          )}
+          {usernameField.renderError('form-field-hook__error')}
         </div>
         <div className="form-field-hook__states">
           <Space wrap>
@@ -139,9 +137,7 @@ const PasswordStrengthExample: React.FC = () => {
             placeholder="Enter password"
             {...passwordField.getAntdInputProps()}
           />
-          {passwordField.getErrorProps().show && (
-            <div className="form-field-hook__error">{passwordField.getErrorProps().message}</div>
-          )}
+          {passwordField.renderError('form-field-hook__error')}
         </div>
         <div>
           <Text>Confirm Password:</Text>
@@ -149,9 +145,7 @@ const PasswordStrengthExample: React.FC = () => {
             placeholder="Confirm password"
             {...confirmPasswordField.getAntdInputProps()}
           />
-          {confirmPasswordField.getErrorProps().show && (
-            <div className="form-field-hook__error">{confirmPasswordField.getErrorProps().message}</div>
-          )}
+          {confirmPasswordField.renderError('form-field-hook__error')}
         </div>
       </Space>
     </Card>
@@ -211,9 +205,7 @@ const FormActionsExample: React.FC = () => {
             placeholder="Enter name"
             {...nameField.getAntdInputProps()}
           />
-          {nameField.getErrorProps().show && (
-            <div className="form-field-hook__error">{nameField.getErrorProps().message}</div>
-          )}
+          {nameField.renderError('form-field-hook__error')}
         </div>
         <div>
           <Text>Age:</Text>
@@ -221,9 +213,7 @@ const FormActionsExample: React.FC = () => {
             placeholder="Enter age"
             {...ageField.getAntdInputProps()}
           />
-          {ageField.getErrorProps().show && (
-            <div className="form-field-hook__error">{ageField.getErrorProps().message}</div>
-          )}
+          {ageField.renderError('form-field-hook__error')}
         </div>
         <Space>
           <Button type="primary" onClick={handleSubmit}>
@@ -268,9 +258,7 @@ const ValidateOnBlurExample: React.FC = () => {
             placeholder="Type and blur to validate"
             {...field.getAntdInputProps()}
           />
-          {field.getErrorProps().show && (
-            <div className="form-field-hook__error">{field.getErrorProps().message}</div>
-          )}
+          {field.renderError('form-field-hook__error')}
         </div>
         <div className="form-field-hook__states">
           <Space wrap>
@@ -314,9 +302,7 @@ const BuiltInValidatorsExample: React.FC = () => {
             placeholder="user@example.com"
             {...emailField.getAntdInputProps()}
           />
-          {emailField.getErrorProps().show && (
-            <div className="form-field-hook__error">{emailField.getErrorProps().message}</div>
-          )}
+          {emailField.renderError('form-field-hook__error')}
         </div>
         <div>
           <Text>Age (0-150):</Text>
@@ -324,9 +310,7 @@ const BuiltInValidatorsExample: React.FC = () => {
             placeholder="25"
             {...ageField.getAntdInputProps()}
           />
-          {ageField.getErrorProps().show && (
-            <div className="form-field-hook__error">{ageField.getErrorProps().message}</div>
-          )}
+          {ageField.renderError('form-field-hook__error')}
         </div>
         <div>
           <Text>Website URL:</Text>
@@ -334,9 +318,7 @@ const BuiltInValidatorsExample: React.FC = () => {
             placeholder="https://example.com"
             {...urlField.getAntdInputProps()}
           />
-          {urlField.getErrorProps().show && (
-            <div className="form-field-hook__error">{urlField.getErrorProps().message}</div>
-          )}
+          {urlField.renderError('form-field-hook__error')}
         </div>
       </Space>
     </Card>
@@ -472,29 +454,23 @@ const UltraSimplifiedExample: React.FC = () => {
   return (
     <Card title="Ultra Simplified Usage 🚀" className="form-field-hook__card">
       <Paragraph type="secondary">
-        Maximum simplification with <Text code>getAntdInputProps()</Text> and <Text code>getErrorProps()</Text>
+        Maximum simplification with <Text code>getAntdInputProps()</Text> and <Text code>renderError()</Text>
       </Paragraph>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
           <Text>Name:</Text>
           <Input placeholder="John Doe" {...nameField.getAntdInputProps()} />
-          {nameField.getErrorProps().show && (
-            <div className="form-field-hook__error">{nameField.getErrorProps().message}</div>
-          )}
+          {nameField.renderError('form-field-hook__error')}
         </div>
         <div>
           <Text>Email:</Text>
           <Input placeholder="john@example.com" {...emailField.getAntdInputProps()} />
-          {emailField.getErrorProps().show && (
-            <div className="form-field-hook__error">{emailField.getErrorProps().message}</div>
-          )}
+          {emailField.renderError('form-field-hook__error')}
         </div>
         <div>
           <Text>Phone:</Text>
           <Input placeholder="123-456-7890" {...phoneField.getAntdInputProps()} />
-          {phoneField.getErrorProps().show && (
-            <div className="form-field-hook__error">{phoneField.getErrorProps().message}</div>
-          )}
+          {phoneField.renderError('form-field-hook__error')}
         </div>
       </Space>
     </Card>
