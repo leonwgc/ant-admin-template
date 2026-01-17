@@ -195,8 +195,6 @@ export interface FieldActions<T = string> {
   };
   /** Render error message (returns JSX or null) */
   renderError: (className?: string) => React.ReactNode;
-  /** Check if field should show error (touched and has error) */
-  shouldShowError: () => boolean;
 }
 
 /**
@@ -259,7 +257,7 @@ export interface FieldConfig<T = string> extends UseFormFieldOptions<T> {
  *
  * // Method 2: Using getInputProps (for Select, DatePicker, etc.)
  * <Select {...emailField.getInputProps()} options={options} />
- * {emailField.shouldShowError() && <div className="error">{emailField.error}</div>}
+ * {emailField.renderError()}
  *
  * // Method 3: Manual control
  * <Input
@@ -551,13 +549,6 @@ export function useFormField<T = string>(
   );
 
   /**
-   * Check if field should show error
-   */
-  const shouldShowError = useCallback(() => {
-    return touched && invalid && !!error;
-  }, [touched, invalid, error]);
-
-  /**
    * Render error message (returns JSX or null)
    */
   const renderError = useCallback(
@@ -607,7 +598,6 @@ export function useFormField<T = string>(
     getHTMLInputProps,
     getAntdInputProps,
     renderError,
-    shouldShowError,
   };
 }
 

@@ -1287,10 +1287,6 @@ const FormFieldHook: React.FC = () => {
               <li>
                 <Text code>renderError()</Text> - Render error message
               </li>
-              <li>
-                <Text code>shouldShowError()</Text> - 🆕 Check if should show
-                error
-              </li>
             </ul>
           </Col>
           <Col xs={24} md={8}>
