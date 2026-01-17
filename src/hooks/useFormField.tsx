@@ -108,6 +108,26 @@ export interface FieldActions<T = string> {
     onBlur: () => void;
     onFocus: () => void;
   };
+  /** Get props for HTML input element (auto-extracts event.target.value) */
+  getHTMLInputProps: () => {
+    value: T;
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onBlur: () => void;
+    onFocus: () => void;
+  };
+  /** Get props for Ant Design Input component (includes status) */
+  getAntdInputProps: () => {
+    value: T;
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onBlur: () => void;
+    onFocus: () => void;
+    status?: 'error' | 'warning';
+  };
+  /** Get error display props */
+  getErrorProps: () => {
+    show: boolean;
+    message: string | null;
+  };
 }
 
 /**
@@ -366,6 +386,46 @@ export function useFormField<T = string>(
   );
 
   /**
+   * Get props for HTML input element (auto-extracts event.target.value)
+   */
+  const getHTMLInputProps = useCallback(
+    () => ({
+      value,
+      onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        handleChange(e.target.value as T),
+      onBlur: handleBlur,
+      onFocus: handleFocus,
+    }),
+    [value, handleChange, handleBlur, handleFocus]
+  );
+
+  /**
+   * Get props for Ant Design Input component (includes status)
+   */
+  const getAntdInputProps = useCallback(
+    () => ({
+      value,
+      onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        handleChange(e.target.value as T),
+      onBlur: handleBlur,
+      onFocus: handleFocus,
+      status: (touched && invalid ? 'error' : undefined) as 'error' | 'warning' | undefined,
+    }),
+    [value, handleChange, handleBlur, handleFocus, touched, invalid]
+  );
+
+  /**
+   * Get error display props
+   */
+  const getErrorProps = useCallback(
+    () => ({
+      show: touched && invalid,
+      message: error,
+    }),
+    [touched, invalid, error]
+  );
+
+  /**
    * Cleanup on unmount
    */
   useEffect(() => {
@@ -397,5 +457,8 @@ export function useFormField<T = string>(
     setError,
     setTouched,
     getInputProps,
+    getHTMLInputProps,
+    getAntdInputProps,
+    getErrorProps,
   };
 }

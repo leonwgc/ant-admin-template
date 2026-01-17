@@ -340,36 +340,30 @@ const BuiltInValidatorsExample: React.FC = () => {
           <Text>Email:</Text>
           <Input
             placeholder="user@example.com"
-            {...emailField.getInputProps()}
-            onChange={(e) => emailField.onChange(e.target.value)}
-            status={emailField.touched && emailField.invalid ? 'error' : undefined}
+            {...emailField.getAntdInputProps()}
           />
-          {emailField.touched && emailField.error && (
-            <div className="form-field-hook__error">{emailField.error}</div>
+          {emailField.getErrorProps().show && (
+            <div className="form-field-hook__error">{emailField.getErrorProps().message}</div>
           )}
         </div>
         <div>
           <Text>Age (0-150):</Text>
           <Input
             placeholder="25"
-            {...ageField.getInputProps()}
-            onChange={(e) => ageField.onChange(e.target.value)}
-            status={ageField.touched && ageField.invalid ? 'error' : undefined}
+            {...ageField.getAntdInputProps()}
           />
-          {ageField.touched && ageField.error && (
-            <div className="form-field-hook__error">{ageField.error}</div>
+          {ageField.getErrorProps().show && (
+            <div className="form-field-hook__error">{ageField.getErrorProps().message}</div>
           )}
         </div>
         <div>
           <Text>Website URL:</Text>
           <Input
             placeholder="https://example.com"
-            {...urlField.getInputProps()}
-            onChange={(e) => urlField.onChange(e.target.value)}
-            status={urlField.touched && urlField.invalid ? 'error' : undefined}
+            {...urlField.getAntdInputProps()}
           />
-          {urlField.touched && urlField.error && (
-            <div className="form-field-hook__error">{urlField.error}</div>
+          {urlField.getErrorProps().show && (
+            <div className="form-field-hook__error">{urlField.getErrorProps().message}</div>
           )}
         </div>
       </Space>
@@ -485,6 +479,57 @@ const CustomCompareExample: React.FC = () => {
 };
 
 /**
+ * Ultra simplified example - showing the most concise usage
+ */
+const UltraSimplifiedExample: React.FC = () => {
+  const nameField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.minLength(2)],
+  });
+
+  const emailField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.email()],
+  });
+
+  const phoneField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.pattern(/^\d{3}-\d{3}-\d{4}$/, 'Format: 123-456-7890')],
+  });
+
+  return (
+    <Card title="Ultra Simplified Usage 🚀" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Maximum simplification with <Text code>getAntdInputProps()</Text> and <Text code>getErrorProps()</Text>
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Text>Name:</Text>
+          <Input placeholder="John Doe" {...nameField.getAntdInputProps()} />
+          {nameField.getErrorProps().show && (
+            <div className="form-field-hook__error">{nameField.getErrorProps().message}</div>
+          )}
+        </div>
+        <div>
+          <Text>Email:</Text>
+          <Input placeholder="john@example.com" {...emailField.getAntdInputProps()} />
+          {emailField.getErrorProps().show && (
+            <div className="form-field-hook__error">{emailField.getErrorProps().message}</div>
+          )}
+        </div>
+        <div>
+          <Text>Phone:</Text>
+          <Input placeholder="123-456-7890" {...phoneField.getAntdInputProps()} />
+          {phoneField.getErrorProps().show && (
+            <div className="form-field-hook__error">{phoneField.getErrorProps().message}</div>
+          )}
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+/**
  * Main component
  */
 const FormFieldHook: React.FC = () => {
@@ -501,6 +546,9 @@ const FormFieldHook: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={12}>
           <BasicExample />
+        </Col>
+        <Col xs={24} lg={12}>
+          <UltraSimplifiedExample />
         </Col>
         <Col xs={24} lg={12}>
           <BuiltInValidatorsExample />
@@ -520,7 +568,7 @@ const FormFieldHook: React.FC = () => {
         <Col xs={24} lg={12}>
           <ValidateOnBlurExample />
         </Col>
-        <Col xs={24} lg={12}>
+        <Col xs={24}>
           <FormActionsExample />
         </Col>
       </Row>
@@ -552,7 +600,13 @@ const FormFieldHook: React.FC = () => {
               <li><Text code>validate</Text> - Manually trigger validation</li>
               <li><Text code>setError</Text> - Manually set error</li>
               <li><Text code>setTouched</Text> - Manually set touched state</li>
-              <li><Text code>getInputProps</Text> - 🆕 Get input props</li>
+            </ul>
+            <Title level={5} style={{ marginTop: 8 }}>Helper Methods:</Title>
+            <ul>
+              <li><Text code>getInputProps()</Text> - Basic input props</li>
+              <li><Text code>getHTMLInputProps()</Text> - 🆕 HTML input props</li>
+              <li><Text code>getAntdInputProps()</Text> - 🆕 Ant Design props</li>
+              <li><Text code>getErrorProps()</Text> - 🆕 Error display props</li>
             </ul>
           </Col>
           <Col xs={24} md={8}>
