@@ -38,14 +38,10 @@ const BasicExample: React.FC = () => {
         <div>
           <Input
             placeholder="Enter your email"
-            value={emailField.value}
-            onChange={(e) => emailField.onChange(e.target.value)}
-            onBlur={emailField.onBlur}
-            onFocus={emailField.onFocus}
-            status={emailField.touched && emailField.invalid ? 'error' : undefined}
+            {...emailField.getAntdInputProps()}
           />
-          {emailField.touched && emailField.error && (
-            <div className="form-field-hook__error">{emailField.error}</div>
+          {emailField.getErrorProps().show && (
+            <div className="form-field-hook__error">{emailField.getErrorProps().message}</div>
           )}
         </div>
         <div className="form-field-hook__states">
@@ -87,15 +83,11 @@ const AsyncValidationExample: React.FC = () => {
         <div>
           <Input
             placeholder="Enter username"
-            value={usernameField.value}
-            onChange={(e) => usernameField.onChange(e.target.value)}
-            onBlur={usernameField.onBlur}
-            onFocus={usernameField.onFocus}
-            status={usernameField.touched && usernameField.invalid ? 'error' : undefined}
+            {...usernameField.getAntdInputProps()}
             suffix={usernameField.validating ? 'Validating...' : undefined}
           />
-          {usernameField.touched && usernameField.error && (
-            <div className="form-field-hook__error">{usernameField.error}</div>
+          {usernameField.getErrorProps().show && (
+            <div className="form-field-hook__error">{usernameField.getErrorProps().message}</div>
           )}
         </div>
         <div className="form-field-hook__states">
@@ -145,28 +137,20 @@ const PasswordStrengthExample: React.FC = () => {
           <Text>Password:</Text>
           <Input.Password
             placeholder="Enter password"
-            value={passwordField.value}
-            onChange={(e) => passwordField.onChange(e.target.value)}
-            onBlur={passwordField.onBlur}
-            onFocus={passwordField.onFocus}
-            status={passwordField.touched && passwordField.invalid ? 'error' : undefined}
+            {...passwordField.getAntdInputProps()}
           />
-          {passwordField.touched && passwordField.error && (
-            <div className="form-field-hook__error">{passwordField.error}</div>
+          {passwordField.getErrorProps().show && (
+            <div className="form-field-hook__error">{passwordField.getErrorProps().message}</div>
           )}
         </div>
         <div>
           <Text>Confirm Password:</Text>
           <Input.Password
             placeholder="Confirm password"
-            value={confirmPasswordField.value}
-            onChange={(e) => confirmPasswordField.onChange(e.target.value)}
-            onBlur={confirmPasswordField.onBlur}
-            onFocus={confirmPasswordField.onFocus}
-            status={confirmPasswordField.touched && confirmPasswordField.invalid ? 'error' : undefined}
+            {...confirmPasswordField.getAntdInputProps()}
           />
-          {confirmPasswordField.touched && confirmPasswordField.error && (
-            <div className="form-field-hook__error">{confirmPasswordField.error}</div>
+          {confirmPasswordField.getErrorProps().show && (
+            <div className="form-field-hook__error">{confirmPasswordField.getErrorProps().message}</div>
           )}
         </div>
       </Space>
@@ -225,28 +209,20 @@ const FormActionsExample: React.FC = () => {
           <Text>Name:</Text>
           <Input
             placeholder="Enter name"
-            value={nameField.value}
-            onChange={(e) => nameField.onChange(e.target.value)}
-            onBlur={nameField.onBlur}
-            onFocus={nameField.onFocus}
-            status={nameField.touched && nameField.invalid ? 'error' : undefined}
+            {...nameField.getAntdInputProps()}
           />
-          {nameField.touched && nameField.error && (
-            <div className="form-field-hook__error">{nameField.error}</div>
+          {nameField.getErrorProps().show && (
+            <div className="form-field-hook__error">{nameField.getErrorProps().message}</div>
           )}
         </div>
         <div>
           <Text>Age:</Text>
           <Input
             placeholder="Enter age"
-            value={ageField.value}
-            onChange={(e) => ageField.onChange(e.target.value)}
-            onBlur={ageField.onBlur}
-            onFocus={ageField.onFocus}
-            status={ageField.touched && ageField.invalid ? 'error' : undefined}
+            {...ageField.getAntdInputProps()}
           />
-          {ageField.touched && ageField.error && (
-            <div className="form-field-hook__error">{ageField.error}</div>
+          {ageField.getErrorProps().show && (
+            <div className="form-field-hook__error">{ageField.getErrorProps().message}</div>
           )}
         </div>
         <Space>
@@ -290,14 +266,10 @@ const ValidateOnBlurExample: React.FC = () => {
         <div>
           <Input
             placeholder="Type and blur to validate"
-            value={field.value}
-            onChange={(e) => field.onChange(e.target.value)}
-            onBlur={field.onBlur}
-            onFocus={field.onFocus}
-            status={field.touched && field.invalid ? 'error' : undefined}
+            {...field.getAntdInputProps()}
           />
-          {field.touched && field.error && (
-            <div className="form-field-hook__error">{field.error}</div>
+          {field.getErrorProps().show && (
+            <div className="form-field-hook__error">{field.getErrorProps().message}</div>
           )}
         </div>
         <div className="form-field-hook__states">
