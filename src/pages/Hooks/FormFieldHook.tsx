@@ -835,25 +835,21 @@ const EditFormExample: React.FC = () => {
 const MultipleFieldsExample: React.FC = () => {
   const { fields, form } = useFormFields({
     username: {
-      initialValue: '',
       rules: [
         validators.required('Username is required'),
         validators.minLength(3),
       ],
     },
     email: {
-      initialValue: '',
       rules: [validators.required('Email is required'), validators.email()],
     },
     password: {
-      initialValue: '',
       rules: [
         validators.required('Password is required'),
         validators.minLength(6, 'At least 6 characters'),
       ],
     },
     age: {
-      initialValue: '',
       rules: [
         validators.number('Must be a number'),
         validators.min(18, 'Must be at least 18'),
@@ -943,11 +939,18 @@ const MultipleFieldsExample: React.FC = () => {
           </Col>
         </Row>
         <Space>
-          <Button type="primary" onClick={handleSubmit}>
+          <Button
+            type="primary"
+            onClick={handleSubmit}
+            disabled={form.isDisabled()}
+          >
             Submit All
           </Button>
           <Button onClick={handleReset}>Reset All</Button>
           <Button onClick={handleLoadSample}>Load Sample</Button>
+          <Button onClick={() => form.setDisabled(!form.isDisabled())}>
+            Toggle Form Disabled
+          </Button>
         </Space>
         <div className="form-field-hook__states">
           <Space wrap>
@@ -956,6 +959,9 @@ const MultipleFieldsExample: React.FC = () => {
             </Tag>
             <Tag color={form.isValid() ? 'green' : 'red'}>
               Form Valid: {String(form.isValid())}
+            </Tag>
+            <Tag color={form.isDisabled() ? 'red' : 'green'}>
+              Form Disabled: {String(form.isDisabled())}
             </Tag>
           </Space>
         </div>

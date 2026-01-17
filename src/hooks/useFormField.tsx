@@ -622,6 +622,10 @@ export interface FormActions<T extends Record<string, unknown>> {
   getErrors: () => Partial<Record<keyof T, string | null>>;
   /** Set initial values (useful for edit forms) */
   setInitialValues: (values: Partial<T>) => void;
+  /** Set disabled state for all fields */
+  setDisabled: (disabled: boolean) => void;
+  /** Check if all fields are disabled */
+  isDisabled: () => boolean;
 }
 
 /**
@@ -720,6 +724,17 @@ export function useFormFields<T extends Record<string, unknown>>(
     ) as Partial<Record<keyof T, string | null>>;
   }, [fields, fieldNames]);
 
+  const setDisabled = useCallback(
+    (disabled: boolean) => {
+      fieldNames.forEach((name) => fields[name].setDisabled(disabled));
+    },
+    [fields, fieldNames]
+  );
+
+  const isDisabled = useCallback((): boolean => {
+    return fieldNames.every((name) => fields[name].disabled);
+  }, [fields, fieldNames]);
+
   const form: FormActions<T> = useMemo(
     () => ({
       validateAll,
@@ -730,8 +745,21 @@ export function useFormFields<T extends Record<string, unknown>>(
       isDirty,
       isValid,
       getErrors,
+      setDisabled,
+      isDisabled,
     }),
-    [validateAll, resetAll, getValues, setValues, setInitialValues, isDirty, isValid, getErrors]
+    [
+      validateAll,
+      resetAll,
+      getValues,
+      setValues,
+      setInitialValues,
+      isDirty,
+      isValid,
+      getErrors,
+      setDisabled,
+      isDisabled,
+    ]
   );
 
   return { fields, form };
