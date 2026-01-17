@@ -17,8 +17,13 @@ import {
   DatePicker,
   Checkbox,
 } from '@derbysoft/neat-design';
-import { useFormField, validators, useFormFields } from '../../hooks/useFormField';
+import {
+  useFormField,
+  validators,
+  useFormFields,
+} from '../../hooks/useFormField';
 import './FormFieldHook.scss';
+import { useMount } from 'ahooks';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -564,9 +569,13 @@ const SelectDateExample: React.FC = () => {
   });
 
   return (
-    <Card title="Select & DatePicker Components" className="form-field-hook__card">
+    <Card
+      title="Select & DatePicker Components"
+      className="form-field-hook__card"
+    >
       <Paragraph type="secondary">
-        Using <Text code>getInputProps()</Text> for components that directly receive value
+        Using <Text code>getInputProps()</Text> for components that directly
+        receive value
       </Paragraph>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
@@ -637,7 +646,8 @@ const DisabledStateExample: React.FC = () => {
   });
 
   const handleSubmit = async () => {
-    const isValid = await usernameField.validate() && await emailField.validate();
+    const isValid =
+      (await usernameField.validate()) && (await emailField.validate());
 
     if (isValid) {
       setIsSubmitting(true);
@@ -661,12 +671,18 @@ const DisabledStateExample: React.FC = () => {
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
           <Text>Username:</Text>
-          <Input {...usernameField.getAntdInputProps()} placeholder="Enter username" />
+          <Input
+            {...usernameField.getAntdInputProps()}
+            placeholder="Enter username"
+          />
           {usernameField.renderError('form-field-hook__error')}
         </div>
         <div>
           <Text>Email:</Text>
-          <Input {...emailField.getAntdInputProps()} placeholder="Enter email" />
+          <Input
+            {...emailField.getAntdInputProps()}
+            placeholder="Enter email"
+          />
           {emailField.renderError('form-field-hook__error')}
         </div>
         <Button type="primary" loading={isSubmitting} onClick={handleSubmit}>
@@ -692,7 +708,11 @@ const DisabledStateExample: React.FC = () => {
  */
 const EditFormExample: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState<{ name: string; email: string; bio: string } | null>(null);
+  const [userData, setUserData] = useState<{
+    name: string;
+    email: string;
+    bio: string;
+  } | null>(null);
 
   const nameField = useFormField({
     initialValue: '',
@@ -730,9 +750,10 @@ const EditFormExample: React.FC = () => {
   };
 
   const handleSave = async () => {
-    const isValid = await nameField.validate() &&
-                     await emailField.validate() &&
-                     await bioField.validate();
+    const isValid =
+      (await nameField.validate()) &&
+      (await emailField.validate()) &&
+      (await bioField.validate());
 
     if (isValid) {
       alert('Data saved successfully!');
@@ -748,7 +769,8 @@ const EditFormExample: React.FC = () => {
   return (
     <Card title="Edit Form (setInitialValue)" className="form-field-hook__card">
       <Paragraph type="secondary">
-        Use <Text code>setInitialValue()</Text> to load data from API and track changes
+        Use <Text code>setInitialValue()</Text> to load data from API and track
+        changes
       </Paragraph>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         {!userData ? (
@@ -769,21 +791,24 @@ const EditFormExample: React.FC = () => {
             </div>
             <div>
               <Text>Bio:</Text>
-              <Input.TextArea
-                {...bioField.getAntdInputProps()}
-                rows={3}
-              />
+              <Input.TextArea {...bioField.getAntdInputProps()} rows={3} />
               {bioField.renderError('form-field-hook__error')}
             </div>
             <Space>
-              <Button type="primary" onClick={handleSave} disabled={!hasChanges}>
+              <Button
+                type="primary"
+                onClick={handleSave}
+                disabled={!hasChanges}
+              >
                 Save Changes
               </Button>
-              <Button onClick={() => {
-                nameField.reset();
-                emailField.reset();
-                bioField.reset();
-              }}>
+              <Button
+                onClick={() => {
+                  nameField.reset();
+                  emailField.reset();
+                  bioField.reset();
+                }}
+              >
                 Reset
               </Button>
             </Space>
@@ -811,7 +836,10 @@ const MultipleFieldsExample: React.FC = () => {
   const { fields, form } = useFormFields({
     username: {
       initialValue: '',
-      rules: [validators.required('Username is required'), validators.minLength(3)],
+      rules: [
+        validators.required('Username is required'),
+        validators.minLength(3),
+      ],
     },
     email: {
       initialValue: '',
@@ -862,33 +890,55 @@ const MultipleFieldsExample: React.FC = () => {
     });
   };
 
+  useMount(() => {
+    form.setInitialValues({
+      username: 'leon',
+      email: 'leonwgc@gmail.com',
+      password: 'password123',
+      age: '18',
+    });
+  });
+
   return (
     <Card title="useFormFields Hook 🔥" className="form-field-hook__card">
       <Paragraph type="secondary">
-        Use <Text code>useFormFields</Text> to manage multiple fields at once with form-level actions
+        Use <Text code>useFormFields</Text> to manage multiple fields at once
+        with form-level actions
       </Paragraph>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <Row gutter={16}>
           <Col span={12}>
             <Text>Username:</Text>
-            <Input {...fields.username.getAntdInputProps()} placeholder="Enter username" />
+            <Input
+              {...fields.username.getAntdInputProps()}
+              placeholder="Enter username"
+            />
             {fields.username.renderError('form-field-hook__error')}
           </Col>
           <Col span={12}>
             <Text>Email:</Text>
-            <Input {...fields.email.getAntdInputProps()} placeholder="Enter email" />
+            <Input
+              {...fields.email.getAntdInputProps()}
+              placeholder="Enter email"
+            />
             {fields.email.renderError('form-field-hook__error')}
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Text>Password:</Text>
-            <Input.Password {...fields.password.getAntdInputProps()} placeholder="Enter password" />
+            <Input.Password
+              {...fields.password.getAntdInputProps()}
+              placeholder="Enter password"
+            />
             {fields.password.renderError('form-field-hook__error')}
           </Col>
           <Col span={12}>
             <Text>Age:</Text>
-            <Input {...fields.age.getAntdInputProps()} placeholder="Enter age" />
+            <Input
+              {...fields.age.getAntdInputProps()}
+              placeholder="Enter age"
+            />
             {fields.age.renderError('form-field-hook__error')}
           </Col>
         </Row>
@@ -934,7 +984,7 @@ const ConditionalValidationExample: React.FC = () => {
       // Conditional validation
       validators.custom(
         (value) => !agreeToTerms || value.includes('@'),
-        'Valid email required when terms are accepted'
+        'Valid email required when terms are accepted',
       ),
     ],
   });
@@ -947,7 +997,10 @@ const ConditionalValidationExample: React.FC = () => {
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
           <Text>Email:</Text>
-          <Input {...emailField.getAntdInputProps()} placeholder="Enter email" />
+          <Input
+            {...emailField.getAntdInputProps()}
+            placeholder="Enter email"
+          />
           {emailField.renderError('form-field-hook__error')}
         </div>
         <Checkbox
@@ -997,7 +1050,14 @@ const ValidatorsCompositionExample: React.FC = () => {
   };
 
   const strength = getStrength();
-  const strengthText = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'][strength];
+  const strengthText = [
+    'Very Weak',
+    'Weak',
+    'Fair',
+    'Good',
+    'Strong',
+    'Very Strong',
+  ][strength];
 
   return (
     <Card title="Validators Composition" className="form-field-hook__card">
@@ -1007,7 +1067,10 @@ const ValidatorsCompositionExample: React.FC = () => {
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
           <Text>Strong Password:</Text>
-          <Input.Password {...passwordField.getAntdInputProps()} placeholder="Enter password" />
+          <Input.Password
+            {...passwordField.getAntdInputProps()}
+            placeholder="Enter password"
+          />
           {passwordField.renderError('form-field-hook__error')}
         </div>
         <div>
@@ -1018,19 +1081,41 @@ const ValidatorsCompositionExample: React.FC = () => {
         <Card size="small" type="inner">
           <Text type="secondary">Requirements:</Text>
           <ul style={{ margin: '8px 0', paddingLeft: '20px' }}>
-            <li style={{ color: passwordField.value.length >= 8 ? 'green' : 'inherit' }}>
+            <li
+              style={{
+                color: passwordField.value.length >= 8 ? 'green' : 'inherit',
+              }}
+            >
               At least 8 characters
             </li>
-            <li style={{ color: /[A-Z]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+            <li
+              style={{
+                color: /[A-Z]/.test(passwordField.value) ? 'green' : 'inherit',
+              }}
+            >
               Contains uppercase letter
             </li>
-            <li style={{ color: /[a-z]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+            <li
+              style={{
+                color: /[a-z]/.test(passwordField.value) ? 'green' : 'inherit',
+              }}
+            >
               Contains lowercase letter
             </li>
-            <li style={{ color: /[0-9]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+            <li
+              style={{
+                color: /[0-9]/.test(passwordField.value) ? 'green' : 'inherit',
+              }}
+            >
               Contains number
             </li>
-            <li style={{ color: /[!@#$%^&*]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+            <li
+              style={{
+                color: /[!@#$%^&*]/.test(passwordField.value)
+                  ? 'green'
+                  : 'inherit',
+              }}
+            >
               Contains special character (!@#$%^&*)
             </li>
           </ul>
@@ -1195,7 +1280,8 @@ const FormFieldHook: React.FC = () => {
                 <Text code>renderError()</Text> - Render error message
               </li>
               <li>
-                <Text code>shouldShowError()</Text> - 🆕 Check if should show error
+                <Text code>shouldShowError()</Text> - 🆕 Check if should show
+                error
               </li>
             </ul>
           </Col>
