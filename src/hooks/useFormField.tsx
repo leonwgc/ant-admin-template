@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 
 /**
  * Validation rule type - can be synchronous or asynchronous
@@ -11,6 +11,51 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 export type ValidationRule<T = string> = (
   value: T
 ) => string | null | undefined | Promise<string | null | undefined>;
+
+/**
+ * Common validation rules
+ */
+export const validators = {
+  required: (message = 'This field is required') => (value: string) =>
+    !value || !value.trim() ? message : null,
+
+  email: (message = 'Invalid email format') => (value: string) =>
+    value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? message : null,
+
+  minLength: (min: number, message?: string) => (value: string) =>
+    value && value.length < min ? message || `Minimum ${min} characters` : null,
+
+  maxLength: (max: number, message?: string) => (value: string) =>
+    value && value.length > max ? message || `Maximum ${max} characters` : null,
+
+  pattern: (regex: RegExp, message: string) => (value: string) =>
+    value && !regex.test(value) ? message : null,
+
+  min: (min: number, message?: string) => (value: string | number) => {
+    const num = typeof value === 'string' ? parseFloat(value) : value;
+    return !isNaN(num) && num < min ? message || `Minimum value is ${min}` : null;
+  },
+
+  max: (max: number, message?: string) => (value: string | number) => {
+    const num = typeof value === 'string' ? parseFloat(value) : value;
+    return !isNaN(num) && num > max ? message || `Maximum value is ${max}` : null;
+  },
+
+  url: (message = 'Invalid URL format') => (value: string) => {
+    try {
+      if (value) new URL(value);
+      return null;
+    } catch {
+      return message;
+    }
+  },
+
+  number: (message = 'Must be a number') => (value: string) =>
+    value && isNaN(Number(value)) ? message : null,
+
+  integer: (message = 'Must be an integer') => (value: string) =>
+    value && !Number.isInteger(Number(value)) ? message : null,
+};
 
 /**
  * Field state interface
@@ -56,6 +101,13 @@ export interface FieldActions<T = string> {
   setError: (error: string | null) => void;
   /** Mark field as touched */
   setTouched: (touched: boolean) => void;
+  /** Get props for input component (simplified usage) */
+  getInputProps: () => {
+    value: T;
+    onChange: (value: T) => void;
+    onBlur: () => void;
+    onFocus: () => void;
+  };
 }
 
 /**
@@ -72,6 +124,10 @@ export interface UseFormFieldOptions<T = string> {
   validateOnBlur?: boolean;
   /** Debounce delay for validation in milliseconds (default: 0) */
   validateDebounce?: number;
+  /** Transform value before setting (e.g., trim, lowercase) */
+  transform?: (value: T) => T;
+  /** Custom comparison function for dirty state (default: strict equality) */
+  compareWith?: (a: T, b: T) => boolean;
   /** Callback fired when value changes */
   onValueChange?: (value: T) => void;
   /** Callback fired when validation status changes */
@@ -122,6 +178,8 @@ export function useFormField<T = string>(
     validateOnChange = true,
     validateOnBlur = true,
     validateDebounce = 0,
+    transform,
+    compareWith,
     onValueChange,
     onValidationChange,
   } = options;
@@ -136,8 +194,14 @@ export function useFormField<T = string>(
   const validateTimeoutRef = useRef<NodeJS.Timeout>();
   const validationCounterRef = useRef(0);
 
-  // Calculate derived states
-  const dirty = value !== initialValueRef.current;
+  // Calculate derived states with memoization
+  const dirty = useMemo(() => {
+    if (compareWith) {
+      return !compareWith(value, initialValueRef.current);
+    }
+    return value !== initialValueRef.current;
+  }, [value, compareWith]);
+
   const pristine = !dirty;
   const invalid = error !== null;
   const valid = !invalid && !validating;
@@ -210,17 +274,18 @@ export function useFormField<T = string>(
    */
   const handleChange = useCallback(
     (newValue: T) => {
-      setValue(newValue);
+      const transformedValue = transform ? transform(newValue) : newValue;
+      setValue(transformedValue);
 
       if (onValueChange) {
-        onValueChange(newValue);
+        onValueChange(transformedValue);
       }
 
       if (validateOnChange) {
-        triggerValidation(newValue);
+        triggerValidation(transformedValue);
       }
     },
-    [validateOnChange, triggerValidation, onValueChange]
+    [validateOnChange, triggerValidation, onValueChange, transform]
   );
 
   /**
@@ -277,13 +342,27 @@ export function useFormField<T = string>(
    */
   const handleSetValue = useCallback(
     (newValue: T) => {
-      setValue(newValue);
+      const transformedValue = transform ? transform(newValue) : newValue;
+      setValue(transformedValue);
 
       if (onValueChange) {
-        onValueChange(newValue);
+        onValueChange(transformedValue);
       }
     },
-    [onValueChange]
+    [onValueChange, transform]
+  );
+
+  /**
+   * Get props for input component (simplified usage)
+   */
+  const getInputProps = useCallback(
+    () => ({
+      value,
+      onChange: handleChange,
+      onBlur: handleBlur,
+      onFocus: handleFocus,
+    }),
+    [value, handleChange, handleBlur, handleFocus]
   );
 
   /**
@@ -317,5 +396,6 @@ export function useFormField<T = string>(
     validate,
     setError,
     setTouched,
+    getInputProps,
   };
 }

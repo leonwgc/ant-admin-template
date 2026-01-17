@@ -5,13 +5,13 @@
 
 import React, { useState } from 'react';
 import { Input, Button, Space, Card, Typography, Row, Col, Tag } from '@derbysoft/neat-design';
-import { useFormField } from '../../hooks/useFormField';
+import { useFormField, validators } from '../../hooks/useFormField';
 import './FormFieldHook.scss';
 
 const { Title, Paragraph, Text } = Typography;
 
 /**
- * Common validation rules
+ * Common validation rules (legacy - now can use built-in validators)
  */
 const validationRules = {
   required: (value: string) => (!value || !value.trim() ? 'This field is required' : null),
@@ -327,6 +327,179 @@ const ValidateOnBlurExample: React.FC = () => {
 };
 
 /**
+ * Built-in validators example
+ */
+const BuiltInValidatorsExample: React.FC = () => {
+  const emailField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.email()],
+  });
+
+  const ageField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.number(), validators.min(0), validators.max(150)],
+  });
+
+  const urlField = useFormField({
+    initialValue: '',
+    rules: [validators.url()],
+  });
+
+  return (
+    <Card title="Built-in Validators (Simplified)" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Use built-in validators for common scenarios - cleaner and more maintainable
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Text>Email:</Text>
+          <Input
+            placeholder="user@example.com"
+            {...emailField.getInputProps()}
+            onChange={(e) => emailField.onChange(e.target.value)}
+            status={emailField.touched && emailField.invalid ? 'error' : undefined}
+          />
+          {emailField.touched && emailField.error && (
+            <div className="form-field-hook__error">{emailField.error}</div>
+          )}
+        </div>
+        <div>
+          <Text>Age (0-150):</Text>
+          <Input
+            placeholder="25"
+            {...ageField.getInputProps()}
+            onChange={(e) => ageField.onChange(e.target.value)}
+            status={ageField.touched && ageField.invalid ? 'error' : undefined}
+          />
+          {ageField.touched && ageField.error && (
+            <div className="form-field-hook__error">{ageField.error}</div>
+          )}
+        </div>
+        <div>
+          <Text>Website URL:</Text>
+          <Input
+            placeholder="https://example.com"
+            {...urlField.getInputProps()}
+            onChange={(e) => urlField.onChange(e.target.value)}
+            status={urlField.touched && urlField.invalid ? 'error' : undefined}
+          />
+          {urlField.touched && urlField.error && (
+            <div className="form-field-hook__error">{urlField.error}</div>
+          )}
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+/**
+ * Transform example
+ */
+const TransformExample: React.FC = () => {
+  const usernameField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.minLength(3)],
+    transform: (value: string) => value.toLowerCase().trim(), // Auto lowercase and trim
+  });
+
+  const phoneField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.pattern(/^\d{3}-\d{3}-\d{4}$/, 'Format: 123-456-7890')],
+    transform: (value: string) => {
+      // Auto format phone number
+      const digits = value.replace(/\D/g, '');
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+      return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+    },
+  });
+
+  return (
+    <Card title="Value Transform" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Auto-transform input values (trim, lowercase, format, etc.)
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Text>Username (auto lowercase & trim):</Text>
+          <Input
+            placeholder="JohnDoe"
+            value={usernameField.value}
+            onChange={(e) => usernameField.onChange(e.target.value)}
+            onBlur={usernameField.onBlur}
+            onFocus={usernameField.onFocus}
+            status={usernameField.touched && usernameField.invalid ? 'error' : undefined}
+          />
+          {usernameField.touched && usernameField.error && (
+            <div className="form-field-hook__error">{usernameField.error}</div>
+          )}
+          <Text type="secondary">Stored value: {usernameField.value}</Text>
+        </div>
+        <div>
+          <Text>Phone (auto format):</Text>
+          <Input
+            placeholder="1234567890"
+            value={phoneField.value}
+            onChange={(e) => phoneField.onChange(e.target.value)}
+            onBlur={phoneField.onBlur}
+            onFocus={phoneField.onFocus}
+            status={phoneField.touched && phoneField.invalid ? 'error' : undefined}
+          />
+          {phoneField.touched && phoneField.error && (
+            <div className="form-field-hook__error">{phoneField.error}</div>
+          )}
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+/**
+ * Custom compare example
+ */
+const CustomCompareExample: React.FC = () => {
+  const tagsField = useFormField<string>({
+    initialValue: 'react,vue,angular',
+    rules: [validators.required()],
+    // Custom comparison - compare sorted arrays
+    compareWith: (a, b) => {
+      const arrA = a.split(',').map(s => s.trim()).sort();
+      const arrB = b.split(',').map(s => s.trim()).sort();
+      return JSON.stringify(arrA) === JSON.stringify(arrB);
+    },
+  });
+
+  return (
+    <Card title="Custom Comparison (compareWith)" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Custom logic for determining dirty state. Here, tag order doesn't matter.
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <div>
+          <Text>Tags (comma-separated):</Text>
+          <Input
+            placeholder="react,vue,angular"
+            value={tagsField.value}
+            onChange={(e) => tagsField.onChange(e.target.value)}
+            onBlur={tagsField.onBlur}
+            onFocus={tagsField.onFocus}
+          />
+          <Paragraph type="secondary" style={{ marginTop: 8 }}>
+            Try: "vue,react,angular" - still pristine because order doesn't matter
+          </Paragraph>
+        </div>
+        <div className="form-field-hook__states">
+          <Space wrap>
+            <Tag color={tagsField.dirty ? 'orange' : undefined}>Dirty: {String(tagsField.dirty)}</Tag>
+            <Tag color={tagsField.pristine ? 'green' : undefined}>Pristine: {String(tagsField.pristine)}</Tag>
+          </Space>
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+/**
  * Main component
  */
 const FormFieldHook: React.FC = () => {
@@ -345,22 +518,31 @@ const FormFieldHook: React.FC = () => {
           <BasicExample />
         </Col>
         <Col xs={24} lg={12}>
+          <BuiltInValidatorsExample />
+        </Col>
+        <Col xs={24} lg={12}>
           <AsyncValidationExample />
+        </Col>
+        <Col xs={24} lg={12}>
+          <TransformExample />
         </Col>
         <Col xs={24} lg={12}>
           <PasswordStrengthExample />
         </Col>
         <Col xs={24} lg={12}>
+          <CustomCompareExample />
+        </Col>
+        <Col xs={24} lg={12}>
           <ValidateOnBlurExample />
         </Col>
-        <Col xs={24}>
+        <Col xs={24} lg={12}>
           <FormActionsExample />
         </Col>
       </Row>
 
       <Card title="Features" className="form-field-hook__card" style={{ marginTop: 16 }}>
         <Row gutter={16}>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={8}>
             <Title level={5}>Field States:</Title>
             <ul>
               <li><Text code>value</Text> - Current field value</li>
@@ -374,7 +556,7 @@ const FormFieldHook: React.FC = () => {
               <li><Text code>visited</Text> - Field has been focused at least once</li>
             </ul>
           </Col>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={8}>
             <Title level={5}>Actions:</Title>
             <ul>
               <li><Text code>onChange</Text> - Handle value changes</li>
@@ -385,6 +567,27 @@ const FormFieldHook: React.FC = () => {
               <li><Text code>validate</Text> - Manually trigger validation</li>
               <li><Text code>setError</Text> - Manually set error</li>
               <li><Text code>setTouched</Text> - Manually set touched state</li>
+              <li><Text code>getInputProps</Text> - 🆕 Get input props</li>
+            </ul>
+          </Col>
+          <Col xs={24} md={8}>
+            <Title level={5}>New Features:</Title>
+            <ul>
+              <li><Text code>validators</Text> - 🆕 Built-in validation rules</li>
+              <li><Text code>transform</Text> - 🆕 Auto-transform values</li>
+              <li><Text code>compareWith</Text> - 🆕 Custom dirty comparison</li>
+              <li><Text code>getInputProps()</Text> - 🆕 Simplified props binding</li>
+            </ul>
+            <Title level={5} style={{ marginTop: 16 }}>Built-in Validators:</Title>
+            <ul style={{ fontSize: '12px' }}>
+              <li><Text code>required()</Text></li>
+              <li><Text code>email()</Text></li>
+              <li><Text code>minLength(n)</Text></li>
+              <li><Text code>maxLength(n)</Text></li>
+              <li><Text code>pattern(regex, msg)</Text></li>
+              <li><Text code>min(n)</Text> / <Text code>max(n)</Text></li>
+              <li><Text code>url()</Text></li>
+              <li><Text code>number()</Text> / <Text code>integer()</Text></li>
             </ul>
           </Col>
         </Row>
