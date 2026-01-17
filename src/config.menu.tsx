@@ -240,6 +240,12 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-ds-table',
         permissions: [],
       },
+      {
+        key: 'use-form-field',
+        label: 'useFormField',
+        route: '/app/hooks/use-form-field',
+        permissions: [],
+      },
     ],
   },
 
