@@ -106,10 +106,16 @@
   .ds-form-item-explain-error {
     display: none;
   }
+  .ds-form-item-explain {
+    visibility: hidden;
+  }
 }
 
 .ant-form-item:focus-within:not(.skip) {
   .ant-form-item-explain-error {
     display: none;
+  }
+  .ant-form-item-explain {
+    visibility: hidden;
   }
 }

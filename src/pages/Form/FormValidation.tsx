@@ -102,22 +102,22 @@ const FormValidation: React.FC = () => {
     }
     if (value.length < 8) {
       return Promise.reject(
-        new Error('Password must be at least 8 characters')
+        new Error('Password must be at least 8 characters'),
       );
     }
     if (!/[A-Z]/.test(value)) {
       return Promise.reject(
-        new Error('Password must contain at least one uppercase letter')
+        new Error('Password must contain at least one uppercase letter'),
       );
     }
     if (!/[a-z]/.test(value)) {
       return Promise.reject(
-        new Error('Password must contain at least one lowercase letter')
+        new Error('Password must contain at least one lowercase letter'),
       );
     }
     if (!/[0-9]/.test(value)) {
       return Promise.reject(
-        new Error('Password must contain at least one number')
+        new Error('Password must contain at least one number'),
       );
     }
     return Promise.resolve();
@@ -227,7 +227,6 @@ const FormValidation: React.FC = () => {
           <Form.Item
             label="Email Address with help message"
             name="email2"
-            className="skip"
             validateTrigger={['onBlur', 'onChange']} // neat won't work
             rules={[
               {
@@ -239,9 +238,10 @@ const FormValidation: React.FC = () => {
                 message: 'Please enter a valid email address',
               },
             ]}
-            help={
-              (email2 && emailRegex.test(email2)) || !email2 ? 'help' : void 0
-            }
+            // help={
+            //   (email2 && emailRegex.test(email2)) || !email2 ? 'help' : void 0
+            // }
+            help="this is the help message"
             tooltip="Tooltip: Please enter a valid email."
           >
             <Input placeholder="Enter your email" size="large" />
