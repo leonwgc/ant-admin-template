@@ -10,27 +10,22 @@ import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
  */
 export type ValidationRule<T = string> = (
   value: T,
-  fieldName?: string
+  fieldName?: string,
 ) => string | null | undefined | Promise<string | null | undefined>;
-
-/**
- * Compose multiple validation rules into one
- * @example
- * const emailRules = composeRules(validators.required(), validators.email());
- */
-export const composeRules = <T = string>(
-  ...rules: ValidationRule<T>[]
-): ValidationRule<T>[] => rules;
 
 /**
  * Common validation rules
  */
 export const validators = {
-  required: (message = 'This field is required') => (value: string) =>
-    !value || !value.trim() ? message : null,
+  required:
+    (message = 'This field is required') =>
+    (value: string) =>
+      !value || !value.trim() ? message : null,
 
-  email: (message = 'Invalid email format') => (value: string) =>
-    value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? message : null,
+  email:
+    (message = 'Invalid email format') =>
+    (value: string) =>
+      value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? message : null,
 
   minLength: (min: number, message?: string) => (value: string) =>
     value && value.length < min ? message || `Minimum ${min} characters` : null,
@@ -43,28 +38,38 @@ export const validators = {
 
   min: (min: number, message?: string) => (value: string | number) => {
     const num = typeof value === 'string' ? parseFloat(value) : value;
-    return !isNaN(num) && num < min ? message || `Minimum value is ${min}` : null;
+    return !isNaN(num) && num < min
+      ? message || `Minimum value is ${min}`
+      : null;
   },
 
   max: (max: number, message?: string) => (value: string | number) => {
     const num = typeof value === 'string' ? parseFloat(value) : value;
-    return !isNaN(num) && num > max ? message || `Maximum value is ${max}` : null;
+    return !isNaN(num) && num > max
+      ? message || `Maximum value is ${max}`
+      : null;
   },
 
-  url: (message = 'Invalid URL format') => (value: string) => {
-    try {
-      if (value) new URL(value);
-      return null;
-    } catch {
-      return message;
-    }
-  },
+  url:
+    (message = 'Invalid URL format') =>
+    (value: string) => {
+      try {
+        if (value) new URL(value);
+        return null;
+      } catch {
+        return message;
+      }
+    },
 
-  number: (message = 'Must be a number') => (value: string) =>
-    value && isNaN(Number(value)) ? message : null,
+  number:
+    (message = 'Must be a number') =>
+    (value: string) =>
+      value && isNaN(Number(value)) ? message : null,
 
-  integer: (message = 'Must be an integer') => (value: string) =>
-    value && !Number.isInteger(Number(value)) ? message : null,
+  integer:
+    (message = 'Must be an integer') =>
+    (value: string) =>
+      value && !Number.isInteger(Number(value)) ? message : null,
 
   /**
    * Validate that two fields match (e.g., password confirmation)
@@ -88,10 +93,10 @@ export const validators = {
   /**
    * Custom validation with async support
    */
-  custom:
+  validate:
     <T,>(
       validator: (value: T) => boolean | Promise<boolean>,
-      message: string
+      message: string,
     ): ValidationRule<T> =>
     async (value: T) => {
       const isValid = await Promise.resolve(validator(value));
@@ -101,8 +106,10 @@ export const validators = {
   /**
    * Validate phone number format
    */
-  phone: (message = 'Invalid phone number') => (value: string) =>
-    value && !/^[\d\s\-+()]{7,}$/.test(value) ? message : null,
+  phone:
+    (message = 'Invalid phone number') =>
+    (value: string) =>
+      value && !/^[\d\s\-+()]{7,}$/.test(value) ? message : null,
 };
 
 /**
@@ -168,7 +175,9 @@ export interface FieldActions<T = string> {
   /** Get props for HTML input element (auto-extracts event.target.value) */
   getHTMLInputProps: () => {
     value: T;
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
     onBlur: () => void;
     onFocus: () => void;
     disabled: boolean;
@@ -176,7 +185,9 @@ export interface FieldActions<T = string> {
   /** Get props for Ant Design / Neat Design Input component (includes status) */
   getAntdInputProps: () => {
     value: T;
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
     onBlur: () => void;
     onFocus: () => void;
     status?: 'error' | 'warning';
@@ -291,7 +302,7 @@ export interface FieldConfig<T = string> extends UseFormFieldOptions<T> {
  * };
  */
 export function useFormField<T = string>(
-  options: UseFormFieldOptions<T> = {}
+  options: UseFormFieldOptions<T> = {},
 ): FieldState<T> & FieldActions<T> {
   const {
     initialValue = '' as T,
@@ -363,7 +374,7 @@ export function useFormField<T = string>(
         return 'Validation error occurred';
       }
     },
-    [rules]
+    [rules],
   );
 
   /**
@@ -390,7 +401,7 @@ export function useFormField<T = string>(
         validateTimeoutRef.current = setTimeout(validate, validateDebounce);
       }
     },
-    [runValidation, validateDebounce, onValidationChange]
+    [runValidation, validateDebounce, onValidationChange],
   );
 
   /**
@@ -410,7 +421,7 @@ export function useFormField<T = string>(
         triggerValidation(transformedValue);
       }
     },
-    [disabled, validateOnChange, triggerValidation, onValueChange, transform]
+    [disabled, validateOnChange, triggerValidation, onValueChange, transform],
   );
 
   /**
@@ -486,7 +497,7 @@ export function useFormField<T = string>(
         onValueChange(transformedValue);
       }
     },
-    [onValueChange, transform]
+    [onValueChange, transform],
   );
 
   /**
@@ -500,7 +511,7 @@ export function useFormField<T = string>(
       onFocus: handleFocus,
       disabled,
     }),
-    [value, handleChange, handleBlur, handleFocus, disabled]
+    [value, handleChange, handleBlur, handleFocus, disabled],
   );
 
   /**
@@ -509,13 +520,14 @@ export function useFormField<T = string>(
   const getHTMLInputProps = useCallback(
     () => ({
       value,
-      onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        handleChange(e.target.value as T),
+      onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      ) => handleChange(e.target.value as T),
       onBlur: handleBlur,
       onFocus: handleFocus,
       disabled,
     }),
-    [value, handleChange, handleBlur, handleFocus, disabled]
+    [value, handleChange, handleBlur, handleFocus, disabled],
   );
 
   /**
@@ -524,14 +536,18 @@ export function useFormField<T = string>(
   const getAntdInputProps = useCallback(
     () => ({
       value,
-      onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        handleChange(e.target.value as T),
+      onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      ) => handleChange(e.target.value as T),
       onBlur: handleBlur,
       onFocus: handleFocus,
-      status: (touched && invalid ? 'error' : undefined) as 'error' | 'warning' | undefined,
+      status: (touched && invalid ? 'error' : undefined) as
+        | 'error'
+        | 'warning'
+        | undefined,
       disabled,
     }),
-    [value, handleChange, handleBlur, handleFocus, touched, invalid, disabled]
+    [value, handleChange, handleBlur, handleFocus, touched, invalid, disabled],
   );
 
   /**
@@ -546,10 +562,10 @@ export function useFormField<T = string>(
    */
   const renderError = useCallback(
     (className = 'form-field-error') => {
-      if (!touched || !invalid || !error) return null;
+      if (!touched || !invalid || !error || focused) return null;
       return <div className={className}>{error}</div>;
     },
-    [touched, invalid, error]
+    [touched, invalid, error, focused],
   );
 
   /**
@@ -658,9 +674,9 @@ export interface FormActions<T extends Record<string, unknown>> {
  * }}>Submit</Button>
  * ```
  */
-export function useFormFields<T extends Record<string, unknown>>(
-  config: { [K in keyof T]: UseFormFieldOptions<T[K]> }
-): {
+export function useFormFields<T extends Record<string, unknown>>(config: {
+  [K in keyof T]: UseFormFieldOptions<T[K]>;
+}): {
   fields: FieldCollection<T>;
   form: FormActions<T>;
 } {
@@ -676,7 +692,9 @@ export function useFormFields<T extends Record<string, unknown>>(
   const fields = Object.fromEntries(fieldEntries) as FieldCollection<T>;
 
   const validateAll = useCallback(async (): Promise<boolean> => {
-    const results = await Promise.all(fieldNames.map((name) => fields[name].validate()));
+    const results = await Promise.all(
+      fieldNames.map((name) => fields[name].validate()),
+    );
     return results.every((valid) => valid);
   }, [fields, fieldNames]);
 
@@ -685,7 +703,9 @@ export function useFormFields<T extends Record<string, unknown>>(
   }, [fields, fieldNames]);
 
   const getValues = useCallback((): T => {
-    return Object.fromEntries(fieldNames.map((name) => [name, fields[name].value])) as T;
+    return Object.fromEntries(
+      fieldNames.map((name) => [name, fields[name].value]),
+    ) as T;
   }, [fields, fieldNames]);
 
   const setValues = useCallback(
@@ -696,7 +716,7 @@ export function useFormFields<T extends Record<string, unknown>>(
         }
       });
     },
-    [fields]
+    [fields],
   );
 
   const setInitialValues = useCallback(
@@ -707,7 +727,7 @@ export function useFormFields<T extends Record<string, unknown>>(
         }
       });
     },
-    [fields]
+    [fields],
   );
 
   const isDirty = useCallback((): boolean => {
@@ -720,7 +740,7 @@ export function useFormFields<T extends Record<string, unknown>>(
 
   const getErrors = useCallback((): Partial<Record<keyof T, string | null>> => {
     return Object.fromEntries(
-      fieldNames.map((name) => [name, fields[name].error])
+      fieldNames.map((name) => [name, fields[name].error]),
     ) as Partial<Record<keyof T, string | null>>;
   }, [fields, fieldNames]);
 
@@ -728,7 +748,7 @@ export function useFormFields<T extends Record<string, unknown>>(
     (disabled: boolean) => {
       fieldNames.forEach((name) => fields[name].setDisabled(disabled));
     },
-    [fields, fieldNames]
+    [fields, fieldNames],
   );
 
   const isDisabled = useCallback((): boolean => {
@@ -759,7 +779,7 @@ export function useFormFields<T extends Record<string, unknown>>(
       getErrors,
       setDisabled,
       isDisabled,
-    ]
+    ],
   );
 
   return { fields, form };

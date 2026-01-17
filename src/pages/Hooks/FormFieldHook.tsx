@@ -555,12 +555,14 @@ const UltraSimplifiedExample: React.FC = () => {
 const SelectDateExample: React.FC = () => {
   const categoryField = useFormField<string | undefined>({
     initialValue: undefined,
-    rules: [validators.custom((value) => !!value, 'Please select a category')],
+    rules: [
+      validators.validate((value) => !!value, 'Please select a category'),
+    ],
   });
 
   const birthDateField = useFormField({
     initialValue: null,
-    rules: [validators.custom((value) => !!value, 'Please select a date')],
+    rules: [validators.validate((value) => !!value, 'Please select a date')],
   });
 
   const countryField = useFormField<string | undefined>({
@@ -988,7 +990,7 @@ const ConditionalValidationExample: React.FC = () => {
       validators.required('Email is required'),
       validators.email(),
       // Conditional validation
-      validators.custom(
+      validators.validate(
         (value) => !agreeToTerms || value.includes('@'),
         'Valid email required when terms are accepted',
       ),
@@ -1359,7 +1361,7 @@ const FormFieldHook: React.FC = () => {
                 <Text code>oneOf()</Text> - 🆕 Value in allowed list
               </li>
               <li>
-                <Text code>custom()</Text> - 🆕 Custom validation
+                <Text code>validate()</Text> - 🆕 Custom validation
               </li>
               <li>
                 <Text code>phone()</Text> - 🆕 Phone number
