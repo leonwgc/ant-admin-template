@@ -9,8 +9,18 @@ import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
  * Validation rule type - can be synchronous or asynchronous
  */
 export type ValidationRule<T = string> = (
-  value: T
+  value: T,
+  fieldName?: string
 ) => string | null | undefined | Promise<string | null | undefined>;
+
+/**
+ * Compose multiple validation rules into one
+ * @example
+ * const emailRules = composeRules(validators.required(), validators.email());
+ */
+export const composeRules = <T = string>(
+  ...rules: ValidationRule<T>[]
+): ValidationRule<T>[] => rules;
 
 /**
  * Common validation rules
@@ -55,6 +65,44 @@ export const validators = {
 
   integer: (message = 'Must be an integer') => (value: string) =>
     value && !Number.isInteger(Number(value)) ? message : null,
+
+  /**
+   * Validate that two fields match (e.g., password confirmation)
+   * @example validators.matches(() => passwordField.value, 'Passwords must match')
+   */
+  matches:
+    <T,>(getOtherValue: () => T, message = 'Values do not match') =>
+    (value: T) =>
+      value !== getOtherValue() ? message : null,
+
+  /**
+   * Validate value is one of the allowed values
+   */
+  oneOf:
+    <T,>(allowedValues: T[], message?: string) =>
+    (value: T) =>
+      !allowedValues.includes(value)
+        ? message || `Must be one of: ${allowedValues.join(', ')}`
+        : null,
+
+  /**
+   * Custom validation with async support
+   */
+  custom:
+    <T,>(
+      validator: (value: T) => boolean | Promise<boolean>,
+      message: string
+    ): ValidationRule<T> =>
+    async (value: T) => {
+      const isValid = await Promise.resolve(validator(value));
+      return isValid ? null : message;
+    },
+
+  /**
+   * Validate phone number format
+   */
+  phone: (message = 'Invalid phone number') => (value: string) =>
+    value && !/^[\d\s\-+()]{7,}$/.test(value) ? message : null,
 };
 
 /**
@@ -81,6 +129,8 @@ export interface FieldState<T = string> {
   visited: boolean;
   /** Whether the field is currently focused */
   focused: boolean;
+  /** Whether the field is disabled */
+  disabled: boolean;
 }
 
 /**
@@ -103,12 +153,17 @@ export interface FieldActions<T = string> {
   setError: (error: string | null) => void;
   /** Mark field as touched */
   setTouched: (touched: boolean) => void;
+  /** Set disabled state */
+  setDisabled: (disabled: boolean) => void;
+  /** Update the initial value (useful for edit forms after fetching data) */
+  setInitialValue: (value: T) => void;
   /** Get props for input component (simplified usage) */
   getInputProps: () => {
     value: T;
     onChange: (value: T) => void;
     onBlur: () => void;
     onFocus: () => void;
+    disabled: boolean;
   };
   /** Get props for HTML input element (auto-extracts event.target.value) */
   getHTMLInputProps: () => {
@@ -116,17 +171,21 @@ export interface FieldActions<T = string> {
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     onBlur: () => void;
     onFocus: () => void;
+    disabled: boolean;
   };
-  /** Get props for Ant Design Input component (includes status) */
+  /** Get props for Ant Design / Neat Design Input component (includes status) */
   getAntdInputProps: () => {
     value: T;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     onBlur: () => void;
     onFocus: () => void;
     status?: 'error' | 'warning';
+    disabled: boolean;
   };
   /** Render error message (returns JSX or null) */
   renderError: (className?: string) => React.ReactNode;
+  /** Check if field should show error (touched and has error) */
+  shouldShowError: () => boolean;
 }
 
 /**
@@ -151,42 +210,85 @@ export interface UseFormFieldOptions<T = string> {
   onValueChange?: (value: T) => void;
   /** Callback fired when validation status changes */
   onValidationChange?: (valid: boolean, error: string | null) => void;
+  /** Whether the field is initially disabled */
+  disabled?: boolean;
+}
+
+/**
+ * Field configuration for useFormFields hook
+ */
+export interface FieldConfig<T = string> extends UseFormFieldOptions<T> {
+  /** Field name/key */
+  name: string;
 }
 
 /**
  * A comprehensive form field validation hook that manages field state and validation
  *
  * Features:
- * - Tracks multiple field states: touched, dirty, pristine, valid, invalid, visited
+ * - Tracks multiple field states: touched, dirty, pristine, valid, invalid, visited, disabled
  * - Supports both synchronous and asynchronous validation rules
  * - Configurable validation timing (onChange, onBlur)
  * - Debounced validation support
  * - Manual validation trigger
- * - Field reset functionality
+ * - Field reset and initial value update
  * - Error message management
+ * - Multiple prop getters for different component types
  *
  * @example
- * ```tsx
+ * // Basic usage with validators
  * const emailField = useFormField({
  *   initialValue: '',
- *   rules: [
- *     (value) => !value ? 'Email is required' : null,
- *     (value) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Invalid email format' : null,
- *   ],
- *   validateOnChange: true,
- *   validateOnBlur: true,
+ *   rules: [validators.required('Email is required'), validators.email()],
  * });
  *
+ * // Method 1: Using getAntdInputProps (recommended for Input components)
+ * <Input {...emailField.getAntdInputProps()} />
+ * {emailField.renderError()}
+ *
+ * // Method 2: Using getInputProps (for Select, DatePicker, etc.)
+ * <Select {...emailField.getInputProps()} options={options} />
+ * {emailField.shouldShowError() && <div className="error">{emailField.error}</div>}
+ *
+ * // Method 3: Manual control
  * <Input
  *   value={emailField.value}
  *   onChange={(e) => emailField.onChange(e.target.value)}
  *   onBlur={emailField.onBlur}
  *   status={emailField.touched && emailField.invalid ? 'error' : undefined}
+ *   disabled={emailField.disabled}
  * />
- * {emailField.touched && emailField.error && (
- *   <div className="error">{emailField.error}</div>
- * )}
- * ```
+ *
+ * // Advanced: Custom validation with async
+ * const usernameField = useFormField({
+ *   initialValue: '',
+ *   rules: [
+ *     validators.required(),
+ *     validators.minLength(3),
+ *     validators.custom(
+ *       async (value) => {
+ *         const exists = await checkUsernameExists(value);
+ *         return !exists;
+ *       },
+ *       'Username already taken'
+ *     ),
+ *   ],
+ *   validateDebounce: 500,
+ * });
+ *
+ * // Edit form: Set initial value from API
+ * useEffect(() => {
+ *   fetchUserData().then(data => {
+ *     emailField.setInitialValue(data.email);
+ *   });
+ * }, []);
+ *
+ * // Manual validation and submission
+ * const handleSubmit = async () => {
+ *   if (await emailField.validate()) {
+ *     console.log('Valid:', emailField.value);
+ *   }
+ * };
  */
 export function useFormField<T = string>(
   options: UseFormFieldOptions<T> = {}
@@ -201,6 +303,7 @@ export function useFormField<T = string>(
     compareWith,
     onValueChange,
     onValidationChange,
+    disabled: initialDisabled = false,
   } = options;
 
   const [value, setValue] = useState<T>(initialValue);
@@ -209,6 +312,7 @@ export function useFormField<T = string>(
   const [focused, setFocused] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [validating, setValidating] = useState(false);
+  const [disabled, setDisabled] = useState(initialDisabled);
 
   const initialValueRef = useRef(initialValue);
   const validateTimeoutRef = useRef<NodeJS.Timeout>();
@@ -294,6 +398,7 @@ export function useFormField<T = string>(
    */
   const handleChange = useCallback(
     (newValue: T) => {
+      if (disabled) return;
       const transformedValue = transform ? transform(newValue) : newValue;
       setValue(transformedValue);
 
@@ -305,7 +410,7 @@ export function useFormField<T = string>(
         triggerValidation(transformedValue);
       }
     },
-    [validateOnChange, triggerValidation, onValueChange, transform]
+    [disabled, validateOnChange, triggerValidation, onValueChange, transform]
   );
 
   /**
@@ -347,18 +452,27 @@ export function useFormField<T = string>(
    * Reset field to initial state
    */
   const reset = useCallback(() => {
-    setValue(initialValue);
+    setValue(initialValueRef.current);
     setTouched(false);
     setVisited(false);
     setFocused(false);
     setError(null);
     setValidating(false);
-    initialValueRef.current = initialValue;
 
     if (validateTimeoutRef.current) {
       clearTimeout(validateTimeoutRef.current);
     }
-  }, [initialValue]);
+  }, []);
+
+  /**
+   * Update initial value (useful for edit forms after fetching data)
+   */
+  const setInitialValue = useCallback((newInitialValue: T) => {
+    initialValueRef.current = newInitialValue;
+    setValue(newInitialValue);
+    setTouched(false);
+    setError(null);
+  }, []);
 
   /**
    * Manually set value
@@ -384,8 +498,9 @@ export function useFormField<T = string>(
       onChange: handleChange,
       onBlur: handleBlur,
       onFocus: handleFocus,
+      disabled,
     }),
-    [value, handleChange, handleBlur, handleFocus]
+    [value, handleChange, handleBlur, handleFocus, disabled]
   );
 
   /**
@@ -398,12 +513,13 @@ export function useFormField<T = string>(
         handleChange(e.target.value as T),
       onBlur: handleBlur,
       onFocus: handleFocus,
+      disabled,
     }),
-    [value, handleChange, handleBlur, handleFocus]
+    [value, handleChange, handleBlur, handleFocus, disabled]
   );
 
   /**
-   * Get props for Ant Design Input component (includes status)
+   * Get props for Ant Design / Neat Design Input component (includes status)
    */
   const getAntdInputProps = useCallback(
     () => ({
@@ -413,9 +529,17 @@ export function useFormField<T = string>(
       onBlur: handleBlur,
       onFocus: handleFocus,
       status: (touched && invalid ? 'error' : undefined) as 'error' | 'warning' | undefined,
+      disabled,
     }),
-    [value, handleChange, handleBlur, handleFocus, touched, invalid]
+    [value, handleChange, handleBlur, handleFocus, touched, invalid, disabled]
   );
+
+  /**
+   * Check if field should show error
+   */
+  const shouldShowError = useCallback(() => {
+    return touched && invalid && !!error;
+  }, [touched, invalid, error]);
 
   /**
    * Render error message (returns JSX or null)
@@ -451,6 +575,7 @@ export function useFormField<T = string>(
     validating,
     visited,
     focused,
+    disabled,
     // Actions
     onChange: handleChange,
     onBlur: handleBlur,
@@ -460,9 +585,154 @@ export function useFormField<T = string>(
     validate,
     setError,
     setTouched,
+    setDisabled,
+    setInitialValue,
     getInputProps,
     getHTMLInputProps,
     getAntdInputProps,
     renderError,
+    shouldShowError,
   };
+}
+
+/**
+ * Type for field collection returned by useFormFields
+ */
+export type FieldCollection<T extends Record<string, unknown>> = {
+  [K in keyof T]: FieldState<T[K]> & FieldActions<T[K]>;
+};
+
+/**
+ * Form actions for managing multiple fields
+ */
+export interface FormActions<T extends Record<string, unknown>> {
+  /** Validate all fields and return whether form is valid */
+  validateAll: () => Promise<boolean>;
+  /** Reset all fields to their initial values */
+  resetAll: () => void;
+  /** Get all field values as an object */
+  getValues: () => T;
+  /** Set multiple field values at once */
+  setValues: (values: Partial<T>) => void;
+  /** Check if any field is dirty */
+  isDirty: () => boolean;
+  /** Check if all fields are valid */
+  isValid: () => boolean;
+  /** Get all errors as an object */
+  getErrors: () => Partial<Record<keyof T, string | null>>;
+  /** Set initial values (useful for edit forms) */
+  setInitialValues: (values: Partial<T>) => void;
+}
+
+/**
+ * Hook for managing multiple form fields at once
+ *
+ * @example
+ * ```tsx
+ * const { fields, form } = useFormFields({
+ *   username: {
+ *     initialValue: '',
+ *     rules: [validators.required()],
+ *   },
+ *   email: {
+ *     initialValue: '',
+ *     rules: [validators.required(), validators.email()],
+ *   },
+ * });
+ *
+ * // Usage
+ * <Input {...fields.username.getAntdInputProps()} />
+ * {fields.username.renderError()}
+ *
+ * <Input {...fields.email.getAntdInputProps()} />
+ * {fields.email.renderError()}
+ *
+ * <Button onClick={async () => {
+ *   if (await form.validateAll()) {
+ *     console.log(form.getValues());
+ *   }
+ * }}>Submit</Button>
+ * ```
+ */
+export function useFormFields<T extends Record<string, unknown>>(
+  config: { [K in keyof T]: UseFormFieldOptions<T[K]> }
+): {
+  fields: FieldCollection<T>;
+  form: FormActions<T>;
+} {
+  const fieldNames = Object.keys(config) as (keyof T)[];
+
+  // Create individual field hooks
+  const fieldEntries = fieldNames.map((name) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const field = useFormField<T[typeof name]>(config[name]);
+    return [name, field] as const;
+  });
+
+  const fields = Object.fromEntries(fieldEntries) as FieldCollection<T>;
+
+  const validateAll = useCallback(async (): Promise<boolean> => {
+    const results = await Promise.all(fieldNames.map((name) => fields[name].validate()));
+    return results.every((valid) => valid);
+  }, [fields, fieldNames]);
+
+  const resetAll = useCallback(() => {
+    fieldNames.forEach((name) => fields[name].reset());
+  }, [fields, fieldNames]);
+
+  const getValues = useCallback((): T => {
+    return Object.fromEntries(fieldNames.map((name) => [name, fields[name].value])) as T;
+  }, [fields, fieldNames]);
+
+  const setValues = useCallback(
+    (values: Partial<T>) => {
+      Object.entries(values).forEach(([name, value]) => {
+        if (name in fields) {
+          fields[name as keyof T].setValue(value as T[keyof T]);
+        }
+      });
+    },
+    [fields]
+  );
+
+  const setInitialValues = useCallback(
+    (values: Partial<T>) => {
+      Object.entries(values).forEach(([name, value]) => {
+        if (name in fields) {
+          fields[name as keyof T].setInitialValue(value as T[keyof T]);
+        }
+      });
+    },
+    [fields]
+  );
+
+  const isDirty = useCallback((): boolean => {
+    return fieldNames.some((name) => fields[name].dirty);
+  }, [fields, fieldNames]);
+
+  const isValid = useCallback((): boolean => {
+    return fieldNames.every((name) => fields[name].valid);
+  }, [fields, fieldNames]);
+
+  const getErrors = useCallback((): Partial<Record<keyof T, string | null>> => {
+    return Object.fromEntries(
+      fieldNames.map((name) => [name, fields[name].error])
+    ) as Partial<Record<keyof T, string | null>>;
+  }, [fields, fieldNames]);
+
+  const form: FormActions<T> = useMemo(
+    () => ({
+      validateAll,
+      resetAll,
+      getValues,
+      setValues,
+      setInitialValues,
+      isDirty,
+      isValid,
+      getErrors,
+    }),
+    [validateAll, resetAll, getValues, setValues, setInitialValues, isDirty, isValid, getErrors]
+  );
+
+  return { fields, form };
 }

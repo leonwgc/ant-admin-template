@@ -13,8 +13,11 @@ import {
   Row,
   Col,
   Tag,
+  Select,
+  DatePicker,
+  Checkbox,
 } from '@derbysoft/neat-design';
-import { useFormField, validators } from '../../hooks/useFormField';
+import { useFormField, validators, useFormFields } from '../../hooks/useFormField';
 import './FormFieldHook.scss';
 
 const { Title, Paragraph, Text } = Typography;
@@ -542,6 +545,502 @@ const UltraSimplifiedExample: React.FC = () => {
 };
 
 /**
+ * Select and DatePicker example - using getInputProps
+ */
+const SelectDateExample: React.FC = () => {
+  const categoryField = useFormField<string | undefined>({
+    initialValue: undefined,
+    rules: [validators.custom((value) => !!value, 'Please select a category')],
+  });
+
+  const birthDateField = useFormField({
+    initialValue: null,
+    rules: [validators.custom((value) => !!value, 'Please select a date')],
+  });
+
+  const countryField = useFormField<string | undefined>({
+    initialValue: undefined,
+    rules: [validators.required('Please select a country')],
+  });
+
+  return (
+    <Card title="Select & DatePicker Components" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Using <Text code>getInputProps()</Text> for components that directly receive value
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Text>Category:</Text>
+          <Select
+            {...categoryField.getInputProps()}
+            placeholder="Select category"
+            style={{ width: '100%' }}
+            options={[
+              { label: 'Frontend', value: 'frontend' },
+              { label: 'Backend', value: 'backend' },
+              { label: 'DevOps', value: 'devops' },
+            ]}
+          />
+          {categoryField.renderError('form-field-hook__error')}
+        </div>
+        <div>
+          <Text>Birth Date:</Text>
+          <DatePicker
+            {...birthDateField.getInputProps()}
+            placeholder="Select date"
+            style={{ width: '100%' }}
+          />
+          {birthDateField.renderError('form-field-hook__error')}
+        </div>
+        <div>
+          <Text>Country:</Text>
+          <Select
+            {...countryField.getInputProps()}
+            placeholder="Select country"
+            style={{ width: '100%' }}
+            showSearch
+            options={[
+              { label: 'United States', value: 'us' },
+              { label: 'China', value: 'cn' },
+              { label: 'Japan', value: 'jp' },
+              { label: 'United Kingdom', value: 'uk' },
+            ]}
+          />
+          {countryField.renderError('form-field-hook__error')}
+        </div>
+        <div className="form-field-hook__states">
+          <Space wrap>
+            <Tag>Category: {categoryField.value || 'null'}</Tag>
+            <Tag>Date: {birthDateField.value ? 'Selected' : 'null'}</Tag>
+            <Tag>Country: {countryField.value || 'null'}</Tag>
+          </Space>
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+/**
+ * Disabled state management example
+ */
+const DisabledStateExample: React.FC = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const usernameField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.minLength(3)],
+  });
+
+  const emailField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.email()],
+  });
+
+  const handleSubmit = async () => {
+    const isValid = await usernameField.validate() && await emailField.validate();
+
+    if (isValid) {
+      setIsSubmitting(true);
+      usernameField.setDisabled(true);
+      emailField.setDisabled(true);
+
+      // Simulate API call
+      setTimeout(() => {
+        setIsSubmitting(false);
+        usernameField.setDisabled(false);
+        emailField.setDisabled(false);
+      }, 2000);
+    }
+  };
+
+  return (
+    <Card title="Disabled State Management" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Use <Text code>setDisabled()</Text> to dynamically control field state
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Text>Username:</Text>
+          <Input {...usernameField.getAntdInputProps()} placeholder="Enter username" />
+          {usernameField.renderError('form-field-hook__error')}
+        </div>
+        <div>
+          <Text>Email:</Text>
+          <Input {...emailField.getAntdInputProps()} placeholder="Enter email" />
+          {emailField.renderError('form-field-hook__error')}
+        </div>
+        <Button type="primary" loading={isSubmitting} onClick={handleSubmit}>
+          {isSubmitting ? 'Submitting...' : 'Submit'}
+        </Button>
+        <div className="form-field-hook__states">
+          <Space wrap>
+            <Tag color={usernameField.disabled ? 'red' : 'green'}>
+              Username Disabled: {String(usernameField.disabled)}
+            </Tag>
+            <Tag color={emailField.disabled ? 'red' : 'green'}>
+              Email Disabled: {String(emailField.disabled)}
+            </Tag>
+          </Space>
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+/**
+ * Edit form example - setInitialValue
+ */
+const EditFormExample: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState<{ name: string; email: string; bio: string } | null>(null);
+
+  const nameField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.minLength(2)],
+  });
+
+  const emailField = useFormField({
+    initialValue: '',
+    rules: [validators.required(), validators.email()],
+  });
+
+  const bioField = useFormField({
+    initialValue: '',
+    rules: [validators.maxLength(200, 'Bio must be less than 200 characters')],
+  });
+
+  // Simulate fetching user data from API
+  const loadUserData = () => {
+    setLoading(true);
+    setTimeout(() => {
+      const data = {
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        bio: 'Software engineer with 5 years experience.',
+      };
+
+      // Set initial values from API
+      nameField.setInitialValue(data.name);
+      emailField.setInitialValue(data.email);
+      bioField.setInitialValue(data.bio);
+
+      setUserData(data);
+      setLoading(false);
+    }, 1000);
+  };
+
+  const handleSave = async () => {
+    const isValid = await nameField.validate() &&
+                     await emailField.validate() &&
+                     await bioField.validate();
+
+    if (isValid) {
+      alert('Data saved successfully!');
+      // Update initial values to current values
+      nameField.setInitialValue(nameField.value);
+      emailField.setInitialValue(emailField.value);
+      bioField.setInitialValue(bioField.value);
+    }
+  };
+
+  const hasChanges = nameField.dirty || emailField.dirty || bioField.dirty;
+
+  return (
+    <Card title="Edit Form (setInitialValue)" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Use <Text code>setInitialValue()</Text> to load data from API and track changes
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        {!userData ? (
+          <Button type="primary" onClick={loadUserData} loading={loading}>
+            Load User Data
+          </Button>
+        ) : (
+          <>
+            <div>
+              <Text>Name:</Text>
+              <Input {...nameField.getAntdInputProps()} />
+              {nameField.renderError('form-field-hook__error')}
+            </div>
+            <div>
+              <Text>Email:</Text>
+              <Input {...emailField.getAntdInputProps()} />
+              {emailField.renderError('form-field-hook__error')}
+            </div>
+            <div>
+              <Text>Bio:</Text>
+              <Input.TextArea
+                {...bioField.getAntdInputProps()}
+                rows={3}
+              />
+              {bioField.renderError('form-field-hook__error')}
+            </div>
+            <Space>
+              <Button type="primary" onClick={handleSave} disabled={!hasChanges}>
+                Save Changes
+              </Button>
+              <Button onClick={() => {
+                nameField.reset();
+                emailField.reset();
+                bioField.reset();
+              }}>
+                Reset
+              </Button>
+            </Space>
+            <div className="form-field-hook__states">
+              <Space wrap>
+                <Tag color={hasChanges ? 'orange' : 'green'}>
+                  Has Unsaved Changes: {String(hasChanges)}
+                </Tag>
+                <Tag>Name Dirty: {String(nameField.dirty)}</Tag>
+                <Tag>Email Dirty: {String(emailField.dirty)}</Tag>
+                <Tag>Bio Dirty: {String(bioField.dirty)}</Tag>
+              </Space>
+            </div>
+          </>
+        )}
+      </Space>
+    </Card>
+  );
+};
+
+/**
+ * useFormFields example - multiple fields management
+ */
+const MultipleFieldsExample: React.FC = () => {
+  const { fields, form } = useFormFields({
+    username: {
+      initialValue: '',
+      rules: [validators.required('Username is required'), validators.minLength(3)],
+    },
+    email: {
+      initialValue: '',
+      rules: [validators.required('Email is required'), validators.email()],
+    },
+    password: {
+      initialValue: '',
+      rules: [
+        validators.required('Password is required'),
+        validators.minLength(6, 'At least 6 characters'),
+      ],
+    },
+    age: {
+      initialValue: '',
+      rules: [
+        validators.number('Must be a number'),
+        validators.min(18, 'Must be at least 18'),
+        validators.max(100, 'Must be less than 100'),
+      ],
+    },
+  });
+
+  const [submitResult, setSubmitResult] = useState<{
+    username: string;
+    email: string;
+    password: string;
+    age: string;
+  } | null>(null);
+
+  const handleSubmit = async () => {
+    if (await form.validateAll()) {
+      const values = form.getValues();
+      setSubmitResult(values);
+    }
+  };
+
+  const handleReset = () => {
+    form.resetAll();
+    setSubmitResult(null);
+  };
+
+  const handleLoadSample = () => {
+    form.setValues({
+      username: 'johndoe',
+      email: 'john@example.com',
+      password: 'password123',
+      age: '25',
+    });
+  };
+
+  return (
+    <Card title="useFormFields Hook 🔥" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Use <Text code>useFormFields</Text> to manage multiple fields at once with form-level actions
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <Row gutter={16}>
+          <Col span={12}>
+            <Text>Username:</Text>
+            <Input {...fields.username.getAntdInputProps()} placeholder="Enter username" />
+            {fields.username.renderError('form-field-hook__error')}
+          </Col>
+          <Col span={12}>
+            <Text>Email:</Text>
+            <Input {...fields.email.getAntdInputProps()} placeholder="Enter email" />
+            {fields.email.renderError('form-field-hook__error')}
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Text>Password:</Text>
+            <Input.Password {...fields.password.getAntdInputProps()} placeholder="Enter password" />
+            {fields.password.renderError('form-field-hook__error')}
+          </Col>
+          <Col span={12}>
+            <Text>Age:</Text>
+            <Input {...fields.age.getAntdInputProps()} placeholder="Enter age" />
+            {fields.age.renderError('form-field-hook__error')}
+          </Col>
+        </Row>
+        <Space>
+          <Button type="primary" onClick={handleSubmit}>
+            Submit All
+          </Button>
+          <Button onClick={handleReset}>Reset All</Button>
+          <Button onClick={handleLoadSample}>Load Sample</Button>
+        </Space>
+        <div className="form-field-hook__states">
+          <Space wrap>
+            <Tag color={form.isDirty() ? 'orange' : 'green'}>
+              Form Dirty: {String(form.isDirty())}
+            </Tag>
+            <Tag color={form.isValid() ? 'green' : 'red'}>
+              Form Valid: {String(form.isValid())}
+            </Tag>
+          </Space>
+        </div>
+        {submitResult && (
+          <Card size="small" style={{ backgroundColor: '#f6ffed' }}>
+            <Text strong>Submitted Values:</Text>
+            <pre>{JSON.stringify(submitResult, null, 2)}</pre>
+          </Card>
+        )}
+      </Space>
+    </Card>
+  );
+};
+
+/**
+ * Conditional validation example
+ */
+const ConditionalValidationExample: React.FC = () => {
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
+
+  const emailField = useFormField({
+    initialValue: '',
+    rules: [
+      validators.required('Email is required'),
+      validators.email(),
+      // Conditional validation
+      validators.custom(
+        (value) => !agreeToTerms || value.includes('@'),
+        'Valid email required when terms are accepted'
+      ),
+    ],
+  });
+
+  return (
+    <Card title="Conditional Validation" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Validation rules can be conditional based on other state
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Text>Email:</Text>
+          <Input {...emailField.getAntdInputProps()} placeholder="Enter email" />
+          {emailField.renderError('form-field-hook__error')}
+        </div>
+        <Checkbox
+          checked={agreeToTerms}
+          onChange={(e) => {
+            setAgreeToTerms(e.target.checked);
+            emailField.validate(); // Re-validate when checkbox changes
+          }}
+        >
+          I agree to terms and conditions
+        </Checkbox>
+        <div className="form-field-hook__states">
+          <Tag color={agreeToTerms ? 'blue' : undefined}>
+            Terms Accepted: {String(agreeToTerms)}
+          </Tag>
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+/**
+ * Validators composition example
+ */
+const ValidatorsCompositionExample: React.FC = () => {
+  const passwordField = useFormField({
+    initialValue: '',
+    rules: [
+      validators.required('Password is required'),
+      validators.minLength(8, 'At least 8 characters'),
+      validators.pattern(/[A-Z]/, 'Must contain uppercase letter'),
+      validators.pattern(/[a-z]/, 'Must contain lowercase letter'),
+      validators.pattern(/[0-9]/, 'Must contain number'),
+      validators.pattern(/[!@#$%^&*]/, 'Must contain special character'),
+    ],
+  });
+
+  const getStrength = () => {
+    const value = passwordField.value;
+    let strength = 0;
+    if (value.length >= 8) strength++;
+    if (/[A-Z]/.test(value)) strength++;
+    if (/[a-z]/.test(value)) strength++;
+    if (/[0-9]/.test(value)) strength++;
+    if (/[!@#$%^&*]/.test(value)) strength++;
+    return strength;
+  };
+
+  const strength = getStrength();
+  const strengthText = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'][strength];
+
+  return (
+    <Card title="Validators Composition" className="form-field-hook__card">
+      <Paragraph type="secondary">
+        Combine multiple validation rules for complex requirements
+      </Paragraph>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Text>Strong Password:</Text>
+          <Input.Password {...passwordField.getAntdInputProps()} placeholder="Enter password" />
+          {passwordField.renderError('form-field-hook__error')}
+        </div>
+        <div>
+          <Text>Password Strength: </Text>
+          <Tag color="red">{strengthText}</Tag>
+          <Tag>{strength}/5</Tag>
+        </div>
+        <Card size="small" type="inner">
+          <Text type="secondary">Requirements:</Text>
+          <ul style={{ margin: '8px 0', paddingLeft: '20px' }}>
+            <li style={{ color: passwordField.value.length >= 8 ? 'green' : 'inherit' }}>
+              At least 8 characters
+            </li>
+            <li style={{ color: /[A-Z]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+              Contains uppercase letter
+            </li>
+            <li style={{ color: /[a-z]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+              Contains lowercase letter
+            </li>
+            <li style={{ color: /[0-9]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+              Contains number
+            </li>
+            <li style={{ color: /[!@#$%^&*]/.test(passwordField.value) ? 'green' : 'inherit' }}>
+              Contains special character (!@#$%^&*)
+            </li>
+          </ul>
+        </Card>
+      </Space>
+    </Card>
+  );
+};
+
+/**
  * Main component
  */
 const FormFieldHook: React.FC = () => {
@@ -563,11 +1062,29 @@ const FormFieldHook: React.FC = () => {
         <Col xs={24} lg={12}>
           <UltraSimplifiedExample />
         </Col>
+        <Col xs={24}>
+          <MultipleFieldsExample />
+        </Col>
+        <Col xs={24} lg={12}>
+          <SelectDateExample />
+        </Col>
+        <Col xs={24} lg={12}>
+          <DisabledStateExample />
+        </Col>
+        <Col xs={24}>
+          <EditFormExample />
+        </Col>
         <Col xs={24} lg={12}>
           <BuiltInValidatorsExample />
         </Col>
         <Col xs={24} lg={12}>
           <AsyncValidationExample />
+        </Col>
+        <Col xs={24} lg={12}>
+          <ValidatorsCompositionExample />
+        </Col>
+        <Col xs={24} lg={12}>
+          <ConditionalValidationExample />
         </Col>
         <Col xs={24} lg={12}>
           <TransformExample />
@@ -622,6 +1139,9 @@ const FormFieldHook: React.FC = () => {
               <li>
                 <Text code>visited</Text> - Field has been focused at least once
               </li>
+              <li>
+                <Text code>disabled</Text> - 🆕 Field is disabled
+              </li>
             </ul>
           </Col>
           <Col xs={24} md={8}>
@@ -651,6 +1171,12 @@ const FormFieldHook: React.FC = () => {
               <li>
                 <Text code>setTouched</Text> - Manually set touched state
               </li>
+              <li>
+                <Text code>setDisabled</Text> - 🆕 Set disabled state
+              </li>
+              <li>
+                <Text code>setInitialValue</Text> - 🆕 Update initial value
+              </li>
             </ul>
             <Title level={5} style={{ marginTop: 8 }}>
               Helper Methods:
@@ -660,27 +1186,53 @@ const FormFieldHook: React.FC = () => {
                 <Text code>getInputProps()</Text> - Basic input props
               </li>
               <li>
-                <Text code>getHTMLInputProps()</Text> - 🆕 HTML input props
+                <Text code>getHTMLInputProps()</Text> - HTML input props
               </li>
               <li>
-                <Text code>getAntdInputProps()</Text> - 🆕 Ant Design props
+                <Text code>getAntdInputProps()</Text> - Ant Design props
+              </li>
+              <li>
+                <Text code>renderError()</Text> - Render error message
+              </li>
+              <li>
+                <Text code>shouldShowError()</Text> - 🆕 Check if should show error
               </li>
             </ul>
           </Col>
           <Col xs={24} md={8}>
-            <Title level={5}>New Features:</Title>
+            <Title level={5}>Advanced Hooks:</Title>
             <ul>
               <li>
-                <Text code>validators</Text> - 🆕 Built-in validation rules
+                <Text code>useFormFields</Text> - 🆕 Manage multiple fields
+              </li>
+            </ul>
+            <Title level={5} style={{ marginTop: 8 }}>
+              Form Actions (useFormFields):
+            </Title>
+            <ul>
+              <li>
+                <Text code>validateAll()</Text> - Validate all fields
               </li>
               <li>
-                <Text code>transform</Text> - 🆕 Auto-transform values
+                <Text code>resetAll()</Text> - Reset all fields
               </li>
               <li>
-                <Text code>compareWith</Text> - 🆕 Custom dirty comparison
+                <Text code>getValues()</Text> - Get all field values
               </li>
               <li>
-                <Text code>getInputProps()</Text> - 🆕 Simplified props binding
+                <Text code>setValues()</Text> - Set multiple values
+              </li>
+              <li>
+                <Text code>setInitialValues()</Text> - Set initial values
+              </li>
+              <li>
+                <Text code>isDirty()</Text> - Check if any field is dirty
+              </li>
+              <li>
+                <Text code>isValid()</Text> - Check if all fields are valid
+              </li>
+              <li>
+                <Text code>getErrors()</Text> - Get all errors
               </li>
             </ul>
             <Title level={5} style={{ marginTop: 16 }}>
@@ -694,10 +1246,7 @@ const FormFieldHook: React.FC = () => {
                 <Text code>email()</Text>
               </li>
               <li>
-                <Text code>minLength(n)</Text>
-              </li>
-              <li>
-                <Text code>maxLength(n)</Text>
+                <Text code>minLength(n)</Text> / <Text code>maxLength(n)</Text>
               </li>
               <li>
                 <Text code>pattern(regex, msg)</Text>
@@ -710,6 +1259,18 @@ const FormFieldHook: React.FC = () => {
               </li>
               <li>
                 <Text code>number()</Text> / <Text code>integer()</Text>
+              </li>
+              <li>
+                <Text code>matches()</Text> - 🆕 Compare two fields
+              </li>
+              <li>
+                <Text code>oneOf()</Text> - 🆕 Value in allowed list
+              </li>
+              <li>
+                <Text code>custom()</Text> - 🆕 Custom validation
+              </li>
+              <li>
+                <Text code>phone()</Text> - 🆕 Phone number
               </li>
             </ul>
           </Col>
