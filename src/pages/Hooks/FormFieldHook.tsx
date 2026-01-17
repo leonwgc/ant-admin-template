@@ -179,12 +179,12 @@ const PasswordStrengthExample: React.FC = () => {
  */
 const FormActionsExample: React.FC = () => {
   const nameField = useFormField({
-    initialValue: '',
+    initialValue: 'leon',
     rules: [validators.required(), validators.minLength(2)],
   });
 
   const ageField = useFormField({
-    initialValue: '',
+    initialValue: '18',
     rules: [
       validators.required(),
       validators.number(),
