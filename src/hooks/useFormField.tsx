@@ -79,6 +79,8 @@ export interface FieldState<T = string> {
   validating: boolean;
   /** Whether the field has been visited (focused at least once) */
   visited: boolean;
+  /** Whether the field is currently focused */
+  focused: boolean;
 }
 
 /**
@@ -204,6 +206,7 @@ export function useFormField<T = string>(
   const [value, setValue] = useState<T>(initialValue);
   const [touched, setTouched] = useState(false);
   const [visited, setVisited] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [validating, setValidating] = useState(false);
 
@@ -310,6 +313,7 @@ export function useFormField<T = string>(
    */
   const handleBlur = useCallback(() => {
     setTouched(true);
+    setFocused(false);
 
     if (validateOnBlur) {
       triggerValidation(value, true); // Immediate validation on blur
@@ -321,6 +325,7 @@ export function useFormField<T = string>(
    */
   const handleFocus = useCallback(() => {
     setVisited(true);
+    setFocused(true);
   }, []);
 
   /**
@@ -345,6 +350,7 @@ export function useFormField<T = string>(
     setValue(initialValue);
     setTouched(false);
     setVisited(false);
+    setFocused(false);
     setError(null);
     setValidating(false);
     initialValueRef.current = initialValue;
@@ -444,6 +450,7 @@ export function useFormField<T = string>(
     error,
     validating,
     visited,
+    focused,
     // Actions
     onChange: handleChange,
     onBlur: handleBlur,

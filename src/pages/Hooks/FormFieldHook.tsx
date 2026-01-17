@@ -72,6 +72,9 @@ const BasicExample: React.FC = () => {
             <Tag color={emailField.visited ? 'purple' : undefined}>
               Visited: {String(emailField.visited)}
             </Tag>
+            <Tag color={emailField.focused ? 'cyan' : undefined}>
+              Focused: {String(emailField.focused)}
+            </Tag>
           </Space>
         </div>
       </Space>
