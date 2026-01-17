@@ -123,11 +123,6 @@ export interface FieldActions<T = string> {
     onFocus: () => void;
     status?: 'error' | 'warning';
   };
-  /** Get error display props */
-  getErrorProps: () => {
-    show: boolean;
-    message: string | null;
-  };
   /** Render error message (returns JSX or null) */
   renderError: (className?: string) => React.ReactNode;
 }
@@ -417,17 +412,6 @@ export function useFormField<T = string>(
   );
 
   /**
-   * Get error display props
-   */
-  const getErrorProps = useCallback(
-    () => ({
-      show: touched && invalid,
-      message: error,
-    }),
-    [touched, invalid, error]
-  );
-
-  /**
    * Render error message (returns JSX or null)
    */
   const renderError = useCallback(
@@ -472,7 +456,6 @@ export function useFormField<T = string>(
     getInputProps,
     getHTMLInputProps,
     getAntdInputProps,
-    getErrorProps,
     renderError,
   };
 }
