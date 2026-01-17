@@ -11,27 +11,15 @@ import './FormFieldHook.scss';
 const { Title, Paragraph, Text } = Typography;
 
 /**
- * Common validation rules (legacy - now can use built-in validators)
+ * Async validation helper - simulates API call
  */
-const validationRules = {
-  required: (value: string) => (!value || !value.trim() ? 'This field is required' : null),
-  email: (value: string) =>
-    value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Invalid email format' : null,
-  minLength: (min: number) => (value: string) =>
-    value && value.length < min ? `Minimum length is ${min} characters` : null,
-  maxLength: (max: number) => (value: string) =>
-    value && value.length > max ? `Maximum length is ${max} characters` : null,
-  pattern: (regex: RegExp, message: string) => (value: string) =>
-    value && !regex.test(value) ? message : null,
-  // Async validation example - simulates API call
-  asyncUnique: (value: string) =>
-    new Promise<string | null>((resolve) => {
-      setTimeout(() => {
-        const taken = ['admin', 'test', 'user'].includes(value.toLowerCase());
-        resolve(taken ? 'This username is already taken' : null);
-      }, 500);
-    }),
-};
+const asyncUnique = (value: string) =>
+  new Promise<string | null>((resolve) => {
+    setTimeout(() => {
+      const taken = ['admin', 'test', 'user'].includes(value.toLowerCase());
+      resolve(taken ? 'This username is already taken' : null);
+    }, 500);
+  });
 
 /**
  * Basic usage example
@@ -39,7 +27,7 @@ const validationRules = {
 const BasicExample: React.FC = () => {
   const emailField = useFormField({
     initialValue: '',
-    rules: [validationRules.required, validationRules.email],
+    rules: [validators.required(), validators.email()],
     validateOnChange: true,
     validateOnBlur: true,
   });
@@ -82,9 +70,9 @@ const AsyncValidationExample: React.FC = () => {
   const usernameField = useFormField({
     initialValue: '',
     rules: [
-      validationRules.required,
-      validationRules.minLength(3),
-      validationRules.asyncUnique,
+      validators.required(),
+      validators.minLength(3),
+      asyncUnique,
     ],
     validateOnChange: true,
     validateDebounce: 300,
@@ -130,9 +118,9 @@ const PasswordStrengthExample: React.FC = () => {
   const passwordField = useFormField({
     initialValue: '',
     rules: [
-      validationRules.required,
-      validationRules.minLength(8),
-      validationRules.pattern(
+      validators.required(),
+      validators.minLength(8),
+      validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
         'Password must contain uppercase, lowercase, and number'
       ),
@@ -143,7 +131,7 @@ const PasswordStrengthExample: React.FC = () => {
   const confirmPasswordField = useFormField({
     initialValue: '',
     rules: [
-      validationRules.required,
+      validators.required(),
       (value: string) =>
         value !== passwordField.value ? 'Passwords do not match' : null,
     ],
@@ -192,19 +180,16 @@ const PasswordStrengthExample: React.FC = () => {
 const FormActionsExample: React.FC = () => {
   const nameField = useFormField({
     initialValue: '',
-    rules: [validationRules.required, validationRules.minLength(2)],
+    rules: [validators.required(), validators.minLength(2)],
   });
 
   const ageField = useFormField({
     initialValue: '',
     rules: [
-      validationRules.required,
-      (value: string) => {
-        const num = parseInt(value, 10);
-        if (isNaN(num)) return 'Must be a number';
-        if (num < 0 || num > 150) return 'Age must be between 0 and 150';
-        return null;
-      },
+      validators.required(),
+      validators.number(),
+      validators.min(0),
+      validators.max(150),
     ],
   });
 
@@ -289,8 +274,8 @@ const ValidateOnBlurExample: React.FC = () => {
   const field = useFormField({
     initialValue: '',
     rules: [
-      validationRules.required,
-      validationRules.minLength(5),
+      validators.required(),
+      validators.minLength(5),
     ],
     validateOnChange: false,
     validateOnBlur: true,
