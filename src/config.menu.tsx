@@ -325,7 +325,7 @@ export const menus: MenuItem[] = [
     children: [
       {
         key: 'use-form-field',
-        label: 'useFormField',
+        label: 'React-form-field-hook',
         route: '/app/hooks/use-form-field',
         permissions: [],
       },
