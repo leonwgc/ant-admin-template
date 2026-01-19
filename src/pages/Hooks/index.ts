@@ -4,4 +4,4 @@
  */
 
 export { default as VerificationCodeCountdown } from './VerificationCodeCountdown';
-export { default as FormFieldHook } from './FormFieldHook';
+export { default as FormFieldHook } from './UseFormFieldHook';

@@ -126,7 +126,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/use-responsive': lazyLoad('pages/Hooks/UseResponsiveExample'),
   '/app/hooks/use-ds-table': lazyLoad('pages/Hooks/UseDsTableExample'),
   '/app/hooks/use-global-state': lazyLoad('pages/Hooks/UseGlobalStateExample'),
-  '/app/hooks/use-form-field': lazyLoad('pages/Hooks/FormFieldHook'),
+  '/app/hooks/use-form-field': lazyLoad('pages/Hooks/UseFormFieldHook'),
 
   // JavaScript/Library Examples
   '/app/js/sortable-demo': lazyLoad('pages/Js/SortableDemo'),

@@ -17,12 +17,8 @@ import {
   DatePicker,
   Checkbox,
 } from '@derbysoft/neat-design';
-import {
-  useFormField,
-  validators,
-  useFormFields,
-} from '../../hooks/useFormField';
-import './FormFieldHook.scss';
+import { useFormField, validators, useFormFields } from 'react-form-field-hook';
+import './UseFormFieldHook.scss';
 import { useMount } from 'ahooks';
 
 const { Title, Paragraph, Text } = Typography;
@@ -944,26 +940,26 @@ const MultipleFieldsExample: React.FC = () => {
           <Button
             type="primary"
             onClick={handleSubmit}
-            disabled={form.isDisabled()}
+            disabled={form.isDisabled}
           >
             Submit All
           </Button>
           <Button onClick={handleReset}>Reset All</Button>
           <Button onClick={handleLoadSample}>Load Sample</Button>
-          <Button onClick={() => form.setDisabled(!form.isDisabled())}>
+          <Button onClick={() => form.setDisabled(!form.isDisabled)}>
             Toggle Form Disabled
           </Button>
         </Space>
         <div className="form-field-hook__states">
           <Space wrap>
-            <Tag color={form.isDirty() ? 'orange' : 'green'}>
-              Form Dirty: {String(form.isDirty())}
+            <Tag color={form.isDirty ? 'orange' : 'green'}>
+              Form Dirty: {String(form.isDirty)}
             </Tag>
-            <Tag color={form.isValid() ? 'green' : 'red'}>
-              Form Valid: {String(form.isValid())}
+            <Tag color={form.isValid ? 'green' : 'red'}>
+              Form Valid: {String(form.isValid)}
             </Tag>
-            <Tag color={form.isDisabled() ? 'red' : 'green'}>
-              Form Disabled: {String(form.isDisabled())}
+            <Tag color={form.isDisabled ? 'red' : 'green'}>
+              Form Disabled: {String(form.isDisabled)}
             </Tag>
           </Space>
         </div>
