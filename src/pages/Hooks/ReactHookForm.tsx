@@ -9,7 +9,8 @@ import {
   Controller,
   useFieldArray,
   SubmitHandler,
-  useWatch,
+  FormProvider,
+  useFormContext,
 } from 'react-hook-form';
 import {
   Input,
@@ -30,6 +31,7 @@ import {
   Divider,
   Alert,
   Tag,
+  Collapse,
 } from '@derbysoft/neat-design';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import './ReactHookForm.scss';
@@ -184,7 +186,7 @@ interface ControllerFormData {
   gender: string;
   country: string;
   interests: string[];
-  birthDate: any;
+  birthDate: Date | null;
   newsletter: boolean;
   bio: string;
 }
@@ -472,7 +474,6 @@ const DynamicFieldArrayExample: React.FC = () => {
           ))}
 
           <Button
-            type="dashed"
             onClick={() => append({ name: '', email: '', phone: '' })}
             block
             icon={<PlusOutlined />}
@@ -1201,10 +1202,10 @@ const FormStateExample: React.FC = () => {
         <Card size="small" title="Form State (formState)">
           <Space direction="vertical" style={{ width: '100%' }}>
             <div>
-              <Tag color={isDirty ? 'orange' : 'default'}>isDirty: {String(isDirty)}</Tag>
+              <Tag color={isDirty ? 'orange' : undefined}>isDirty: {String(isDirty)}</Tag>
               <Tag color={isValid ? 'green' : 'red'}>isValid: {String(isValid)}</Tag>
-              <Tag color={isSubmitting ? 'blue' : 'default'}>isSubmitting: {String(isSubmitting)}</Tag>
-              <Tag color={isSubmitted ? 'purple' : 'default'}>isSubmitted: {String(isSubmitted)}</Tag>
+              <Tag color={isSubmitting ? 'blue' : undefined}>isSubmitting: {String(isSubmitting)}</Tag>
+              <Tag color={isSubmitted ? 'purple' : undefined}>isSubmitted: {String(isSubmitted)}</Tag>
               <Tag>submitCount: {submitCount}</Tag>
             </div>
             <Divider style={{ margin: '8px 0' }} />
@@ -1286,6 +1287,488 @@ const FormStateExample: React.FC = () => {
 };
 
 /**
+ * Form Context example - Split large form into multiple components
+ */
+interface UserProfileFormData {
+  // Personal Info
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  // Address Info
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  // Preferences
+  newsletter: boolean;
+  notifications: boolean;
+  language: string;
+}
+
+// Personal Info Section Component
+const PersonalInfoSection: React.FC = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<UserProfileFormData>();
+
+  return (
+    <Card title="Personal Information" size="small" style={{ marginBottom: 16 }}>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <Row gutter={16}>
+          <Col span={12}>
+            <label className="react-hook-form__label">First Name *</label>
+            <Controller
+              name="firstName"
+              control={control}
+              rules={{ required: 'First name is required' }}
+              render={({ field }) => (
+                <Input {...field} placeholder="Enter first name" status={errors.firstName ? 'error' : ''} />
+              )}
+            />
+            {errors.firstName && (
+              <div className="react-hook-form__error">{errors.firstName.message}</div>
+            )}
+          </Col>
+          <Col span={12}>
+            <label className="react-hook-form__label">Last Name *</label>
+            <Controller
+              name="lastName"
+              control={control}
+              rules={{ required: 'Last name is required' }}
+              render={({ field }) => (
+                <Input {...field} placeholder="Enter last name" status={errors.lastName ? 'error' : ''} />
+              )}
+            />
+            {errors.lastName && (
+              <div className="react-hook-form__error">{errors.lastName.message}</div>
+            )}
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <label className="react-hook-form__label">Email *</label>
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: 'Email is required',
+                pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Invalid email' },
+              }}
+              render={({ field }) => (
+                <Input {...field} placeholder="Enter email" status={errors.email ? 'error' : ''} />
+              )}
+            />
+            {errors.email && <div className="react-hook-form__error">{errors.email.message}</div>}
+          </Col>
+          <Col span={12}>
+            <label className="react-hook-form__label">Phone</label>
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => <Input {...field} placeholder="Enter phone" />}
+            />
+          </Col>
+        </Row>
+      </Space>
+    </Card>
+  );
+};
+
+// Address Info Section Component
+const AddressInfoSection: React.FC = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<UserProfileFormData>();
+
+  return (
+    <Card title="Address Information" size="small" style={{ marginBottom: 16 }}>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <label className="react-hook-form__label">Street *</label>
+          <Controller
+            name="street"
+            control={control}
+            rules={{ required: 'Street is required' }}
+            render={({ field }) => (
+              <Input {...field} placeholder="Enter street address" status={errors.street ? 'error' : ''} />
+            )}
+          />
+          {errors.street && <div className="react-hook-form__error">{errors.street.message}</div>}
+        </div>
+
+        <Row gutter={16}>
+          <Col span={8}>
+            <label className="react-hook-form__label">City *</label>
+            <Controller
+              name="city"
+              control={control}
+              rules={{ required: 'City is required' }}
+              render={({ field }) => (
+                <Input {...field} placeholder="Enter city" status={errors.city ? 'error' : ''} />
+              )}
+            />
+            {errors.city && <div className="react-hook-form__error">{errors.city.message}</div>}
+          </Col>
+          <Col span={8}>
+            <label className="react-hook-form__label">State *</label>
+            <Controller
+              name="state"
+              control={control}
+              rules={{ required: 'State is required' }}
+              render={({ field }) => (
+                <Input {...field} placeholder="Enter state" status={errors.state ? 'error' : ''} />
+              )}
+            />
+            {errors.state && <div className="react-hook-form__error">{errors.state.message}</div>}
+          </Col>
+          <Col span={8}>
+            <label className="react-hook-form__label">Zip Code *</label>
+            <Controller
+              name="zipCode"
+              control={control}
+              rules={{ required: 'Zip code is required' }}
+              render={({ field }) => (
+                <Input {...field} placeholder="Enter zip code" status={errors.zipCode ? 'error' : ''} />
+              )}
+            />
+            {errors.zipCode && <div className="react-hook-form__error">{errors.zipCode.message}</div>}
+          </Col>
+        </Row>
+      </Space>
+    </Card>
+  );
+};
+
+// Preferences Section Component
+const PreferencesSection: React.FC = () => {
+  const { control } = useFormContext<UserProfileFormData>();
+
+  return (
+    <Card title="Preferences" size="small" style={{ marginBottom: 16 }}>
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
+        <div>
+          <Controller
+            name="newsletter"
+            control={control}
+            render={({ field }) => (
+              <Checkbox checked={field.value} onChange={field.onChange}>
+                Subscribe to newsletter
+              </Checkbox>
+            )}
+          />
+        </div>
+
+        <div>
+          <Controller
+            name="notifications"
+            control={control}
+            render={({ field }) => (
+              <Checkbox checked={field.value} onChange={field.onChange}>
+                Enable notifications
+              </Checkbox>
+            )}
+          />
+        </div>
+
+        <div>
+          <label className="react-hook-form__label">Language</label>
+          <Controller
+            name="language"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                style={{ width: '100%' }}
+                placeholder="Select language"
+                options={[
+                  { value: 'en', label: 'English' },
+                  { value: 'zh', label: '中文' },
+                  { value: 'es', label: 'Español' },
+                  { value: 'fr', label: 'Français' },
+                ]}
+              />
+            )}
+          />
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+// Main Form with Context
+const FormContextExample: React.FC = () => {
+  const methods = useForm<UserProfileFormData>({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      street: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      newsletter: false,
+      notifications: true,
+      language: 'en',
+    },
+  });
+
+  const onSubmit: SubmitHandler<UserProfileFormData> = (data) => {
+    message.success('Form submitted successfully!');
+    console.log('Form data:', data);
+  };
+
+  return (
+    <Card title="Form Context (FormProvider & useFormContext)" className="react-hook-form__card">
+      <Alert
+        message="Large Form Split into Components"
+        description="This example demonstrates how to split a large form into multiple components using FormProvider and useFormContext. Each section is a separate component but shares the same form context."
+        type="info"
+        showIcon
+        style={{ marginBottom: 24 }}
+      />
+
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <Space direction="vertical" style={{ width: '100%' }} size="large">
+            <PersonalInfoSection />
+            <AddressInfoSection />
+            <PreferencesSection />
+
+            <Divider />
+
+            <Space>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+              <Button onClick={() => methods.reset()}>Reset</Button>
+            </Space>
+          </Space>
+        </form>
+      </FormProvider>
+    </Card>
+  );
+};
+
+/**
+ * Only Submit Changed Fields Example
+ */
+interface EditProfileFormData {
+  username: string;
+  email: string;
+  phone: string;
+  bio: string;
+  country: string;
+}
+
+const OnlySubmitChangedExample: React.FC = () => {
+  // Simulate existing user data
+  const existingUserData: EditProfileFormData = {
+    username: 'johndoe',
+    email: 'john@example.com',
+    phone: '+1234567890',
+    bio: 'Software developer',
+    country: 'us',
+  };
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, dirtyFields },
+    reset,
+  } = useForm<EditProfileFormData>({
+    defaultValues: existingUserData,
+  });
+
+  const [submittedData, setSubmittedData] = useState<Partial<EditProfileFormData> | null>(null);
+
+  const onSubmit: SubmitHandler<EditProfileFormData> = (data) => {
+    // Only submit changed fields
+    const changedData: Partial<EditProfileFormData> = {};
+
+    (Object.keys(dirtyFields) as Array<keyof EditProfileFormData>).forEach((key) => {
+      if (dirtyFields[key]) {
+        changedData[key] = data[key];
+      }
+    });
+
+    if (Object.keys(changedData).length === 0) {
+      message.warning('No changes to submit');
+      return;
+    }
+
+    setSubmittedData(changedData);
+    message.success(`Only ${Object.keys(changedData).length} field(s) submitted!`);
+    console.log('Changed fields:', changedData);
+    console.log('Dirty fields:', dirtyFields);
+  };
+
+  const handleResetToOriginal = () => {
+    reset(existingUserData);
+    setSubmittedData(null);
+    message.info('Form reset to original values');
+  };
+
+  return (
+    <Card title="Only Submit Changed Fields" className="react-hook-form__card">
+      <Alert
+        message="Performance Optimization"
+        description="This example shows how to submit only the fields that have been modified (dirty fields), reducing network payload and improving performance. This is common in edit/update forms."
+        type="info"
+        showIcon
+        style={{ marginBottom: 24 }}
+      />
+
+      <Row gutter={24}>
+        <Col span={12}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Space direction="vertical" style={{ width: '100%' }} size="large">
+              <div>
+                <label className="react-hook-form__label">Username *</label>
+                <Controller
+                  name="username"
+                  control={control}
+                  rules={{ required: 'Username is required' }}
+                  render={({ field }) => (
+                    <Input {...field} placeholder="Enter username" status={errors.username ? 'error' : ''} />
+                  )}
+                />
+                {errors.username && (
+                  <div className="react-hook-form__error">{errors.username.message}</div>
+                )}
+                {dirtyFields.username && <Tag color="orange">Modified</Tag>}
+              </div>
+
+              <div>
+                <label className="react-hook-form__label">Email *</label>
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: 'Email is required',
+                    pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Invalid email' },
+                  }}
+                  render={({ field }) => (
+                    <Input {...field} placeholder="Enter email" status={errors.email ? 'error' : ''} />
+                  )}
+                />
+                {errors.email && <div className="react-hook-form__error">{errors.email.message}</div>}
+                {dirtyFields.email && <Tag color="orange">Modified</Tag>}
+              </div>
+
+              <div>
+                <label className="react-hook-form__label">Phone</label>
+                <Controller
+                  name="phone"
+                  control={control}
+                  render={({ field }) => <Input {...field} placeholder="Enter phone" />}
+                />
+                {dirtyFields.phone && <Tag color="orange">Modified</Tag>}
+              </div>
+
+              <div>
+                <label className="react-hook-form__label">Bio</label>
+                <Controller
+                  name="bio"
+                  control={control}
+                  render={({ field }) => <TextArea {...field} placeholder="Enter bio" rows={3} />}
+                />
+                {dirtyFields.bio && <Tag color="orange">Modified</Tag>}
+              </div>
+
+              <div>
+                <label className="react-hook-form__label">Country</label>
+                <Controller
+                  name="country"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      style={{ width: '100%' }}
+                      placeholder="Select country"
+                      options={[
+                        { value: 'us', label: 'United States' },
+                        { value: 'uk', label: 'United Kingdom' },
+                        { value: 'cn', label: 'China' },
+                        { value: 'jp', label: 'Japan' },
+                      ]}
+                    />
+                  )}
+                />
+                {dirtyFields.country && <Tag color="orange">Modified</Tag>}
+              </div>
+
+              <Divider />
+
+              <Space>
+                <Button type="primary" htmlType="submit">
+                  Submit Changes
+                </Button>
+                <Button onClick={handleResetToOriginal}>Reset to Original</Button>
+              </Space>
+            </Space>
+          </form>
+        </Col>
+
+        <Col span={12}>
+          <Card title="Debug Information" size="small">
+            <Space direction="vertical" style={{ width: '100%' }}>
+              <Collapse
+                items={[
+                  {
+                    key: '1',
+                    label: 'Original Data',
+                    children: <pre style={{ margin: 0 }}>{JSON.stringify(existingUserData, null, 2)}</pre>,
+                  },
+                  {
+                    key: '2',
+                    label: 'Dirty Fields (Modified)',
+                    children: <pre style={{ margin: 0 }}>{JSON.stringify(dirtyFields, null, 2)}</pre>,
+                  },
+                  ...(submittedData
+                    ? [
+                        {
+                          key: '3',
+                          label: 'Last Submitted Data (Only Changed)',
+                          children: (
+                            <>
+                              <Alert
+                                message={`Submitted ${Object.keys(submittedData).length} field(s)`}
+                                type="success"
+                                showIcon
+                                style={{ marginBottom: 8 }}
+                              />
+                              <pre style={{ margin: 0 }}>{JSON.stringify(submittedData, null, 2)}</pre>
+                            </>
+                          ),
+                        },
+                      ]
+                    : []),
+                ]}
+              />
+            </Space>
+          </Card>
+
+          <Card title="Benefits" size="small" style={{ marginTop: 16 }}>
+            <ul style={{ margin: 0, paddingLeft: 20 }}>
+              <li>Reduced network payload</li>
+              <li>Faster API response times</li>
+              <li>Better performance</li>
+              <li>Track exactly what changed</li>
+              <li>Avoid unnecessary database updates</li>
+            </ul>
+          </Card>
+        </Col>
+      </Row>
+    </Card>
+  );
+};
+
+/**
  * Main component - React Hook Form examples
  */
 const ReactHookForm: React.FC = () => {
@@ -1334,6 +1817,16 @@ const ReactHookForm: React.FC = () => {
       key: '9',
       label: 'Form State',
       children: <FormStateExample />,
+    },
+    {
+      key: '10',
+      label: 'Form Context',
+      children: <FormContextExample />,
+    },
+    {
+      key: '11',
+      label: 'Only Submit Changed',
+      children: <OnlySubmitChangedExample />,
     },
   ];
 
