@@ -324,6 +324,12 @@ export const menus: MenuItem[] = [
     permissions: [],
     children: [
       {
+        key: 'react-hook-form',
+        label: 'React-hook-form',
+        route: '/app/hooks/react-hook-form',
+        permissions: [],
+      },
+      {
         key: 'use-form-field',
         label: 'React-form-field-hook',
         route: '/app/hooks/use-form-field',

@@ -5,3 +5,4 @@
 
 export { default as VerificationCodeCountdown } from './VerificationCodeCountdown';
 export { default as FormFieldHook } from './UseFormFieldHook';
+export { default as ReactHookForm } from './ReactHookForm';
