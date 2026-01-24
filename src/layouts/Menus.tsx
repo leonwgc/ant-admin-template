@@ -1,6 +1,7 @@
 import { Menu, MenuProps, Skeleton } from '@derbysoft/neat-design';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import type { MenuItem } from '../config.menu';
 import {
   getFlatMenus,
@@ -23,20 +24,28 @@ export default (props: Props) => {
   const { onClick, collapsed, menus, ...menuProps } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language; // Extract to trigger re-computation
   const [menuCollapsed] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { operations } = useAppStore();
 
+  // Add currentLanguage as dependency to re-compute menus when language changes
   const filterMenus = useMemo(
     () => getFilterMenus(operations, menus),
-    [menus, operations]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [menus, operations, currentLanguage],
   );
   const levelKeys = useMemo(
     () => getLevelKeys(filterMenus as LevelKeysProps[]),
-    [filterMenus]
+    [filterMenus],
   );
-  const flatMenus = useMemo(() => getFlatMenus(menus), [menus]);
+  const flatMenus = useMemo(
+    () => getFlatMenus(menus),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [menus, currentLanguage],
+  );
 
   useEffect(() => {
     const paths = getMenuPaths(pathname, filterMenus);
@@ -61,13 +70,13 @@ export default (props: Props) => {
         setOpenKeys(
           keys
             .filter((_, index) => index !== repeatIndex)
-            .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey])
+            .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey]),
         );
       } else {
         setOpenKeys(keys);
       }
     },
-    [levelKeys, openKeys]
+    [levelKeys, openKeys],
   );
 
   return (

@@ -1,3 +1,7 @@
+/**
+ * @file src/config.menu.tsx
+ * @author leon.wang
+ */
 import {
   ExperimentOutlined,
   UserOutlined,
@@ -8,6 +12,10 @@ import {
   AndroidOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
+import i18n from './i18n';
+
+/** Get translated label */
+const t = (key: string) => i18n.t(key);
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
   /**
@@ -46,31 +54,31 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
 export const menus: MenuItem[] = [
   {
     key: 'js-feature',
-    label: 'JS Feature',
+    get label() { return t('menu.jsFeature'); },
     icon: <CodeOutlined />,
     permissions: ['js'],
     children: [
       {
         key: 'intl-number-format',
-        label: 'Intl.NumberFormat',
+        get label() { return t('menu.intlNumberFormat'); },
         route: '/app/js-feature/intl-number-format',
         permissions: [],
       },
       {
         key: 'element-height',
-        label: 'Element Height',
+        get label() { return t('menu.elementHeight'); },
         route: '/app/js-feature/element-height',
         permissions: [],
       },
       {
         key: 'weakmap',
-        label: 'WeakMap',
+        get label() { return t('menu.weakmap'); },
         route: '/app/js-feature/weakmap',
         permissions: [],
       },
       {
         key: 'proxy',
-        label: 'Proxy',
+        get label() { return t('menu.proxy'); },
         route: '/app/js-feature/proxy',
         permissions: [],
       },
@@ -78,55 +86,55 @@ export const menus: MenuItem[] = [
   },
   {
     key: 'css',
-    label: 'CSS Feature',
+    get label() { return t('menu.cssFeature'); },
     icon: <ExperimentOutlined />,
     permissions: [],
     children: [
       {
         key: 'css-1',
-        label: 'CSS New Features',
+        get label() { return t('menu.cssNewFeatures'); },
         route: '/app/css',
         permissions: [],
       },
       {
         key: 'css-render-optimization',
-        label: 'CSS Render Optimization',
+        get label() { return t('menu.cssRenderOptimization'); },
         route: '/app/css/render-optimization',
         permissions: [],
       },
       {
         key: 'css-grid',
-        label: 'CSS Grid Layout',
+        get label() { return t('menu.cssGridLayout'); },
         route: '/app/css/grid',
         permissions: [],
       },
       {
         key: 'css-flex',
-        label: 'CSS Flexbox',
+        get label() { return t('menu.cssFlexbox'); },
         route: '/app/css/flexbox',
         permissions: [],
       },
       {
         key: 'css-container-queries',
-        label: 'CSS Container Queries',
+        get label() { return t('menu.cssContainerQueries'); },
         route: '/app/css/container-queries',
         permissions: [],
       },
       {
         key: 'css-blend-modes',
-        label: 'CSS Blend Modes',
+        get label() { return t('menu.cssBlendModes'); },
         route: '/app/css/blend-modes',
         permissions: [],
       },
       {
         key: 'css-animation',
-        label: 'CSS Animation',
+        get label() { return t('menu.cssAnimation'); },
         route: '/app/css/animation',
         permissions: [],
       },
       {
         key: 'css-filter',
-        label: 'CSS Filter',
+        get label() { return t('menu.cssFilter'); },
         route: '/app/components/css-filter',
         permissions: [],
       },
@@ -134,32 +142,32 @@ export const menus: MenuItem[] = [
   },
   {
     key: 'user',
-    label: 'Users',
+    get label() { return t('menu.users'); },
     icon: <UserOutlined />,
     permissions: [],
     children: [
       {
         key: 'user-1',
-        label: 'User list',
+        get label() { return t('menu.userList'); },
         route: '/app/users',
         permissions: [],
       },
       {
         key: 'user-2',
-        label: 'Expand Table',
+        get label() { return t('menu.expandTable'); },
         route: '/app/users/table',
         permissions: [],
       },
       {
         key: 'user-add',
-        label: 'Add User',
+        get label() { return t('menu.addUser'); },
         route: '/app/users/add',
         permissions: [],
         hidden: true, // Hidden from menu, but included in routes
       },
       {
         key: 'user-edit',
-        label: 'Edit User',
+        get label() { return t('menu.editUser'); },
         route: '/app/users/edit',
         permissions: [],
         hidden: true, // Hidden from menu, but included in routes
@@ -168,31 +176,31 @@ export const menus: MenuItem[] = [
   },
   {
     key: 'form',
-    label: 'Forms',
+    get label() { return t('menu.forms'); },
     icon: <FormOutlined />,
     permissions: [],
     children: [
       {
         key: 'form1',
-        label: 'Responsive Form',
+        get label() { return t('menu.responsiveForm'); },
         route: '/app/forms',
         permissions: [],
       },
       {
         key: 'dynamic-list',
-        label: 'Dynamic List',
+        get label() { return t('menu.dynamicList'); },
         route: '/app/forms/dynamic-list',
         permissions: [],
       },
       {
         key: 'form-validation',
-        label: 'Form Validation',
+        get label() { return t('menu.formValidation'); },
         route: '/app/forms/validation',
         permissions: [],
       },
       {
         key: 'virtual-list',
-        label: 'Virtual List',
+        get label() { return t('menu.virtualList'); },
         route: '/app/forms/virtual-list',
         permissions: [],
       },
@@ -200,43 +208,43 @@ export const menus: MenuItem[] = [
   },
   {
     key: 'hooks',
-    label: 'React Hooks',
+    get label() { return t('menu.reactHooks'); },
     icon: <ApiOutlined />,
     permissions: [],
     children: [
       {
         key: 'use-transition',
-        label: 'useTransition',
+        get label() { return t('menu.useTransition'); },
         route: '/app/hooks/use-transition',
         permissions: [],
       },
       {
         key: 'use-suspense',
-        label: 'Suspense',
+        get label() { return t('menu.suspense'); },
         route: '/app/hooks/use-suspense',
         permissions: [],
       },
       {
         key: 'use-ahooks-countdown',
-        label: 'useCountdown',
+        get label() { return t('menu.useCountdown'); },
         route: '/app/hooks/use-ahooks-countdown',
         permissions: [],
       },
       {
         key: 'verification-code-countdown',
-        label: 'Verification Code Countdown',
+        get label() { return t('menu.verificationCodeCountdown'); },
         route: '/app/hooks/verification-code-countdown',
         permissions: [],
       },
       {
         key: 'use-responsive',
-        label: 'useResponsive',
+        get label() { return t('menu.useResponsive'); },
         route: '/app/hooks/use-responsive',
         permissions: [],
       },
       {
         key: 'use-ds-table',
-        label: 'useDsTable',
+        get label() { return t('menu.useDsTable'); },
         route: '/app/hooks/use-ds-table',
         permissions: [],
       },
@@ -245,73 +253,73 @@ export const menus: MenuItem[] = [
 
   {
     key: 'components',
-    label: 'Components',
+    get label() { return t('menu.components'); },
     icon: <AppstoreOutlined />,
     permissions: [],
     children: [
       {
         key: 'dot-status',
-        label: 'DotStatus',
+        get label() { return t('menu.dotStatus'); },
         route: '/app/components/dot-status',
         permissions: [],
       },
       {
         key: 'verification-code',
-        label: 'VerificationCode',
+        get label() { return t('menu.verificationCode'); },
         route: '/app/components/verification-code',
         permissions: [],
       },
       {
         key: 'contact-info',
-        label: 'ContactInfo',
+        get label() { return t('menu.contactInfo'); },
         route: '/app/components/contact-info',
         permissions: [],
       },
       {
         key: 'user-contact-card',
-        label: 'UserContactCard',
+        get label() { return t('menu.userContactCard'); },
         route: '/app/components/user-contact-card',
         permissions: [],
       },
       {
         key: 'email-success-modal',
-        label: 'EmailSuccessModal',
+        get label() { return t('menu.emailSuccessModal'); },
         route: '/app/components/email-success-modal',
         permissions: [],
       },
       {
         key: 'verification-code-page',
-        label: 'VerificationCodePage',
+        get label() { return t('menu.verificationCodePage'); },
         route: '/app/components/verification-code-page',
         permissions: [],
       },
       {
         key: 'masonry',
-        label: 'Masonry',
+        get label() { return t('menu.masonry'); },
         route: '/app/components/masonry',
         permissions: [],
       },
       {
         key: 'chatbot',
-        label: 'ChatBot',
+        get label() { return t('menu.chatbot'); },
         route: '/app/components/chatbot',
         permissions: [],
       },
       {
         key: 'image-upload',
-        label: 'ImageUpload',
+        get label() { return t('menu.imageUpload'); },
         route: '/app/components/image-upload',
         permissions: [],
       },
       {
         key: 'fade-in',
-        label: 'FadeIn',
+        get label() { return t('menu.fadeIn'); },
         route: '/app/components/fade-in',
         permissions: [],
       },
       {
         key: 'date-table',
-        label: 'DateTable',
+        get label() { return t('menu.dateTable'); },
         route: '/app/components/date-table',
         permissions: [],
       },
@@ -319,37 +327,37 @@ export const menus: MenuItem[] = [
   },
   {
     key: 'libs',
-    label: 'Libraries',
+    get label() { return t('menu.libraries'); },
     icon: <CodeOutlined />,
     permissions: [],
     children: [
       {
         key: 'react-hook-form',
-        label: 'React-hook-form',
+        get label() { return t('menu.reactHookForm'); },
         route: '/app/hooks/react-hook-form',
         permissions: [],
       },
       {
         key: 'use-form-field',
-        label: 'React-form-field-hook',
+        get label() { return t('menu.reactFormFieldHook'); },
         route: '/app/hooks/use-form-field',
         permissions: [],
       },
       {
         key: 'zustand-demo',
-        label: 'Zustand',
+        get label() { return t('menu.zustand'); },
         route: '/app/hooks/zustand-demo',
         permissions: [],
       },
       {
         key: 'use-global-state',
-        label: 'zustand-kit',
+        get label() { return t('menu.zustandKit'); },
         route: '/app/hooks/use-global-state',
         permissions: [],
       },
       {
         key: 'sortable-demo',
-        label: 'Sortable.js',
+        get label() { return t('menu.sortableJs'); },
         route: '/app/js/sortable-demo',
         permissions: [],
       },
@@ -357,31 +365,31 @@ export const menus: MenuItem[] = [
   },
   {
     key: 'games',
-    label: 'Games',
+    get label() { return t('menu.games'); },
     icon: <AndroidOutlined />,
     permissions: [],
     children: [
       {
         key: 'tetris-3d',
-        label: '3D Tetris',
+        get label() { return t('menu.tetris3d'); },
         route: '/app/games/tetris-3d',
         permissions: [],
       },
       {
         key: 'flappy-birds-3d',
-        label: 'Flappy Birds 3D',
+        get label() { return t('menu.flappyBirds3d'); },
         route: '/app/games/flappy-birds-3d',
         permissions: [],
       },
       {
         key: 'snake-3d',
-        label: '3D Snake',
+        get label() { return t('menu.snake3d'); },
         route: '/app/games/snake-3d',
         permissions: [],
       },
       {
         key: 'match-3',
-        label: 'Match 3',
+        get label() { return t('menu.match3'); },
         route: '/app/games/match-3',
         permissions: [],
       },
