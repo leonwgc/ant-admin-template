@@ -129,6 +129,26 @@ const en = {
 export default en;
 ```
 
+同时在 `src/locales/index.ts` 中注册命名空间（用于简化翻译键）：
+
+```typescript
+import zh from './zh';
+import en from './en';
+
+const resources = {
+  en: {
+    translation: en,
+    'pages.user': en.pages.user,  // 注册命名空间
+  },
+  zh: {
+    translation: zh,
+    'pages.user': zh.pages.user,  // 注册命名空间
+  },
+};
+
+export default resources;
+```
+
 ```typescript
 // src/locales/zh.ts
 import commonZh from './common/zh';
@@ -146,6 +166,24 @@ export default zh;
 
 ### Step 3: 在组件中使用
 
+**方式一：使用命名空间（推荐）**
+```typescript
+import { useTranslation } from 'react-i18next';
+
+export default () => {
+  // 指定命名空间，简化翻译键
+  const { t } = useTranslation('pages.user');
+
+  return (
+    <div>
+      <h1>{t('users.pageTitle')}</h1>
+      <Button>{t('users.actions.submit')}</Button>
+    </div>
+  );
+};
+```
+
+**方式二：使用完整路径**
 ```typescript
 import { useTranslation } from 'react-i18next';
 
@@ -161,7 +199,47 @@ export default () => {
 };
 ```
 
-## 🔑 命名空间设计规则
+💡 **推荐使用方式一**，键名更简洁，代码更易读。
+
+---
+
+## 🔑 翻译键使用规范
+
+### 命名空间的优势
+
+✅ **简化键名**：`t('users.title')` 比 `t('pages.user.users.title')` 更简洁
+✅ **提高可读性**：减少冗余前缀
+✅ **避免重复**：不需要每次都写完整路径
+✅ **易于维护**：修改命名空间结构更方便
+
+### 使用场景
+
+| 场景 | 命名空间 | 翻译键示例 |
+|------|---------|-----------|
+| 全局通用 | 无（默认） | `t('switchLanguage')` |
+| User 页面 | `pages.user` | `t('users.pageTitle')` |
+| Order 页面 | `pages.order` | `t('list.pageTitle')` |
+
+### 访问方式对比
+
+```typescript
+// ❌ 不使用命名空间 - 键名过长
+const { t } = useTranslation();
+t('pages.user.users.pageTitle')
+t('pages.user.users.columns.name')
+t('pages.user.users.actions.submit')
+
+// ✅ 使用命名空间 - 简洁清晰
+const { t } = useTranslation('pages.user');
+t('users.pageTitle')
+t('users.columns.name')
+t('users.actions.submit')
+
+// ✅ 访问全局翻译
+const { t } = useTranslation();
+t('menu.users')
+t('switchLanguage')
+```
 
 ### 全局公共翻译
 

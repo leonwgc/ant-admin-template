@@ -36,7 +36,8 @@ const getTableData = (
 };
 
 export default () => {
-  const { t } = useTranslation();
+  // 使用命名空间，简化翻译键
+  const { t } = useTranslation('pages.user');
   const [form] = Form.useForm();
   const {
     tableProps,
@@ -51,15 +52,15 @@ export default () => {
 
   const columns: TableColumnsType<User> = [
     {
-      title: t('pages.user.users.columns.name'),
+      title: t('users.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: t('pages.user.users.columns.age'),
+      title: t('users.columns.age'),
       dataIndex: 'age',
     },
     {
-      title: t('pages.user.users.columns.address'),
+      title: t('users.columns.address'),
       dataIndex: 'address',
     },
   ];
@@ -69,27 +70,27 @@ export default () => {
       {
         type: Input,
         name: 'name',
-        label: t('pages.user.users.form.nameLabel'),
+        label: t('users.form.nameLabel'),
       },
       {
         type: Input,
         name: 'age',
-        label: t('pages.user.users.form.ageLabel'),
+        label: t('users.form.ageLabel'),
       },
       {
         type: Input,
         name: 'address',
-        label: t('pages.user.users.form.addressLabel'),
+        label: t('users.form.addressLabel'),
       },
       {
         render() {
           return (
             <Space>
               <Button htmlType="submit" type="primary" onClick={submit}>
-                {t('pages.user.users.actions.submit')}
+                {t('users.actions.submit')}
               </Button>
               <Button htmlType="reset" onClick={reset}>
-                {t('pages.user.users.actions.reset')}
+                {t('users.actions.reset')}
               </Button>
             </Space>
           );
@@ -102,10 +103,10 @@ export default () => {
   return (
     <div>
       <Flex justify="space-between" wrap>
-        <h1>{t('pages.user.users.pageTitle')}</h1>
+        <h1>{t('users.pageTitle')}</h1>
         <Space>
-          <Link to="./add">{t('pages.user.users.actions.addUser')}</Link>
-          <Link to="./edit">{t('pages.user.users.actions.editUser')}</Link>
+          <Link to="./add">{t('users.actions.addUser')}</Link>
+          <Link to="./edit">{t('users.actions.editUser')}</Link>
         </Space>
       </Flex>
 
