@@ -52,15 +52,15 @@ export default () => {
 
   const columns: TableColumnsType<User> = [
     {
-      title: t('users.columns.name'),
+      title: t('usersColName'),
       dataIndex: 'name',
     },
     {
-      title: t('users.columns.age'),
+      title: t('usersColAge'),
       dataIndex: 'age',
     },
     {
-      title: t('users.columns.address'),
+      title: t('usersColAddress'),
       dataIndex: 'address',
     },
   ];
@@ -70,27 +70,27 @@ export default () => {
       {
         type: Input,
         name: 'name',
-        label: t('users.form.nameLabel'),
+        label: t('usersFormName'),
       },
       {
         type: Input,
         name: 'age',
-        label: t('users.form.ageLabel'),
+        label: t('usersFormAge'),
       },
       {
         type: Input,
         name: 'address',
-        label: t('users.form.addressLabel'),
+        label: t('usersFormAddress'),
       },
       {
         render() {
           return (
             <Space>
               <Button htmlType="submit" type="primary" onClick={submit}>
-                {t('users.actions.submit')}
+                {t('usersBtnSubmit')}
               </Button>
               <Button htmlType="reset" onClick={reset}>
-                {t('users.actions.reset')}
+                {t('usersBtnReset')}
               </Button>
             </Space>
           );
@@ -103,10 +103,10 @@ export default () => {
   return (
     <div>
       <Flex justify="space-between" wrap>
-        <h1>{t('users.pageTitle')}</h1>
+        <h1>{t('usersTitle')}</h1>
         <Space>
-          <Link to="./add">{t('users.actions.addUser')}</Link>
-          <Link to="./edit">{t('users.actions.editUser')}</Link>
+          <Link to="./add">{t('usersBtnAdd')}</Link>
+          <Link to="./edit">{t('usersBtnEdit')}</Link>
         </Space>
       </Flex>
 

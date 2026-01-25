@@ -6,58 +6,45 @@
 /**
  * User management pages translations (English)
  * Namespace: pages.user
+ * 扁平化结构，减少嵌套层级
  */
 export default {
-  users: {
-    // Page title and headers
-    pageTitle: 'Users',
+  // Users List Page
+  usersTitle: 'Users',
+  usersColName: 'Name',
+  usersColAge: 'Age',
+  usersColAddress: 'Address',
 
-    // Table columns
-    columns: {
-      name: 'Name',
-      age: 'Age',
-      address: 'Address',
-    },
+  // Users Form
+  usersFormName: 'Name',
+  usersFormNamePh: 'Please enter name',
+  usersFormAge: 'Age',
+  usersFormAgePh: 'Please enter age',
+  usersFormAddress: 'Address',
+  usersFormAddressPh: 'Please enter address',
 
-    // Form labels
-    form: {
-      nameLabel: 'Name',
-      namePlaceholder: 'Please enter name',
-      ageLabel: 'Age',
-      agePlaceholder: 'Please enter age',
-      addressLabel: 'Address',
-      addressPlaceholder: 'Please enter address',
-    },
+  // Users Actions
+  usersBtnAdd: 'Add User',
+  usersBtnEdit: 'Edit User',
+  usersBtnSubmit: 'Submit',
+  usersBtnReset: 'Reset',
+  usersBtnSearch: 'Search',
+  usersBtnDelete: 'Delete',
+  usersBtnCancel: 'Cancel',
 
-    // Actions
-    actions: {
-      addUser: 'Add User',
-      editUser: 'Edit User',
-      submit: 'Submit',
-      reset: 'Reset',
-      search: 'Search',
-      delete: 'Delete',
-      cancel: 'Cancel',
-    },
+  // Users Messages
+  usersMsgDeleteConfirm: 'Are you sure you want to delete this user?',
+  usersMsgDeleteSuccess: 'User deleted successfully',
+  usersMsgAddSuccess: 'User added successfully',
+  usersMsgUpdateSuccess: 'User updated successfully',
+  usersMsgLoadError: 'Failed to load user data',
 
-    // Messages
-    messages: {
-      deleteConfirm: 'Are you sure you want to delete this user?',
-      deleteSuccess: 'User deleted successfully',
-      addSuccess: 'User added successfully',
-      updateSuccess: 'User updated successfully',
-      loadError: 'Failed to load user data',
-    },
-  },
+  // Add User Page
+  addUserTitle: 'Add User',
+  addUserSubmit: 'Create User',
 
-  addUser: {
-    pageTitle: 'Add User',
-    submitButton: 'Create User',
-  },
-
-  editUser: {
-    pageTitle: 'Edit User',
-    submitButton: 'Update User',
-    loadError: 'Failed to load user information',
-  },
+  // Edit User Page
+  editUserTitle: 'Edit User',
+  editUserSubmit: 'Update User',
+  editUserLoadError: 'Failed to load user information',
 };

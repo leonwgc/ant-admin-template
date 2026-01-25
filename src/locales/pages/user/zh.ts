@@ -6,58 +6,45 @@
 /**
  * 用户管理页面翻译（中文）
  * 命名空间: pages.user
+ * 扁平化结构，减少嵌套层级
  */
 export default {
-  users: {
-    // 页面标题和头部
-    pageTitle: '用户列表',
+  // 用户列表页面
+  usersTitle: '用户列表',
+  usersColName: '姓名',
+  usersColAge: '年龄',
+  usersColAddress: '地址',
 
-    // 表格列
-    columns: {
-      name: '姓名',
-      age: '年龄',
-      address: '地址',
-    },
+  // 用户表单
+  usersFormName: '姓名',
+  usersFormNamePh: '请输入姓名',
+  usersFormAge: '年龄',
+  usersFormAgePh: '请输入年龄',
+  usersFormAddress: '地址',
+  usersFormAddressPh: '请输入地址',
 
-    // 表单标签
-    form: {
-      nameLabel: '姓名',
-      namePlaceholder: '请输入姓名',
-      ageLabel: '年龄',
-      agePlaceholder: '请输入年龄',
-      addressLabel: '地址',
-      addressPlaceholder: '请输入地址',
-    },
+  // 用户操作
+  usersBtnAdd: '添加用户',
+  usersBtnEdit: '编辑用户',
+  usersBtnSubmit: '提交',
+  usersBtnReset: '重置',
+  usersBtnSearch: '搜索',
+  usersBtnDelete: '删除',
+  usersBtnCancel: '取消',
 
-    // 操作按钮
-    actions: {
-      addUser: '添加用户',
-      editUser: '编辑用户',
-      submit: '提交',
-      reset: '重置',
-      search: '搜索',
-      delete: '删除',
-      cancel: '取消',
-    },
+  // 用户提示信息
+  usersMsgDeleteConfirm: '确定要删除该用户吗？',
+  usersMsgDeleteSuccess: '用户删除成功',
+  usersMsgAddSuccess: '用户添加成功',
+  usersMsgUpdateSuccess: '用户更新成功',
+  usersMsgLoadError: '加载用户数据失败',
 
-    // 提示信息
-    messages: {
-      deleteConfirm: '确定要删除该用户吗？',
-      deleteSuccess: '用户删除成功',
-      addSuccess: '用户添加成功',
-      updateSuccess: '用户更新成功',
-      loadError: '加载用户数据失败',
-    },
-  },
+  // 添加用户页面
+  addUserTitle: '添加用户',
+  addUserSubmit: '创建用户',
 
-  addUser: {
-    pageTitle: '添加用户',
-    submitButton: '创建用户',
-  },
-
-  editUser: {
-    pageTitle: '编辑用户',
-    submitButton: '更新用户',
-    loadError: '加载用户信息失败',
-  },
+  // 编辑用户页面
+  editUserTitle: '编辑用户',
+  editUserSubmit: '更新用户',
+  editUserLoadError: '加载用户信息失败',
 };
