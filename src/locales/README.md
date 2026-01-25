@@ -8,19 +8,22 @@
 
 ```
 src/
-├── locales/
+├── locales/              # 所有翻译文件统一管理
 │   ├── index.ts          # 导出所有语言资源
 │   ├── en.ts             # 英文翻译汇总
 │   ├── zh.ts             # 中文翻译汇总
-│   └── common/           # 公共翻译（全局使用）
-│       ├── en.ts         # 公共英文翻译
-│       └── zh.ts         # 公共中文翻译
+│   ├── common/           # 公共翻译（全局使用）
+│   │   ├── en.ts         # 公共英文翻译
+│   │   └── zh.ts         # 公共中文翻译
+│   └── pages/            # 页面专属翻译
+│       └── user/         # User 页面翻译
+│           ├── en.ts
+│           └── zh.ts
 └── pages/
     └── User/
         ├── Users.tsx
-        └── locales/      # User 页面专属翻译
-            ├── en.ts
-            └── zh.ts
+        ├── Add.tsx
+        └── Edit.tsx
 ```
 
 ## 🎯 命名空间规则
@@ -55,12 +58,12 @@ t('pages.user.users.actions.submit')         // 操作按钮
 
 ### Step 1: 创建页面翻译文件
 
-在页面目录下创建 `locales/` 文件夹，添加 `en.ts` 和 `zh.ts`：
+在 `src/locales/pages/` 目录下创建对应的页面文件夹，添加 `en.ts` 和 `zh.ts`：
 
 ```typescript
-// src/pages/User/locales/en.ts
+// src/locales/pages/user/en.ts
 /**
- * @file pages/User/locales/en.ts
+ * @file locales/pages/user/en.ts
  * @author leon.wang
  */
 
@@ -83,9 +86,9 @@ export default {
 ```
 
 ```typescript
-// src/pages/User/locales/zh.ts
+// src/locales/pages/user/zh.ts
 /**
- * @file pages/User/locales/zh.ts
+ * @file locales/pages/user/zh.ts
  * @author leon.wang
  */
 
@@ -114,7 +117,7 @@ export default {
 ```typescript
 // src/locales/en.ts
 import commonEn from './common/en';
-import userEn from '../pages/User/locales/en';
+import userEn from './pages/user/en';
 
 const en = {
   ...commonEn,
@@ -129,7 +132,7 @@ export default en;
 ```typescript
 // src/locales/zh.ts
 import commonZh from './common/zh';
-import userZh from '../pages/User/locales/zh';
+import userZh from './pages/user/zh';
 
 const zh = {
   ...commonZh,
@@ -246,24 +249,41 @@ pages.
 ### 1. 文件组织
 
 ```
-✅ 推荐：每个页面一个 locales 文件夹
-pages/User/
-  ├── Users.tsx
-  ├── Add.tsx
-  ├── Edit.tsx
-  └── locales/
-      ├── en.ts
-      └── zh.ts
+✅ 推荐：统一在 src/locales/pages/ 下管理
+src/locales/
+  ├── common/
+  │   ├── en.ts
+  │   └── zh.ts
+  └── pages/
+      ├── user/
+      │   ├── en.ts
+      │   └── zh.ts
+      └── order/
+          ├── en.ts
+          └── zh.ts
 
-❌ 不推荐：混在一起
-pages/User/
-  ├── Users.tsx
-  ├── Add.tsx
-  ├── Edit.tsx
-  ├── users.en.ts
-  ├── users.zh.ts
-  ├── add.en.ts
-  └── add.zh.ts
+src/pages/
+  ├── User/
+  │   ├── Users.tsx
+  │   ├── Add.tsx
+  │   └── Edit.tsx
+  └── Order/
+      ├── List.tsx
+      └── Detail.tsx
+
+❌ 不推荐：分散在各个页面目录下
+src/pages/
+  ├── User/
+  │   ├── Users.tsx
+  │   ├── Add.tsx
+  │   └── locales/      # 分散在这里
+  │       ├── en.ts
+  │       └── zh.ts
+  └── Order/
+      ├── List.tsx
+      └── locales/      # 分散在这里
+          ├── en.ts
+          └── zh.ts
 ```
 
 ### 2. 键名设计
@@ -319,9 +339,9 @@ export default {
 ### 创建 Order 订单页面的多语言
 
 ```typescript
-// src/pages/Order/locales/en.ts
+// src/locales/pages/order/en.ts
 /**
- * @file pages/Order/locales/en.ts
+ * @file locales/pages/order/en.ts
  * @author leon.wang
  */
 
@@ -348,9 +368,9 @@ export default {
 ```
 
 ```typescript
-// src/pages/Order/locales/zh.ts
+// src/locales/pages/order/zh.ts
 /**
- * @file pages/Order/locales/zh.ts
+ * @file locales/pages/order/zh.ts
  * @author leon.wang
  */
 
@@ -378,7 +398,7 @@ export default {
 
 ```typescript
 // src/locales/en.ts
-import orderEn from '../pages/Order/locales/en';
+import orderEn from './pages/order/en';
 
 const en = {
   ...commonEn,
@@ -421,10 +441,10 @@ export default () => {
 
 如果你要迁移现有页面到新的多语言结构：
 
-1. 在页面目录创建 `locales/en.ts` 和 `locales/zh.ts`
-2. 将页面相关的翻译从 `src/locales/en.ts` 移动到页面 locales 文件
-3. 在主翻译文件中导入并注册
-4. 更新组件中的翻译键，添加命名空间前缀
+1. 在 `src/locales/pages/` 下创建对应的页面目录，如 `order/`
+2. 创建 `en.ts` 和 `zh.ts` 文件，移入翻译内容
+3. 在 `src/locales/en.ts` 和 `zh.ts` 中导入并注册
+4. 更新组件中的翻译键（如果命名空间有变化）
 5. 测试切换语言功能是否正常
 
 ## ❓ FAQ
@@ -447,10 +467,12 @@ A: 使用插值语法，例如: `'Found {{count}} items'` → `t('key', { count:
 
 新的多语言组织方式具有以下优势：
 
-1. ✅ **模块化**: 每个页面管理自己的翻译
-2. ✅ **可扩展**: 新增页面只需添加 locales 文件夹
-3. ✅ **无冲突**: 通过命名空间避免键名冲突
-4. ✅ **易维护**: 翻译与页面代码在同一目录
-5. ✅ **类型安全**: 可以为翻译键生成 TypeScript 类型
+1. ✅ **集中管理**: 所有翻译文件统一在 `src/locales/` 目录下
+2. ✅ **模块化**: 通过 `common/` 和 `pages/` 目录分离公共和页面专属翻译
+3. ✅ **可扩展**: 新增页面只需在 `locales/pages/` 下添加文件夹
+4. ✅ **无冲突**: 通过命名空间避免键名冲突
+5. ✅ **易查找**: 不用在各个页面目录中寻找翻译文件
+6. ✅ **易维护**: 翻译文件集中，便于统一管理和修改
+7. ✅ **类型安全**: 可以为翻译键生成 TypeScript 类型
 
 遵循本指南，可以让项目的多语言管理更加规范和高效！

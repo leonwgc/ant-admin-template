@@ -4,7 +4,7 @@
  */
 
 import commonEn from './common/en';
-import userEn from '../pages/User/locales/en';
+import userEn from './pages/user/en';
 
 /**
  * English translations

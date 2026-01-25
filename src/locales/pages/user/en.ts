@@ -1,5 +1,5 @@
 /**
- * @file pages/User/locales/en.ts
+ * @file locales/pages/user/en.ts
  * @author leon.wang
  */
 

@@ -4,7 +4,7 @@
  */
 
 import commonZh from './common/zh';
-import userZh from '../pages/User/locales/zh';
+import userZh from './pages/user/zh';
 
 /**
  * 中文翻译
