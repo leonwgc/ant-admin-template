@@ -1,0 +1,112 @@
+/**
+ * @file locales/common/zh.ts
+ * @author leon.wang
+ */
+
+/**
+ * 全局通用翻译
+ * 包括菜单项、通用操作和全局 UI 文本
+ */
+export default {
+  // 通用操作和 UI
+  switchLanguage: '切换语言',
+  language: '语言',
+
+  // 菜单翻译
+  menu: {
+    jsFeature: 'JS 特性',
+    intlNumberFormat: 'Intl.NumberFormat',
+    elementHeight: '元素高度',
+    weakmap: 'WeakMap',
+    proxy: 'Proxy',
+    cssFeature: 'CSS 特性',
+    cssNewFeatures: 'CSS 新特性',
+    cssRenderOptimization: 'CSS 渲染优化',
+    cssGridLayout: 'CSS 网格布局',
+    cssFlexbox: 'CSS 弹性盒',
+    cssContainerQueries: 'CSS 容器查询',
+    cssBlendModes: 'CSS 混合模式',
+    cssAnimation: 'CSS 动画',
+    cssFilter: 'CSS 滤镜',
+    users: '用户',
+    userList: '用户列表',
+    expandTable: '展开表格',
+    addUser: '添加用户',
+    editUser: '编辑用户',
+    forms: '表单',
+    responsiveForm: '响应式表单',
+    dynamicList: '动态列表',
+    formValidation: '表单验证',
+    virtualList: '虚拟列表',
+    reactHooks: 'React Hooks',
+    useTransition: 'useTransition',
+    suspense: 'Suspense',
+    useCountdown: 'useCountdown',
+    verificationCodeCountdown: '验证码倒计时',
+    useResponsive: 'useResponsive',
+    useDsTable: 'useDsTable',
+    components: '组件',
+    dotStatus: '状态点',
+    verificationCode: '验证码',
+    contactInfo: '联系信息',
+    userContactCard: '用户联系卡片',
+    emailSuccessModal: '邮件成功弹窗',
+    verificationCodePage: '验证码页面',
+    masonry: '瀑布流',
+    chatbot: '聊天机器人',
+    imageUpload: '图片上传',
+    fadeIn: '淡入动画',
+    dateTable: '日期表格',
+    libraries: '类库',
+    reactHookForm: 'React Hook Form',
+    reactFormFieldHook: 'React Form Field Hook',
+    zustand: 'Zustand',
+    zustandKit: 'zustand-kit',
+    sortableJs: 'Sortable.js',
+    games: '游戏',
+    tetris3d: '3D 俄罗斯方块',
+    flappyBirds3d: 'Flappy Birds 3D',
+    snake3d: '3D 贪吃蛇',
+    match3: '三消游戏',
+  },
+
+  // 酒店预订通用翻译
+  hotel: {
+    address: '酒店地址',
+    contactNumber: '联系电话',
+    checkIn: '入住',
+    checkOut: '离店',
+    night_zero: '晚',
+    night_one: '晚',
+    night_other: '晚',
+    room: '房间',
+    adult: '成人',
+    searchRoom: '查询房型',
+    brandName: '云尚精品酒店',
+    complete_zero: '完成 (--晚)',
+    complete_other: '完成 ({{count}} 晚)',
+    selectDates: '请选择入住和离店日期',
+    orderSearch: '查询订单',
+    roomTypesFound_zero: '共找到 {{count}} 个房型',
+    roomTypesFound_one: '共找到 {{count}} 个房型',
+    roomTypesFound_other: '共找到 {{count}} 个房型',
+  },
+
+  // 入住信息（用于预订流程）
+  guestInfo: {
+    title: '入住信息',
+    contactInfo: '联系信息',
+    roomCountSuffix_one: '间',
+    roomCountSuffix_other: '间',
+    nameLabel: '入住人姓名',
+    lastNamePlaceholder: '姓',
+    firstNamePlaceholder: '名',
+    phoneLabel: '联系手机',
+    sendCode: '发送验证码',
+    reSendCodeCount: '重新发送({{count}})',
+    resendCode: '重新发送',
+    phoneTip: '当前仅支持中国大陆地区手机号预订',
+    codeLabel: '验证码',
+    required: '*',
+  },
+};

@@ -11,6 +11,7 @@ import {
 import { FlexRender, Item } from '@derbysoft/antd-form-builder';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import req from '~/req';
 
 interface User {
@@ -35,6 +36,7 @@ const getTableData = (
 };
 
 export default () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const {
     tableProps,
@@ -49,15 +51,15 @@ export default () => {
 
   const columns: TableColumnsType<User> = [
     {
-      title: 'Name',
+      title: t('pages.user.users.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: 'Age',
+      title: t('pages.user.users.columns.age'),
       dataIndex: 'age',
     },
     {
-      title: 'Address',
+      title: t('pages.user.users.columns.address'),
       dataIndex: 'address',
     },
   ];
@@ -67,43 +69,43 @@ export default () => {
       {
         type: Input,
         name: 'name',
-        label: 'Name',
+        label: t('pages.user.users.form.nameLabel'),
       },
       {
         type: Input,
         name: 'age',
-        label: 'Age',
+        label: t('pages.user.users.form.ageLabel'),
       },
       {
         type: Input,
         name: 'address',
-        label: 'Address',
+        label: t('pages.user.users.form.addressLabel'),
       },
       {
         render() {
           return (
             <Space>
               <Button htmlType="submit" type="primary" onClick={submit}>
-                submit
+                {t('pages.user.users.actions.submit')}
               </Button>
               <Button htmlType="reset" onClick={reset}>
-                reset
+                {t('pages.user.users.actions.reset')}
               </Button>
             </Space>
           );
         },
       },
     ],
-    [submit, reset]
+    [submit, reset, t]
   );
 
   return (
     <div>
       <Flex justify="space-between" wrap>
-        <h1>Users</h1>
+        <h1>{t('pages.user.users.pageTitle')}</h1>
         <Space>
-          <Link to="./add">Add User</Link>
-          <Link to="./edit">Edit User</Link>
+          <Link to="./add">{t('pages.user.users.actions.addUser')}</Link>
+          <Link to="./edit">{t('pages.user.users.actions.editUser')}</Link>
         </Space>
       </Flex>
 
