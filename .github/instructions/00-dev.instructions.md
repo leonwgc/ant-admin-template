@@ -40,6 +40,7 @@ applyTo: '**'
 #### 基本要求
 - **函数式组件**: 使用 `const Component: FC<Props> = () => {}` 格式
 - **类型注解**: 所有 Props、State、函数参数必须定义类型
+- **图标使用**: 菜单图标使用 `@ant-design/icons`，页面内图标优先使用 `@derbysoft/neat-design-icons`
 - **文件头注释**: 每个文件顶部必须添加：
   ```typescript
   /**
@@ -403,22 +404,27 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
    #### 第 1 步：在菜单配置中添加路由
    ```tsx
    // src/config.menu.tsx
+   import { UserOutlined } from '@ant-design/icons';  // 菜单图标
+   import i18n from './i18n';
+
+   const t = (key: string) => i18n.t(key);  // 翻译函数
+
    export const menus: MenuItem[] = [
      {
        key: 'user',
-       label: 'Users',
+       get label() { return t('menu.users'); },  // 使用 getter 支持动态翻译
        icon: <UserOutlined />,
        permissions: [],
        children: [
          {
            key: 'user-list',
-           label: 'User List',
+           get label() { return t('menu.userList'); },
            route: '/app/users',        // 定义路由路径
            permissions: [],
          },
          {
            key: 'user-add',
-           label: 'Add User',
+           get label() { return t('menu.addUser'); },
            route: '/app/users/add',
            permissions: [],
            hidden: true,  // 不在菜单显示，但路由存在
@@ -457,14 +463,16 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
    ```typescript
    interface MenuItem {
      key: string;              // 菜单唯一标识
-     label: string;            // 菜单显示文本
+     label: string | { (): string };  // 菜单显示文本，支持 getter 函数实现动态翻译
      route?: string;           // 路由路径（必须以 /app/ 开头）
-     icon?: ReactNode;         // 菜单图标
+     icon?: ReactNode;         // 菜单图标（使用 @ant-design/icons）
      permissions?: string[];   // 权限列表
      hidden?: boolean;         // true: 不在菜单显示但路由存在
      children?: MenuItem[];    // 子菜单
    }
    ```
+
+   **注意**: 使用 `get label() { return t('key'); }` 而非直接字符串，确保语言切换时菜单文本自动更新。
 
    ### 隐藏路由（Hidden Routes）
    用于详情页、编辑页等不需要在菜单显示但必须存在的路由：
@@ -518,8 +526,9 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
    - ✅ **组件必须使用 `default export`**
    - ✅ **使用路径别名 `~/` 导入（对应 `src/`）**
    - ✅ **隐藏路由使用 `hidden: true`，不要从菜单中删除**
+   - ✅ **菜单 label 使用 `get label() { return t('key'); }` 实现动态翻译**
    - ❌ **不要手动编辑 `RouteConfig.tsx`，路由自动生成**
-   - ❌ **不要在 `config.route.ts` 中定义路由（如果该文件存在）**
+   - ❌ **不要在 `config.route.ts` 中手动添加路由**（它会自动从菜单提取）
    - ❌ **不要在组件内部使用 `<Routes>` 定义路由**
 
    ### 系统优势
@@ -549,20 +558,22 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
 
    ```tsx
    // 1️⃣ config.menu.tsx - 添加菜单项
+   import { ShopOutlined } from '@ant-design/icons';
+
    {
      key: 'products',
-     label: 'Products',
+     get label() { return t('menu.products'); },
      icon: <ShopOutlined />,
      children: [
        {
          key: 'product-list',
-         label: 'Product List',
+         get label() { return t('menu.productList'); },
          route: '/app/products',
          permissions: [],
        },
        {
          key: 'product-detail',
-         label: 'Product Detail',
+         get label() { return t('menu.productDetail'); },
          route: '/app/products/:id',
          hidden: true,  // 详情页隐藏
        },
@@ -587,11 +598,28 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
    - 详细文档: `src/utils/README.md`
    - 路由示例: `src/utils/routeGenerator.example.md`
 
-4. **菜单配置**: 参考 `config.menu.tsx`（菜单是路由的唯一来源）
-5. **全局状态**: 使用 Zustand，参考 `store.ts`
+4. **菜单配置**: 参考 `config.menu.tsx`（菜单是路由的唯一来源，使用 i18n getter 实现动态翻译）
+5. **全局状态管理**:
+   - 使用 Zustand 4.x + zustand-kit 进行状态管理
+   - 主 store: `src/store.ts` - 管理语言、权限等全局状态
+   - 使用示例:
+     ```typescript
+     import { useAppStore } from '~/store';
+
+     // 获取状态
+     const language = useAppStore((state) => state.language);
+     const operations = useAppStore((state) => state.operations);
+
+     // 更新状态
+     const { setLanguage, setOperations } = useAppStore();
+     setLanguage('en');
+     ```
+   - Store 自动同步 i18n 语言切换
+   - 支持 localStorage 持久化（可选）
 6. **请求封装**: 使用 `req.ts` 封装的 axios 实例
-7. **国际化**: 使用 i18next，配置文件在 `locales/`
-8. **命名空间注册**: 添加新页面翻译时，必须在 `locales/index.ts` 中注册命名空间，否则 TypeScript 类型检查会失效
+7. **config.route.ts**: 该文件从菜单配置提取路由信息，供权限判断使用，**不用于定义路由**
+8. **国际化**: 使用 i18next，配置文件在 `locales/`
+9. **命名空间注册**: 添加新页面翻译时，必须在 `locales/index.ts` 中注册命名空间，否则 TypeScript 类型检查会失效
 
 ---
 
