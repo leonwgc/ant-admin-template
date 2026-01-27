@@ -53,7 +53,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
           >
             <GlobalOutlined
               style={{ fontSize: 18, cursor: 'pointer' }}
-              title={t('switchLanguage')}
+              title={t('common:switchLanguage')}
             />
           </Dropdown>
           <MenuOutlined className="mobile-menus" onClick={setTrue} />
