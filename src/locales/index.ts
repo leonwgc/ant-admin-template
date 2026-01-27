@@ -1,15 +1,24 @@
+/**
+ * @file src/locales/index.ts
+ * @author leon.wang
+ */
+
 import zh from './zh';
 import en from './en';
 
-const resources = {
+/** 默认命名空间 */
+export const defaultNS = 'translation';
+
+/** i18n 资源配置 */
+export const resources = {
   en: {
-    translation: en,
-    'pages.user': en.pages.user,  // 注册命名空间
+    [defaultNS]: en,
+    'pages.user': en.pages.user, // 注册命名空间
   },
   zh: {
-    translation: zh,
-    'pages.user': zh.pages.user,  // 注册命名空间
+    [defaultNS]: zh,
+    'pages.user': zh.pages.user, // 注册命名空间
   },
-};
+} as const;
 
 export default resources;

@@ -23,7 +23,7 @@ interface User {
 
 const getTableData = (
   { current, pageSize },
-  formData: FormData
+  formData: FormData,
 ): Promise<TableDataResult<User>> => {
   const query = `page=${current}&size=${pageSize}`;
 
@@ -52,15 +52,15 @@ export default () => {
 
   const columns: TableColumnsType<User> = [
     {
-      title: t('usersColName'),
+      title: t('pages.user:usersColName'),
       dataIndex: 'name',
     },
     {
-      title: t('usersColAge'),
+      title: t('pages.user:usersColAge'),
       dataIndex: 'age',
     },
     {
-      title: t('usersColAddress'),
+      title: t('pages.user:usersColAddress'),
       dataIndex: 'address',
     },
   ];
@@ -70,43 +70,43 @@ export default () => {
       {
         type: Input,
         name: 'name',
-        label: t('usersFormName'),
+        label: t('pages.user:usersFormName'),
       },
       {
         type: Input,
         name: 'age',
-        label: t('usersFormAge'),
+        label: t('pages.user:usersFormAge'),
       },
       {
         type: Input,
         name: 'address',
-        label: t('usersFormAddress'),
+        label: t('pages.user:usersFormAddress'),
       },
       {
         render() {
           return (
             <Space>
               <Button htmlType="submit" type="primary" onClick={submit}>
-                {t('usersBtnSubmit')}
+                {t('pages.user:usersBtnSubmit')}
               </Button>
               <Button htmlType="reset" onClick={reset}>
-                {t('usersBtnReset')}
+                {t('pages.user:usersBtnReset')}
               </Button>
             </Space>
           );
         },
       },
     ],
-    [submit, reset, t]
+    [submit, reset, t],
   );
 
   return (
     <div>
       <Flex justify="space-between" wrap>
-        <h1>{t('usersTitle')}</h1>
+        <h1>{t('pages.user:usersTitle')}</h1>
         <Space>
-          <Link to="./add">{t('usersBtnAdd')}</Link>
-          <Link to="./edit">{t('usersBtnEdit')}</Link>
+          <Link to="./add">{t('pages.user:usersBtnAdd')}</Link>
+          <Link to="./edit">{t('pages.user:usersBtnEdit')}</Link>
         </Space>
       </Flex>
 

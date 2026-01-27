@@ -4,7 +4,7 @@
  */
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import resources from './locales';
+import resources, { defaultNS } from './locales';
 
 /** Supported language types */
 export type Language = 'zh' | 'en';
@@ -63,16 +63,15 @@ i18n
     lng: language,
     fallbackLng: DEFAULT_LANGUAGE,
 
+    // Default namespace
+    defaultNS,
+
     // Debug mode (only in development)
     debug: process.env.NODE_ENV === 'development',
 
     interpolation: {
       escapeValue: false, // React already escapes values
     },
-
-    // Optional: configure namespaces if needed
-    // ns: ['translation'],
-    // defaultNS: 'translation',
   });
 
 /**
