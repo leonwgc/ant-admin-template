@@ -5,6 +5,7 @@ import {
   Select,
   Form as NeatForm,
 } from '@derbysoft/neat-design';
+import { useTranslation } from 'react-i18next';
 import './ResponsiveForm.scss';
 
 interface FormValues {
@@ -19,23 +20,25 @@ interface FormValues {
   phoneNumber: string;
 }
 
-const countryOptions = [
-  { label: 'China', value: 'China' },
-  // 可扩展更多国家
-];
-
-const languageOptions = [
-  { label: 'English', value: 'English' },
-  // 可扩展更多语言
-];
-
-const timeZoneOptions = [
-  { label: '(GMT+08:00) Asia/Shanghai', value: 'Asia/Shanghai' },
-  // 可扩展更多时区
-];
-
 const Form: FC = () => {
+  const { t } = useTranslation();
   const [form] = NeatForm.useForm<FormValues>();
+
+  const countryOptions = [
+    { label: t('pages.form:responsiveFormCountryChina'), value: 'China' },
+    // 可扩展更多国家
+  ];
+
+  const languageOptions = [
+    { label: t('pages.form:responsiveFormLanguageEnglish'), value: 'English' },
+    { label: t('pages.form:responsiveFormLanguageChinese'), value: 'Chinese' },
+    // 可扩展更多语言
+  ];
+
+  const timeZoneOptions = [
+    { label: t('pages.form:responsiveFormTimeZoneShanghai'), value: 'Asia/Shanghai' },
+    // 可扩展更多时区
+  ];
 
   return (
     <div className="form-profile">
@@ -56,48 +59,69 @@ const Form: FC = () => {
         }}
       >
         <div className="form-profile__section">
-          <div className="form-profile__section-title">Basic Info</div>
+          <div className="form-profile__section-title">
+            {t('pages.form:responsiveFormSectionBasicInfo')}
+          </div>
           <div className="responsive-grid">
             <NeatForm.Item
-              label="First Name"
+              label={t('pages.form:responsiveFormFieldFirstName')}
               name="firstName"
-              rules={[{ required: true, message: 'First Name is required' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('pages.form:responsiveFormFieldFirstNameRequired'),
+                },
+              ]}
             >
               <Input />
             </NeatForm.Item>
             <NeatForm.Item
-              label="Last Name"
+              label={t('pages.form:responsiveFormFieldLastName')}
               name="lastName"
-              rules={[{ required: true, message: 'Last Name is required' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('pages.form:responsiveFormFieldLastNameRequired'),
+                },
+              ]}
             >
               <Input />
             </NeatForm.Item>
-            <NeatForm.Item label="Primary Language" name="primaryLanguage">
+            <NeatForm.Item
+              label={t('pages.form:responsiveFormFieldPrimaryLanguage')}
+              name="primaryLanguage"
+            >
               <Select options={languageOptions} />
             </NeatForm.Item>
             <NeatForm.Item
-              label="Country/Region"
+              label={t('pages.form:responsiveFormFieldCountry')}
               name="country"
               rules={[
-              { required: true, message: 'Country/Region is required' },
+                {
+                  required: true,
+                  message: t('pages.form:responsiveFormFieldCountryRequired'),
+                },
               ]}
             >
               <Select options={countryOptions} />
             </NeatForm.Item>
-            <NeatForm.Item label="Time Zone" name="timeZone">
+            <NeatForm.Item
+              label={t('pages.form:responsiveFormFieldTimeZone')}
+              name="timeZone"
+            >
               <Select options={timeZoneOptions} />
             </NeatForm.Item>
           </div>
         </div>
 
         <div className="form-profile__actions">
-          <Button>Cancel</Button>
+          <Button>{t('pages.form:responsiveFormBtnCancel')}</Button>
           <Button
             type="primary"
             onClick={() => {}}
             className="form-profile__update-btn"
           >
-            Update
+            {t('pages.form:responsiveFormBtnUpdate')}
           </Button>
         </div>
       </NeatForm>

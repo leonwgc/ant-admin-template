@@ -5,6 +5,7 @@
 
 import commonZh from './common/zh';
 import userZh from './pages/user/zh';
+import formZh from './pages/form/zh';
 
 /**
  * 中文翻译
@@ -17,6 +18,7 @@ const zh = {
   // 页面专属翻译，使用命名空间
   pages: {
     user: userZh,
+    form: formZh,
   },
 };
 

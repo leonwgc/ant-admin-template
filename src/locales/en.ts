@@ -5,18 +5,20 @@
 
 import commonEn from './common/en';
 import userEn from './pages/user/en';
+import formEn from './pages/form/en';
 
 /**
  * English translations
- * Aggregates all module translations with namespaces
+ * Aggregates translations from all modules, organized by namespaces
  */
 const en = {
   // Common translations (global)
   ...commonEn,
 
-  // Page-specific translations with namespaces
+  // Page-specific translations, using namespaces
   pages: {
     user: userEn,
+    form: formEn,
   },
 };
 
