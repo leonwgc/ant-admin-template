@@ -5,7 +5,7 @@ import {
   Select,
   Form as NeatForm,
 } from '@derbysoft/neat-design';
-import './MyForm.scss';
+import './ResponsiveForm.scss';
 
 interface FormValues {
   firstName: string;
@@ -58,45 +58,35 @@ const Form: FC = () => {
         <div className="form-profile__section">
           <div className="form-profile__section-title">Basic Info</div>
           <div className="responsive-grid">
-            <div>
-              <NeatForm.Item
-                label="First Name"
-                name="firstName"
-                rules={[{ required: true, message: 'First Name is required' }]}
-              >
-                <Input />
-              </NeatForm.Item>
-            </div>
-            <div>
-              <NeatForm.Item
-                label="Last Name"
-                name="lastName"
-                rules={[{ required: true, message: 'Last Name is required' }]}
-              >
-                <Input />
-              </NeatForm.Item>
-            </div>
-            <div>
-              <NeatForm.Item label="Primary Language" name="primaryLanguage">
-                <Select options={languageOptions} />
-              </NeatForm.Item>
-            </div>
-            <div>
-              <NeatForm.Item
-                label="Country/Region"
-                name="country"
-                rules={[
-                  { required: true, message: 'Country/Region is required' },
-                ]}
-              >
-                <Select options={countryOptions} />
-              </NeatForm.Item>
-            </div>
-            <div>
-              <NeatForm.Item label="Time Zone" name="timeZone">
-                <Select options={timeZoneOptions} />
-              </NeatForm.Item>
-            </div>
+            <NeatForm.Item
+              label="First Name"
+              name="firstName"
+              rules={[{ required: true, message: 'First Name is required' }]}
+            >
+              <Input />
+            </NeatForm.Item>
+            <NeatForm.Item
+              label="Last Name"
+              name="lastName"
+              rules={[{ required: true, message: 'Last Name is required' }]}
+            >
+              <Input />
+            </NeatForm.Item>
+            <NeatForm.Item label="Primary Language" name="primaryLanguage">
+              <Select options={languageOptions} />
+            </NeatForm.Item>
+            <NeatForm.Item
+              label="Country/Region"
+              name="country"
+              rules={[
+              { required: true, message: 'Country/Region is required' },
+              ]}
+            >
+              <Select options={countryOptions} />
+            </NeatForm.Item>
+            <NeatForm.Item label="Time Zone" name="timeZone">
+              <Select options={timeZoneOptions} />
+            </NeatForm.Item>
           </div>
         </div>
 

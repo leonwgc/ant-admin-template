@@ -113,7 +113,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/users/edit': lazyLoad('pages/User/Edit'),
 
   // Forms
-  '/app/forms': lazyLoad('pages/Form/MyForm'),
+  '/app/forms': lazyLoad('pages/Form/ResponsiveForm'),
   '/app/forms/dynamic-list': lazyLoad('pages/Form/DynamicList'),
   '/app/forms/validation': lazyLoad('pages/Form/FormValidation'),
   '/app/forms/virtual-list': lazyLoad('pages/Form/VirtualLists'),
