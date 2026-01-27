@@ -15,7 +15,7 @@ const tailLayout = {
 };
 
 const App: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('pages.user');
   const [form] = Form.useForm();
 
   useTitle(t('pages.user:addUserTitle'));
