@@ -388,8 +388,206 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
 
 1. **MCP 服务强制使用**: 使用 Neat Design 组件前必须调用 MCP 服务获取文档
 2. **不使用 CSS Module**: SCSS 文件不需要 `.module.scss` 后缀
-3. **路由配置**: 参考 `config.route.ts` 和 `RouteConfig.tsx`
-4. **菜单配置**: 参考 `config.menu.tsx`
+3. **路由配置 - 自动路由生成系统**:
+
+   本项目使用**自动路由生成系统**，通过菜单配置自动生成路由，无需在多个地方维护路由。
+
+   ### 核心文件
+   - `src/config.menu.tsx` - 菜单配置（路由来源）
+   - `src/utils/routeGenerator.tsx` - 组件映射配置
+   - `src/RouteConfig.tsx` - 自动生成路由（不需手动编辑）
+   - `src/layouts/RouteGuard.tsx` - 路由守卫（权限校验）
+
+   ### 添加新路由的完整流程（3 步）
+
+   #### 第 1 步：在菜单配置中添加路由
+   ```tsx
+   // src/config.menu.tsx
+   export const menus: MenuItem[] = [
+     {
+       key: 'user',
+       label: 'Users',
+       icon: <UserOutlined />,
+       permissions: [],
+       children: [
+         {
+           key: 'user-list',
+           label: 'User List',
+           route: '/app/users',        // 定义路由路径
+           permissions: [],
+         },
+         {
+           key: 'user-add',
+           label: 'Add User',
+           route: '/app/users/add',
+           permissions: [],
+           hidden: true,  // 不在菜单显示，但路由存在
+         },
+       ],
+     },
+   ];
+   ```
+
+   #### 第 2 步：在组件映射中注册组件
+   ```tsx
+   // src/utils/routeGenerator.tsx
+   export const routeComponentMap: RouteComponentMap = {
+     '/app/users': lazyLoad('pages/User/Users'),
+     '/app/users/add': lazyLoad('pages/User/AddUser'),
+     // 每个路由路径必须映射到对应组件
+   };
+   ```
+
+   #### 第 3 步：创建页面组件
+   ```tsx
+   /**
+    * @file pages/User/Users.tsx
+    * @author leon.wang
+    */
+   import React, { FC } from 'react';
+
+   const Users: FC = () => {
+     return <div>User List Page</div>;
+   };
+
+   export default Users;  // 必须使用 default export
+   ```
+
+   ### 菜单项配置说明
+   ```typescript
+   interface MenuItem {
+     key: string;              // 菜单唯一标识
+     label: string;            // 菜单显示文本
+     route?: string;           // 路由路径（必须以 /app/ 开头）
+     icon?: ReactNode;         // 菜单图标
+     permissions?: string[];   // 权限列表
+     hidden?: boolean;         // true: 不在菜单显示但路由存在
+     children?: MenuItem[];    // 子菜单
+   }
+   ```
+
+   ### 隐藏路由（Hidden Routes）
+   用于详情页、编辑页等不需要在菜单显示但必须存在的路由：
+   ```tsx
+   {
+     key: 'user-edit',
+     label: 'Edit User',
+     route: '/app/users/edit/:id',
+     hidden: true,  // 路由存在，但不显示在菜单中
+   }
+   ```
+
+   ### 权限控制
+   路由自动继承菜单配置的权限：
+   ```tsx
+   {
+     key: 'admin-panel',
+     label: 'Admin Panel',
+     route: '/app/admin',
+     permissions: ['admin', 'superuser'],  // 只有这些权限的用户能访问
+   }
+   ```
+
+   ### 动态路由参数
+   ```tsx
+   // 配置
+   route: '/app/users/edit/:id'
+
+   // 组件内获取参数
+   import { useParams } from 'react-router-dom';
+   const { id } = useParams<{ id: string }>();
+   ```
+
+   ### 路由懒加载
+   `lazyLoad` 函数自动处理懒加载和错误边界：
+   ```tsx
+   // src/utils/routeGenerator.tsx
+   const lazyLoad = (path: string) => {
+     const Component = lazy(() => import(`~/${path}`));
+     return (
+       <Suspense fallback={<Loading />}>
+         <Component />
+       </Suspense>
+     );
+   };
+   ```
+
+   ### 路由规则
+   - ✅ **所有业务路由必须以 `/app/` 开头**
+   - ✅ **菜单中的每个 `route` 必须在 `routeComponentMap` 中映射组件**
+   - ✅ **组件必须使用 `default export`**
+   - ✅ **使用路径别名 `~/` 导入（对应 `src/`）**
+   - ✅ **隐藏路由使用 `hidden: true`，不要从菜单中删除**
+   - ❌ **不要手动编辑 `RouteConfig.tsx`，路由自动生成**
+   - ❌ **不要在 `config.route.ts` 中定义路由（如果该文件存在）**
+   - ❌ **不要在组件内部使用 `<Routes>` 定义路由**
+
+   ### 系统优势
+   - 📌 **单一数据源**：菜单配置驱动路由和导航
+   - 📌 **无重复维护**：路由只定义一次
+   - 📌 **类型安全**：完整的 TypeScript 类型支持
+   - 📌 **权限集成**：路由自动继承菜单权限
+   - 📌 **易于维护**：3 步完成新路由添加
+
+   ### 常见问题排查
+
+   **路由不工作？**
+   1. 检查菜单配置是否有 `route` 属性
+   2. 确认组件已在 `routeComponentMap` 中注册
+   3. 确认组件文件路径正确
+   4. 查看浏览器控制台警告
+
+   **组件无法加载？**
+   1. 确认 `lazyLoad()` 中的导入路径正确
+   2. 检查组件是否使用 `default export`
+   3. 确认组件文件存在于指定路径
+
+   **路由显示但组件缺失？**
+   - 检查 `routeComponentMap` - 每个菜单路由必须有对应的组件映射
+
+   ### 完整示例：添加一个新页面
+
+   ```tsx
+   // 1️⃣ config.menu.tsx - 添加菜单项
+   {
+     key: 'products',
+     label: 'Products',
+     icon: <ShopOutlined />,
+     children: [
+       {
+         key: 'product-list',
+         label: 'Product List',
+         route: '/app/products',
+         permissions: [],
+       },
+       {
+         key: 'product-detail',
+         label: 'Product Detail',
+         route: '/app/products/:id',
+         hidden: true,  // 详情页隐藏
+       },
+     ],
+   }
+
+   // 2️⃣ routeGenerator.tsx - 映射组件
+   export const routeComponentMap = {
+     // ...existing mappings
+     '/app/products': lazyLoad('pages/Product/ProductList'),
+     '/app/products/:id': lazyLoad('pages/Product/ProductDetail'),
+   };
+
+   // 3️⃣ 创建组件文件
+   // src/pages/Product/ProductList.tsx
+   // src/pages/Product/ProductDetail.tsx
+   ```
+
+   **完成！** 路由自动生成，无需手动配置。
+
+   ### 相关文档
+   - 详细文档: `src/utils/README.md`
+   - 路由示例: `src/utils/routeGenerator.example.md`
+
+4. **菜单配置**: 参考 `config.menu.tsx`（菜单是路由的唯一来源）
 5. **全局状态**: 使用 Zustand，参考 `store.ts`
 6. **请求封装**: 使用 `req.ts` 封装的 axios 实例
 7. **国际化**: 使用 i18next，配置文件在 `locales/`
