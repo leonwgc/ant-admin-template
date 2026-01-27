@@ -7,7 +7,7 @@ import zh from './zh';
 import en from './en';
 
 /** 默认命名空间 */
-export const defaultNS = 'translation';
+export const defaultNS = 'common';
 
 /** i18n 资源配置 */
 export const resources = {

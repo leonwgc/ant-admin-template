@@ -42,6 +42,20 @@ export default {
   // Add User Page
   addUserTitle: 'Add User',
   addUserSubmit: 'Create User',
+  addUserFormNote: 'Note',
+  addUserFormGender: 'Gender',
+  addUserFormGenderPh: 'Select a option and change input text above',
+  addUserFormCustomizeGender: 'Customize Gender',
+  addUserGenderMale: 'male',
+  addUserGenderFemale: 'female',
+  addUserGenderOther: 'other',
+  addUserNoteHiMan: 'Hi, man!',
+  addUserNoteHiLady: 'Hi, lady!',
+  addUserNoteHiThere: 'Hi there!',
+  addUserNoteHelloWorld: 'Hello world!',
+  addUserBtnSubmit: 'Submit',
+  addUserBtnReset: 'Reset',
+  addUserBtnFill: 'Fill form',
 
   // Edit User Page
   editUserTitle: 'Edit User',

@@ -56,23 +56,21 @@ function detectLanguage(): Language {
 export const language: Language = detectLanguage();
 
 // Initialize i18next
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: language,
-    fallbackLng: DEFAULT_LANGUAGE,
+i18n.use(initReactI18next).init({
+  resources,
+  lng: language,
+  fallbackLng: DEFAULT_LANGUAGE,
 
-    // Default namespace
-    defaultNS,
+  // Default namespace
+  defaultNS,
 
-    // Debug mode (only in development)
-    debug: process.env.NODE_ENV === 'development',
+  // Debug mode (only in development)
+  debug: process.env.NODE_ENV === 'development',
 
-    interpolation: {
-      escapeValue: false, // React already escapes values
-    },
-  });
+  interpolation: {
+    escapeValue: false, // React already escapes values
+  },
+});
 
 /**
  * Change language and persist to localStorage

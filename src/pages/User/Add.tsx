@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Form, Input, Select, Space } from '@derbysoft/neat-design';
 import { useTitle } from 'ahooks';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
@@ -14,20 +15,21 @@ const tailLayout = {
 };
 
 const App: React.FC = () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  useTitle('Add User');
+  useTitle(t('pages.user:addUserTitle'));
 
   const onGenderChange = (value: string) => {
     switch (value) {
       case 'male':
-        form.setFieldsValue({ note: 'Hi, man!' });
+        form.setFieldsValue({ note: t('pages.user:addUserNoteHiMan') });
         break;
       case 'female':
-        form.setFieldsValue({ note: 'Hi, lady!' });
+        form.setFieldsValue({ note: t('pages.user:addUserNoteHiLady') });
         break;
       case 'other':
-        form.setFieldsValue({ note: 'Hi there!' });
+        form.setFieldsValue({ note: t('pages.user:addUserNoteHiThere') });
         break;
       default:
     }
@@ -42,7 +44,10 @@ const App: React.FC = () => {
   };
 
   const onFill = () => {
-    form.setFieldsValue({ note: 'Hello world!', gender: 'male' });
+    form.setFieldsValue({
+      note: t('pages.user:addUserNoteHelloWorld'),
+      gender: 'male',
+    });
   };
 
   return (
@@ -53,18 +58,26 @@ const App: React.FC = () => {
       onFinish={onFinish}
       style={{ maxWidth: 600 }}
     >
-      <Form.Item name="note" label="Note" rules={[{ required: true }]}>
+      <Form.Item
+        name="note"
+        label={t('pages.user:addUserFormNote')}
+        rules={[{ required: true }]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
+      <Form.Item
+        name="gender"
+        label={t('pages.user:addUserFormGender')}
+        rules={[{ required: true }]}
+      >
         <Select
-          placeholder="Select a option and change input text above"
+          placeholder={t('pages.user:addUserFormGenderPh')}
           onChange={onGenderChange}
           allowClear
         >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
+          <Option value="male">{t('pages.user:addUserGenderMale')}</Option>
+          <Option value="female">{t('pages.user:addUserGenderFemale')}</Option>
+          <Option value="other">{t('pages.user:addUserGenderOther')}</Option>
         </Select>
       </Form.Item>
       <Form.Item
@@ -77,7 +90,7 @@ const App: React.FC = () => {
           getFieldValue('gender') === 'other' ? (
             <Form.Item
               name="customizeGender"
-              label="Customize Gender"
+              label={t('pages.user:addUserFormCustomizeGender')}
               rules={[{ required: true }]}
             >
               <Input />
@@ -88,13 +101,13 @@ const App: React.FC = () => {
       <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
-            Submit
+            {t('pages.user:addUserBtnSubmit')}
           </Button>
           <Button htmlType="button" onClick={onReset}>
-            Reset
+            {t('pages.user:addUserBtnReset')}
           </Button>
           <Button type="link" htmlType="button" onClick={onFill}>
-            Fill form
+            {t('pages.user:addUserBtnFill')}
           </Button>
         </Space>
       </Form.Item>

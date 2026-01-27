@@ -42,6 +42,20 @@ export default {
   // 添加用户页面
   addUserTitle: '添加用户',
   addUserSubmit: '创建用户',
+  addUserFormNote: '备注',
+  addUserFormGender: '性别',
+  addUserFormGenderPh: '选择一个选项，上方输入框会改变',
+  addUserFormCustomizeGender: '自定义性别',
+  addUserGenderMale: '男',
+  addUserGenderFemale: '女',
+  addUserGenderOther: '其他',
+  addUserNoteHiMan: '你好，先生！',
+  addUserNoteHiLady: '你好，女士！',
+  addUserNoteHiThere: '你好！',
+  addUserNoteHelloWorld: 'Hello world!',
+  addUserBtnSubmit: '提交',
+  addUserBtnReset: '重置',
+  addUserBtnFill: '填充表单',
 
   // 编辑用户页面
   editUserTitle: '编辑用户',
