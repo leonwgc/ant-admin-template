@@ -12,7 +12,7 @@ import {
   Divider,
 } from '@derbysoft/neat-design';
 import { useGlobalState } from '~/hooks/useGlobalState';
-import './UseGlobalStateExample.scss';
+import './ZustandKitDemo.scss';
 
 const { Text } = Typography;
 
