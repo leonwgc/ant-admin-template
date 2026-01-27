@@ -171,6 +171,175 @@ import { EmailOutlined } from '@ant-design/icons';
 - **尾随逗号**: ES5 标准
 - **括号间距**: 对象字面量需要空格 `{ foo: bar }`
 
+### 7️⃣ 国际化 (i18next) 规范
+
+#### 配置说明
+- **默认命名空间**: `common` (全局通用翻译)
+- **命名空间分隔符**: `:` (冒号)
+- **键分隔符**: `.` (点号)
+- **翻译文件位置**: `src/locales/`
+
+#### 命名空间注册
+所有命名空间必须在 `src/locales/index.ts` 中显式注册：
+```typescript
+export const resources = {
+  zh: {
+    common: zh,
+    'pages.user': zh.pages.user,  // 注册命名空间
+    'pages.form': zh.pages.form,
+  },
+} as const;  // ← as const 确保类型推断
+```
+
+#### 翻译键命名规范
+使用 camelCase，添加前缀表明用途：
+- `xxxTitle` - 页面标题
+- `xxxCol` - 表格列名
+- `xxxForm` - 表单字段
+- `xxxFormPh` - 表单字段 placeholder
+- `xxxBtn` - 按钮文本
+- `xxxMsg` - 消息提示
+
+#### 使用方式
+
+**方式 1: 使用命名空间分隔符（推荐）**
+```tsx
+import { useTranslation } from 'react-i18next';
+
+const MyComponent: FC = () => {
+  const { t } = useTranslation();  // 默认命名空间
+
+  return (
+    <div>
+      <h1>{t('pages.user:usersTitle')}</h1>
+      <Button>{t('pages.form:responsiveFormBtnSubmit')}</Button>
+    </div>
+  );
+};
+```
+
+**注意**:
+- 方式 1 使用 `:` 分隔命名空间和键名（如 `pages.user:usersTitle`）
+- **推荐方式 1**，保持统一的翻译调用风格
+
+#### 添加新翻译的步骤
+
+1. **创建翻译文件**
+```bash
+# 创建页面翻译目录
+mkdir -p src/locales/pages/product
+```
+
+2. **添加中文翻译** (`src/locales/pages/product/zh.ts`)
+```typescript
+/**
+ * @file locales/pages/product/zh.ts
+ * @author leon.wang
+ */
+export default {
+  productTitle: '产品列表',
+  productColName: '产品名称',
+  productBtnAdd: '添加产品',
+};
+```
+
+3. **添加英文翻译** (`src/locales/pages/product/en.ts`)
+```typescript
+/**
+ * @file locales/pages/product/en.ts
+ * @author leon.wang
+ */
+export default {
+  productTitle: 'Product List',
+  productColName: 'Product Name',
+  productBtnAdd: 'Add Product',
+};
+```
+
+4. **在 zh.ts 中导入**
+```typescript
+import productZh from './pages/product/zh';
+
+const zh = {
+  ...commonZh,
+  pages: {
+    user: userZh,
+    product: productZh,  // ← 添加
+  },
+};
+```
+
+5. **在 en.ts 中导入**
+```typescript
+import productEn from './pages/product/en';
+
+const en = {
+  ...commonEn,
+  pages: {
+    user: userEn,
+    product: productEn,  // ← 添加
+  },
+};
+```
+
+6. **注册命名空间** (`src/locales/index.ts`)
+```typescript
+export const resources = {
+  zh: {
+    common: zh,
+    'pages.user': zh.pages.user,
+    'pages.product': zh.pages.product,  // ← 注册新命名空间
+  },
+  en: {
+    common: en,
+    'pages.user': en.pages.user,
+    'pages.product': en.pages.product,  // ← 注册新命名空间
+  },
+} as const;
+```
+
+7. **在组件中使用**
+```tsx
+const ProductPage: FC = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <h1>{t('pages.product:productTitle')}</h1>
+      <Button>{t('pages.product:productBtnAdd')}</Button>
+    </div>
+  );
+};
+```
+
+#### TypeScript 智能提示配置
+
+项目已配置 TypeScript 类型支持（`src/i18next.d.ts`），享受：
+- ✅ 键名自动补全
+- ✅ 错误键名会报 TypeScript 错误
+- ✅ 命名空间验证
+
+**重启 TypeScript 服务器**以加载类型：
+- `Cmd+Shift+P` → "TypeScript: Restart TS Server"
+
+#### 翻译文件组织结构
+```
+src/locales/
+├── index.ts              # 资源配置和命名空间注册
+├── zh.ts                 # 中文主文件
+├── en.ts                 # 英文主文件
+├── common/
+│   ├── zh.ts            # 通用中文翻译
+│   └── en.ts            # 通用英文翻译
+└── pages/
+    ├── user/
+    │   ├── zh.ts        # 用户页面中文
+    │   └── en.ts        # 用户页面英文
+    └── form/
+        ├── zh.ts        # 表单页面中文
+        └── en.ts        # 表单页面英文
+```
+
 ---
 
 ## 🚀 快速开发工作流
@@ -224,5 +393,15 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
 5. **全局状态**: 使用 Zustand，参考 `store.ts`
 6. **请求封装**: 使用 `req.ts` 封装的 axios 实例
 7. **国际化**: 使用 i18next，配置文件在 `locales/`
+8. **命名空间注册**: 添加新页面翻译时，必须在 `locales/index.ts` 中注册命名空间，否则 TypeScript 类型检查会失效
+
+---
+
+## 📚 相关文档
+
+- **i18next TypeScript 智能提示**: `src/locales/I18N_TYPESCRIPT.md`
+- **i18next 命名空间工作原理**: `src/locales/NAMESPACE_DEMO.md`
+- **Neat Design MCP 服务**: `.github/instructions/01-mcp.neat.instructions.md`
+- **Ant Design MCP 服务**: `.github/instructions/02-mcp.ant.instructions.md`
 
 ---
