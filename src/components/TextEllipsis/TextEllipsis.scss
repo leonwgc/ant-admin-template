@@ -1,0 +1,17 @@
+/**
+ * @file components/TextEllipsis/TextEllipsis.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.text-ellipsis {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+
+  &:hover {
+    cursor: default;
+  }
+}

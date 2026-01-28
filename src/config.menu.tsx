@@ -318,6 +318,12 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'text-ellipsis',
+        get label() { return t('menu.textEllipsis'); },
+        route: '/app/components/text-ellipsis',
+        permissions: [],
+      },
+      {
         key: 'date-table',
         get label() { return t('menu.dateTable'); },
         route: '/app/components/date-table',

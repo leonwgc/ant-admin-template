@@ -146,6 +146,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/chatbot': lazyLoad('pages/Components/ChatBot'),
   '/app/components/image-upload': lazyLoad('pages/Components/ImageUploadExample'),
   '/app/components/fade-in': lazyLoad('pages/Components/FadeInExample'),
+  '/app/components/text-ellipsis': lazyLoad('pages/Components/TextEllipsisDemo'),
   '/app/components/date-table': lazyLoad('pages/Components/DateTable'),
   '/app/components/css-filter': lazyLoad('pages/Components/CssFilterExample'),
 

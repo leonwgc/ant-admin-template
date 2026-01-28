@@ -56,6 +56,7 @@ export default {
     chatbot: 'ChatBot',
     imageUpload: 'ImageUpload',
     fadeIn: 'FadeIn',
+    textEllipsis: 'TextEllipsis',
     dateTable: 'DateTable',
     libraries: 'Libraries',
     reactHookForm: 'React Hook Form',
