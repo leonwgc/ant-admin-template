@@ -57,7 +57,7 @@ export default {
     imageUpload: '图片上传',
     fadeIn: '淡入动画',
     textEllipsis: '文本省略',
-    dateTable: '日期表格',
+    dateTable: 'sticky 表格',
     libraries: '类库',
     reactHookForm: 'React Hook Form',
     reactFormFieldHook: 'React Form Field Hook',
