@@ -10,52 +10,143 @@ import './StickyTableDemo.scss';
 interface StickyTableDemoProps {}
 
 /**
+ * Column configuration interface (similar to Ant Design Table)
+ */
+interface ColumnConfig {
+  /** Column key */
+  key: string;
+  /** Column title */
+  title: string;
+  /** Column width in pixels */
+  width: number;
+  /** Whether to fix this column (left or false) */
+  fixed?: 'left' | false;
+  /** Custom render function */
+  render?: (value: any, row: any, index: number) => React.ReactNode;
+  /** CSS class name */
+  className?: string;
+}
+
+/**
+ * Calculate left offset for fixed columns
+ */
+const calculateFixedOffsets = (
+  columns: ColumnConfig[]
+): Map<string, number> => {
+  const offsets = new Map<string, number>();
+  let leftOffset = 0;
+
+  columns.forEach((col) => {
+    if (col.fixed === 'left') {
+      offsets.set(col.key, leftOffset);
+      leftOffset += col.width;
+    }
+  });
+
+  return offsets;
+};
+
+/**
  * HTML Table with CSS sticky columns demo
  * Demonstrates dynamic sticky column configuration
  */
 const StickyTableDemo: FC<StickyTableDemoProps> = () => {
-  const [fixedColumns, setFixedColumns] = useState<number>(2);
-  const totalColumns = 30;
+  const [fixedColumnCount, setFixedColumnCount] = useState<number>(2);
+  const totalDateColumns = 30;
 
-  // Generate date columns (30 days from today)
+  // Generate date columns data
   const dateColumns = useMemo(() => {
     const today = new Date();
     const columns: { date: Date; dayOfWeek: number; dateStr: string }[] = [];
 
-    for (let i = 0; i < totalColumns; i++) {
+    for (let i = 0; i < totalDateColumns; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
-      const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
+      const dayOfWeek = date.getDay();
       const dateStr = `${date.getMonth() + 1}/${date.getDate()}`;
-
       columns.push({ date, dayOfWeek, dateStr });
     }
 
     return columns;
   }, []);
 
-  // Generate sample data rows
-  const dataRows = useMemo(() => {
-    return Array.from({ length: 10 }, (_, rowIndex) => ({
-      id: rowIndex + 1,
-      name: `Item ${rowIndex + 1}`,
-      category: `Category ${(rowIndex % 3) + 1}`,
-      values: Array.from({ length: totalColumns }, () =>
-        Math.floor(Math.random() * 100)
+  // Column configuration (similar to Ant Design Table columns prop)
+  const columns: ColumnConfig[] = useMemo(() => {
+    const baseColumns: ColumnConfig[] = [
+      {
+        key: 'id',
+        title: 'ID',
+        width: 100,
+        fixed: fixedColumnCount > 0 ? 'left' : false,
+      },
+      {
+        key: 'name',
+        title: 'Name',
+        width: 150,
+        fixed: fixedColumnCount > 1 ? 'left' : false,
+      },
+      {
+        key: 'category',
+        title: 'Category',
+        width: 120,
+        fixed: fixedColumnCount > 2 ? 'left' : false,
+      },
+    ];
+
+    // Add date columns
+    const dateColumnConfigs: ColumnConfig[] = dateColumns.map((col, index) => ({
+      key: `date-${index}`,
+      title: col.dateStr,
+      width: 80,
+      fixed: false,
+      className:
+        col.dayOfWeek === 0 || col.dayOfWeek === 6 ? 'weekend' : undefined,
+      render: (value, row) => (
+        <div className="sticky-table__th-content">
+          <div className="sticky-table__date">{col.dateStr}</div>
+          <div className="sticky-table__day">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][col.dayOfWeek]}
+          </div>
+        </div>
       ),
     }));
-  }, []);
+
+    return [...baseColumns, ...dateColumnConfigs];
+  }, [fixedColumnCount, dateColumns]);
+
+  // Calculate fixed column offsets
+  const fixedOffsets = useMemo(() => {
+    return calculateFixedOffsets(columns);
+  }, [columns]);
+
+  // Generate sample data rows
+  const dataRows = useMemo(() => {
+    return Array.from({ length: 10 }, (_, rowIndex) => {
+      const row: Record<string, any> = {
+        id: rowIndex + 1,
+        name: `Item ${rowIndex + 1}`,
+        category: `Category ${(rowIndex % 3) + 1}`,
+      };
+
+      // Add date values
+      dateColumns.forEach((_, index) => {
+        row[`date-${index}`] = Math.floor(Math.random() * 100);
+      });
+
+      return row;
+    });
+  }, [dateColumns]);
 
   return (
     <div className="sticky-table-demo">
-      <Card title="HTML Table with CSS Sticky Columns">
+      <Card title="Flexible Sticky Table (Ant Design Style)">
         <Space style={{ marginBottom: 16 }}>
           <span>Fixed Columns:</span>
           <InputNumber
             min={0}
             max={3}
-            value={fixedColumns}
-            onChange={(value) => setFixedColumns(value as number)}
+            value={fixedColumnCount}
+            onChange={(value) => setFixedColumnCount(value as number)}
           />
           <span style={{ color: '#999', marginLeft: 8 }}>
             (Scroll horizontally to see sticky effect)
@@ -64,99 +155,54 @@ const StickyTableDemo: FC<StickyTableDemoProps> = () => {
 
         <div className="sticky-table-container">
           <table className="sticky-table">
-            <colgroup>
-              <col
-                className="sticky-table__col--fixed"
-                data-fixed-column={0 < fixedColumns ? '0' : undefined}
-              />
-              <col
-                className="sticky-table__col--fixed"
-                data-fixed-column={1 < fixedColumns ? '1' : undefined}
-              />
-              <col
-                className="sticky-table__col--fixed"
-                data-fixed-column={2 < fixedColumns ? '2' : undefined}
-              />
-              {dateColumns.map((_, index) => (
-                <col key={index} className="sticky-table__col--date" />
-              ))}
-            </colgroup>
-
             <thead className="sticky-table__header">
               <tr>
-                <th
-                  className="sticky-table__th sticky-table__th--fixed"
-                  data-fixed-column={0 < fixedColumns ? '0' : undefined}
-                >
-                  ID
-                </th>
-                <th
-                  className="sticky-table__th sticky-table__th--fixed"
-                  data-fixed-column={1 < fixedColumns ? '1' : undefined}
-                >
-                  Name
-                </th>
-                <th
-                  className="sticky-table__th sticky-table__th--fixed"
-                  data-fixed-column={2 < fixedColumns ? '2' : undefined}
-                >
-                  Category
-                </th>
-                {dateColumns.map((col, index) => (
-                  <th
-                    key={index}
-                    className={`sticky-table__th sticky-table__th--date ${
-                      col.dayOfWeek === 0 || col.dayOfWeek === 6
-                        ? 'sticky-table__th--weekend'
-                        : ''
-                    }`}
-                  >
-                    <div className="sticky-table__th-content">
-                      <div className="sticky-table__date">{col.dateStr}</div>
-                      <div className="sticky-table__day">
-                        {
-                          ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][
-                            col.dayOfWeek
-                          ]
-                        }
-                      </div>
-                    </div>
-                  </th>
-                ))}
+                {columns.map((col) => {
+                  const isFixed = col.fixed === 'left';
+                  const leftOffset = isFixed ? fixedOffsets.get(col.key) : undefined;
+
+                  return (
+                    <th
+                      key={col.key}
+                      className={`sticky-table__th ${
+                        isFixed ? 'sticky-table__th--fixed' : ''
+                      } ${col.className ? `sticky-table__th--${col.className}` : ''}`}
+                      style={{
+                        width: col.width,
+                        minWidth: col.width,
+                        ...(isFixed && leftOffset !== undefined
+                          ? { left: leftOffset }
+                          : {}),
+                      }}
+                    >
+                      {col.render ? col.render(null, null, 0) : col.title}
+                    </th>
+                  );
+                })}
               </tr>
             </thead>
 
             <tbody className="sticky-table__body">
-              {dataRows.map((row) => (
+              {dataRows.map((row, rowIndex) => (
                 <tr key={row.id} className="sticky-table__row">
-                  <td
-                    className="sticky-table__td sticky-table__td--fixed"
-                    data-fixed-column={0 < fixedColumns ? '0' : undefined}
-                  >
-                    {row.id}
-                  </td>
-                  <td
-                    className="sticky-table__td sticky-table__td--fixed"
-                    data-fixed-column={1 < fixedColumns ? '1' : undefined}
-                  >
-                    {row.name}
-                  </td>
-                  <td
-                    className="sticky-table__td sticky-table__td--fixed"
-                    data-fixed-column={2 < fixedColumns ? '2' : undefined}
-                  >
-                    {row.category}
-                  </td>
-                  {row.values.map((value, index) => {
-                    const isWeekend =
-                      dateColumns[index].dayOfWeek === 0 ||
-                      dateColumns[index].dayOfWeek === 6;
+                  {columns.map((col) => {
+                    const isFixed = col.fixed === 'left';
+                    const leftOffset = isFixed ? fixedOffsets.get(col.key) : undefined;
+                    const value = row[col.key];
+
                     return (
                       <td
-                        key={index}
-                        className={`sticky-table__td sticky-table__td--date ${
-                          isWeekend ? 'sticky-table__td--weekend' : ''
-                        }`}
+                        key={col.key}
+                        className={`sticky-table__td ${
+                          isFixed ? 'sticky-table__td--fixed' : ''
+                        } ${col.className ? `sticky-table__td--${col.className}` : ''}`}
+                        style={{
+                          width: col.width,
+                          minWidth: col.width,
+                          ...(isFixed && leftOffset !== undefined
+                            ? { left: leftOffset }
+                            : {}),
+                        }}
                       >
                         {value}
                       </td>
