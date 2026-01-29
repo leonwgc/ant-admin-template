@@ -29,6 +29,7 @@ export default {
     cssAnimation: 'CSS Animation',
     cssFilter: 'CSS Filter',
     cssStickyTable: 'CSS Sticky Table',
+    cssStickyExamples: 'CSS Sticky Examples',
     users: 'Users',
     userList: 'User List',
     expandTable: 'Expand Table',

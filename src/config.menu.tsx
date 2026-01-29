@@ -174,6 +174,14 @@ export const menus: MenuItem[] = [
         route: '/app/css/sticky-table',
         permissions: [],
       },
+      {
+        key: 'css-sticky-examples',
+        get label() {
+          return t('menu.cssStickyExamples');
+        },
+        route: '/app/css/sticky-examples',
+        permissions: [],
+      },
     ],
   },
   {

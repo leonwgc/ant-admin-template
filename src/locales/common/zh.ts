@@ -29,6 +29,7 @@ export default {
     cssAnimation: 'CSS 动画',
     cssFilter: 'CSS 滤镜',
     cssStickyTable: 'CSS 固定列表格',
+    cssStickyExamples: 'CSS Sticky 应用场景',
     users: '用户',
     userList: '用户列表',
     expandTable: '展开表格',
