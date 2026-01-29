@@ -21,6 +21,7 @@ export default {
     proxy: 'Proxy',
     cssFeature: 'CSS 特性',
     cssNewFeatures: 'CSS 新特性',
+    cssBoxModel: 'CSS 盒模型',
     cssRenderOptimization: 'CSS 渲染优化',
     cssGridLayout: 'CSS 网格布局',
     cssFlexbox: 'CSS 弹性盒',

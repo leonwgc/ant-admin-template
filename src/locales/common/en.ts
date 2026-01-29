@@ -21,6 +21,7 @@ export default {
     proxy: 'Proxy',
     cssFeature: 'CSS Feature',
     cssNewFeatures: 'CSS New Features',
+    cssBoxModel: 'CSS Box Model',
     cssRenderOptimization: 'CSS Render Optimization',
     cssGridLayout: 'CSS Grid Layout',
     cssFlexbox: 'CSS Flexbox',

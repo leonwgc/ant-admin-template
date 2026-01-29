@@ -111,6 +111,14 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'css-box-model',
+        get label() {
+          return t('menu.cssBoxModel');
+        },
+        route: '/app/css/box-model',
+        permissions: [],
+      },
+      {
         key: 'css-render-optimization',
         get label() {
           return t('menu.cssRenderOptimization');
