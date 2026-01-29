@@ -28,6 +28,7 @@ export default {
     cssBlendModes: 'CSS 混合模式',
     cssAnimation: 'CSS 动画',
     cssFilter: 'CSS 滤镜',
+    cssStickyTable: 'CSS 固定列表格',
     users: '用户',
     userList: '用户列表',
     expandTable: '展开表格',

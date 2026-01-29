@@ -1,0 +1,155 @@
+/**
+ * @file pages/Css/StickyTableDemo.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.sticky-table-demo {
+  padding: 20px;
+}
+
+.sticky-table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 600px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  position: relative;
+}
+
+.sticky-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+
+  &__col--fixed {
+    width: 100px;
+  }
+
+  &__col--date {
+    width: 80px;
+  }
+
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: #fafafa;
+  }
+
+  &__th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    background: #fafafa;
+    white-space: nowrap;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    // Sticky column styling
+    &[data-fixed-column] {
+      position: sticky;
+      z-index: 4;
+      background: #fafafa;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    // Set left position for each fixed column
+    &[data-fixed-column='0'] {
+      left: 0;
+    }
+
+    &[data-fixed-column='1'] {
+      left: 100px;
+    }
+
+    &[data-fixed-column='2'] {
+      left: 200px;
+    }
+
+    &--date {
+      text-align: center;
+    }
+
+    &--weekend {
+      background: #fff5f5;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
+  &__date {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &__day {
+    font-size: 12px;
+    color: #999;
+    font-weight: normal;
+  }
+
+  &__body {
+    background: #fff;
+  }
+
+  &__row {
+    &:hover {
+      background: #f5f5f5;
+
+      .sticky-table__td[data-fixed-column] {
+        background: #f5f5f5;
+      }
+    }
+  }
+
+  &__td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    white-space: nowrap;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    // Sticky column styling
+    &[data-fixed-column] {
+      position: sticky;
+      z-index: 2;
+      background: #fff;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    // Set left position for each fixed column
+    &[data-fixed-column='0'] {
+      left: 0;
+    }
+
+    &[data-fixed-column='1'] {
+      left: 100px;
+    }
+
+    &[data-fixed-column='2'] {
+      left: 200px;
+    }
+
+    &--date {
+      text-align: center;
+    }
+
+    &--weekend {
+      background: #fff5f5;
+    }
+  }
+}

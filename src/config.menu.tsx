@@ -166,6 +166,14 @@ export const menus: MenuItem[] = [
         route: '/app/components/css-filter',
         permissions: [],
       },
+      {
+        key: 'css-sticky-table',
+        get label() {
+          return t('menu.cssStickyTable');
+        },
+        route: '/app/css/sticky-table',
+        permissions: [],
+      },
     ],
   },
   {

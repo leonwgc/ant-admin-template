@@ -105,6 +105,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/css/container-queries': lazyLoad('pages/Css/CssContainerQueriesExample'),
   '/app/css/blend-modes': lazyLoad('pages/Css/CssBlendModesExample'),
   '/app/css/animation': lazyLoad('pages/Css/CssAnimationExample'),
+  '/app/css/sticky-table': lazyLoad('pages/Css/StickyTableDemo'),
 
   // User Management
   '/app/users': lazyLoad('pages/User/Users'),

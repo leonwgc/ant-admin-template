@@ -28,6 +28,7 @@ export default {
     cssBlendModes: 'CSS Blend Modes',
     cssAnimation: 'CSS Animation',
     cssFilter: 'CSS Filter',
+    cssStickyTable: 'CSS Sticky Table',
     users: 'Users',
     userList: 'User List',
     expandTable: 'Expand Table',
