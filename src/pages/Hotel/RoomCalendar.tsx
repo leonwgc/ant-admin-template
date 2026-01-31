@@ -10,10 +10,12 @@ import {
   UnorderedListOutlined,
   TeamOutlined,
   ImportOutlined,
+  ExportOutlined,
 } from '@ant-design/icons';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import './RoomCalendar.scss';
+import { EditOutlined } from '@derbysoft/neat-design-icons';
 
 const { RangePicker } = DatePicker;
 
@@ -331,17 +333,11 @@ const RoomCalendar: FC = () => {
                     {room.roomNumber}
                   </div>
                 </div>
-                <Button className="room-calendar__room-edit-btn" size="small">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M6 3L10 8L6 13"
-                      stroke="#1890ff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </Button>
+                <Button
+                  className="room-calendar__room-edit-btn"
+                  size="small"
+                  icon={<EditOutlined />}
+                />
               </div>
 
               {/* Status Labels */}
