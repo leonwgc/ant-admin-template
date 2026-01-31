@@ -72,5 +72,8 @@ export default {
     flappyBirds3d: 'Flappy Birds 3D',
     snake3d: '3D Snake',
     match3: 'Match 3',
+    hotel: 'Hotel Management',
+    roomCalendar: 'Room Calendar',
+    phoneManagement: 'Phone Management',
   },
 };

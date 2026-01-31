@@ -121,6 +121,8 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/forms/validation': lazyLoad('pages/Form/FormValidation'),
   '/app/forms/virtual-list': lazyLoad('pages/Form/VirtualLists'),
 
+  '/app/form/add-phone-number': lazyLoad('pages/Form/AddPhoneNumber'),
+
   // React Hooks Examples
   '/app/hooks/use-transition': lazyLoad('pages/Hooks/UseTransition'),
   '/app/hooks/use-suspense': lazyLoad('pages/Hooks/UseSuspense'),
@@ -160,4 +162,8 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/games/flappy-birds-3d': lazyLoad('pages/Games/FlappyBirds3D'),
   '/app/games/snake-3d': lazyLoad('pages/Games/Snake3D'),
   '/app/games/match-3': lazyLoad('pages/Games/Match3'),
+
+  // Hotel Management
+  '/app/hotel/room-calendar': lazyLoad('pages/Hotel/RoomCalendar'),
+  '/app/hotel/phone-management': lazyLoad('pages/Hotel/AddPhoneNumber'),
 };

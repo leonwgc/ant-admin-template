@@ -6,6 +6,7 @@
 import commonZh from './common/zh';
 import userZh from './pages/user/zh';
 import formZh from './pages/form/zh';
+import hotelZh from './pages/hotel/zh';
 
 /**
  * 中文翻译
@@ -19,6 +20,7 @@ const zh = {
   pages: {
     user: userZh,
     form: formZh,
+    hotel: hotelZh,
   },
 };
 

@@ -1,0 +1,281 @@
+/**
+ * @file pages/Hotel/RoomCalendar.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.room-calendar {
+  padding: 24px;
+  background: #fff;
+  min-height: calc(100vh - 120px);
+
+  &__header {
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #1a1a1a;
+  }
+
+  &__date-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__date-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__nav-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__date-picker {
+    width: 272px;
+  }
+
+  &__settings-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__grid-container {
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  &__month-headers {
+    display: flex;
+    background: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  &__room-header {
+    width: 376px;
+    min-width: 376px;
+    padding: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    border-right: 1px solid #e8e8e8;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+  }
+
+  &__date-headers {
+    flex: 1;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  &__month-group {
+    flex-shrink: 0;
+  }
+
+  &__month-label {
+    padding: 8px;
+    font-size: 12px;
+    color: #8c8c8c;
+    font-weight: 500;
+  }
+
+  &__date-row {
+    display: flex;
+  }
+
+  &__date-cell {
+    width: 52px;
+    flex-shrink: 0;
+    text-align: center;
+    padding: 6px 0;
+    border-right: 1px solid #f0f0f0;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__date-number {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 20px;
+  }
+
+  &__date-weekday {
+    font-size: 12px;
+    color: #8c8c8c;
+    line-height: 16px;
+  }
+
+  &__rooms {
+    background: #fff;
+  }
+
+  &__room-row {
+    display: flex;
+    border-bottom: 1px solid #e8e8e8;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: #fafafa;
+    }
+  }
+
+  &__room-info {
+    width: 376px;
+    min-width: 376px;
+    border-right: 1px solid #e8e8e8;
+    background: #fff;
+  }
+
+  &__room-content {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__room-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  &__room-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 20px;
+  }
+
+  &__room-number {
+    font-size: 12px;
+    color: #8c8c8c;
+    line-height: 16px;
+  }
+
+  &__room-labels {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 12px;
+    color: #595959;
+    background: #fafafa;
+
+    &:first-child {
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
+
+  &__date-cells {
+    flex: 1;
+    display: flex;
+  }
+
+  &__cell-group {
+    display: flex;
+    flex-direction: column;
+    width: 52px;
+    flex-shrink: 0;
+    border-right: 1px solid #f0f0f0;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__cell {
+    height: 40px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: #f0f7ff;
+    }
+
+    &--checkin {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    &--checkout {
+      border-bottom: none;
+    }
+
+    // Cell status styles
+    &--booked {
+      background: #1890ff;
+      opacity: 0.8;
+    }
+
+    &--pending {
+      background: #faad14;
+      opacity: 0.6;
+    }
+
+    &--maintenance {
+      background: #ff4d4f;
+      opacity: 0.5;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .room-calendar {
+    padding: 16px;
+
+    &__title {
+      font-size: 18px;
+    }
+
+    &__date-nav {
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    &__date-controls {
+      justify-content: center;
+    }
+
+    &__room-header {
+      width: 280px;
+      min-width: 280px;
+    }
+
+    &__room-info {
+      width: 280px;
+      min-width: 280px;
+    }
+  }
+}

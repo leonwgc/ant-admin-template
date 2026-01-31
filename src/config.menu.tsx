@@ -10,6 +10,7 @@ import {
   AppstoreOutlined,
   CodeOutlined,
   AndroidOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -244,6 +245,14 @@ export const menus: MenuItem[] = [
     icon: <FormOutlined />,
     permissions: [],
     children: [
+      {
+        route: '/app/form/add-phone-number',
+        key: 'add-phone-number',
+        get label() {
+          return t('menu.addPhoneNumber');
+        },
+        permissions: [],
+      },
       {
         key: 'form1',
         get label() {
@@ -523,6 +532,32 @@ export const menus: MenuItem[] = [
           return t('menu.match3');
         },
         route: '/app/games/match-3',
+        permissions: [],
+      },
+    ],
+  },
+  {
+    key: 'hotel',
+    get label() {
+      return t('menu.hotel');
+    },
+    icon: <HomeOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'room-calendar',
+        get label() {
+          return t('menu.roomCalendar');
+        },
+        route: '/app/hotel/room-calendar',
+        permissions: [],
+      },
+      {
+        key: 'phone-management',
+        get label() {
+          return t('menu.phoneManagement');
+        },
+        route: '/app/hotel/phone-management',
         permissions: [],
       },
     ],

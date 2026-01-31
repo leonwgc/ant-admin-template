@@ -72,5 +72,8 @@ export default {
     flappyBirds3d: 'Flappy Birds 3D',
     snake3d: '3D 贪吃蛇',
     match3: '三消游戏',
+    hotel: '酒店管理',
+    roomCalendar: '房控日历',
+    phoneManagement: '手机号管理',
   },
 };
