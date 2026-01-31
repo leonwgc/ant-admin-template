@@ -80,10 +80,12 @@
   &__date-row {
     display: flex;
     align-items: flex-start;
-    padding: 20px 16px 0 16px;
+    padding: 0px 16px 0 16px;
     background: #fff;
     border-bottom: 1px solid #e8e8e8;
+    border-top:1px solid #e8e8e8;
     position: relative;
+    margin-top: 20px;
   }
 
   &__date-controls {
@@ -92,7 +94,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 0 0 20px 0;
+    // padding: 0 0 20px 0;
+    align-self: center;
   }
 
   &__nav-btn {
@@ -127,6 +130,7 @@
     overflow-y: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    // border-bottom: 1px solid #e8e8e8;
 
     &::-webkit-scrollbar {
       display: none;
@@ -137,6 +141,11 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    border-right: 1px solid #f0f0f0;
+
+    &:last-child {
+      border-right: none;
+    }
   }
 
   &__month-label {
@@ -147,6 +156,7 @@
     font-size: 12px;
     color: #8c8c8c;
     white-space: nowrap;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   &__date-columns {
@@ -162,6 +172,11 @@
     align-items: center;
     justify-content: center;
     padding: 6px 0;
+    border-right: 1px solid #f0f0f0;
+
+    &:last-child {
+      border-right: none;
+    }
   }
 
   &__date-day {
@@ -237,7 +252,7 @@
   }
 
   &__room-info {
-    width: 336px;
+    width: 350px;
     flex-shrink: 0;
     padding: 22px 16px;
     display: flex;
@@ -343,6 +358,7 @@
   }
 
   &__grid-cell {
+    width: 52px;
     height: 40px;
     display: flex;
     align-items: center;
