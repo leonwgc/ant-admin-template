@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 import React, { FC, useState, useMemo, useRef, useEffect } from 'react';
-import { Button, DatePicker, Radio } from '@derbysoft/neat-design';
+import { Button, DatePicker, Segmented } from '@derbysoft/neat-design';
 import {
   LeftOutlined,
   RightOutlined,
@@ -215,11 +215,9 @@ const RoomCalendar: FC = () => {
       {/* Function Bar */}
       <div className="room-calendar__function-bar">
         <div className="room-calendar__tabs">
-          <Radio.Group
+          <Segmented
             value={activeTab}
-            onChange={(e) => setActiveTab(e.target.value)}
-            optionType="button"
-            buttonStyle="solid"
+            onChange={(val) => setActiveTab(val as TabType)}
             options={tabOptions}
           />
         </div>
