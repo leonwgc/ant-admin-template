@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 import React, { FC, useState, useMemo, useRef, useEffect } from 'react';
-import { Button, DatePicker, Segmented } from '@derbysoft/neat-design';
+import { Button, DatePicker, Segmented, InputNumber, Space } from '@derbysoft/neat-design';
 import {
   LeftOutlined,
   RightOutlined,
@@ -11,6 +11,8 @@ import {
   TeamOutlined,
   ImportOutlined,
   ExportOutlined,
+  CheckOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/zh-cn';
@@ -66,6 +68,13 @@ const RoomCalendar: FC = () => {
   // Refs for synchronized scrolling
   const headerScrollRef = useRef<HTMLDivElement>(null);
   const bodyScrollRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Inventory data per room per date (first grid row = 可售)
+  const [roomInventory, setRoomInventory] = useState<Record<string, number[]>>({});
+
+  // Editing state
+  const [editingRoomId, setEditingRoomId] = useState<string | null>(null);
+  const [editingValues, setEditingValues] = useState<Record<string, number[]>>({});
 
   // Mock room data
   const rooms: Room[] = useMemo(
@@ -203,6 +212,61 @@ const RoomCalendar: FC = () => {
     };
   }, [rooms.length]);
 
+  // Initialize inventory arrays when rooms or dateColumns change
+  useEffect(() => {
+    setRoomInventory((prev) => {
+      const next = { ...prev };
+      rooms.forEach((r) => {
+        if (!next[r.id] || next[r.id].length !== dateColumns.length) {
+          next[r.id] = new Array(dateColumns.length).fill(0);
+        }
+      });
+      return next;
+    });
+    // keep editingValues in sync if date length changes
+    setEditingValues((prev) => {
+      const next = { ...prev };
+      rooms.forEach((r) => {
+        if (next[r.id] && next[r.id].length !== dateColumns.length) {
+          next[r.id] = new Array(dateColumns.length).fill(0);
+        }
+      });
+      return next;
+    });
+  }, [rooms, dateColumns.length]);
+
+  const handleEdit = (roomId: string) => {
+    setEditingRoomId(roomId);
+    setEditingValues((prev) => ({
+      ...prev,
+      [roomId]: (roomInventory[roomId] || new Array(dateColumns.length).fill(0)).slice(),
+    }));
+  };
+
+  const handleCancel = (roomId: string) => {
+    setEditingRoomId(null);
+    setEditingValues((prev) => ({ ...prev, [roomId]: (roomInventory[roomId] || []).slice() }));
+  };
+
+  const handleSave = (roomId: string) => {
+    if (!editingValues[roomId]) {
+      setEditingRoomId(null);
+      return;
+    }
+    setRoomInventory((prev) => ({ ...prev, [roomId]: editingValues[roomId].slice() }));
+    setEditingRoomId(null);
+  };
+
+  const handleInventoryChange = (roomId: string, index: number, val: number | null) => {
+    setEditingValues((prev) => {
+      const copy = { ...prev };
+      const arr = (copy[roomId] || roomInventory[roomId] || new Array(dateColumns.length).fill(0)).slice();
+      arr[index] = val ?? 0;
+      copy[roomId] = arr;
+      return copy;
+    });
+  };
+
   // Tab options
   const tabOptions = [
     { label: '库存', value: 'inventory' },
@@ -331,11 +395,30 @@ const RoomCalendar: FC = () => {
                     {room.roomNumber}
                   </div>
                 </div>
-                <Button
-                  className="room-calendar__room-edit-btn"
-                  size="small"
-                  icon={<EditOutlined />}
-                />
+                {editingRoomId === room.id ? (
+                  <Space className="room-calendar__room-edit-actions">
+                    <Button
+                      className="room-calendar__room-save-btn"
+                      size="small"
+                      type='primary'
+
+                      onClick={() => handleSave(room.id)}
+                    >保存</Button>
+                    <Button
+                      className="room-calendar__room-cancel-btn"
+                      size="small"
+
+                      onClick={() => handleCancel(room.id)}
+                    >取消</Button>
+                  </Space>
+                ) : (
+                  <Button
+                    className="room-calendar__room-edit-btn"
+                    size="small"
+                    icon={<EditOutlined />}
+                    onClick={() => handleEdit(room.id)}
+                  />
+                )}
               </div>
 
               {/* Status Labels */}
@@ -351,12 +434,24 @@ const RoomCalendar: FC = () => {
                   bodyScrollRefs.current[index] = el;
                 }}
               >
-                {dateColumns.map((col) => (
+                {dateColumns.map((col, colIndex) => (
                   <div
                     key={`${room.id}-${col.date.format('YYYY-MM-DD')}`}
                     className="room-calendar__grid-column"
                   >
-                    <div className="room-calendar__grid-cell">-</div>
+                    <div className="room-calendar__grid-cell">
+                      {editingRoomId === room.id ? (
+                        <InputNumber
+                          size="small"
+                          value={editingValues[room.id]?.[colIndex] ?? 0}
+                          onChange={(v) => handleInventoryChange(room.id, colIndex, v as number | null)}
+                        />
+                      ) : (
+                        (roomInventory[room.id] && roomInventory[room.id][colIndex] !== undefined)
+                          ? String(roomInventory[room.id][colIndex])
+                          : '-'
+                      )}
+                    </div>
                     <div className="room-calendar__grid-cell">-</div>
                   </div>
                 ))}
