@@ -1,0 +1,94 @@
+/**
+ * @file src/pages/Js/TypeScriptAdvancedTypes.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.ts-types {
+  padding: 24px;
+
+  &__tags {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__tabs {
+    .ant-tabs-content {
+      padding-left: 24px;
+    }
+  }
+
+  &__section {
+    max-width: 900px;
+
+    h4 {
+      margin-top: 0;
+      color: #1a1a1a;
+    }
+  }
+
+  &__code-block {
+    margin: 16px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+  }
+
+  &__code-title {
+    background: #f5f5f5;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  &__code {
+    margin: 0;
+    padding: 16px;
+    background: #fafafa;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+
+    code {
+      color: #333;
+      white-space: pre;
+    }
+  }
+
+  &__utility-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+
+    .ant-card {
+      .ant-card-head {
+        min-height: 40px;
+        padding: 0 12px;
+
+        .ant-card-head-title {
+          padding: 8px 0;
+        }
+      }
+
+      .ant-card-body {
+        padding: 12px;
+      }
+    }
+
+    .ts-types__code-block {
+      margin: 0;
+    }
+
+    .ts-types__code {
+      padding: 12px;
+      font-size: 12px;
+    }
+  }
+}

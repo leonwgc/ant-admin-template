@@ -96,6 +96,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/js-feature/element-height': lazyLoad('pages/Js/ElementHeightDemo'),
   '/app/js-feature/weakmap': lazyLoad('pages/Js/WeakMapDemo'),
   '/app/js-feature/proxy': lazyLoad('pages/Js/ProxyDemo'),
+  '/app/js-feature/typescript-advanced-types': lazyLoad('pages/Js/TypeScriptAdvancedTypes'),
 
   // CSS Features
   '/app/css': lazyLoad('pages/Form/CssFeature'),

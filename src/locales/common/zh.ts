@@ -19,6 +19,7 @@ export default {
     elementHeight: '元素高度',
     weakmap: 'WeakMap',
     proxy: 'Proxy',
+    typescriptAdvancedTypes: 'TypeScript 高级类型',
     cssFeature: 'CSS 特性',
     cssNewFeatures: 'CSS 新特性',
     cssBoxModel: 'CSS 盒模型',

@@ -93,6 +93,14 @@ export const menus: MenuItem[] = [
         route: '/app/js-feature/proxy',
         permissions: [],
       },
+      {
+        key: 'typescript-advanced-types',
+        get label() {
+          return t('menu.typescriptAdvancedTypes');
+        },
+        route: '/app/js-feature/typescript-advanced-types',
+        permissions: [],
+      },
     ],
   },
   {

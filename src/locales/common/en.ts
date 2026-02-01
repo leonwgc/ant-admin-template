@@ -19,6 +19,7 @@ export default {
     elementHeight: 'Element Height',
     weakmap: 'WeakMap',
     proxy: 'Proxy',
+    typescriptAdvancedTypes: 'TypeScript Advanced Types',
     cssFeature: 'CSS Feature',
     cssNewFeatures: 'CSS New Features',
     cssBoxModel: 'CSS Box Model',
