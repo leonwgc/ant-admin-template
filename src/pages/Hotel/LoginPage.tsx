@@ -17,20 +17,14 @@
 
 import React, { FC } from 'react';
 import {
-  Tabs,
+  Segmented,
   Input,
   Button,
   Space,
   Typography,
 } from '@derbysoft/neat-design';
-import {
-  MailOutlined,
-  PhoneOutlined,
-  LockOutlined,
-  EyeOutlined,
-  EyeInvisibleOutlined,
-} from '@ant-design/icons';
-import { useBoolean, useRequest } from 'ahooks';
+import { MailOutlined, PhoneOutlined, LockOutlined } from '@ant-design/icons';
+import { useRequest } from 'ahooks';
 
 import './LoginPage.scss';
 
@@ -48,53 +42,56 @@ interface LoginFormData {
  * Provides Email and Phone Number login options
  */
 const LoginPage: FC = () => {
-  const [activeTab, { set: setActiveTab }] = useBoolean(true);
-  const [showPassword, toggleShowPassword] = useBoolean(false);
+  const [activeTab, setActiveTab] = React.useState<string>('email');
   const [formData, setFormData] = React.useState<LoginFormData>({
     password: '',
   });
 
-  const isEmailTab = activeTab;
+  const isEmailTab = activeTab === 'email';
 
-  const { loading, run: handleLogin } = useRequest(
-    async () => {
-      // TODO: Implement login logic
-      console.log('Login with:', formData);
-      return new Promise((resolve) => setTimeout(resolve, 1000));
+  const { loading, run: runLogin } = useRequest(
+    async (data: LoginFormData) => {
+      // TODO: Implement login logic (send `data` to API)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return;
     },
     {
       manual: true,
-    }
+    },
   );
 
-  const handleInputChange = (field: keyof LoginFormData, value: string) => {
-    setFormData({ ...formData, [field]: value });
-  };
+  const handleLogin = React.useCallback(() => runLogin(formData), [runLogin, formData]);
 
-  const handleClearInput = (field: keyof LoginFormData) => {
-    setFormData({ ...formData, [field]: '' });
-  };
+  const handleInputChange = React.useCallback(
+    (field: keyof LoginFormData, value: string) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    },
+    [],
+  );
 
-  const tabItems = [
-    {
-      key: 'email',
-      label: (
-        <Space size={8}>
-          <MailOutlined />
-          <span>Email</span>
-        </Space>
-      ),
-    },
-    {
-      key: 'phone',
-      label: (
-        <Space size={8}>
-          <PhoneOutlined />
-          <span>Phone Number</span>
-        </Space>
-      ),
-    },
-  ];
+  const segmentedOptions = React.useMemo(
+    () => [
+      {
+        label: (
+          <Space size={8}>
+            <MailOutlined />
+            <span>Email</span>
+          </Space>
+        ),
+        value: 'email',
+      },
+      {
+        label: (
+          <Space size={8}>
+            <PhoneOutlined />
+            <span>Phone Number</span>
+          </Space>
+        ),
+        value: 'phone',
+      },
+    ],
+    [],
+  );
 
   return (
     <div className="login-page">
@@ -105,58 +102,54 @@ const LoginPage: FC = () => {
 
         <div className="login-page__main">
           <div className="login-page__form">
-            <Tabs
-              activeKey={isEmailTab ? 'email' : 'phone'}
-              items={tabItems}
-              onChange={(key) => setActiveTab(key === 'email')}
+            <Segmented
+              value={activeTab}
+              options={segmentedOptions}
+              onChange={setActiveTab}
               className="login-page__tabs"
             />
 
             <div className="login-page__form-content">
               <div className="login-page__form-item">
-                <label className="login-page__label">
+                <label
+                  className="login-page__label"
+                  htmlFor={isEmailTab ? 'login-email' : 'login-phone'}
+                >
                   {isEmailTab ? 'Work Email' : 'Phone Number'}
                 </label>
                 <Input
-                  placeholder={isEmailTab ? 'Enter your work email' : 'Enter your phone number'}
-                  value={isEmailTab ? formData.email : formData.phoneNumber}
-                  onChange={(e) => handleInputChange(
-                    isEmailTab ? 'email' : 'phoneNumber',
-                    e.target.value
-                  )}
-                  prefix={isEmailTab ? <MailOutlined /> : <PhoneOutlined />}
-                  suffix={
-                    (isEmailTab ? formData.email : formData.phoneNumber) ? (
-                      <Button
-                        type="text"
-                        onClick={() => handleClearInput(isEmailTab ? 'email' : 'phoneNumber')}
-                        className="login-page__clear-btn"
-                      >
-                        ×
-                      </Button>
-                    ) : null
+                  id={isEmailTab ? 'login-email' : 'login-phone'}
+                  aria-label={isEmailTab ? 'work email' : 'phone number'}
+                  placeholder={
+                    isEmailTab
+                      ? 'Enter your work email'
+                      : 'Enter your phone number'
                   }
+                  value={isEmailTab ? formData.email : formData.phoneNumber}
+                  onChange={(e) =>
+                    handleInputChange(
+                      isEmailTab ? 'email' : 'phoneNumber',
+                      e.target.value,
+                    )
+                  }
+                  prefix={isEmailTab ? <MailOutlined /> : <PhoneOutlined />}
+                  allowClear
                   size="large"
                   className="login-page__input"
                 />
               </div>
 
               <div className="login-page__form-item">
-                <label className="login-page__label">Password</label>
+                <label className="login-page__label" htmlFor="login-password">
+                  Password
+                </label>
                 <Input.Password
+                  id="login-password"
+                  aria-label="password"
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
                   prefix={<LockOutlined />}
-                  iconRender={(visible) => (
-                    <Button
-                      type="text"
-                      onClick={toggleShowPassword}
-                      className="login-page__password-toggle"
-                    >
-                      {visible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                    </Button>
-                  )}
                   size="large"
                   className="login-page__input"
                 />
