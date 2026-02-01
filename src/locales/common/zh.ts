@@ -76,5 +76,6 @@ export default {
     hotel: '酒店管理',
     roomCalendar: '房控日历',
     phoneManagement: '手机号管理',
+    loginPage: '登录页面',
   },
 };

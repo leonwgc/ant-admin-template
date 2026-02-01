@@ -4,3 +4,4 @@
  */
 export { default as RoomCalendar } from './RoomCalendar';
 export { default as AddPhoneNumber } from './AddPhoneNumber';
+export { default as LoginPage } from './LoginPage';

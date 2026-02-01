@@ -167,4 +167,5 @@ export const routeComponentMap: RouteComponentMap = {
   // Hotel Management
   '/app/hotel/room-calendar': lazyLoad('pages/Hotel/RoomCalendar'),
   '/app/hotel/phone-management': lazyLoad('pages/Hotel/AddPhoneNumber'),
+  '/app/hotel/login-page': lazyLoad('pages/Hotel/LoginPage'),
 };

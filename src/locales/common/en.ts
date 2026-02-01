@@ -76,5 +76,6 @@ export default {
     hotel: 'Hotel Management',
     roomCalendar: 'Room Calendar',
     phoneManagement: 'Phone Management',
+    loginPage: 'Login Page',
   },
 };

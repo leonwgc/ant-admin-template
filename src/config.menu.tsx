@@ -568,6 +568,14 @@ export const menus: MenuItem[] = [
         route: '/app/hotel/phone-management',
         permissions: [],
       },
+      {
+        key: 'login-page',
+        get label() {
+          return t('menu.loginPage');
+        },
+        route: '/app/hotel/login-page',
+        permissions: [],
+      },
     ],
   },
 ];
