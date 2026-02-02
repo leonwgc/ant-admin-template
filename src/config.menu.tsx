@@ -16,7 +16,7 @@ import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
 
 /** Get translated label */
-const t = (key: string) => i18n.t(key);
+const t = (key) => i18n.t(key);
 
 export type MenuItem = Required<MenuProps>['items'][number] & {
   /**
