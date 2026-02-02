@@ -254,14 +254,6 @@ export const menus: MenuItem[] = [
     permissions: [],
     children: [
       {
-        route: '/app/form/add-phone-number',
-        key: 'add-phone-number',
-        get label() {
-          return t('menu.addPhoneNumber');
-        },
-        permissions: [],
-      },
-      {
         key: 'form1',
         get label() {
           return t('menu.responsiveForm');
