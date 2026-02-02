@@ -25,7 +25,12 @@ export type AnimationType =
   | 'flip'
   | 'zoom';
 
-export type TriggerType = 'onLoad' | 'onHover' | 'onVisible' | 'onClick' | 'manual';
+export type TriggerType =
+  | 'onLoad'
+  | 'onHover'
+  | 'onVisible'
+  | 'onClick'
+  | 'manual';
 
 export interface AnimatedProps {
   /** Child elements to be animated */
@@ -75,6 +80,7 @@ export const Animated: FC<AnimatedProps> = ({
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationCount, setAnimationCount] = useState(0);
+  const hasPlayedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [inViewport] = useInViewport(containerRef);
 
@@ -112,15 +118,17 @@ export const Animated: FC<AnimatedProps> = ({
   }, [trigger, play, delay, onAnimationStart]);
 
   const handleMouseEnter = () => {
-    if (trigger === 'onHover') {
+    if (trigger === 'onHover' && !hasPlayedRef.current) {
+      hasPlayedRef.current = true;
       setIsAnimating(true);
       onAnimationStart?.();
     }
   };
 
   const handleMouseLeave = () => {
-    if (trigger === 'onHover' && !repeat) {
+    if (trigger === 'onHover') {
       setIsAnimating(false);
+      hasPlayedRef.current = false;
     }
   };
 
@@ -147,9 +155,12 @@ export const Animated: FC<AnimatedProps> = ({
         }, 50);
       }
     } else {
-      if (trigger === 'onClick' || trigger === 'onHover') {
+      // For onClick, stop animation after it completes
+      if (trigger === 'onClick') {
         setIsAnimating(false);
       }
+      // For onHover, keep the animation in final state while hovered
+      // Animation will be reset when mouse leaves
     }
   };
 
@@ -167,6 +178,26 @@ export const Animated: FC<AnimatedProps> = ({
     '--animation-delay': `${delay}ms`,
     '--animation-timing': easing,
   } as React.CSSProperties;
+
+  // For hover trigger, wrap in outer container to prevent animation interference with mouse events
+  if (trigger === 'onHover') {
+    return (
+      <div
+        ref={containerRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{ display: 'inline-block' }}
+      >
+        <div
+          className={animationClasses}
+          style={style}
+          onAnimationEnd={handleAnimationEnd}
+        >
+          {children}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
