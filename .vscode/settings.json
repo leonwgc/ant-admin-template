@@ -85,6 +85,5 @@
   "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.minimap.enabled": false,
   "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
-  "workbench.iconTheme": "vscode-icons"
+  "editor.guides.bracketPairs": true
 }
