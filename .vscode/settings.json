@@ -83,7 +83,7 @@
     "strings": true
   },
   "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "editor.minimap.enabled": true,
+  "editor.minimap.enabled": false,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
   "workbench.iconTheme": "vscode-icons"
