@@ -7,6 +7,7 @@ import commonEn from './common/en';
 import userEn from './pages/user/en';
 import formEn from './pages/form/en';
 import hotelEn from './pages/hotel/en';
+import componentsEn from './pages/components/en';
 
 /**
  * English translations
@@ -21,6 +22,7 @@ const en = {
     user: userEn,
     form: formEn,
     hotel: hotelEn,
+    components: componentsEn,
   },
 };
 

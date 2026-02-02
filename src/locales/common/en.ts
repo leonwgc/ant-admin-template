@@ -61,6 +61,7 @@ export default {
     imageUpload: 'ImageUpload',
     fadeIn: 'FadeIn',
     textEllipsis: 'TextEllipsis',
+    animated: 'Animated',
     dateTable: 'Sticky Table',
     libraries: 'Libraries',
     reactHookForm: 'React Hook Form',

@@ -450,6 +450,14 @@ export const menus: MenuItem[] = [
         route: '/app/components/text-ellipsis',
         permissions: [],
       },
+      {
+        key: 'animated',
+        get label() {
+          return t('menu.animated');
+        },
+        route: '/app/components/animated',
+        permissions: [],
+      },
     ],
   },
   {

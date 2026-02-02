@@ -7,6 +7,7 @@ import commonZh from './common/zh';
 import userZh from './pages/user/zh';
 import formZh from './pages/form/zh';
 import hotelZh from './pages/hotel/zh';
+import componentsZh from './pages/components/zh';
 
 /**
  * 中文翻译
@@ -21,6 +22,7 @@ const zh = {
     user: userZh,
     form: formZh,
     hotel: hotelZh,
+    components: componentsZh,
   },
 };
 
