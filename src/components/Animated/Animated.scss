@@ -14,6 +14,51 @@
     animation-fill-mode: both;
   }
 
+  // Fade animations - 初始状态
+  &--fade:not(&--active) {
+    opacity: 0;
+  }
+
+  &--fadeUp:not(&--active),
+  &--fadeDown:not(&--active),
+  &--fadeLeft:not(&--active),
+  &--fadeRight:not(&--active) {
+    opacity: 0;
+  }
+
+  // Scale animations - 初始状态
+  &--scale:not(&--active),
+  &--scaleUp:not(&--active) {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  &--scaleDown:not(&--active) {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+
+  // Rotate animation - 初始状态
+  &--rotate:not(&--active) {
+    opacity: 0;
+  }
+
+  // Bounce animation - 初始状态
+  &--bounce:not(&--active) {
+    opacity: 1;
+  }
+
+  // Flip animation - 初始状态
+  &--flip:not(&--active) {
+    opacity: 0;
+  }
+
+  // Zoom animation - 初始状态
+  &--zoom:not(&--active) {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
   // Fade animations
   &--fade {
     animation-name: fade;
