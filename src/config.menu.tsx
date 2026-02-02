@@ -363,6 +363,14 @@ export const menus: MenuItem[] = [
     permissions: [],
     children: [
       {
+        key: 'animated',
+        get label() {
+          return t('menu.animated');
+        },
+        route: '/app/components/animated',
+        permissions: [],
+      },
+      {
         key: 'dot-status',
         get label() {
           return t('menu.dotStatus');
@@ -450,14 +458,7 @@ export const menus: MenuItem[] = [
         route: '/app/components/text-ellipsis',
         permissions: [],
       },
-      {
-        key: 'animated',
-        get label() {
-          return t('menu.animated');
-        },
-        route: '/app/components/animated',
-        permissions: [],
-      },
+
     ],
   },
   {

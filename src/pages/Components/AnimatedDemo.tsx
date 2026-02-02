@@ -47,61 +47,93 @@ const AnimatedDemo: FC = () => {
 
   return (
     <div className="animated-demo">
-      <Title level={2}>{t('pages.components:animatedTitle')}</Title>
-      <Paragraph>{t('pages.components:animatedDesc')}</Paragraph>
+      <div className="animated-demo__hero">
+        <Title level={1} className="animated-demo__title">
+          {t('pages.components:animatedTitle')}
+        </Title>
+        <Paragraph className="animated-demo__desc">
+          {t('pages.components:animatedDesc')}
+        </Paragraph>
+      </div>
 
       {/* onLoad trigger demo */}
-      <Card title={t('pages.components:animatedSectionOnLoad')} className="animated-demo__section">
-        <Space size="large" wrap>
-          {animationTypes.slice(0, 8).map((type) => (
-            <Animated key={type} type={type} duration={800} delay={200}>
-              <div className="animated-demo__box">
-                <Text>{type}</Text>
+      <Card
+        title={
+          <span className="animated-demo__section-title">
+            ⚡ {t('pages.components:animatedSectionOnLoad')}
+          </span>
+        }
+        className="animated-demo__section"
+      >
+        <div className="animated-demo__grid">
+          {animationTypes.slice(0, 8).map((type, index) => (
+            <Animated key={type} type={type} duration={800} delay={index * 80}>
+              <div className="animated-demo__box" data-type={type}>
+                <div className="animated-demo__box-icon">✨</div>
+                <Text className="animated-demo__box-text">{type}</Text>
               </div>
             </Animated>
           ))}
-        </Space>
+        </div>
       </Card>
 
       {/* onHover trigger demo */}
       <Card
-        title={t('pages.components:animatedSectionOnHover')}
+        title={
+          <span className="animated-demo__section-title">
+            🎯 {t('pages.components:animatedSectionOnHover')}
+          </span>
+        }
         className="animated-demo__section"
       >
-        <Space size="large" wrap>
+        <div className="animated-demo__grid">
           {['scale', 'scaleUp', 'bounce', 'rotate'].map((type) => (
             <Animated key={type} type={type as AnimationType} trigger="onHover" duration={500}>
-              <div className="animated-demo__box animated-demo__box--hover">
-                <Text>{type}</Text>
+              <div className="animated-demo__box animated-demo__box--hover" data-type={type}>
+                <div className="animated-demo__box-icon">👆</div>
+                <Text className="animated-demo__box-text">{type}</Text>
+                <div className="animated-demo__box-hint">Hover me</div>
               </div>
             </Animated>
           ))}
-        </Space>
+        </div>
       </Card>
 
       {/* onClick trigger demo */}
       <Card
-        title={t('pages.components:animatedSectionOnClick')}
+        title={
+          <span className="animated-demo__section-title">
+            🖱️ {t('pages.components:animatedSectionOnClick')}
+          </span>
+        }
         className="animated-demo__section"
       >
-        <Space size="large" wrap>
+        <div className="animated-demo__grid">
           {['bounce', 'flip', 'zoom', 'rotate'].map((type) => (
             <Animated key={type} type={type as AnimationType} trigger="onClick" duration={600}>
-              <div className="animated-demo__box animated-demo__box--clickable">
-                <Text>{type}</Text>
+              <div className="animated-demo__box animated-demo__box--clickable" data-type={type}>
+                <div className="animated-demo__box-icon">👇</div>
+                <Text className="animated-demo__box-text">{type}</Text>
+                <div className="animated-demo__box-hint">Click me</div>
               </div>
             </Animated>
           ))}
-        </Space>
+        </div>
       </Card>
 
       {/* onVisible trigger demo */}
       <Card
-        title={t('pages.components:animatedSectionOnVisible')}
+        title={
+          <span className="animated-demo__section-title">
+            👁️ {t('pages.components:animatedSectionOnVisible')}
+          </span>
+        }
         className="animated-demo__section"
       >
-        <Paragraph>{t('pages.components:animatedOnVisibleDesc')}</Paragraph>
-        <Row gutter={[16, 16]}>
+        <Paragraph className="animated-demo__hint">
+          📜 {t('pages.components:animatedOnVisibleDesc')}
+        </Paragraph>
+        <Row gutter={[20, 20]}>
           {animationTypes.map((type, index) => (
             <Col key={type} xs={24} sm={12} md={8} lg={6}>
               <Animated
@@ -110,9 +142,10 @@ const AnimatedDemo: FC = () => {
                 duration={800}
                 delay={index * 50}
               >
-                <Card size="small" className="animated-demo__card">
-                  <Text>{type}</Text>
-                </Card>
+                <div className="animated-demo__visible-card">
+                  <div className="animated-demo__visible-icon">🎬</div>
+                  <Text className="animated-demo__visible-text">{type}</Text>
+                </div>
               </Animated>
             </Col>
           ))}
@@ -121,14 +154,23 @@ const AnimatedDemo: FC = () => {
 
       {/* Manual trigger demo */}
       <Card
-        title={t('pages.components:animatedSectionManual')}
+        title={
+          <span className="animated-demo__section-title">
+            🎮 {t('pages.components:animatedSectionManual')}
+          </span>
+        }
         className="animated-demo__section"
       >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          <Button type="primary" onClick={triggerManualAnimation}>
-            {t('pages.components:animatedBtnTrigger')}
+          <Button
+            type="primary"
+            size="large"
+            onClick={triggerManualAnimation}
+            className="animated-demo__trigger-btn"
+          >
+            🚀 {t('pages.components:animatedBtnTrigger')}
           </Button>
-          <Space size="large" wrap>
+          <div className="animated-demo__grid">
             {['fadeUp', 'scale', 'bounce', 'flip'].map((type) => (
               <Animated
                 key={type}
@@ -137,88 +179,127 @@ const AnimatedDemo: FC = () => {
                 play={manualPlay}
                 duration={800}
               >
-                <div className="animated-demo__box">
-                  <Text>{type}</Text>
+                <div className="animated-demo__box" data-type={type}>
+                  <div className="animated-demo__box-icon">🎯</div>
+                  <Text className="animated-demo__box-text">{type}</Text>
                 </div>
               </Animated>
             ))}
-          </Space>
+          </div>
         </Space>
       </Card>
 
       {/* Repeat animation demo */}
       <Card
-        title={t('pages.components:animatedSectionRepeat')}
+        title={
+          <span className="animated-demo__section-title">
+            🔄 {t('pages.components:animatedSectionRepeat')}
+          </span>
+        }
         className="animated-demo__section"
       >
-        <Space size="large" wrap>
+        <div className="animated-demo__grid">
           <Animated type="bounce" repeat duration={1000}>
-            <div className="animated-demo__box">
-              <Text>Infinite Bounce</Text>
+            <div className="animated-demo__box animated-demo__box--repeat" data-type="bounce">
+              <div className="animated-demo__box-icon">♾️</div>
+              <Text className="animated-demo__box-text">Infinite</Text>
+              <div className="animated-demo__box-hint">Bounce</div>
             </div>
           </Animated>
           <Animated type="rotate" repeat repeatCount={3} duration={1000}>
-            <div className="animated-demo__box">
-              <Text>Rotate 3x</Text>
+            <div className="animated-demo__box animated-demo__box--repeat" data-type="rotate">
+              <div className="animated-demo__box-icon">3️⃣</div>
+              <Text className="animated-demo__box-text">Rotate</Text>
+              <div className="animated-demo__box-hint">3 times</div>
             </div>
           </Animated>
           <Animated type="scale" trigger="onHover" repeat duration={600}>
-            <div className="animated-demo__box animated-demo__box--hover">
-              <Text>Hover Repeat</Text>
+            <div className="animated-demo__box animated-demo__box--hover animated-demo__box--repeat" data-type="scale">
+              <div className="animated-demo__box-icon">🔁</div>
+              <Text className="animated-demo__box-text">Hover</Text>
+              <div className="animated-demo__box-hint">Repeat</div>
             </div>
           </Animated>
-        </Space>
+        </div>
       </Card>
 
       {/* Configuration examples */}
       <Card
-        title={t('pages.components:animatedSectionConfig')}
+        title={
+          <span className="animated-demo__section-title">
+            ⚙️ {t('pages.components:animatedSectionConfig')}
+          </span>
+        }
         className="animated-demo__section"
       >
-        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-          <div>
-            <Text strong>{t('pages.components:animatedConfigDuration')}: </Text>
-            <Space>
+        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <div className="animated-demo__config-group">
+            <div className="animated-demo__config-label">
+              ⏱️ {t('pages.components:animatedConfigDuration')}
+            </div>
+            <div className="animated-demo__config-items">
               <Animated type="fadeUp" duration={300}>
-                <div className="animated-demo__box animated-demo__box--small">300ms</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="duration">
+                  <span className="animated-demo__config-value">300ms</span>
+                </div>
               </Animated>
               <Animated type="fadeUp" duration={600}>
-                <div className="animated-demo__box animated-demo__box--small">600ms</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="duration">
+                  <span className="animated-demo__config-value">600ms</span>
+                </div>
               </Animated>
               <Animated type="fadeUp" duration={1200}>
-                <div className="animated-demo__box animated-demo__box--small">1200ms</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="duration">
+                  <span className="animated-demo__config-value">1200ms</span>
+                </div>
               </Animated>
-            </Space>
+            </div>
           </div>
 
-          <div>
-            <Text strong>{t('pages.components:animatedConfigDelay')}: </Text>
-            <Space>
+          <div className="animated-demo__config-group">
+            <div className="animated-demo__config-label">
+              ⏳ {t('pages.components:animatedConfigDelay')}
+            </div>
+            <div className="animated-demo__config-items">
               <Animated type="scale" delay={0}>
-                <div className="animated-demo__box animated-demo__box--small">0ms</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="delay">
+                  <span className="animated-demo__config-value">0ms</span>
+                </div>
               </Animated>
               <Animated type="scale" delay={200}>
-                <div className="animated-demo__box animated-demo__box--small">200ms</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="delay">
+                  <span className="animated-demo__config-value">200ms</span>
+                </div>
               </Animated>
               <Animated type="scale" delay={400}>
-                <div className="animated-demo__box animated-demo__box--small">400ms</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="delay">
+                  <span className="animated-demo__config-value">400ms</span>
+                </div>
               </Animated>
-            </Space>
+            </div>
           </div>
 
-          <div>
-            <Text strong>{t('pages.components:animatedConfigEasing')}: </Text>
-            <Space>
+          <div className="animated-demo__config-group">
+            <div className="animated-demo__config-label">
+              📈 {t('pages.components:animatedConfigEasing')}
+            </div>
+            <div className="animated-demo__config-items">
               <Animated type="fadeUp" easing="linear">
-                <div className="animated-demo__box animated-demo__box--small">linear</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="easing">
+                  <span className="animated-demo__config-value">linear</span>
+                </div>
               </Animated>
               <Animated type="fadeUp" easing="ease-in">
-                <div className="animated-demo__box animated-demo__box--small">ease-in</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="easing">
+                  <span className="animated-demo__config-value">ease-in</span>
+                </div>
               </Animated>
               <Animated type="fadeUp" easing="ease-out">
-                <div className="animated-demo__box animated-demo__box--small">ease-out</div>
+                <div className="animated-demo__box animated-demo__box--small" data-config="easing">
+                  <span className="animated-demo__config-value">ease-out</span>
+                </div>
               </Animated>
-            </Space>
+            </div>
           </div>
         </Space>
       </Card>
@@ -226,7 +307,14 @@ const AnimatedDemo: FC = () => {
       <Divider />
 
       {/* Usage example code */}
-      <Card title={t('pages.components:animatedSectionUsage')}>
+      <Card
+        title={
+          <span className="animated-demo__section-title">
+            💻 {t('pages.components:animatedSectionUsage')}
+          </span>
+        }
+        className="animated-demo__code-section"
+      >
         <Typography>
           <Paragraph>
             <pre className="animated-demo__code">
