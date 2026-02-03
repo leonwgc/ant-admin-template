@@ -11,6 +11,10 @@ export default {
   // Common actions and UI
   switchLanguage: 'Switch Language',
   language: 'Language',
+  companies: 'Companies',
+  adminConsole: 'Admin Console',
+  inviteUser: 'Invite User',
+  signOut: 'Sign Out',
 
   // Menu translations
   menu: {

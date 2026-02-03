@@ -11,6 +11,10 @@ export default {
   // 通用操作和 UI
   switchLanguage: '切换语言',
   language: '语言',
+  companies: '公司',
+  adminConsole: '管理控制台',
+  inviteUser: '邀请用户',
+  signOut: '退出登录',
 
   // 菜单翻译
   menu: {

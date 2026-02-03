@@ -1,0 +1,14 @@
+/**
+ * @file layouts/Header.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.pop-user-actions {
+  .ds-dropdown-menu-item:first-child {
+    padding: 16px;
+  }
+  .ds-dropdown-menu-item:not(:first-child) {
+    margin: 8px 16px;
+  }
+}
