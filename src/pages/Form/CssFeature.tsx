@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 import React from 'react';
-import { Card, Tabs, Space, Input, Checkbox, Slider, Typography } from '@derbysoft/neat-design';
+import { Card, Tabs, Space, Input, Typography } from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';
 import './CssFeature.scss';
 
@@ -30,18 +30,44 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
               <div>
                 <Text strong>复选框：</Text>
-                <Space style={{ marginTop: 12 }}>
-                  <Checkbox className="css-feature-demo__accent-red">红色强调</Checkbox>
-                  <Checkbox className="css-feature-demo__accent-blue">蓝色强调</Checkbox>
-                  <Checkbox className="css-feature-demo__accent-green">绿色强调</Checkbox>
-                </Space>
+                <div className="css-feature-demo__accent-group">
+                  <label className="css-feature-demo__accent-label">
+                    <input type="checkbox" className="css-feature-demo__accent-red" defaultChecked />
+                    <span>红色强调</span>
+                  </label>
+                  <label className="css-feature-demo__accent-label">
+                    <input type="checkbox" className="css-feature-demo__accent-blue" defaultChecked />
+                    <span>蓝色强调</span>
+                  </label>
+                  <label className="css-feature-demo__accent-label">
+                    <input type="checkbox" className="css-feature-demo__accent-green" defaultChecked />
+                    <span>绿色强调</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <Text strong>单选按钮：</Text>
+                <div className="css-feature-demo__accent-group">
+                  <label className="css-feature-demo__accent-label">
+                    <input type="radio" name="color" className="css-feature-demo__accent-red" defaultChecked />
+                    <span>红色</span>
+                  </label>
+                  <label className="css-feature-demo__accent-label">
+                    <input type="radio" name="color" className="css-feature-demo__accent-blue" />
+                    <span>蓝色</span>
+                  </label>
+                  <label className="css-feature-demo__accent-label">
+                    <input type="radio" name="color" className="css-feature-demo__accent-green" />
+                    <span>绿色</span>
+                  </label>
+                </div>
               </div>
               <div>
                 <Text strong>滑块：</Text>
                 <div style={{ marginTop: 12 }}>
-                  <input type="range" className="css-feature-demo__range-red" />
-                  <input type="range" className="css-feature-demo__range-blue" style={{ marginTop: 12 }} />
-                  <input type="range" className="css-feature-demo__range-green" style={{ marginTop: 12 }} />
+                  <input type="range" className="css-feature-demo__range-red" defaultValue={50} />
+                  <input type="range" className="css-feature-demo__range-blue" defaultValue={70} style={{ marginTop: 12 }} />
+                  <input type="range" className="css-feature-demo__range-green" defaultValue={30} style={{ marginTop: 12 }} />
                 </div>
               </div>
             </Space>
