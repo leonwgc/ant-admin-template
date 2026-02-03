@@ -166,17 +166,41 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
             </Paragraph>
           </div>
           <Card className="css-feature-demo__preview">
-            <div className="css-feature-demo__floating-label">
-              <input
-                type="text"
-                id="floating-input"
-                className="css-feature-demo__placeholder-input"
-                placeholder="请输入内容"
-              />
-              <label htmlFor="floating-input" className="css-feature-demo__floating-label-text">
-                浮动标签
-              </label>
-            </div>
+            <Space direction="vertical" size="large" style={{ width: '100%' }}>
+              <div className="css-feature-demo__floating-label">
+                <input
+                  type="text"
+                  id="floating-input-1"
+                  className="css-feature-demo__placeholder-input"
+                  placeholder=""
+                />
+                <label htmlFor="floating-input-1" className="css-feature-demo__floating-label-text">
+                  用户名
+                </label>
+              </div>
+              <div className="css-feature-demo__floating-label">
+                <input
+                  type="email"
+                  id="floating-input-2"
+                  className="css-feature-demo__placeholder-input"
+                  placeholder=""
+                />
+                <label htmlFor="floating-input-2" className="css-feature-demo__floating-label-text">
+                  邮箱地址
+                </label>
+              </div>
+              <div className="css-feature-demo__floating-label">
+                <input
+                  type="password"
+                  id="floating-input-3"
+                  className="css-feature-demo__placeholder-input"
+                  placeholder=""
+                />
+                <label htmlFor="floating-input-3" className="css-feature-demo__floating-label-text">
+                  密码
+                </label>
+              </div>
+            </Space>
           </Card>
         </div>
       ),

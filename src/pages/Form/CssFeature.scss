@@ -172,12 +172,11 @@
   // placeholder-shown
   &__floating-label {
     position: relative;
-    margin-top: 20px;
   }
 
   &__placeholder-input {
     width: 100%;
-    padding: 16px 12px 8px;
+    padding: 8px 12px 8px;
     font-size: 16px;
     border: 2px solid #d9d9d9;
     border-radius: 6px;
@@ -187,25 +186,42 @@
       outline: none;
       border-color: #1890ff;
       box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+
+      & + .css-feature-demo__floating-label-text {
+        top: -8px;
+        left: 12px;
+        font-size: 12px;
+        color: #1890ff;
+        background: white;
+      }
+    }
+
+    &:not(:placeholder-shown) + .css-feature-demo__floating-label-text {
+      top: -8px;
+      left: 12px;
+      font-size: 12px;
+      color: #8c8c8c;
+      background: white;
     }
 
     &:placeholder-shown + .css-feature-demo__floating-label-text {
       top: 50%;
+      left: 12px;
       transform: translateY(-50%);
       font-size: 16px;
       color: #bfbfbf;
+      background: transparent;
     }
   }
 
   &__floating-label-text {
     position: absolute;
+    top: -8px;
     left: 12px;
-    top: 4px;
     font-size: 12px;
     color: #8c8c8c;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     pointer-events: none;
-    background: white;
     padding: 0 4px;
   }
 
