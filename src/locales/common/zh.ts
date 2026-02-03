@@ -49,6 +49,7 @@ export default {
     verificationCodeCountdown: '验证码倒计时',
     useResponsive: 'useResponsive',
     useDsTable: 'useDsTable',
+    useLockAsyncFunc: 'useLockAsyncFunc',
     components: '组件',
     dotStatus: '状态点',
     verificationCode: '验证码',

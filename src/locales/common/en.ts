@@ -49,6 +49,7 @@ export default {
     verificationCodeCountdown: 'Verification Code Countdown',
     useResponsive: 'useResponsive',
     useDsTable: 'useDsTable',
+    useLockAsyncFunc: 'useLockAsyncFunc',
     components: 'Components',
     dotStatus: 'DotStatus',
     verificationCode: 'VerificationCode',

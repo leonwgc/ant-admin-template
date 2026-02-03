@@ -343,6 +343,14 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-ds-table',
         permissions: [],
       },
+      {
+        key: 'use-lock-async-func',
+        get label() {
+          return t('menu.useLockAsyncFunc');
+        },
+        route: '/app/hooks/use-lock-async-func',
+        permissions: [],
+      },
     ],
   },
 
