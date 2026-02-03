@@ -120,7 +120,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
               <div className="pop-user-actions">{menu}</div>
             )}
           >
-            <Avatar style={{ cursor: 'pointer' }}>LW</Avatar>
+            <Avatar style={{ cursor: 'pointer', userSelect: 'none' }}>
+              LW
+            </Avatar>
           </Dropdown>
         </Space>
       </Layout.Header>
