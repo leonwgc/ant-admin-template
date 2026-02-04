@@ -675,4 +675,160 @@
     );
     background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
   }
+
+  // box-shadow
+  &__shadow-content {
+    padding: 32px 24px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  // 基础阴影
+  &__shadow-small {
+    .css-feature-demo__shadow-content {
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__shadow-medium {
+    .css-feature-demo__shadow-content {
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__shadow-large {
+    .css-feature-demo__shadow-content {
+      background: white;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // 彩色阴影
+  &__shadow-colored-blue {
+    .css-feature-demo__shadow-content {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
+    }
+  }
+
+  &__shadow-colored-red {
+    .css-feature-demo__shadow-content {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      box-shadow: 0 8px 24px rgba(245, 87, 108, 0.5);
+    }
+  }
+
+  &__shadow-colored-green {
+    .css-feature-demo__shadow-content {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      color: white;
+      box-shadow: 0 8px 24px rgba(67, 233, 123, 0.5);
+    }
+  }
+
+  // 内阴影
+  &__shadow-inset-light {
+    .css-feature-demo__shadow-content {
+      background: #f5f5f5;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &__shadow-inset-deep {
+    .css-feature-demo__shadow-content {
+      background: #e8e8e8;
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__shadow-inset-border {
+    .css-feature-demo__shadow-content {
+      background: white;
+      box-shadow: inset 0 0 0 2px #1890ff, inset 0 2px 8px rgba(24, 144, 255, 0.2);
+    }
+  }
+
+  // 多层阴影与特殊效果
+  &__shadow-layered {
+    .css-feature-demo__shadow-content {
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__shadow-neon {
+    .css-feature-demo__shadow-content {
+      background: #1a1a2e;
+      color: #00fff0;
+      box-shadow: 0 0 10px rgba(0, 255, 240, 0.5), 0 0 20px rgba(0, 255, 240, 0.3),
+        0 0 30px rgba(0, 255, 240, 0.2), inset 0 0 10px rgba(0, 255, 240, 0.1);
+      text-shadow: 0 0 10px rgba(0, 255, 240, 0.8);
+    }
+  }
+
+  &__shadow-3d {
+    .css-feature-demo__shadow-content {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 1px 0 #5568d3, 0 2px 0 #4f5ec4, 0 3px 0 #4954b5, 0 4px 0 #434aa6,
+        0 5px 0 #3d4097, 0 6px 0 #373688, 0 7px 0 #312c79, 0 8px 0 #2b226a,
+        0 9px 10px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  // 悬停交互效果
+  &__shadow-hover-lift {
+    cursor: pointer;
+
+    .css-feature-demo__shadow-content {
+      background: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover .css-feature-demo__shadow-content {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__shadow-hover-glow {
+    cursor: pointer;
+
+    .css-feature-demo__shadow-content {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+    }
+
+    &:hover .css-feature-demo__shadow-content {
+      box-shadow: 0 8px 32px rgba(79, 172, 254, 0.6), 0 0 20px rgba(79, 172, 254, 0.4);
+    }
+  }
+
+  &__shadow-hover-press {
+    cursor: pointer;
+
+    .css-feature-demo__shadow-content {
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:hover .css-feature-demo__shadow-content {
+      transform: translateY(2px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active .css-feature-demo__shadow-content {
+      transform: translateY(4px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
 }

@@ -547,6 +547,98 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
         </div>
       ),
     },
+    {
+      key: 'box-shadow',
+      label: 'box-shadow',
+      children: (
+        <div className="css-feature-demo__content">
+          <div className="css-feature-demo__description">
+            <Title level={5}>box-shadow 盒阴影</Title>
+            <Paragraph type="secondary">
+              为元素添加阴影效果，创建深度感和层次感，提升视觉立体效果。支持多层阴影叠加。
+            </Paragraph>
+          </div>
+          <Card className="css-feature-demo__preview">
+            <Space direction="vertical" size="large" style={{ width: '100%' }}>
+              <div>
+                <Text strong>基础阴影：</Text>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                  <div className="css-feature-demo__shadow-small">
+                    <div className="css-feature-demo__shadow-content">小阴影</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-medium">
+                    <div className="css-feature-demo__shadow-content">中阴影</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-large">
+                    <div className="css-feature-demo__shadow-content">大阴影</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Text strong>彩色阴影：</Text>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                  <div className="css-feature-demo__shadow-colored-blue">
+                    <div className="css-feature-demo__shadow-content">蓝色阴影</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-colored-red">
+                    <div className="css-feature-demo__shadow-content">红色阴影</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-colored-green">
+                    <div className="css-feature-demo__shadow-content">绿色阴影</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Text strong>内阴影：</Text>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                  <div className="css-feature-demo__shadow-inset-light">
+                    <div className="css-feature-demo__shadow-content">浅内阴影</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-inset-deep">
+                    <div className="css-feature-demo__shadow-content">深内阴影</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-inset-border">
+                    <div className="css-feature-demo__shadow-content">边框效果</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Text strong>多层阴影与特殊效果：</Text>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                  <div className="css-feature-demo__shadow-layered">
+                    <div className="css-feature-demo__shadow-content">多层阴影</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-neon">
+                    <div className="css-feature-demo__shadow-content">霓虹效果</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-3d">
+                    <div className="css-feature-demo__shadow-content">3D 效果</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Text strong>悬停交互效果：</Text>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                  <div className="css-feature-demo__shadow-hover-lift">
+                    <div className="css-feature-demo__shadow-content">悬浮上升</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-hover-glow">
+                    <div className="css-feature-demo__shadow-content">光晕效果</div>
+                  </div>
+                  <div className="css-feature-demo__shadow-hover-press">
+                    <div className="css-feature-demo__shadow-content">按压效果</div>
+                  </div>
+                </div>
+              </div>
+            </Space>
+          </Card>
+        </div>
+      ),
+    },
   ];
 
   return (
