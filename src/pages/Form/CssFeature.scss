@@ -516,6 +516,110 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 
+  &__backdrop-blur-demo {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  &__backdrop-image {
+    height: 100%;
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%),
+      repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // 添加一些装饰元素
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    &::before {
+      width: 200px;
+      height: 200px;
+      top: -50px;
+      left: -50px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    &::after {
+      width: 150px;
+      height: 150px;
+      bottom: -30px;
+      right: -30px;
+      animation: float 8s ease-in-out infinite reverse;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  &__backdrop-overlay {
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__backdrop-content {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &__backdrop-btn {
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    &--outline {
+      background: transparent;
+      backdrop-filter: none;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+    }
+  }
+
   // clip-path
   &__clip-circle,
   &__clip-triangle,

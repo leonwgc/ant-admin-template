@@ -483,12 +483,31 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
             </Paragraph>
           </div>
           <Card className="css-feature-demo__preview" style={{ padding: 0, overflow: 'hidden' }}>
-            <div className="css-feature-demo__backdrop-container">
-              <div className="css-feature-demo__backdrop-card">
-                <h3 style={{ margin: '0 0 8px 0', color: 'white' }}>毛玻璃卡片</h3>
-                <p style={{ margin: 0, color: 'rgba(255,255,255,0.9)' }}>背景模糊效果</p>
+            <Space direction="vertical" size={0} style={{ width: '100%' }}>
+              <div className="css-feature-demo__backdrop-container">
+                <div className="css-feature-demo__backdrop-card">
+                  <h3 style={{ margin: '0 0 8px 0', color: 'white' }}>毛玻璃卡片</h3>
+                  <p style={{ margin: 0, color: 'rgba(255,255,255,0.9)' }}>背景模糊效果</p>
+                </div>
               </div>
-            </div>
+
+              <div className="css-feature-demo__backdrop-blur-demo">
+                <div className="css-feature-demo__backdrop-image">
+                  <div className="css-feature-demo__backdrop-overlay">
+                    <div className="css-feature-demo__backdrop-content">
+                      <h3 style={{ margin: '0 0 12px 0', fontSize: 24 }}>模糊背景面板</h3>
+                      <p style={{ margin: '0 0 16px 0', fontSize: 14, opacity: 0.9 }}>
+                        鼠标悬停查看更强的模糊效果
+                      </p>
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        <button className="css-feature-demo__backdrop-btn">了解更多</button>
+                        <button className="css-feature-demo__backdrop-btn css-feature-demo__backdrop-btn--outline">关闭</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Space>
           </Card>
         </div>
       ),
