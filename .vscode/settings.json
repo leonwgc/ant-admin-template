@@ -41,6 +41,17 @@
   "typescript.preferences.quoteStyle": "single",
   "javascript.preferences.quoteStyle": "single",
 
+  // TypeScript 性能优化
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.tsserver.maxTsServerMemory": 4096,
+
+  // 禁用不必要的功能
+  "editor.hover.delay": 300,
+  "editor.quickSuggestionsDelay": 10,
+  "workbench.editor.enablePreview": false, // 双击才打开新标签
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 10, // 限制打开的编辑器数量
+
   // ========== ESLint ==========
   "eslint.validate": [
     "javascript",
