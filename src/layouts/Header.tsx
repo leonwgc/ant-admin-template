@@ -17,8 +17,8 @@ import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 import MobileMenus from './MobileMenus';
-import { AIRelatedFilled } from '@derbysoft/neat-design-icons';
 import { changeLanguage, type Language } from '~/i18n';
+import logo from '~/images/logo.png';
 import './Header.scss';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
@@ -90,12 +90,8 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   return (
     <div className="neat-header">
       <Layout.Header {...props}>
-        <Flex
-          align="center"
-          gap={8}
-          style={{ fontSize: 32, fontWeight: 'bold' }}
-        >
-          <AIRelatedFilled />
+        <Flex align="center">
+          <img src={logo} alt="Logo" style={{ height: 32 }} />
         </Flex>
 
         <Space size={8}>
