@@ -99,10 +99,13 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
             placement="bottomRight"
           >
-            <GlobalOutlined
-              style={{ fontSize: 18, cursor: 'pointer' }}
-              title={t('common:switchLanguage')}
-            />
+            <Space>
+              <GlobalOutlined
+                style={{ fontSize: 18, cursor: 'pointer' }}
+                title={t('common:switchLanguage')}
+              />
+              {currentLang === 'zh' ? '简体中文' : 'English'}
+            </Space>
           </Dropdown>
           <MenuOutlined className="mobile-menus" onClick={setTrue} />
           <Dropdown
