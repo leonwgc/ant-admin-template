@@ -318,4 +318,257 @@
       }
     }
   }
+
+  // :has() selector
+  &__has-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  &__has-card {
+    padding: 24px;
+    background: white;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-color: #1890ff;
+    }
+
+    // 使用 :has() 选择包含特色标记的卡片
+    &:has(.css-feature-demo__has-card--featured) {
+      border-color: #faad14;
+    }
+
+    &--featured {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #8c5e00;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    &-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    &-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #1f2329;
+    }
+
+    &-desc {
+      font-size: 14px;
+      color: #8c8c8c;
+    }
+  }
+
+  // ::selection
+  &__selection-custom {
+    ::selection {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+  }
+
+  &__selection-gradient {
+    ::selection {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: #ffd700;
+    }
+  }
+
+  // :focus-visible
+  &__focus-visible-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 2px solid #d9d9d9;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      border-color: #1890ff;
+      box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.2);
+    }
+  }
+
+  &__focus-visible-input {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #d9d9d9;
+    border-radius: 6px;
+    transition: all 0.3s;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      border-color: #1890ff;
+      box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.2);
+    }
+  }
+
+  // :focus-within
+  &__focus-within-form {
+    padding: 24px;
+    background: white;
+    border: 3px solid #e8e8e8;
+    border-radius: 12px;
+    transition: all 0.3s;
+
+    &:focus-within {
+      border-color: #1890ff;
+      box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.1);
+      background: #f0f7ff;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #d9d9d9;
+      border-radius: 6px;
+      transition: all 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: #1890ff;
+      }
+    }
+  }
+
+  // aspect-ratio
+  &__aspect-ratio-16-9,
+  &__aspect-ratio-4-3,
+  &__aspect-ratio-1-1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__aspect-ratio-16-9 {
+    aspect-ratio: 16 / 9;
+  }
+
+  &__aspect-ratio-4-3 {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  &__aspect-ratio-1-1 {
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  &__aspect-ratio-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  // backdrop-filter
+  &__backdrop-container {
+    height: 400px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea"/><stop offset="100%" style="stop-color:%23764ba2"/></linearGradient></defs><rect width="1200" height="600" fill="url(%23g1)"/><circle cx="200" cy="150" r="100" fill="rgba(255,255,255,0.1)"/><circle cx="900" cy="400" r="150" fill="rgba(255,255,255,0.1)"/><circle cx="600" cy="300" r="80" fill="rgba(255,255,255,0.15)"/></svg>');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  &__backdrop-card {
+    padding: 32px 48px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  // clip-path
+  &__clip-circle,
+  &__clip-triangle,
+  &__clip-polygon,
+  &__clip-star {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &__clip-circle {
+    clip-path: circle(50%);
+  }
+
+  &__clip-triangle {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  &__clip-polygon {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  &__clip-star {
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  }
 }
