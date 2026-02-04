@@ -1,4 +1,4 @@
-import { Animated } from '~/components/Animated';
+import FadeIn from '../components/FadeIn';
 import './Footer.scss';
 
 const Footer = ({ menuCollapsed }) => {
@@ -9,12 +9,12 @@ const Footer = ({ menuCollapsed }) => {
           ©
         </div>
       ) : (
-        <Animated type="fade">
+        <FadeIn>
           <div>
             <div>© 2002 - feature</div>
             <div>All rights reserved.</div>
           </div>
-        </Animated>
+        </FadeIn>
       )}
     </div>
   );
