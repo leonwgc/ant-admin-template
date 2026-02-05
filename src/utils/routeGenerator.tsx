@@ -97,6 +97,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/js-feature/weakmap': lazyLoad('pages/Js/WeakMapDemo'),
   '/app/js-feature/proxy': lazyLoad('pages/Js/ProxyDemo'),
   '/app/js-feature/typescript-advanced-types': lazyLoad('pages/Js/TypeScriptAdvancedTypes'),
+  '/app/js-feature/broadcast-channel': lazyLoad('pages/Js/BroadcastChannelDemo'),
 
   // CSS Features
   '/app/css': lazyLoad('pages/Form/CssFeature'),

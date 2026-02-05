@@ -24,6 +24,7 @@ export default {
     weakmap: 'WeakMap',
     proxy: 'Proxy',
     typescriptAdvancedTypes: 'TypeScript Advanced Types',
+    broadcastChannel: 'BroadcastChannel',
     cssFeature: 'CSS Feature',
     cssNewFeatures: 'CSS New Features',
     cssBoxModel: 'CSS Box Model',

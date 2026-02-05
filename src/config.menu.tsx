@@ -101,6 +101,14 @@ export const menus: MenuItem[] = [
         route: '/app/js-feature/typescript-advanced-types',
         permissions: [],
       },
+      {
+        key: 'broadcast-channel',
+        get label() {
+          return t('menu.broadcastChannel');
+        },
+        route: '/app/js-feature/broadcast-channel',
+        permissions: [],
+      },
     ],
   },
   {
