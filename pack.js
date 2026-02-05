@@ -1,4 +1,5 @@
-import { run } from 'packrs';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { run } = require('packrs');
 
 run({
   port: 3002,
