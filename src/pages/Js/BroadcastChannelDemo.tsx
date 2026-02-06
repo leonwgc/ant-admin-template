@@ -60,6 +60,13 @@ const BroadcastChannelDemo: React.FC = () => {
     addLog(`🆔 当前标签页 ID: ${tabId}`);
     addLog('✅ BroadcastChannel API 已就绪');
 
+    // Auto-initialize all channels
+    initMessagingChannel();
+    initSyncChannel();
+    initNotificationChannel();
+    initAuthChannel();
+    addLog('🚀 所有频道已自动初始化');
+
     // Cleanup function
     return () => {
       messagingChannelRef.current?.close();
@@ -67,12 +74,12 @@ const BroadcastChannelDemo: React.FC = () => {
       notificationChannelRef.current?.close();
       authChannelRef.current?.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabId]);
 
   // Scenario 1: Basic Cross-Tab Messaging
   const initMessagingChannel = () => {
     if (messagingChannelRef.current) {
-      addLog('⚠️ 消息频道已存在');
       return;
     }
 
@@ -117,18 +124,9 @@ const BroadcastChannelDemo: React.FC = () => {
     message.success('消息已发送到所有标签页');
   };
 
-  const closeMessagingChannel = () => {
-    if (messagingChannelRef.current) {
-      messagingChannelRef.current.close();
-      messagingChannelRef.current = null;
-      addLog('🔒 消息频道已关闭');
-    }
-  };
-
   // Scenario 2: Data Synchronization
   const initSyncChannel = () => {
     if (syncChannelRef.current) {
-      addLog('⚠️ 同步频道已存在');
       return;
     }
 
@@ -190,7 +188,6 @@ const BroadcastChannelDemo: React.FC = () => {
   // Scenario 3: Real-time Notifications
   const initNotificationChannel = () => {
     if (notificationChannelRef.current) {
-      addLog('⚠️ 通知频道已存在');
       return;
     }
 
@@ -238,7 +235,6 @@ const BroadcastChannelDemo: React.FC = () => {
   // Scenario 4: Authentication State Sync
   const initAuthChannel = () => {
     if (authChannelRef.current) {
-      addLog('⚠️ 认证频道已存在');
       return;
     }
 
@@ -315,8 +311,9 @@ const BroadcastChannelDemo: React.FC = () => {
         message="使用提示"
         description={
           <div>
-            <p>• 在新标签页中打开此页面以测试跨标签页通信</p>
+            <p>• <strong>页面已自动初始化所有频道</strong>，可直接测试跨标签页通信</p>
             <p>• 当前标签页 ID: <Tag color="blue">{tabId}</Tag></p>
+            <p>• 在新标签页中打开此页面，两个标签页可以互相通信</p>
             <p>• BroadcastChannel 仅在同源页面间工作（相同协议、域名、端口）</p>
           </div>
         }
@@ -330,17 +327,10 @@ const BroadcastChannelDemo: React.FC = () => {
         <Space direction="vertical" style={{ width: '100%' }}>
           <Alert
             message="适用场景"
-            description="用于标签页之间发送简单消息，如通知、提醒、实时更新等"
+            description="用于标签页之间发送简单消息，如通知、提醒、实时更新等。频道已自动初始化，可直接发送消息。"
             type="success"
             showIcon
           />
-
-          <Space>
-            <Button type="primary" onClick={initMessagingChannel}>
-              初始化消息频道
-            </Button>
-            <Button onClick={closeMessagingChannel}>关闭频道</Button>
-          </Space>
 
           <div>
             <TextArea
@@ -382,16 +372,13 @@ const BroadcastChannelDemo: React.FC = () => {
         <Space direction="vertical" style={{ width: '100%' }}>
           <Alert
             message="适用场景"
-            description="多标签页之间同步应用状态、用户设置、购物车内容等数据"
+            description="多标签页之间同步应用状态、用户设置、购物车内容等数据。频道已自动初始化。"
             type="success"
             showIcon
           />
 
           <Space>
-            <Button type="primary" onClick={initSyncChannel}>
-              初始化同步频道
-            </Button>
-            <Button icon={<SyncOutlined />} onClick={requestSync}>
+            <Button type="primary" icon={<SyncOutlined />} onClick={requestSync}>
               请求同步数据
             </Button>
           </Space>
@@ -413,16 +400,13 @@ const BroadcastChannelDemo: React.FC = () => {
         <Space direction="vertical" style={{ width: '100%' }}>
           <Alert
             message="适用场景"
-            description="跨标签页推送通知、系统消息、实时提醒等"
+            description="跨标签页推送通知、系统消息、实时提醒等。频道已自动初始化。"
             type="success"
             showIcon
           />
 
           <Space>
-            <Button type="primary" onClick={initNotificationChannel}>
-              初始化通知频道
-            </Button>
-            <Button icon={<NotificationOutlined />} onClick={sendNotification}>
+            <Button type="primary" icon={<NotificationOutlined />} onClick={sendNotification}>
               发送通知
             </Button>
             <Badge count={notificationCount} showZero>
@@ -437,15 +421,12 @@ const BroadcastChannelDemo: React.FC = () => {
         <Space direction="vertical" style={{ width: '100%' }}>
           <Alert
             message="适用场景"
-            description="同步登录/登出状态、Token 刷新、会话过期提醒等"
+            description="同步登录/登出状态、Token 刷新、会话过期提醒等。频道已自动初始化。"
             type="success"
             showIcon
           />
 
           <Space>
-            <Button type="primary" onClick={initAuthChannel}>
-              初始化认证频道
-            </Button>
             <div>
               当前状态: <Tag color={loginStatus === '已登录' ? 'green' : undefined}>{loginStatus}</Tag>
             </div>
