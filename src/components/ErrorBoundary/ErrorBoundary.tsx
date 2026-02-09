@@ -4,7 +4,7 @@
  */
 import React, { Component, ReactNode, ErrorInfo } from 'react';
 import { Button, Result } from '@derbysoft/neat-design';
-import { ReloadOutlined, HomeOutlined, BugOutlined } from '@ant-design/icons';
+import { ReloadOutlined, HomeOutlined } from '@ant-design/icons';
 import './ErrorBoundary.scss';
 
 export interface ErrorBoundaryProps {
@@ -14,8 +14,8 @@ export interface ErrorBoundaryProps {
   fallback?: ReactNode | ((error: Error, errorInfo: ErrorInfo) => ReactNode);
   /** Callback when error is caught */
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-  /** Whether to show detailed error info in development */
-  showDetails?: boolean;
+  /** Callback when go home button is clicked */
+  onGoHome?: () => void;
   /** Custom error title */
   errorTitle?: string;
   /** Custom error subtitle */
@@ -41,7 +41,6 @@ export interface ErrorBoundaryState {
  */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static defaultProps = {
-    showDetails: process.env.NODE_ENV === 'development',
     errorTitle: '页面出错了',
     errorSubtitle: '抱歉，页面遇到了一些问题',
     showReload: true,
@@ -92,7 +91,22 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   };
 
   handleGoHome = (): void => {
-    window.location.href = this.props.homePath || '/';
+    if (this.props.onGoHome) {
+      // Reset error state first, then navigate after re-render
+      this.setState(
+        {
+          hasError: false,
+          error: null,
+          errorInfo: null,
+        },
+        () => {
+          // Execute navigation callback after state reset
+          this.props.onGoHome!();
+        }
+      );
+    } else {
+      window.location.href = this.props.homePath || '/';
+    }
   };
 
   handleReset = (): void => {
@@ -107,7 +121,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     const {
       children,
       fallback,
-      showDetails,
       errorTitle,
       errorSubtitle,
       showReload,
@@ -147,33 +160,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               </div>
             }
           />
-
-          {showDetails && error && (
-            <div className="error-boundary__details">
-              <div className="error-boundary__details-header">
-                <BugOutlined />
-                <span>错误详情（开发环境）</span>
-              </div>
-              <div className="error-boundary__details-content">
-                <div className="error-boundary__error-message">
-                  <strong>错误信息：</strong>
-                  <pre>{error.toString()}</pre>
-                </div>
-                {errorInfo && (
-                  <div className="error-boundary__error-stack">
-                    <strong>组件堆栈：</strong>
-                    <pre>{errorInfo.componentStack}</pre>
-                  </div>
-                )}
-                {error.stack && (
-                  <div className="error-boundary__error-stack">
-                    <strong>错误堆栈：</strong>
-                    <pre>{error.stack}</pre>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       );
     }

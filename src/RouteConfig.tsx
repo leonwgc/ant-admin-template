@@ -3,12 +3,17 @@
  * @author leon.wang
  */
 
-import { Route, Routes } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router';
 import App from './layouts/App';
 import { lazy, Suspense } from 'react';
 import Redirect from './components/Redirect';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { menus } from './config.menu';
-import { extractRoutesFromMenus, routeComponentMap, getRouteElement } from './utils/routeGenerator';
+import {
+  extractRoutesFromMenus,
+  routeComponentMap,
+  getRouteElement,
+} from './utils/routeGenerator';
 
 const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
@@ -25,6 +30,8 @@ const menuRoutes = extractRoutesFromMenus(menus);
  * @returns {JSX.Element} The routes of the application.
  */
 const RouteConfig = () => {
+  const navigate = useNavigate();
+
   return (
     <Suspense>
       <Routes>
@@ -38,7 +45,7 @@ const RouteConfig = () => {
         </Route>
 
         <Route path="app" element={<App />}>
-          {/* Auto-generated routes from menu configuration */}
+          {/* Auto-generated routes from menu configuration with page-level error boundaries */}
           {menuRoutes.map(({ path }) => {
             const element = getRouteElement(path, routeComponentMap);
             if (!element) return null;
@@ -50,7 +57,16 @@ const RouteConfig = () => {
               <Route
                 key={path}
                 path={relativePath}
-                element={element}
+                element={
+                  <ErrorBoundary
+                    errorTitle="页面加载失败"
+                    errorSubtitle="该页面遇到了问题，您可以尝试重新加载或返回首页"
+                    showHome
+                    onGoHome={() => navigate('/app/css')}
+                  >
+                    {element}
+                  </ErrorBoundary>
+                }
               />
             );
           })}

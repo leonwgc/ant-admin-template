@@ -8,7 +8,7 @@ import './scss/global.scss';
 
 // 初始化 Web Vitals 性能监控
 initWebVitals({
-  displayOverlay: true, // 开发环境显示性能面板
+  displayOverlay: false, // 是否在开发环境显示性能面板
 });
 
 createRoot(document.getElementById('app')).render(

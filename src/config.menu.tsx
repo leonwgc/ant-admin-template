@@ -482,6 +482,14 @@ export const menus: MenuItem[] = [
         route: '/app/components/error-boundary',
         permissions: [],
       },
+      {
+        key: 'error-test',
+        get label() {
+          return t('menu.errorTest');
+        },
+        route: '/app/components/error-test',
+        permissions: [],
+      },
 
     ],
   },

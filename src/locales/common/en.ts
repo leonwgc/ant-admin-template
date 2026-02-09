@@ -70,6 +70,7 @@ export default {
     textEllipsis: 'TextEllipsis',
     animated: 'Animated',
     errorBoundary: 'Error Boundary',
+    errorTest: 'Error Test Page',
     dateTable: 'Sticky Table',
     libraries: 'Libraries',
     reactHookForm: 'React Hook Form',

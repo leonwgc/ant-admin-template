@@ -70,6 +70,7 @@ export default {
     textEllipsis: '文本省略',
     animated: '动画组件',
     errorBoundary: '错误边界',
+    errorTest: '错误测试页面',
     dateTable: 'sticky 表格',
     libraries: '类库',
     reactHookForm: 'React Hook Form',
