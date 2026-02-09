@@ -15,9 +15,16 @@ export default {
   adminConsole: 'Admin Console',
   inviteUser: 'Invite User',
   signOut: 'Sign Out',
+  yes: 'Yes',
+  no: 'No',
 
   // Menu translations
   menu: {
+    system: 'System Management',
+    systemUsers: 'User Management',
+    systemRoles: 'Role Management',
+    systemMenus: 'Menu Management',
+    systemPermissions: 'Permission Management',
     jsFeature: 'JS Feature',
     intlNumberFormat: 'Intl.NumberFormat',
     elementHeight: 'Element Height',

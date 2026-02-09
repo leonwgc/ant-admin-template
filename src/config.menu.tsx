@@ -11,6 +11,7 @@ import {
   CodeOutlined,
   AndroidOutlined,
   HomeOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -53,6 +54,48 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
  * This structure is used to render navigation menus and control access based on permissions.
  */
 export const menus: MenuItem[] = [
+  {
+    key: 'system',
+    get label() {
+      return t('menu.system');
+    },
+    icon: <SettingOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'system-users',
+        get label() {
+          return t('menu.systemUsers');
+        },
+        route: '/app/system/users',
+        permissions: [],
+      },
+      {
+        key: 'system-roles',
+        get label() {
+          return t('menu.systemRoles');
+        },
+        route: '/app/system/roles',
+        permissions: [],
+      },
+      {
+        key: 'system-menus',
+        get label() {
+          return t('menu.systemMenus');
+        },
+        route: '/app/system/menus',
+        permissions: [],
+      },
+      {
+        key: 'system-permissions',
+        get label() {
+          return t('menu.systemPermissions');
+        },
+        route: '/app/system/permissions',
+        permissions: [],
+      },
+    ],
+  },
   {
     key: 'js-feature',
     get label() {

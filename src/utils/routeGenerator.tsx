@@ -91,6 +91,12 @@ export const getRouteElement = (
  * This is the central mapping that connects routes to page components
  */
 export const routeComponentMap: RouteComponentMap = {
+  // System Management
+  '/app/system/users': lazyLoad('pages/User/Users'),
+  '/app/system/roles': lazyLoad('pages/System/RoleManagement'),
+  '/app/system/menus': lazyLoad('pages/System/MenuManagement'),
+  '/app/system/permissions': lazyLoad('pages/System/PermissionManagement'),
+
   // JS Features
   '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormatExample'),
   '/app/js-feature/element-height': lazyLoad('pages/Js/ElementHeightDemo'),

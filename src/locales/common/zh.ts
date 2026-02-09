@@ -15,9 +15,16 @@ export default {
   adminConsole: '管理控制台',
   inviteUser: '邀请用户',
   signOut: '退出登录',
+  yes: '确认',
+  no: '取消',
 
   // 菜单翻译
   menu: {
+    system: '系统管理',
+    systemUsers: '用户管理',
+    systemRoles: '角色管理',
+    systemMenus: '菜单管理',
+    systemPermissions: '权限管理',
     jsFeature: 'JS 特性',
     intlNumberFormat: 'Intl.NumberFormat',
     elementHeight: '元素高度',

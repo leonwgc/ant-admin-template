@@ -17,6 +17,7 @@ export const resources = {
     'pages.form': en.pages.form, // 注册命名空间
     'pages.hotel': en.pages.hotel, // 注册命名空间
     'pages.components': en.pages.components, // 注册命名空间
+    'pages.system': en.pages.system, // 注册命名空间
   },
   zh: {
     [defaultNS]: zh,
@@ -24,6 +25,7 @@ export const resources = {
     'pages.form': zh.pages.form, // 注册命名空间
     'pages.hotel': zh.pages.hotel, // 注册命名空间
     'pages.components': zh.pages.components, // 注册命名空间
+    'pages.system': zh.pages.system, // 注册命名空间
   },
 } as const;
 

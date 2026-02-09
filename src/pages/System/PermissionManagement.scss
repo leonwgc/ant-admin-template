@@ -1,0 +1,53 @@
+/**
+ * @file pages/System/PermissionManagement.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.permission-management {
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+
+  &__panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__panel-title {
+    font-weight: 600;
+    font-size: 15px;
+  }
+}
+
+.permission-type-page {
+  color: #1890ff;
+  background: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.permission-type-button {
+  color: #52c41a;
+  background: #f6ffed;
+  border-color: #b7eb8f;
+}
+
+.permission-type-api {
+  color: #fa8c16;
+  background: #fff7e6;
+  border-color: #ffd591;
+}
