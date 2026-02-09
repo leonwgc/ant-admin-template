@@ -25,6 +25,7 @@ export default {
     proxy: 'Proxy',
     typescriptAdvancedTypes: 'TypeScript Advanced Types',
     broadcastChannel: 'BroadcastChannel',
+    performance: 'Performance',
     cssFeature: 'CSS Feature',
     cssNewFeatures: 'CSS New Features',
     cssBoxModel: 'CSS Box Model',

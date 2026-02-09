@@ -109,6 +109,14 @@ export const menus: MenuItem[] = [
         route: '/app/js-feature/broadcast-channel',
         permissions: [],
       },
+      {
+        key: 'performance',
+        get label() {
+          return t('menu.performance');
+        },
+        route: '/app/performance',
+        permissions: [],
+      },
     ],
   },
   {
