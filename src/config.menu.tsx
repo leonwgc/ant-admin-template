@@ -474,6 +474,14 @@ export const menus: MenuItem[] = [
         route: '/app/components/text-ellipsis',
         permissions: [],
       },
+      {
+        key: 'error-boundary',
+        get label() {
+          return t('menu.errorBoundary');
+        },
+        route: '/app/components/error-boundary',
+        permissions: [],
+      },
 
     ],
   },

@@ -158,6 +158,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/text-ellipsis': lazyLoad('pages/Components/TextEllipsisDemo'),
   '/app/components/animated': lazyLoad('pages/Components/AnimatedDemo'),
   '/app/components/css-filter': lazyLoad('pages/Components/CssFilterExample'),
+  '/app/components/error-boundary': lazyLoad('pages/Components/ErrorBoundaryDemo'),
 
   // libs
   '/app/hooks/zustand-demo': lazyLoad('pages/Hooks/ZustandDemo'),

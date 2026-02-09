@@ -69,6 +69,7 @@ export default {
     fadeIn: 'FadeIn',
     textEllipsis: 'TextEllipsis',
     animated: 'Animated',
+    errorBoundary: 'Error Boundary',
     dateTable: 'Sticky Table',
     libraries: 'Libraries',
     reactHookForm: 'React Hook Form',

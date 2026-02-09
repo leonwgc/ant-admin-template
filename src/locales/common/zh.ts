@@ -69,6 +69,7 @@ export default {
     fadeIn: '淡入动画',
     textEllipsis: '文本省略',
     animated: '动画组件',
+    errorBoundary: '错误边界',
     dateTable: 'sticky 表格',
     libraries: '类库',
     reactHookForm: 'React Hook Form',
