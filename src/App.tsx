@@ -1,9 +1,14 @@
-import { ConfigProvider, App as AntdApp } from '@derbysoft/neat-design';
-import zhCN from 'antd/es/locale/zh_CN';
+import React from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
+
+import { ConfigProvider, App as AntdApp } from '@derbysoft/neat-design';
+import zhCN from 'antd/es/locale/zh_CN';
+
 import { ErrorBoundary } from './components/ErrorBoundary';
 import RouteConfig from './RouteConfig';
+import errorMonitor from './utils/errorMonitor';
+
 import './App.scss';
 
 dayjs.locale('zh-cn');
@@ -17,8 +22,14 @@ const App = () => {
           // eslint-disable-next-line no-console
           console.error('App Error Boundary:', error, errorInfo);
         }
-        // In production, send to error tracking service
-        // e.g., Sentry.captureException(error, { contexts: { react: { componentStack: errorInfo.componentStack } } });
+
+        if (process.env.NODE_ENV === 'production') {
+          // Report error to error monitor
+          errorMonitor.reportReactError(error, errorInfo, {
+            url: window.location.href,
+            title: 'App Error',
+          });
+        }
       }}
     >
       <ConfigProvider locale={zhCN}>

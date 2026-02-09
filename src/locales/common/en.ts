@@ -71,6 +71,7 @@ export default {
     animated: 'Animated',
     errorBoundary: 'Error Boundary',
     errorTest: 'Error Test Page',
+    errorMonitor: 'Error Monitor System',
     dateTable: 'Sticky Table',
     libraries: 'Libraries',
     reactHookForm: 'React Hook Form',

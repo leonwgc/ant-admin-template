@@ -490,6 +490,14 @@ export const menus: MenuItem[] = [
         route: '/app/components/error-test',
         permissions: [],
       },
+      {
+        key: 'error-monitor',
+        get label() {
+          return t('menu.errorMonitor');
+        },
+        route: '/app/components/error-monitor',
+        permissions: [],
+      },
 
     ],
   },

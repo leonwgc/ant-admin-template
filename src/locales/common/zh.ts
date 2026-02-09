@@ -71,6 +71,7 @@ export default {
     animated: '动画组件',
     errorBoundary: '错误边界',
     errorTest: '错误测试页面',
+    errorMonitor: '错误监控系统',
     dateTable: 'sticky 表格',
     libraries: '类库',
     reactHookForm: 'React Hook Form',

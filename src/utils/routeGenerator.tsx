@@ -160,6 +160,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/css-filter': lazyLoad('pages/Components/CssFilterExample'),
   '/app/components/error-boundary': lazyLoad('pages/Components/ErrorBoundaryDemo'),
   '/app/components/error-test': lazyLoad('pages/Components/ErrorTest'),
+  '/app/components/error-monitor': lazyLoad('pages/Components/ErrorMonitorDemo'),
 
   // libs
   '/app/hooks/zustand-demo': lazyLoad('pages/Hooks/ZustandDemo'),
