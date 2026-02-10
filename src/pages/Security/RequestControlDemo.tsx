@@ -53,7 +53,7 @@ const RequestControlDemo: FC = () => {
     setRequestCount((prev) => prev + 1);
     await mockApiRequest(2000);
     message.success('请求完成');
-  }, { delay: 500 });
+  });
 
   // 2. 基于签名的防重复示例
   const handlePreventDuplicateBySign = usePreventDuplicateBySign(
@@ -61,15 +61,14 @@ const RequestControlDemo: FC = () => {
       setRequestCount((prev) => prev + 1);
       await mockApiRequest(1500);
       message.success(`用户${userId}的数据加载完成`);
-    },
-    { delay: 500 }
+    }
   );
 
   // 3. 同步防重复示例
   const handlePreventDuplicateSync = usePreventDuplicateSync(() => {
     setClickCount((prev) => prev + 1);
     message.info('按钮被点击');
-  }, { delay: 1000 });
+  }, 1000);
 
   // 4. 重置统计
   const handleReset = () => {
@@ -198,15 +197,14 @@ const RequestControlDemo: FC = () => {
             <div>
               <Tag color="blue">usePreventDuplicate Hook</Tag>
               <p style={{ marginTop: 8, marginBottom: 0 }}>
-                通过 loading 状态 + 延迟重置机制，防止异步操作重复执行
+                通过 loading 状态确保异步函数完全执行完成后才允许下次调用
               </p>
             </div>
           </Descriptions.Item>
           <Descriptions.Item label="基于签名防重">
             <div>
               <Tag color="blue">usePreventDuplicateBySign Hook</Tag>
-              <p style={{ marginTop: 8, marginBottom: 0 }}>
-                根据请求参数生成唯一签名，相同签名的请求共享 pending 状态
+              <p style={{ marginTop: 8, marginBottom: 0 }}>               根据请求参数生成唯一签名，确保相同签名的请求完全执行完成后才允许下次调用，不同签名可并发
               </p>
             </div>
           </Descriptions.Item>
