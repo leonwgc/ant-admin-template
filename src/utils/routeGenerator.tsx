@@ -96,6 +96,8 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/system/roles': lazyLoad('pages/System/RoleManagement'),
   '/app/system/menus': lazyLoad('pages/System/MenuManagement'),
   '/app/system/permissions': lazyLoad('pages/System/PermissionManagement'),
+  '/app/system/security': lazyLoad('pages/Security/SecuritySettings'),
+  '/app/system/request-control': lazyLoad('pages/Security/RequestControlDemo'),
 
   // JS Features
   '/app/js-feature/intl-number-format': lazyLoad('pages/Js/IntlNumberFormatExample'),

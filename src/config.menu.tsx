@@ -667,6 +667,22 @@ export const menus: MenuItem[] = [
         route: '/app/system/permissions',
         permissions: [],
       },
+      {
+        key: 'system-security',
+        get label() {
+          return t('menu.systemSecurity');
+        },
+        route: '/app/system/security',
+        permissions: [],
+      },
+      {
+        key: 'system-request-control',
+        get label() {
+          return t('menu.systemRequestControl');
+        },
+        route: '/app/system/request-control',
+        permissions: [],
+      },
     ],
   },
 ];

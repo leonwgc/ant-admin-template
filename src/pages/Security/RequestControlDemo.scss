@@ -1,0 +1,32 @@
+/**
+ * @file pages/Security/RequestControlDemo.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.request-control-demo {
+  &__header {
+    margin-bottom: 24px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__description {
+    color: #647075;
+    font-size: 14px;
+  }
+
+  &__card {
+    margin-bottom: 24px;
+  }
+
+  &__hint {
+    color: #647075;
+    font-size: 13px;
+    font-style: italic;
+  }
+}

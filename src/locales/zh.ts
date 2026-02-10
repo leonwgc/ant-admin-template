@@ -9,6 +9,7 @@ import formZh from './pages/form/zh';
 import hotelZh from './pages/hotel/zh';
 import componentsZh from './pages/components/zh';
 import systemZh from './pages/system/zh';
+import securityZh from './pages/security/zh';
 
 /**
  * 中文翻译
@@ -25,6 +26,7 @@ const zh = {
     hotel: hotelZh,
     components: componentsZh,
     system: systemZh,
+    security: securityZh,
   },
 };
 

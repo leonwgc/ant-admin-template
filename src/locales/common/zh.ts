@@ -25,6 +25,8 @@ export default {
     systemRoles: '角色管理',
     systemMenus: '菜单管理',
     systemPermissions: '权限管理',
+    systemSecurity: '安全设置',
+    systemRequestControl: '请求控制演示',
     jsFeature: 'JS 特性',
     intlNumberFormat: 'Intl.NumberFormat',
     elementHeight: '元素高度',

@@ -25,6 +25,8 @@ export default {
     systemRoles: 'Role Management',
     systemMenus: 'Menu Management',
     systemPermissions: 'Permission Management',
+    systemSecurity: 'Security Settings',
+    systemRequestControl: 'Request Control Demo',
     jsFeature: 'JS Feature',
     intlNumberFormat: 'Intl.NumberFormat',
     elementHeight: 'Element Height',

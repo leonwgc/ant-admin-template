@@ -9,6 +9,7 @@ import formEn from './pages/form/en';
 import hotelEn from './pages/hotel/en';
 import componentsEn from './pages/components/en';
 import systemEn from './pages/system/en';
+import securityEn from './pages/security/en';
 
 /**
  * English translations
@@ -24,8 +25,7 @@ const en = {
     form: formEn,
     hotel: hotelEn,
     components: componentsEn,
-    system: systemEn,
-  },
+    system: systemEn,    security: securityEn,  },
 };
 
 export default en;
