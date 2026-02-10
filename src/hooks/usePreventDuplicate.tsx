@@ -3,7 +3,6 @@
  * @author leon.wang
  */
 import { useRef, useCallback } from 'react';
-import { message } from '@derbysoft/neat-design';
 
 interface PreventDuplicateOptions {
   /** 防抖时间（毫秒），默认300ms */
