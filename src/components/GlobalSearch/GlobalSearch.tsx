@@ -89,10 +89,18 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ open, onOpenChange }) => {
     return () => document.removeEventListener('keydown', down);
   }, [open, onOpenChange]);
 
-  // 关闭时重置搜索词
+  // 关闭时重置搜索词，打开时自动聚焦
   useEffect(() => {
     if (!open) {
       setSearch('');
+    } else {
+      // 打开时自动聚焦输入框
+      setTimeout(() => {
+        const input = document.querySelector('[cmdk-input]') as HTMLInputElement;
+        if (input) {
+          input.focus();
+        }
+      }, 100);
     }
   }, [open]);
 
