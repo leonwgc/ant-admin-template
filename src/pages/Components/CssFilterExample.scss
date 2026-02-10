@@ -6,7 +6,7 @@
  */
 
 .css-filter-example {
-  padding: 24px;
+
 
   &__preview {
     position: relative;
@@ -236,7 +236,7 @@
 
   // Dark Mode Demo
   &__theme-demo {
-    padding: 24px;
+
     background: #fff;
     border-radius: 8px;
     transition: filter 0.5s ease, background-color 0.5s ease;
@@ -253,7 +253,7 @@
   }
 
   &__theme-card {
-    padding: 24px;
+
     background: #f5f5f5;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -515,7 +515,7 @@
   }
 
   &__sample-card {
-    padding: 24px;
+
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);

@@ -4,7 +4,14 @@
  */
 
 import React from 'react';
-import { Card, Tabs, Typography, Alert, Divider, Tag } from '@derbysoft/neat-design';
+import {
+  Card,
+  Tabs,
+  Typography,
+  Alert,
+  Divider,
+  Tag,
+} from '@derbysoft/neat-design';
 import './TypeScriptAdvancedTypes.scss';
 
 const { Title, Paragraph } = Typography;
@@ -12,7 +19,10 @@ const { Title, Paragraph } = Typography;
 /**
  * Code block component for displaying TypeScript code examples
  */
-const CodeBlock: React.FC<{ code: string; title?: string }> = ({ code, title }) => (
+const CodeBlock: React.FC<{ code: string; title?: string }> = ({
+  code,
+  title,
+}) => (
   <div className="ts-types__code-block">
     {title && <div className="ts-types__code-title">{title}</div>}
     <pre className="ts-types__code">
@@ -315,7 +325,10 @@ type PartialUser = Partial<User>;
               />
             </Card>
 
-            <Card size="small" title={<Tag color="blue">Required&lt;T&gt;</Tag>}>
+            <Card
+              size="small"
+              title={<Tag color="blue">Required&lt;T&gt;</Tag>}
+            >
               <CodeBlock
                 code={`// 将所有属性变为必需
 interface Config { host?: string; port?: number; }
@@ -342,7 +355,10 @@ type SafeUser = Omit<User, 'password'>;
               />
             </Card>
 
-            <Card size="small" title={<Tag color="blue">Record&lt;K, T&gt;</Tag>}>
+            <Card
+              size="small"
+              title={<Tag color="blue">Record&lt;K, T&gt;</Tag>}
+            >
               <CodeBlock
                 code={`// 创建键值对类型
 type PageInfo = { title: string; };
@@ -352,7 +368,10 @@ type Pages = Record<Page, PageInfo>;
               />
             </Card>
 
-            <Card size="small" title={<Tag color="blue">Exclude&lt;T, U&gt;</Tag>}>
+            <Card
+              size="small"
+              title={<Tag color="blue">Exclude&lt;T, U&gt;</Tag>}
+            >
               <CodeBlock
                 code={`// 从联合类型 T 中排除可赋值给 U 的类型
 type T = 'a' | 'b' | 'c';
@@ -361,7 +380,10 @@ type Result = Exclude<T, 'a'>;
               />
             </Card>
 
-            <Card size="small" title={<Tag color="blue">Extract&lt;T, U&gt;</Tag>}>
+            <Card
+              size="small"
+              title={<Tag color="blue">Extract&lt;T, U&gt;</Tag>}
+            >
               <CodeBlock
                 code={`// 从联合类型 T 中提取可赋值给 U 的类型
 type T = 'a' | 'b' | 'c';
@@ -370,7 +392,10 @@ type Result = Extract<T, 'a' | 'b'>;
               />
             </Card>
 
-            <Card size="small" title={<Tag color="blue">ReturnType&lt;T&gt;</Tag>}>
+            <Card
+              size="small"
+              title={<Tag color="blue">ReturnType&lt;T&gt;</Tag>}
+            >
               <CodeBlock
                 code={`// 获取函数返回类型
 function getUser() { return { id: 1, name: 'Alice' }; }
@@ -389,7 +414,8 @@ type User = ReturnType<typeof getUser>;
         <div className="ts-types__section">
           <Title level={4}>模板字面量类型</Title>
           <Paragraph>
-            TypeScript 4.1 引入了模板字面量类型，允许在类型系统中使用字符串模板。
+            TypeScript 4.1
+            引入了模板字面量类型，允许在类型系统中使用字符串模板。
           </Paragraph>
 
           <CodeBlock
@@ -470,7 +496,8 @@ person.on('ageChanged', (newAge) => {
         <div className="ts-types__section">
           <Title level={4}>类型守卫</Title>
           <Paragraph>
-            类型守卫是运行时检查，用于缩窄类型范围，使 TypeScript 能够推断更具体的类型。
+            类型守卫是运行时检查，用于缩窄类型范围，使 TypeScript
+            能够推断更具体的类型。
           </Paragraph>
 
           <CodeBlock
@@ -713,27 +740,26 @@ declare global {
 
   return (
     <div className="ts-types">
-      <Card>
-        <Typography>
-          <Title level={3}>TypeScript 高级类型完全指南</Title>
-          <Paragraph>
-            本文档详细介绍 TypeScript 中的高级类型系统，帮助你掌握类型体操的核心技能。
-            通过这些高级类型特性，你可以编写更加类型安全、可维护的代码。
-          </Paragraph>
-          <div className="ts-types__tags">
-            <Tag color="blue">泛型</Tag>
-            <Tag color="green">条件类型</Tag>
-            <Tag color="orange">映射类型</Tag>
-            <Tag color="purple">模板字面量</Tag>
-            <Tag color="cyan">类型守卫</Tag>
-            <Tag color="red">高级模式</Tag>
-          </div>
-        </Typography>
+      <Typography>
+        <Title level={3}>TypeScript 高级类型完全指南</Title>
+        <Paragraph>
+          本文档详细介绍 TypeScript
+          中的高级类型系统，帮助你掌握类型体操的核心技能。
+          通过这些高级类型特性，你可以编写更加类型安全、可维护的代码。
+        </Paragraph>
+        <div className="ts-types__tags">
+          <Tag color="blue">泛型</Tag>
+          <Tag color="green">条件类型</Tag>
+          <Tag color="orange">映射类型</Tag>
+          <Tag color="purple">模板字面量</Tag>
+          <Tag color="cyan">类型守卫</Tag>
+          <Tag color="red">高级模式</Tag>
+        </div>
+      </Typography>
 
-        <Divider />
+      <Divider />
 
-        <Tabs items={tabItems} className="ts-types__tabs" />
-      </Card>
+      <Tabs items={tabItems} className="ts-types__tabs" />
     </div>
   );
 };

@@ -96,7 +96,7 @@ export default YourPage;
 @import 'scss/common.scss';
 
 .your-page {
-  padding: 24px;
+
 
   // Your styles
 }

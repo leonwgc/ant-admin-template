@@ -336,7 +336,7 @@ const PracticalExamples: FC = () => {
           </div>
         </div>
         <pre>{`.card {
-  padding: 24px;
+
   border: 1px solid #e8e8e8;
   border-radius: 8px;
 }`}</pre>

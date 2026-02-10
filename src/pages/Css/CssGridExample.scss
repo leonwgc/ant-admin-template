@@ -6,7 +6,7 @@
 @import 'scss/common.scss';
 
 .css-grid-example {
-  padding: 24px;
+
 
   &__title {
     font-size: 24px;
@@ -128,7 +128,7 @@
     grid-area: content;
     background: white;
     border-radius: 8px;
-    padding: 24px;
+
 
     h3 {
       margin: 0 0 12px 0;
@@ -420,7 +420,7 @@
   &__widget {
     background: white;
     border-radius: 8px;
-    padding: 24px;
+
     display: flex;
     align-items: center;
     justify-content: center;

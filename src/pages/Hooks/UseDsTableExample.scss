@@ -6,7 +6,7 @@
 @import 'scss/common.scss';
 
 .use-ds-table-example {
-  padding: 24px;
+
   animation: fadeIn 0.6s ease-in;
 
   @keyframes fadeIn {
@@ -106,7 +106,7 @@
   &__code {
     background: #2d2d2d;
     color: #f8f8f2;
-    padding: 24px;
+
     border-radius: 8px;
     overflow-x: auto;
     font-family: 'Courier New', 'Monaco', 'Consolas', monospace;

@@ -6,7 +6,7 @@
 @import 'scss/common.scss';
 
 .weakmap-demo {
-  padding: 24px;
+
 
   &__title {
     font-size: 24px;
@@ -123,7 +123,7 @@
   &__dom-node {
     flex: 1;
     min-width: 150px;
-    padding: 24px;
+
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border-radius: 8px;

@@ -5,7 +5,7 @@
 @import "scss/common.scss";
 
 .animated-demo {
-  padding: 24px;
+
   background: #f5f7fa;
 
   &__hero {
@@ -45,7 +45,7 @@
     }
 
     :global(.ant-card-body) {
-      padding: 24px;
+
     }
   }
 
