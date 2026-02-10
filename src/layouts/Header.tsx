@@ -19,6 +19,8 @@ import {
   LogoutOutlined,
   SearchOutlined,
   DownOutlined,
+  SunOutlined,
+  MoonOutlined,
 } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
@@ -26,6 +28,7 @@ import { useTranslation } from 'react-i18next';
 import MobileMenus from './MobileMenus';
 import { GlobalSearch } from 'components/GlobalSearch';
 import { changeLanguage, type Language } from '~/i18n';
+import { useTheme } from '~/hooks/useTheme';
 import logo from '~/images/logo.png';
 import './Header.scss';
 
@@ -33,6 +36,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [open, { setTrue, setFalse }] = useBoolean(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { t, i18n } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
 
   const currentLang = i18n.language as Language;
 
@@ -122,6 +126,17 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             <kbd className="header-search-btn__shortcut">
               {navigator.platform.toLowerCase().includes('mac') ? '⌘K' : 'Ctrl+K'}
             </kbd>
+          </button>
+          <button
+            className="header-theme-btn"
+            onClick={toggleTheme}
+            aria-label={t('common:switchTheme')}
+          >
+            {theme === 'light' ? (
+              <SunOutlined className="header-theme-btn__icon" />
+            ) : (
+              <MoonOutlined className="header-theme-btn__icon" />
+            )}
           </button>
           <Dropdown
             menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}

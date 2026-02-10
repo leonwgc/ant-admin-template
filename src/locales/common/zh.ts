@@ -10,6 +10,7 @@
 export default {
   // 通用操作和 UI
   switchLanguage: '切换语言',
+  switchTheme: '切换主题',
   language: '语言',
   companies: '公司',
   adminConsole: '管理控制台',

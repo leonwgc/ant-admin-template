@@ -8,12 +8,16 @@ import zhCN from 'antd/es/locale/zh_CN';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import RouteConfig from './RouteConfig';
 import errorMonitor from './utils/errorMonitor';
+import { useTheme } from './hooks/useTheme';
 
 import './App.scss';
 
 dayjs.locale('zh-cn');
 
 const App = () => {
+  // Initialize theme from localStorage and apply to DOM
+  useTheme();
+
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {

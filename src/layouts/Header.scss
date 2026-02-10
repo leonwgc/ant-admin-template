@@ -5,7 +5,8 @@
 @import 'scss/common.scss';
 
 .header-search-btn,
-.header-lang-btn {
+.header-lang-btn,
+.header-theme-btn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -66,6 +67,41 @@
 
     .header-search-btn__text {
       color: #1B2C34;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+    background: rgba(147, 155, 161, 0.16);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $theme-primary;
+    outline-offset: 2px;
+  }
+}
+
+// 主题按钮特定样式
+.header-theme-btn {
+  min-width: auto;
+  width: 36px;
+  padding: 0;
+  justify-content: center;
+
+  &__icon {
+    font-size: 18px;
+    color: #939BA1;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover {
+    background: rgba(147, 155, 161, 0.12);
+    border-color: rgba(147, 155, 161, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    .header-theme-btn__icon {
+      color: $theme-primary;
+      transform: rotate(180deg);
     }
   }
 
@@ -157,6 +193,10 @@
     &__icon {
       font-size: 18px;
     }
+  }
+
+  .header-theme-btn {
+    width: 36px;
   }
 }
 

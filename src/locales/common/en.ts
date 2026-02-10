@@ -10,6 +10,7 @@
 export default {
   // Common actions and UI
   switchLanguage: 'Switch Language',
+  switchTheme: 'Switch Theme',
   language: 'Language',
   companies: 'Companies',
   adminConsole: 'Admin Console',

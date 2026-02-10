@@ -1,5 +1,37 @@
 @import './common.scss';
 
+/* ==============================================
+   Dark Mode - CSS Filter Implementation
+   ============================================== */
+
+html {
+  transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html[data-theme='dark'] {
+  /* 反转颜色并调整色相，保持图片等内容正常显示 */
+  filter: invert(1) hue-rotate(180deg);
+  background-color: #1a1a1a;
+
+  /* 将图片、视频、Logo 等媒体元素再次反转回来 */
+  img,
+  video,
+  iframe,
+  [data-theme-exclude],
+  .ant-image,
+  .ds-image,
+  picture {
+    filter: invert(1) hue-rotate(180deg);
+  }
+
+  /* Avatar 组件通常需要保持原色 */
+  .ant-avatar,
+  .ds-avatar {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
 /* Thin 100 */
 @font-face {
   font-family: 'Roboto';
