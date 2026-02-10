@@ -2,8 +2,8 @@
  * @file layouts/Header.tsx
  * @author leon.wang
  */
-import React from 'react';
-import { Layout, Space, Flex, Avatar } from '@derbysoft/neat-design';
+import React, { useState } from 'react';
+import { Layout, Space, Flex, Avatar, Button, Tooltip } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
   MenuOutlined,
@@ -12,17 +12,20 @@ import {
   ControlOutlined,
   UserAddOutlined,
   LogoutOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 import MobileMenus from './MobileMenus';
+import { GlobalSearch } from 'components/GlobalSearch';
 import { changeLanguage, type Language } from '~/i18n';
 import logo from '~/images/logo.png';
 import './Header.scss';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [open, { setTrue, setFalse }] = useBoolean(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   const currentLang = i18n.language as Language;
@@ -65,25 +68,33 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
       key: 'companies',
       label: t('common:companies'),
       icon: <BankOutlined />,
-      onClick: () => console.log('Navigate to companies'),
+      onClick: () => {
+        // Navigate to companies
+      },
     },
     {
       key: 'admin-console',
       label: t('common:adminConsole'),
       icon: <ControlOutlined />,
-      onClick: () => console.log('Navigate to admin console'),
+      onClick: () => {
+        // Navigate to admin console
+      },
     },
     {
       key: 'invite-user',
       label: t('common:inviteUser'),
       icon: <UserAddOutlined />,
-      onClick: () => console.log('Open invite user modal'),
+      onClick: () => {
+        // Open invite user modal
+      },
     },
     {
       key: 'sign-out',
       label: t('common:signOut'),
       icon: <LogoutOutlined />,
-      onClick: () => console.log('Sign out'),
+      onClick: () => {
+        // Sign out
+      },
     },
   ];
 
@@ -95,6 +106,13 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         </Flex>
 
         <Space size={8}>
+          <Tooltip title={t('common:searchMenuTooltip')}>
+            <Button
+              icon={<SearchOutlined />}
+              onClick={() => setSearchOpen(true)}
+              className="header-search-btn"
+            />
+          </Tooltip>
           <Dropdown
             menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
             placement="bottomRight"
@@ -126,6 +144,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         </Space>
       </Layout.Header>
       <MobileMenus open={open} onClose={setFalse} />
+      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </div>
   );
 };

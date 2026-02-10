@@ -18,6 +18,16 @@ export default {
   yes: '确认',
   no: '取消',
 
+  // 全局搜索
+  searchMenuPlaceholder: '搜索菜单...',
+  searchMenuTooltip: '搜索菜单 (⌘K)',
+  searchNoResults: '未找到匹配项',
+  searchResults: '搜索结果',
+  searchRecent: '最近访问',
+  searchNavigate: '导航',
+  searchSelect: '选择',
+  searchClose: '关闭',
+
   // 菜单翻译
   menu: {
     system: '系统管理',

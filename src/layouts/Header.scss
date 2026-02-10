@@ -4,6 +4,18 @@
  */
 @import 'scss/common.scss';
 
+.header-search-btn {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  &:hover {
+    color:$theme-primary;
+  }
+}
+
 .pop-user-actions {
   .ds-dropdown-menu-item:first-child {
     padding: 16px;

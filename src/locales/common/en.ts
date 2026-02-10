@@ -18,6 +18,16 @@ export default {
   yes: 'Yes',
   no: 'No',
 
+  // Global search
+  searchMenuPlaceholder: 'Search menus...',
+  searchMenuTooltip: 'Search menus (⌘K)',
+  searchNoResults: 'No results found',
+  searchResults: 'Search Results',
+  searchRecent: 'Recently Visited',
+  searchNavigate: 'Navigate',
+  searchSelect: 'Select',
+  searchClose: 'Close',
+
   // Menu translations
   menu: {
     system: 'System Management',
