@@ -125,7 +125,8 @@ const PermissionManagement: FC = () => {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingPermission, setEditingPermission] = useState<PermissionType | null>(null);
+  const [editingPermission, setEditingPermission] =
+    useState<PermissionType | null>(null);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
 
@@ -146,11 +147,12 @@ const PermissionManagement: FC = () => {
     }, [])
     .filter((group) =>
       searchText
-        ? group.permissions.some((p) =>
-            p.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            p.code.toLowerCase().includes(searchText.toLowerCase())
+        ? group.permissions.some(
+            (p) =>
+              p.name.toLowerCase().includes(searchText.toLowerCase()) ||
+              p.code.toLowerCase().includes(searchText.toLowerCase()),
           )
-        : true
+        : true,
     );
 
   function getModuleName(module: string): string {
@@ -185,9 +187,18 @@ const PermissionManagement: FC = () => {
       width: 100,
       render: (type: string) => {
         const typeMap = {
-          page: { text: t('pages.system:permissionTypePage'), className: 'permission-type-page' },
-          button: { text: t('pages.system:permissionTypeButton'), className: 'permission-type-button' },
-          api: { text: t('pages.system:permissionTypeApi'), className: 'permission-type-api' },
+          page: {
+            text: t('pages.system:permissionTypePage'),
+            className: 'permission-type-page',
+          },
+          button: {
+            text: t('pages.system:permissionTypeButton'),
+            className: 'permission-type-button',
+          },
+          api: {
+            text: t('pages.system:permissionTypeApi'),
+            className: 'permission-type-api',
+          },
         };
         const config = typeMap[type as keyof typeof typeMap];
         return <Tag className={config.className}>{config.text}</Tag>;
@@ -263,8 +274,8 @@ const PermissionManagement: FC = () => {
         // Update existing permission
         setPermissions(
           permissions.map((p) =>
-            p.id === editingPermission.id ? { ...p, ...values } : p
-          )
+            p.id === editingPermission.id ? { ...p, ...values } : p,
+          ),
         );
       } else {
         // Add new permission
@@ -322,6 +333,7 @@ const PermissionManagement: FC = () => {
               rowKey="id"
               pagination={false}
               size="small"
+              scroll={{ x: 'max-content' }}
             />
           ),
         }))}
@@ -345,8 +357,14 @@ const PermissionManagement: FC = () => {
             name="code"
             label={t('pages.system:permissionFormCode')}
             rules={[
-              { required: true, message: t('pages.system:permissionFormCodeRequired') },
-              { pattern: /^[a-z:_]+$/, message: t('pages.system:permissionFormCodePattern') },
+              {
+                required: true,
+                message: t('pages.system:permissionFormCodeRequired'),
+              },
+              {
+                pattern: /^[a-z:_]+$/,
+                message: t('pages.system:permissionFormCodePattern'),
+              },
             ]}
           >
             <Input
@@ -358,7 +376,12 @@ const PermissionManagement: FC = () => {
           <Form.Item
             name="name"
             label={t('pages.system:permissionFormName')}
-            rules={[{ required: true, message: t('pages.system:permissionFormNameRequired') }]}
+            rules={[
+              {
+                required: true,
+                message: t('pages.system:permissionFormNameRequired'),
+              },
+            ]}
           >
             <Input placeholder={t('pages.system:permissionFormNamePh')} />
           </Form.Item>
@@ -366,7 +389,12 @@ const PermissionManagement: FC = () => {
           <Form.Item
             name="module"
             label={t('pages.system:permissionFormModule')}
-            rules={[{ required: true, message: t('pages.system:permissionFormModuleRequired') }]}
+            rules={[
+              {
+                required: true,
+                message: t('pages.system:permissionFormModuleRequired'),
+              },
+            ]}
           >
             <Select placeholder={t('pages.system:permissionFormModulePh')}>
               <Select.Option value="user">用户管理</Select.Option>
@@ -383,14 +411,26 @@ const PermissionManagement: FC = () => {
             initialValue="button"
           >
             <Select>
-              <Select.Option value="page">{t('pages.system:permissionTypePage')}</Select.Option>
-              <Select.Option value="button">{t('pages.system:permissionTypeButton')}</Select.Option>
-              <Select.Option value="api">{t('pages.system:permissionTypeApi')}</Select.Option>
+              <Select.Option value="page">
+                {t('pages.system:permissionTypePage')}
+              </Select.Option>
+              <Select.Option value="button">
+                {t('pages.system:permissionTypeButton')}
+              </Select.Option>
+              <Select.Option value="api">
+                {t('pages.system:permissionTypeApi')}
+              </Select.Option>
             </Select>
           </Form.Item>
 
-          <Form.Item name="description" label={t('pages.system:permissionFormDescription')}>
-            <Input.TextArea rows={3} placeholder={t('pages.system:permissionFormDescriptionPh')} />
+          <Form.Item
+            name="description"
+            label={t('pages.system:permissionFormDescription')}
+          >
+            <Input.TextArea
+              rows={3}
+              placeholder={t('pages.system:permissionFormDescriptionPh')}
+            />
           </Form.Item>
         </Form>
       </Modal>

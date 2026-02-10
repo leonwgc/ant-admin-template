@@ -61,7 +61,13 @@ const RoleManagement: FC = () => {
       status: 'active',
       userCount: 2,
       createdAt: '2024-01-01',
-      permissions: ['user:view', 'user:create', 'user:update', 'user:delete', 'role:view'],
+      permissions: [
+        'user:view',
+        'user:create',
+        'user:update',
+        'user:delete',
+        'role:view',
+      ],
     },
     {
       id: '2',
@@ -162,7 +168,9 @@ const RoleManagement: FC = () => {
       width: 100,
       render: (status: string) => (
         <Tag className={`role-status-${status}`}>
-          {status === 'active' ? t('pages.system:roleStatusActive') : t('pages.system:roleStatusInactive')}
+          {status === 'active'
+            ? t('pages.system:roleStatusActive')
+            : t('pages.system:roleStatusInactive')}
         </Tag>
       ),
     },
@@ -252,8 +260,8 @@ const RoleManagement: FC = () => {
         // Update existing role
         setRoles(
           roles.map((role) =>
-            role.id === editingRole.id ? { ...role, ...values } : role
-          )
+            role.id === editingRole.id ? { ...role, ...values } : role,
+          ),
         );
       } else {
         // Add new role
@@ -283,8 +291,8 @@ const RoleManagement: FC = () => {
         roles.map((role) =>
           role.id === editingRole.id
             ? { ...role, permissions: selectedPermissions }
-            : role
-        )
+            : role,
+        ),
       );
       setIsPermissionModalOpen(false);
     }
@@ -300,6 +308,7 @@ const RoleManagement: FC = () => {
       </div>
 
       <Table
+        scroll={{ x: 'max-content' }}
         columns={columns}
         dataSource={roles}
         rowKey="id"
@@ -312,7 +321,11 @@ const RoleManagement: FC = () => {
 
       {/* Add/Edit Role Modal */}
       <Modal
-        title={editingRole ? t('pages.system:roleModalTitleEdit') : t('pages.system:roleModalTitleAdd')}
+        title={
+          editingRole
+            ? t('pages.system:roleModalTitleEdit')
+            : t('pages.system:roleModalTitleAdd')
+        }
         open={isModalOpen}
         onOk={handleSubmit}
         onCancel={() => setIsModalOpen(false)}
@@ -323,7 +336,12 @@ const RoleManagement: FC = () => {
           <Form.Item
             name="name"
             label={t('pages.system:roleFormName')}
-            rules={[{ required: true, message: t('pages.system:roleFormNameRequired') }]}
+            rules={[
+              {
+                required: true,
+                message: t('pages.system:roleFormNameRequired'),
+              },
+            ]}
           >
             <Input placeholder={t('pages.system:roleFormNamePh')} />
           </Form.Item>
@@ -332,11 +350,20 @@ const RoleManagement: FC = () => {
             name="code"
             label={t('pages.system:roleFormCode')}
             rules={[
-              { required: true, message: t('pages.system:roleFormCodeRequired') },
-              { pattern: /^[a-z_]+$/, message: t('pages.system:roleFormCodePattern') },
+              {
+                required: true,
+                message: t('pages.system:roleFormCodeRequired'),
+              },
+              {
+                pattern: /^[a-z_]+$/,
+                message: t('pages.system:roleFormCodePattern'),
+              },
             ]}
           >
-            <Input placeholder={t('pages.system:roleFormCodePh')} disabled={!!editingRole} />
+            <Input
+              placeholder={t('pages.system:roleFormCodePh')}
+              disabled={!!editingRole}
+            />
           </Form.Item>
 
           <Form.Item
@@ -355,8 +382,12 @@ const RoleManagement: FC = () => {
             initialValue="active"
           >
             <Select>
-              <Select.Option value="active">{t('pages.system:roleStatusActive')}</Select.Option>
-              <Select.Option value="inactive">{t('pages.system:roleStatusInactive')}</Select.Option>
+              <Select.Option value="active">
+                {t('pages.system:roleStatusActive')}
+              </Select.Option>
+              <Select.Option value="inactive">
+                {t('pages.system:roleStatusInactive')}
+              </Select.Option>
             </Select>
           </Form.Item>
         </Form>

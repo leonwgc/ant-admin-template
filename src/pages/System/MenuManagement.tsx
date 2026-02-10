@@ -145,7 +145,7 @@ const MenuManagement: FC = () => {
       title: t('pages.system:menuColName'),
       dataIndex: 'name',
       key: 'name',
-      width: 200,
+      width: 160,
     },
     {
       title: t('pages.system:menuColPath'),
@@ -167,9 +167,18 @@ const MenuManagement: FC = () => {
       width: 100,
       render: (type: string) => {
         const typeMap = {
-          menu: { text: t('pages.system:menuTypeMenu'), className: 'menu-type-menu' },
-          page: { text: t('pages.system:menuTypePage'), className: 'menu-type-page' },
-          button: { text: t('pages.system:menuTypeButton'), className: 'menu-type-button' },
+          menu: {
+            text: t('pages.system:menuTypeMenu'),
+            className: 'menu-type-menu',
+          },
+          page: {
+            text: t('pages.system:menuTypePage'),
+            className: 'menu-type-page',
+          },
+          button: {
+            text: t('pages.system:menuTypeButton'),
+            className: 'menu-type-button',
+          },
         };
         const config = typeMap[type as keyof typeof typeMap];
         return <Tag className={config.className}>{config.text}</Tag>;
@@ -188,7 +197,9 @@ const MenuManagement: FC = () => {
       width: 100,
       render: (visible: boolean) => (
         <Tag className={visible ? 'menu-visible-yes' : 'menu-visible-no'}>
-          {visible ? t('pages.system:menuVisibleYes') : t('pages.system:menuVisibleNo')}
+          {visible
+            ? t('pages.system:menuVisibleYes')
+            : t('pages.system:menuVisibleNo')}
         </Tag>
       ),
     },
@@ -202,7 +213,6 @@ const MenuManagement: FC = () => {
     {
       title: t('pages.system:menuColActions'),
       key: 'actions',
-      width: 180,
       fixed: 'right',
       render: (_, record) => (
         <Space>
@@ -353,6 +363,7 @@ const MenuManagement: FC = () => {
       </div>
 
       <Table
+        scroll={{ x: 'max-content' }}
         columns={columns}
         dataSource={flattenMenus(menus)}
         rowKey="id"
@@ -365,7 +376,11 @@ const MenuManagement: FC = () => {
 
       {/* Add/Edit Menu Modal */}
       <Modal
-        title={editingMenu ? t('pages.system:menuModalTitleEdit') : t('pages.system:menuModalTitleAdd')}
+        title={
+          editingMenu
+            ? t('pages.system:menuModalTitleEdit')
+            : t('pages.system:menuModalTitleAdd')
+        }
         open={isModalOpen}
         onOk={handleSubmit}
         onCancel={() => setIsModalOpen(false)}
@@ -380,7 +395,12 @@ const MenuManagement: FC = () => {
           <Form.Item
             name="name"
             label={t('pages.system:menuFormName')}
-            rules={[{ required: true, message: t('pages.system:menuFormNameRequired') }]}
+            rules={[
+              {
+                required: true,
+                message: t('pages.system:menuFormNameRequired'),
+              },
+            ]}
           >
             <Input placeholder={t('pages.system:menuFormNamePh')} />
           </Form.Item>
@@ -388,7 +408,12 @@ const MenuManagement: FC = () => {
           <Form.Item
             name="path"
             label={t('pages.system:menuFormPath')}
-            rules={[{ required: true, message: t('pages.system:menuFormPathRequired') }]}
+            rules={[
+              {
+                required: true,
+                message: t('pages.system:menuFormPathRequired'),
+              },
+            ]}
           >
             <Input placeholder={t('pages.system:menuFormPathPh')} />
           </Form.Item>
@@ -409,9 +434,15 @@ const MenuManagement: FC = () => {
             rules={[{ required: true }]}
           >
             <Select>
-              <Select.Option value="menu">{t('pages.system:menuTypeMenu')}</Select.Option>
-              <Select.Option value="page">{t('pages.system:menuTypePage')}</Select.Option>
-              <Select.Option value="button">{t('pages.system:menuTypeButton')}</Select.Option>
+              <Select.Option value="menu">
+                {t('pages.system:menuTypeMenu')}
+              </Select.Option>
+              <Select.Option value="page">
+                {t('pages.system:menuTypePage')}
+              </Select.Option>
+              <Select.Option value="button">
+                {t('pages.system:menuTypeButton')}
+              </Select.Option>
             </Select>
           </Form.Item>
 
@@ -423,11 +454,18 @@ const MenuManagement: FC = () => {
             <InputNumber min={1} style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item name="visible" label={t('pages.system:menuFormVisible')} valuePropName="checked">
+          <Form.Item
+            name="visible"
+            label={t('pages.system:menuFormVisible')}
+            valuePropName="checked"
+          >
             <Switch />
           </Form.Item>
 
-          <Form.Item name="permission" label={t('pages.system:menuFormPermission')}>
+          <Form.Item
+            name="permission"
+            label={t('pages.system:menuFormPermission')}
+          >
             <Input placeholder={t('pages.system:menuFormPermissionPh')} />
           </Form.Item>
         </Form>

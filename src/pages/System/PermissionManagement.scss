@@ -5,9 +5,9 @@
 @import 'scss/common.scss';
 
 .permission-management {
-  padding: 24px;
   background: #fff;
   border-radius: 8px;
+  min-width: fit-content;
 
   &__header {
     display: flex;
