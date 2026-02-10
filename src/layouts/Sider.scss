@@ -25,6 +25,16 @@
   &.ds-layout-sider {
     padding: 0;
   }
+
+  .ds-layout-sider-trigger {
+    visibility: hidden;
+  }
+
+  &:hover {
+    .ds-layout-sider-trigger {
+      visibility: visible;
+    }
+  }
 }
 
 @media (max-width: 768px) {
