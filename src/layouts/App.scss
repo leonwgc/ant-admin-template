@@ -39,7 +39,7 @@
     box-sizing: border-box;
     min-height: 100vh;
     padding: var(--nav-height) 0 40px var(--menu-width);
-    background-color: #fff;
+    background-color: #f4f6f8; /* 轻微蓝灰背景，dark 模式下反转为柔和深色 */
     transition: padding-left $theme-transition-duration ease-in-out;
 
     &--no-sider {
@@ -52,12 +52,12 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background-color: #fff;
+    background-color: #f9fafb; /* 轻微灰背景 */
   }
 
   &__inner-header {
     padding: 8px 40px 16px;
-    background-color: #fff;
+    background-color: #ffffff;
     border-bottom: 1px solid #dfe4e8;
     display: flex;
     align-items: center;

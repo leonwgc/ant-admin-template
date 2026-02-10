@@ -9,10 +9,16 @@ html {
               background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+body {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// html 反转 0.92 = 降低 8% 亮度
+// 图片反转 1.0 + 提升亮度 9%（1/0.92 ≈ 1.09）
+// 最终效果：图片恢复接近原始亮度和颜色
 html[data-theme='dark'] {
   /* 反转颜色并调整色相，保持图片等内容正常显示 */
-  filter: invert(1) hue-rotate(180deg);
-  background-color: #1a1a1a;
+  filter: invert(0.92) hue-rotate(180deg); /* 降低反转程度，让背景不过深 */
 
   /* 将图片、视频、Logo 等媒体元素再次反转回来 */
   img,
@@ -22,13 +28,13 @@ html[data-theme='dark'] {
   .ant-image,
   .ds-image,
   picture {
-    filter: invert(1) hue-rotate(180deg);
+    filter: invert(1) hue-rotate(180deg) brightness(1.09); /* 补偿 0.92 的亮度损失 */
   }
 
   /* Avatar 组件通常需要保持原色 */
   .ant-avatar,
   .ds-avatar {
-    filter: invert(1) hue-rotate(180deg);
+    filter: invert(1) hue-rotate(180deg) brightness(1.09);
   }
 }
 
