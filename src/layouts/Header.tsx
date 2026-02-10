@@ -18,6 +18,7 @@ import {
   UserAddOutlined,
   LogoutOutlined,
   SearchOutlined,
+  DownOutlined,
 } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
@@ -126,13 +127,13 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
             placement="bottomRight"
           >
-            <Space>
-              <GlobalOutlined
-                style={{ fontSize: 18, cursor: 'pointer' }}
-                title={t('common:switchLanguage')}
-              />
-              {currentLang === 'zh' ? '简体中文' : 'English'}
-            </Space>
+            <button className="header-lang-btn" aria-label={t('common:switchLanguage')}>
+              <GlobalOutlined className="header-lang-btn__icon" />
+              <span className="header-lang-btn__text">
+                {currentLang === 'zh' ? '简体中文' : 'English'}
+              </span>
+              <DownOutlined className="header-lang-btn__arrow" />
+            </button>
           </Dropdown>
           <MenuOutlined className="mobile-menus" onClick={setTrue} />
           <Dropdown

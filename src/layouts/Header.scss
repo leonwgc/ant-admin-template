@@ -4,7 +4,8 @@
  */
 @import 'scss/common.scss';
 
-.header-search-btn {
+.header-search-btn,
+.header-lang-btn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -19,6 +20,9 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
   user-select: none;
+}
+
+.header-search-btn {
   min-width: 200px;
 
   &__icon {
@@ -76,6 +80,55 @@
   }
 }
 
+// 语言按钮特定样式
+.header-lang-btn {
+  min-width: auto;
+  padding: 0 10px;
+
+  &__icon {
+    font-size: 16px;
+    color: #939BA1;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    color: #1B2C34;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  &__arrow {
+    font-size: 10px;
+    color: #939BA1;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: rgba(147, 155, 161, 0.12);
+    border-color: rgba(147, 155, 161, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    .header-lang-btn__icon {
+      color: $theme-primary;
+    }
+
+    .header-lang-btn__arrow {
+      color: $theme-primary;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+    background: rgba(147, 155, 161, 0.16);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $theme-primary;
+    outline-offset: 2px;
+  }
+}
+
 // 响应式：小屏幕时隐藏文字，只显示图标
 @media (max-width: 768px) {
   .header-search-btn {
@@ -85,6 +138,19 @@
 
     &__text,
     &__shortcut {
+      display: none;
+    }
+
+    &__icon {
+      font-size: 18px;
+    }
+  }
+
+  .header-lang-btn {
+    padding: 0 10px;
+
+    &__text,
+    &__arrow {
       display: none;
     }
 
