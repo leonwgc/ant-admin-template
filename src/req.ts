@@ -16,6 +16,11 @@ const getGateWayPath = () => {
   }
 };
 
+// `params` are the URL parameters to be sent with the request
+// Must be a plain object or a URLSearchParams object
+// `data` is the data to be sent as the request body
+// Only applicable for request methods 'PUT', 'POST', 'DELETE', and 'PATCH'
+
 // 创建axios实例
 const req = axios.create({
   baseURL: getGateWayPath(),
