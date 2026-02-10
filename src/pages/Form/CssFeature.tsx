@@ -32,15 +32,27 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
                 <Text strong>复选框：</Text>
                 <div className="css-feature-demo__accent-group">
                   <label className="css-feature-demo__accent-label">
-                    <input type="checkbox" className="css-feature-demo__accent-red" defaultChecked />
+                    <input
+                      type="checkbox"
+                      className="css-feature-demo__accent-red"
+                      defaultChecked
+                    />
                     <span>红色强调</span>
                   </label>
                   <label className="css-feature-demo__accent-label">
-                    <input type="checkbox" className="css-feature-demo__accent-blue" defaultChecked />
+                    <input
+                      type="checkbox"
+                      className="css-feature-demo__accent-blue"
+                      defaultChecked
+                    />
                     <span>蓝色强调</span>
                   </label>
                   <label className="css-feature-demo__accent-label">
-                    <input type="checkbox" className="css-feature-demo__accent-green" defaultChecked />
+                    <input
+                      type="checkbox"
+                      className="css-feature-demo__accent-green"
+                      defaultChecked
+                    />
                     <span>绿色强调</span>
                   </label>
                 </div>
@@ -49,15 +61,28 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
                 <Text strong>单选按钮：</Text>
                 <div className="css-feature-demo__accent-group">
                   <label className="css-feature-demo__accent-label">
-                    <input type="radio" name="color" className="css-feature-demo__accent-red" defaultChecked />
+                    <input
+                      type="radio"
+                      name="color"
+                      className="css-feature-demo__accent-red"
+                      defaultChecked
+                    />
                     <span>红色</span>
                   </label>
                   <label className="css-feature-demo__accent-label">
-                    <input type="radio" name="color" className="css-feature-demo__accent-blue" />
+                    <input
+                      type="radio"
+                      name="color"
+                      className="css-feature-demo__accent-blue"
+                    />
                     <span>蓝色</span>
                   </label>
                   <label className="css-feature-demo__accent-label">
-                    <input type="radio" name="color" className="css-feature-demo__accent-green" />
+                    <input
+                      type="radio"
+                      name="color"
+                      className="css-feature-demo__accent-green"
+                    />
                     <span>绿色</span>
                   </label>
                 </div>
@@ -65,9 +90,23 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
               <div>
                 <Text strong>滑块：</Text>
                 <div style={{ marginTop: 12 }}>
-                  <input type="range" className="css-feature-demo__range-red" defaultValue={50} />
-                  <input type="range" className="css-feature-demo__range-blue" defaultValue={70} style={{ marginTop: 12 }} />
-                  <input type="range" className="css-feature-demo__range-green" defaultValue={30} style={{ marginTop: 12 }} />
+                  <input
+                    type="range"
+                    className="css-feature-demo__range-red"
+                    defaultValue={50}
+                  />
+                  <input
+                    type="range"
+                    className="css-feature-demo__range-blue"
+                    defaultValue={70}
+                    style={{ marginTop: 12 }}
+                  />
+                  <input
+                    type="range"
+                    className="css-feature-demo__range-green"
+                    defaultValue={30}
+                    style={{ marginTop: 12 }}
+                  />
                 </div>
               </div>
             </Space>
@@ -200,7 +239,10 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
                   className="css-feature-demo__placeholder-input"
                   placeholder=""
                 />
-                <label htmlFor="floating-input-1" className="css-feature-demo__floating-label-text">
+                <label
+                  htmlFor="floating-input-1"
+                  className="css-feature-demo__floating-label-text"
+                >
                   用户名
                 </label>
               </div>
@@ -211,7 +253,10 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
                   className="css-feature-demo__placeholder-input"
                   placeholder=""
                 />
-                <label htmlFor="floating-input-2" className="css-feature-demo__floating-label-text">
+                <label
+                  htmlFor="floating-input-2"
+                  className="css-feature-demo__floating-label-text"
+                >
                   邮箱地址
                 </label>
               </div>
@@ -222,7 +267,10 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
                   className="css-feature-demo__placeholder-input"
                   placeholder=""
                 />
-                <label htmlFor="floating-input-3" className="css-feature-demo__floating-label-text">
+                <label
+                  htmlFor="floating-input-3"
+                  className="css-feature-demo__floating-label-text"
+                >
                   密码
                 </label>
               </div>
@@ -253,7 +301,8 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
               <div>
                 <Text strong>平衡换行 (text-wrap: balance)：</Text>
                 <div className="css-feature-demo__text-balance">
-                  这是一段很长的文本用于演示 text-wrap: balance 的效果当文本超出容器宽度时会自动换行并让每行长度更均匀
+                  这是一段很长的文本用于演示 text-wrap: balance
+                  的效果当文本超出容器宽度时会自动换行并让每行长度更均匀
                 </div>
               </div>
             </Space>
@@ -273,31 +322,105 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
             </Paragraph>
           </div>
           <Card className="css-feature-demo__preview">
-            <Text strong style={{ display: 'block', marginBottom: 12 }}>横向滚动示例（滑动查看）：</Text>
+            <Text strong style={{ display: 'block', marginBottom: 12 }}>
+              横向滚动示例（滑动查看）：
+            </Text>
             <div className="css-feature-demo__scroll-snap">
-              <div className="css-feature-demo__scroll-snap-item" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-                <div style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Card 1</div>
-                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>滑动查看下一张</div>
+              <div
+                className="css-feature-demo__scroll-snap-item"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                }}
+              >
+                <div
+                  style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}
+                >
+                  Card 1
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>
+                  滑动查看下一张
+                </div>
               </div>
-              <div className="css-feature-demo__scroll-snap-item" style={{ background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' }}>
-                <div style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Card 2</div>
-                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>继续滑动</div>
+              <div
+                className="css-feature-demo__scroll-snap-item"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                }}
+              >
+                <div
+                  style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}
+                >
+                  Card 2
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>
+                  继续滑动
+                </div>
               </div>
-              <div className="css-feature-demo__scroll-snap-item" style={{ background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' }}>
-                <div style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Card 3</div>
-                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>继续滑动</div>
+              <div
+                className="css-feature-demo__scroll-snap-item"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                }}
+              >
+                <div
+                  style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}
+                >
+                  Card 3
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>
+                  继续滑动
+                </div>
               </div>
-              <div className="css-feature-demo__scroll-snap-item" style={{ background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' }}>
-                <div style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Card 4</div>
-                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>继续滑动</div>
+              <div
+                className="css-feature-demo__scroll-snap-item"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                }}
+              >
+                <div
+                  style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}
+                >
+                  Card 4
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>
+                  继续滑动
+                </div>
               </div>
-              <div className="css-feature-demo__scroll-snap-item" style={{ background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' }}>
-                <div style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Card 5</div>
-                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>继续滑动</div>
+              <div
+                className="css-feature-demo__scroll-snap-item"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                }}
+              >
+                <div
+                  style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}
+                >
+                  Card 5
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>
+                  继续滑动
+                </div>
               </div>
-              <div className="css-feature-demo__scroll-snap-item" style={{ background: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)' }}>
-                <div style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Card 6</div>
-                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>最后一张</div>
+              <div
+                className="css-feature-demo__scroll-snap-item"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                }}
+              >
+                <div
+                  style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}
+                >
+                  Card 6
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.8)', marginTop: 8 }}>
+                  最后一张
+                </div>
               </div>
             </div>
           </Card>
@@ -312,7 +435,8 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
           <div className="css-feature-demo__description">
             <Title level={5}>:has() 父选择器</Title>
             <Paragraph type="secondary">
-              CSS 中的"父选择器"，可以根据子元素的状态来选择父元素，极大提升了 CSS 的表达能力。
+              CSS 中的"父选择器"，可以根据子元素的状态来选择父元素，极大提升了
+              CSS 的表达能力。
             </Paragraph>
           </div>
           <Card className="css-feature-demo__preview">
@@ -322,18 +446,30 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
                 <div className="css-feature-demo__has-cards">
                   <div className="css-feature-demo__has-card">
                     <div className="css-feature-demo__has-card-icon">📝</div>
-                    <div className="css-feature-demo__has-card-title">普通卡片</div>
-                    <div className="css-feature-demo__has-card-desc">悬停查看效果</div>
+                    <div className="css-feature-demo__has-card-title">
+                      普通卡片
+                    </div>
+                    <div className="css-feature-demo__has-card-desc">
+                      悬停查看效果
+                    </div>
                   </div>
                   <div className="css-feature-demo__has-card css-feature-demo__has-card--featured">
                     <div className="css-feature-demo__has-card-icon">⭐</div>
-                    <div className="css-feature-demo__has-card-title">特色卡片</div>
-                    <div className="css-feature-demo__has-card-desc">包含特色标记</div>
+                    <div className="css-feature-demo__has-card-title">
+                      特色卡片
+                    </div>
+                    <div className="css-feature-demo__has-card-desc">
+                      包含特色标记
+                    </div>
                   </div>
                   <div className="css-feature-demo__has-card">
                     <div className="css-feature-demo__has-card-icon">💡</div>
-                    <div className="css-feature-demo__has-card-title">普通卡片</div>
-                    <div className="css-feature-demo__has-card-desc">悬停查看效果</div>
+                    <div className="css-feature-demo__has-card-title">
+                      普通卡片
+                    </div>
+                    <div className="css-feature-demo__has-card-desc">
+                      悬停查看效果
+                    </div>
                   </div>
                 </div>
               </div>
@@ -394,9 +530,15 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
               <div>
                 <Text strong>按 Tab 键切换焦点查看效果：</Text>
                 <div style={{ marginTop: 12, display: 'flex', gap: 12 }}>
-                  <button className="css-feature-demo__focus-visible-btn">按钮 1</button>
-                  <button className="css-feature-demo__focus-visible-btn">按钮 2</button>
-                  <button className="css-feature-demo__focus-visible-btn">按钮 3</button>
+                  <button className="css-feature-demo__focus-visible-btn">
+                    按钮 1
+                  </button>
+                  <button className="css-feature-demo__focus-visible-btn">
+                    按钮 2
+                  </button>
+                  <button className="css-feature-demo__focus-visible-btn">
+                    按钮 3
+                  </button>
                 </div>
               </div>
               <div>
@@ -427,8 +569,12 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
           <Card className="css-feature-demo__preview">
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
               <div className="css-feature-demo__focus-within-form">
-                <Text strong style={{ display: 'block', marginBottom: 12 }}>点击输入框查看容器高亮：</Text>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <Text strong style={{ display: 'block', marginBottom: 12 }}>
+                  点击输入框查看容器高亮：
+                </Text>
+                <div
+                  style={{ display: 'flex', flexDirection: 'column', gap: 12 }}
+                >
                   <input type="text" placeholder="姓名" />
                   <input type="email" placeholder="邮箱" />
                   <input type="tel" placeholder="电话" />
@@ -447,22 +593,36 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
           <div className="css-feature-demo__description">
             <Title level={5}>aspect-ratio 宽高比</Title>
             <Paragraph type="secondary">
-              轻松设置元素的宽高比，无需复杂的 padding hack，常用于视频、图片容器。
+              轻松设置元素的宽高比，无需复杂的 padding
+              hack，常用于视频、图片容器。
             </Paragraph>
           </div>
           <Card className="css-feature-demo__preview">
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
               <div>
                 <Text strong>不同宽高比示例：</Text>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginTop: 12 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: 16,
+                    marginTop: 12,
+                  }}
+                >
                   <div className="css-feature-demo__aspect-ratio-16-9">
-                    <div className="css-feature-demo__aspect-ratio-content">16:9</div>
+                    <div className="css-feature-demo__aspect-ratio-content">
+                      16:9
+                    </div>
                   </div>
                   <div className="css-feature-demo__aspect-ratio-4-3">
-                    <div className="css-feature-demo__aspect-ratio-content">4:3</div>
+                    <div className="css-feature-demo__aspect-ratio-content">
+                      4:3
+                    </div>
                   </div>
                   <div className="css-feature-demo__aspect-ratio-1-1">
-                    <div className="css-feature-demo__aspect-ratio-content">1:1</div>
+                    <div className="css-feature-demo__aspect-ratio-content">
+                      1:1
+                    </div>
                   </div>
                 </div>
               </div>
@@ -482,12 +642,19 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
               对元素背后的区域应用滤镜效果，创建毛玻璃、模糊背景等现代 UI 效果。
             </Paragraph>
           </div>
-          <Card className="css-feature-demo__preview" style={{ padding: 0, overflow: 'hidden' }}>
+          <Card
+            className="css-feature-demo__preview"
+            style={{ padding: 0, overflow: 'hidden' }}
+          >
             <Space direction="vertical" size={0} style={{ width: '100%' }}>
               <div className="css-feature-demo__backdrop-container">
                 <div className="css-feature-demo__backdrop-card">
-                  <h3 style={{ margin: '0 0 8px 0', color: 'white' }}>毛玻璃卡片</h3>
-                  <p style={{ margin: 0, color: 'rgba(255,255,255,0.9)' }}>背景模糊效果</p>
+                  <h3 style={{ margin: '0 0 8px 0', color: 'white' }}>
+                    毛玻璃卡片
+                  </h3>
+                  <p style={{ margin: 0, color: 'rgba(255,255,255,0.9)' }}>
+                    背景模糊效果
+                  </p>
                 </div>
               </div>
 
@@ -495,13 +662,25 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
                 <div className="css-feature-demo__backdrop-image">
                   <div className="css-feature-demo__backdrop-overlay">
                     <div className="css-feature-demo__backdrop-content">
-                      <h3 style={{ margin: '0 0 12px 0', fontSize: 24 }}>模糊背景面板</h3>
-                      <p style={{ margin: '0 0 16px 0', fontSize: 14, opacity: 0.9 }}>
+                      <h3 style={{ margin: '0 0 12px 0', fontSize: 24 }}>
+                        模糊背景面板
+                      </h3>
+                      <p
+                        style={{
+                          margin: '0 0 16px 0',
+                          fontSize: 14,
+                          opacity: 0.9,
+                        }}
+                      >
                         鼠标悬停查看更强的模糊效果
                       </p>
                       <div style={{ display: 'flex', gap: 8 }}>
-                        <button className="css-feature-demo__backdrop-btn">了解更多</button>
-                        <button className="css-feature-demo__backdrop-btn css-feature-demo__backdrop-btn--outline">关闭</button>
+                        <button className="css-feature-demo__backdrop-btn">
+                          了解更多
+                        </button>
+                        <button className="css-feature-demo__backdrop-btn css-feature-demo__backdrop-btn--outline">
+                          关闭
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -527,7 +706,14 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
               <div>
                 <Text strong>不同形状裁剪：</Text>
-                <div style={{ display: 'flex', gap: 24, marginTop: 12, flexWrap: 'wrap' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: 24,
+                    marginTop: 12,
+                    flexWrap: 'wrap',
+                  }}
+                >
                   <div className="css-feature-demo__clip-circle">
                     <span>圆形</span>
                   </div>
@@ -562,75 +748,140 @@ const CssFeature: React.FC<CssFeatureProps> = () => {
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
               <div>
                 <Text strong>基础阴影：</Text>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: 24,
+                    marginTop: 12,
+                  }}
+                >
                   <div className="css-feature-demo__shadow-small">
-                    <div className="css-feature-demo__shadow-content">小阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      小阴影
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-medium">
-                    <div className="css-feature-demo__shadow-content">中阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      中阴影
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-large">
-                    <div className="css-feature-demo__shadow-content">大阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      大阴影
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div>
                 <Text strong>彩色阴影：</Text>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: 24,
+                    marginTop: 12,
+                  }}
+                >
                   <div className="css-feature-demo__shadow-colored-blue">
-                    <div className="css-feature-demo__shadow-content">蓝色阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      蓝色阴影
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-colored-red">
-                    <div className="css-feature-demo__shadow-content">红色阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      红色阴影
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-colored-green">
-                    <div className="css-feature-demo__shadow-content">绿色阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      绿色阴影
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div>
                 <Text strong>内阴影：</Text>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: 24,
+                    marginTop: 12,
+                  }}
+                >
                   <div className="css-feature-demo__shadow-inset-light">
-                    <div className="css-feature-demo__shadow-content">浅内阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      浅内阴影
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-inset-deep">
-                    <div className="css-feature-demo__shadow-content">深内阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      深内阴影
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-inset-border">
-                    <div className="css-feature-demo__shadow-content">边框效果</div>
+                    <div className="css-feature-demo__shadow-content">
+                      边框效果
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div>
                 <Text strong>多层阴影与特殊效果：</Text>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: 24,
+                    marginTop: 12,
+                  }}
+                >
                   <div className="css-feature-demo__shadow-layered">
-                    <div className="css-feature-demo__shadow-content">多层阴影</div>
+                    <div className="css-feature-demo__shadow-content">
+                      多层阴影
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-neon">
-                    <div className="css-feature-demo__shadow-content">霓虹效果</div>
+                    <div className="css-feature-demo__shadow-content">
+                      霓虹效果
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-3d">
-                    <div className="css-feature-demo__shadow-content">3D 效果</div>
+                    <div className="css-feature-demo__shadow-content">
+                      3D 效果
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div>
                 <Text strong>悬停交互效果：</Text>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24, marginTop: 12 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: 24,
+                    marginTop: 12,
+                  }}
+                >
                   <div className="css-feature-demo__shadow-hover-lift">
-                    <div className="css-feature-demo__shadow-content">悬浮上升</div>
+                    <div className="css-feature-demo__shadow-content">
+                      悬浮上升
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-hover-glow">
-                    <div className="css-feature-demo__shadow-content">光晕效果</div>
+                    <div className="css-feature-demo__shadow-content">
+                      光晕效果
+                    </div>
                   </div>
                   <div className="css-feature-demo__shadow-hover-press">
-                    <div className="css-feature-demo__shadow-content">按压效果</div>
+                    <div className="css-feature-demo__shadow-content">
+                      按压效果
+                    </div>
                   </div>
                 </div>
               </div>

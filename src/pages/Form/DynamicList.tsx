@@ -73,7 +73,7 @@ export default () => {
   );
 
   return (
-    <>
+    <div>
       <Steps currentStep={1} steps={steps} style={{ marginBottom: 24 }}></Steps>
       {list.map((ele, index) => Row(index, ele))}
 
@@ -111,6 +111,6 @@ export default () => {
       </Space>
 
       <div>{JSON.stringify(list)}</div>
-    </>
+    </div>
   );
 };

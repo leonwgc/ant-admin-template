@@ -64,7 +64,10 @@
   }
 
   &__inner-content {
-    padding: 8px 40px 0;
+    padding: 0;
+    & > div {
+      padding: 24px;
+    }
   }
 
   // Loading state
