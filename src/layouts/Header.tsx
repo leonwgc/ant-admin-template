@@ -3,7 +3,12 @@
  * @author leon.wang
  */
 import React, { useState } from 'react';
-import { Layout, Space, Flex, Avatar, Button, Tooltip } from '@derbysoft/neat-design';
+import {
+  Layout,
+  Space,
+  Flex,
+  Avatar,
+} from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
   MenuOutlined,
@@ -106,13 +111,17 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         </Flex>
 
         <Space size={8}>
-          <Tooltip title={t('common:searchMenuTooltip')}>
-            <Button
-              icon={<SearchOutlined />}
-              onClick={() => setSearchOpen(true)}
-              className="header-search-btn"
-            />
-          </Tooltip>
+          <button
+            className="header-search-btn"
+            onClick={() => setSearchOpen(true)}
+            aria-label={t('common:searchMenuTooltip')}
+          >
+            <SearchOutlined className="header-search-btn__icon" />
+            <span className="header-search-btn__text">{t('common:search')}</span>
+            <kbd className="header-search-btn__shortcut">
+              {navigator.platform.toLowerCase().includes('mac') ? '⌘K' : 'Ctrl+K'}
+            </kbd>
+          </button>
           <Dropdown
             menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
             placement="bottomRight"

@@ -18,7 +18,8 @@ export default {
   yes: 'Yes',
   no: 'No',
 
-  // Global search
+  // Global Search
+  search: 'Search',
   searchMenuPlaceholder: 'Search menus...',
   searchMenuTooltip: 'Search menus (⌘K)',
   searchNoResults: 'No results found',

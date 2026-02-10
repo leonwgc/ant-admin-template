@@ -19,6 +19,7 @@ export default {
   no: '取消',
 
   // 全局搜索
+  search: '搜索',
   searchMenuPlaceholder: '搜索菜单...',
   searchMenuTooltip: '搜索菜单 (⌘K)',
   searchNoResults: '未找到匹配项',
