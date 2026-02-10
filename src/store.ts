@@ -1,3 +1,8 @@
+/**
+ * @deprecated 此文件已弃用，请使用新的状态管理方案 zustand-kit，相关代码请参考 src/hooks/useTheme.tsx
+ * @file store.ts
+ * @author leon.wang
+ */
 import { create } from 'zustand';
 import i18n, { language } from './i18n';
 
