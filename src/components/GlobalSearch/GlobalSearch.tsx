@@ -121,7 +121,7 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ open, onOpenChange }) => {
             placeholder={t('common:searchMenuPlaceholder')}
             className="global-search__input"
           />
-          <kbd className="global-search__shortcut">ESC</kbd>
+          {/* <kbd className="global-search__shortcut">ESC</kbd> */}
         </div>
 
         <Command.List className="global-search__list">
