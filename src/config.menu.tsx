@@ -55,48 +55,6 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
  */
 export const menus: MenuItem[] = [
   {
-    key: 'system',
-    get label() {
-      return t('menu.system');
-    },
-    icon: <SettingOutlined />,
-    permissions: [],
-    children: [
-      {
-        key: 'system-users',
-        get label() {
-          return t('menu.systemUsers');
-        },
-        route: '/app/system/users',
-        permissions: [],
-      },
-      {
-        key: 'system-roles',
-        get label() {
-          return t('menu.systemRoles');
-        },
-        route: '/app/system/roles',
-        permissions: [],
-      },
-      {
-        key: 'system-menus',
-        get label() {
-          return t('menu.systemMenus');
-        },
-        route: '/app/system/menus',
-        permissions: [],
-      },
-      {
-        key: 'system-permissions',
-        get label() {
-          return t('menu.systemPermissions');
-        },
-        route: '/app/system/permissions',
-        permissions: [],
-      },
-    ],
-  },
-  {
     key: 'js-feature',
     get label() {
       return t('menu.jsFeature');
@@ -541,7 +499,6 @@ export const menus: MenuItem[] = [
         route: '/app/components/error-monitor',
         permissions: [],
       },
-
     ],
   },
   {
@@ -666,6 +623,48 @@ export const menus: MenuItem[] = [
           return t('menu.loginPage');
         },
         route: '/app/hotel/login-page',
+        permissions: [],
+      },
+    ],
+  },
+  {
+    key: 'system',
+    get label() {
+      return t('menu.system');
+    },
+    icon: <SettingOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'system-users',
+        get label() {
+          return t('menu.systemUsers');
+        },
+        route: '/app/system/users',
+        permissions: [],
+      },
+      {
+        key: 'system-roles',
+        get label() {
+          return t('menu.systemRoles');
+        },
+        route: '/app/system/roles',
+        permissions: [],
+      },
+      {
+        key: 'system-menus',
+        get label() {
+          return t('menu.systemMenus');
+        },
+        route: '/app/system/menus',
+        permissions: [],
+      },
+      {
+        key: 'system-permissions',
+        get label() {
+          return t('menu.systemPermissions');
+        },
+        route: '/app/system/permissions',
         permissions: [],
       },
     ],
