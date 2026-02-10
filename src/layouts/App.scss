@@ -39,7 +39,7 @@
     box-sizing: border-box;
     min-height: 100vh;
     padding: var(--nav-height) 0 40px var(--menu-width);
-    background-color: #f4f6f8; /* 轻微蓝灰背景，dark 模式下反转为柔和深色 */
+    background: #fff;
     transition: padding-left $theme-transition-duration ease-in-out;
 
     &--no-sider {
@@ -52,7 +52,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background-color: #f9fafb; /* 轻微灰背景 */
+    background-color: #fff;
   }
 
   &__inner-header {
