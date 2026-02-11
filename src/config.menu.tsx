@@ -216,6 +216,14 @@ export const menus: MenuItem[] = [
         route: '/app/css/sticky-examples',
         permissions: [],
       },
+      {
+        key: 'scss-mixins-guide',
+        get label() {
+          return t('menu.scssMixinsGuide');
+        },
+        route: '/app/css/scss-mixins',
+        permissions: [],
+      },
     ],
   },
   {

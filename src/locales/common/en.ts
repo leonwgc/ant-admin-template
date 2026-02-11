@@ -59,6 +59,7 @@ export default {
     cssFilter: 'CSS Filter',
     cssStickyTable: 'CSS Sticky Table',
     cssStickyExamples: 'CSS Sticky Examples',
+    scssMixinsGuide: 'SCSS Mixins Guide',
     users: 'Users',
     userList: 'User List',
     expandTable: 'Expand Table',

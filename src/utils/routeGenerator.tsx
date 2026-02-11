@@ -119,6 +119,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/css/animation': lazyLoad('pages/Css/CssAnimationExample'),
   '/app/css/sticky-table': lazyLoad('pages/Css/StickyTableDemo'),
   '/app/css/sticky-examples': lazyLoad('pages/Css/CssStickyExamples'),
+  '/app/css/scss-mixins': lazyLoad('pages/Css/ScssMixinsGuide'),
 
   // User Management
   '/app/users': lazyLoad('pages/User/Users'),
