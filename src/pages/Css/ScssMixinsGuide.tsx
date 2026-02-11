@@ -438,6 +438,310 @@ const ScssMixinsGuide: React.FC = () => {
               </Space>
             ),
           },
+          {
+            key: 'advanced',
+            label: '⚡ 进阶 Mixins',
+            children: (
+              <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <MixinCard
+                  title="size"
+                  description="快速设置宽高"
+                  usage={`// 设置相同宽高\n@include size(100px);\n\n// 设置不同宽高\n@include size(200px, 100px);`}
+                />
+
+                <MixinCard
+                  title="circle"
+                  description="创建圆形元素"
+                  usage={`@include circle(50px);\n\n// 生成代码:\nwidth: 50px;\nheight: 50px;\nborder-radius: 50%;`}
+                  example={
+                    <div className="demo-circle">
+                      <div className="circle-item"></div>
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="triangle"
+                  description="创建三角形（用于箭头、提示框等）"
+                  usage={`@include triangle('up', 10px, #333);\n// 方向: 'up', 'down', 'left', 'right'\n// 参数: 方向, 大小, 颜色`}
+                  example={
+                    <div className="demo-triangles">
+                      <div className="triangle-up"></div>
+                      <div className="triangle-down"></div>
+                      <div className="triangle-left"></div>
+                      <div className="triangle-right"></div>
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="center-block"
+                  description="块级元素水平居中"
+                  usage={`@include center-block;\n\n// 生成代码:\ndisplay: block;\nmargin-left: auto;\nmargin-right: auto;`}
+                />
+
+                <MixinCard
+                  title="hardware-acceleration"
+                  description="启用硬件加速（提升动画性能）"
+                  usage={`@include hardware-acceleration;\n\n// 用于需要高性能动画的元素`}
+                />
+
+                <MixinCard
+                  title="backdrop-blur"
+                  description="背景模糊效果（毛玻璃）"
+                  usage={`@include backdrop-blur(10px);\n\n// 配合半透明背景使用`}
+                />
+
+                <MixinCard
+                  title="overlay"
+                  description="创建全屏遮罩层"
+                  usage={`@include overlay(rgba(0, 0, 0, 0.5), 100);\n// 参数: 背景色, z-index`}
+                />
+
+                <MixinCard
+                  title="visually-hidden"
+                  description="视觉隐藏（保持屏幕阅读器可访问）"
+                  usage={`@include visually-hidden;\n\n// 用于无障碍优化，元素视觉隐藏但可被读屏软件识别`}
+                />
+
+                <MixinCard
+                  title="gradient-border"
+                  description="渐变色边框"
+                  usage={`.card {\n  @include gradient-border(\n    2px,\n    linear-gradient(90deg, #667eea, #764ba2),\n    8px\n  );\n}`}
+                  example={
+                    <div className="demo-gradient-border">
+                      渐变边框卡片
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="selection"
+                  description="自定义文本选中颜色"
+                  usage={`.content {\n  @include selection(#667eea, white);\n}`}
+                  example={
+                    <div className="demo-selection">
+                      选中此文本查看自定义高亮效果
+                    </div>
+                  }
+                />
+              </Space>
+            ),
+          },
+          {
+            key: 'grid',
+            label: '🎯 Grid 布局 Mixins',
+            children: (
+              <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <MixinCard
+                  title="grid-layout"
+                  description="快速创建网格布局"
+                  usage={`.container {\n  @include grid-layout(3, 16px);\n  // 参数: 列数, 间距\n}`}
+                  example={
+                    <div className="demo-grid-layout">
+                      {[1, 2, 3, 4, 5, 6].map(i => (
+                        <div key={i} className="grid-item">Item {i}</div>
+                      ))}
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="auto-grid"
+                  description="自适应网格（auto-fit）"
+                  usage={`.container {\n  @include auto-grid(200px, 16px);\n  // 自动填充，尽可能占满空间\n}`}
+                  example={
+                    <div className="demo-auto-grid">
+                      {[1, 2, 3, 4, 5].map(i => (
+                        <div key={i} className="grid-item">Auto {i}</div>
+                      ))}
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="auto-grid-fill"
+                  description="自适应网格（auto-fill）"
+                  usage={`.container {\n  @include auto-grid-fill(180px, 16px);\n  // 保持轨道数量，可能产生空轨道\n}`}
+                />
+
+                <MixinCard
+                  title="sticky"
+                  description="粘性定位"
+                  usage={`.header {\n  @include sticky(0, 100);\n  // 参数: top位置, z-index\n}`}
+                />
+              </Space>
+            ),
+          },
+          {
+            key: 'images',
+            label: '🖼️ 图片 Mixins',
+            children: (
+              <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <MixinCard
+                  title="cover-background"
+                  description="背景图片覆盖（铺满容器）"
+                  usage={`.hero {\n  @include cover-background('path/to/image.jpg');\n}\n\n// 或不指定图片\n@include cover-background;`}
+                />
+
+                <MixinCard
+                  title="contain-background"
+                  description="背景图片包含（完整显示）"
+                  usage={`.logo {\n  @include contain-background('logo.png');\n}`}
+                />
+
+                <MixinCard
+                  title="crisp-image"
+                  description="图片清晰渲染优化"
+                  usage={`img {\n  @include crisp-image;\n  // 适用于像素图、图标等\n}`}
+                />
+              </Space>
+            ),
+          },
+          {
+            key: 'more-animations',
+            label: '🎪 更多动画',
+            children: (
+              <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <MixinCard
+                  title="spinner"
+                  description="加载旋转动画"
+                  usage={`.loading {\n  @include spinner(40px, 4px, #0ea5e9);\n  // 参数: 大小, 边框宽度, 颜色\n}`}
+                  example={
+                    <div className="demo-spinner-wrapper">
+                      <div className="demo-spinner"></div>
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="pulse"
+                  description="脉冲动画"
+                  usage={`.notification {\n  @include pulse(1.5s);\n}`}
+                  example={
+                    <div className="demo-pulse-wrapper">
+                      <div className="demo-pulse"></div>
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="shake"
+                  description="抖动动画（错误提示）"
+                  usage={`.error-input {\n  @include shake(0.5s);\n}`}
+                  example={
+                    <div className="demo-shake-wrapper">
+                      <div className="demo-shake">抖动元素</div>
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="bounce"
+                  description="弹跳动画"
+                  usage={`.icon {\n  @include bounce(1s);\n}`}
+                  example={
+                    <div className="demo-bounce-wrapper">
+                      <div className="demo-bounce">↓</div>
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="rotate"
+                  description="持续旋转动画"
+                  usage={`.loading-icon {\n  @include rotate(2s);\n}`}
+                  example={
+                    <div className="demo-rotate-wrapper">
+                      <div className="demo-rotate">⟳</div>
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="scale"
+                  description="缩放动画"
+                  usage={`.modal {\n  @include scale(0.95, 1, 0.3s);\n  // 参数: 起始缩放, 结束缩放, 动画时长\n}`}
+                />
+
+                <MixinCard
+                  title="card-hover"
+                  description="卡片悬停效果（整合版）"
+                  usage={`.card {\n  @include card-hover(3);\n  // 参数: 阴影深度\n}`}
+                  example={
+                    <div className="demo-card-hover">
+                      悬停查看效果
+                    </div>
+                  }
+                />
+              </Space>
+            ),
+          },
+          {
+            key: 'helpers',
+            label: '🛠️ 辅助 Mixins',
+            children: (
+              <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <MixinCard
+                  title="truncate"
+                  description="文本截断（text-nowrap 的别名）"
+                  usage={`@include truncate;\n\n// 单行文本省略的简写方式`}
+                />
+
+                <MixinCard
+                  title="break-word"
+                  description="强制长单词换行"
+                  usage={`@include break-word;\n\n// 防止长URL或长单词溢出`}
+                  example={
+                    <div className="demo-break-word">
+                      这是一个超长的URL：https://example.com/very-very-very-long-url-path/example
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="smooth-font"
+                  description="字体平滑渲染"
+                  usage={`body {\n  @include smooth-font;\n  // 使字体在 Mac 上渲染更平滑\n}`}
+                />
+
+                <MixinCard
+                  title="reset-input"
+                  description="重置输入框样式"
+                  usage={`input {\n  @include reset-input;\n  // 移除所有默认样式\n}`}
+                />
+
+                <MixinCard
+                  title="focus-outline"
+                  description="自定义焦点轮廓"
+                  usage={`button:focus {\n  @include focus-outline(#0ea5e9, 2px, 2px);\n  // 参数: 颜色, 宽度, 偏移\n}`}
+                />
+
+                <MixinCard
+                  title="no-tap-highlight"
+                  description="移除移动端点击高亮"
+                  usage={`button {\n  @include no-tap-highlight;\n  // 移除 iOS Safari 默认的点击高亮\n}`}
+                />
+
+                <MixinCard
+                  title="diagonal-gradient"
+                  description="对角线渐变"
+                  usage={`.banner {\n  @include diagonal-gradient(#667eea, #764ba2, 45deg);\n}`}
+                  example={
+                    <div className="demo-diagonal-gradient">
+                      对角线渐变
+                    </div>
+                  }
+                />
+
+                <MixinCard
+                  title="flex-gap"
+                  description="Flex 间距兼容方案（旧浏览器）"
+                  usage={`.container {\n  @include flex-gap(16px, row);\n  // 为不支持 gap 属性的浏览器提供兼容\n}`}
+                />
+              </Space>
+            ),
+          },
         ]}
       />
 
@@ -455,6 +759,9 @@ const ScssMixinsGuide: React.FC = () => {
           </Text>
           <Text>
             💡 建议根据实际需求调整 Mixin 的参数，以达到最佳效果
+          </Text>
+          <Text>
+            💡 本次更新新增 <Text strong>30+ 个实用 Mixins</Text>，涵盖布局、动画、图片、Grid 等多个场景
           </Text>
         </Space>
       </Card>

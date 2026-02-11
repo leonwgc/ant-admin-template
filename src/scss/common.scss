@@ -492,3 +492,349 @@ $appMenuPortableWidth: 0.8;
     transform: translateX(0);
   }
 }
+
+// Quick size setter
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// Create circle
+@mixin circle($size) {
+  @include size($size);
+  border-radius: 50%;
+}
+
+// Center block element
+@mixin center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Hardware acceleration
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+// Backdrop blur effect
+@mixin backdrop-blur($blur: 10px) {
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// Background cover image
+@mixin cover-background($url: null) {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @if $url {
+    background-image: url($url);
+  }
+}
+
+// Background contain image
+@mixin contain-background($url: null) {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  @if $url {
+    background-image: url($url);
+  }
+}
+
+// Overlay mask
+@mixin overlay($bg: rgba(0, 0, 0, 0.5), $z-index: 10) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $bg;
+  z-index: $z-index;
+}
+
+// Visually hidden (for accessibility)
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Smooth font rendering
+@mixin smooth-font {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Force word break
+@mixin break-word {
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+// Reset input
+@mixin reset-input {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+// Triangle
+@mixin triangle($direction, $size, $color) {
+  width: 0;
+  height: 0;
+  border: $size solid transparent;
+
+  @if $direction == 'up' {
+    border-bottom-color: $color;
+  } @else if $direction == 'down' {
+    border-top-color: $color;
+  } @else if $direction == 'left' {
+    border-right-color: $color;
+  } @else if $direction == 'right' {
+    border-left-color: $color;
+  }
+}
+
+// Truncate text (alias for text-nowrap)
+@mixin truncate {
+  @include text-nowrap;
+}
+
+// Image rendering optimization
+@mixin crisp-image {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+// Custom focus outline
+@mixin focus-outline($color: $theme-highlight, $width: 2px, $offset: 2px) {
+  outline: $width solid $color;
+  outline-offset: $offset;
+}
+
+// Disable tap highlight on mobile
+@mixin no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+// Spinner animation
+@mixin spinner($size: 40px, $border-width: 4px, $color: $theme-highlight) {
+  @include size($size);
+  border: $border-width solid rgba($color, 0.2);
+  border-top-color: $color;
+  border-radius: 50%;
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Pulse animation
+@mixin pulse($duration: 1.5s) {
+  animation: pulse $duration ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Shake animation
+@mixin shake($duration: 0.5s) {
+  animation: shake $duration ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+// Bounce animation
+@mixin bounce($duration: 1s) {
+  animation: bounce $duration ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+// Scale animation
+@mixin scale($from: 0.95, $to: 1, $duration: 0.3s) {
+  animation: scale-animation $duration ease-out;
+
+  @keyframes scale-animation {
+    from {
+      transform: scale($from);
+    }
+    to {
+      transform: scale($to);
+    }
+  }
+}
+
+// Rotate animation
+@mixin rotate($duration: 2s) {
+  animation: rotate $duration linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Card hover effect
+@mixin card-hover($shadow-depth: 3) {
+  @include transition(transform, box-shadow);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    @include shadow($shadow-depth);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Flex gap fallback (for older browsers)
+@mixin flex-gap($gap, $direction: row) {
+  @if $direction == row {
+    margin-left: -$gap / 2;
+    margin-right: -$gap / 2;
+
+    > * {
+      margin-left: $gap / 2;
+      margin-right: $gap / 2;
+    }
+  } @else {
+    margin-top: -$gap / 2;
+    margin-bottom: -$gap / 2;
+
+    > * {
+      margin-top: $gap / 2;
+      margin-bottom: $gap / 2;
+    }
+  }
+}
+
+// Diagonal gradient background
+@mixin diagonal-gradient($start-color, $end-color, $angle: 45deg) {
+  background: linear-gradient($angle, $start-color 0%, $end-color 100%);
+}
+
+// Grid layout shorthand
+@mixin grid-layout($columns, $gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Auto-fit grid
+@mixin auto-grid($min-width: 250px, $gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Auto-fill grid
+@mixin auto-grid-fill($min-width: 250px, $gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Sticky positioning
+@mixin sticky($top: 0, $z-index: 10) {
+  position: sticky;
+  top: $top;
+  z-index: $z-index;
+}
+
+// Gradient border
+@mixin gradient-border($width, $gradient, $border-radius: 0) {
+  position: relative;
+  background: $gradient;
+  border-radius: $border-radius;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: $width;
+    left: $width;
+    right: $width;
+    bottom: $width;
+    background: white;
+    border-radius: $border-radius - $width;
+  }
+}
+
+// Custom selection color
+@mixin selection($bg-color, $text-color: white) {
+  &::selection {
+    background-color: $bg-color;
+    color: $text-color;
+  }
+
+  &::-moz-selection {
+    background-color: $bg-color;
+    color: $text-color;
+  }
+}
