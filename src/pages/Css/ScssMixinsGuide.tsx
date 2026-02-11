@@ -23,16 +23,16 @@ const ScssMixinsGuide: React.FC = () => {
     setTimeout(() => setCopiedMixin(null), 2000);
   };
 
-  const MixinCard = ({ 
-    title, 
-    description, 
-    usage, 
-    example 
-  }: { 
-    title: string; 
-    description: string; 
-    usage: string; 
-    example?: React.ReactNode 
+  const MixinCard = ({
+    title,
+    description,
+    usage,
+    example
+  }: {
+    title: string;
+    description: string;
+    usage: string;
+    example?: React.ReactNode
   }) => (
     <Card className="mixin-card" size="small">
       <div className="mixin-card__header">
