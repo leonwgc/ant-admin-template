@@ -129,6 +129,14 @@ export const menus: MenuItem[] = [
     permissions: [],
     children: [
       {
+        key: 'scss-mixins-guide',
+        get label() {
+          return t('menu.scssMixinsGuide');
+        },
+        route: '/app/css/scss-mixins',
+        permissions: [],
+      },
+      {
         key: 'css-1',
         get label() {
           return t('menu.cssNewFeatures');
@@ -214,14 +222,6 @@ export const menus: MenuItem[] = [
           return t('menu.cssStickyExamples');
         },
         route: '/app/css/sticky-examples',
-        permissions: [],
-      },
-      {
-        key: 'scss-mixins-guide',
-        get label() {
-          return t('menu.scssMixinsGuide');
-        },
-        route: '/app/css/scss-mixins',
         permissions: [],
       },
     ],
