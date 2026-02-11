@@ -5,12 +5,14 @@
    ============================================== */
 
 html {
-  transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  @include smooth-font;
 }
 
 // html 反转 0.92 = 降低 8% 亮度
@@ -173,8 +175,9 @@ textarea::placeholder {
 }
 
 textarea {
-  font-family: 'helvetica neue', 'hiragino sans gb', 'stheiti',
-    'microsoft yahei', \5FAE\8F6F\96C5\9ED1, tahoma, sans-serif;
+  font-family:
+    'helvetica neue', 'hiragino sans gb', 'stheiti', 'microsoft yahei',
+    \5FAE\8F6F\96C5\9ED1, tahoma, sans-serif;
 }
 
 // remove firefox button dashed outline
@@ -213,8 +216,13 @@ input[type='file'] > input[type='button']::-moz-focus-inner {
 // }
 
 body {
-  font-family: 'Roboto', -apple-system, 'Microsoft YaHei', 'Helvetica Neue',
-    Arial, sans-serif !important;
+  font-family:
+    'Roboto',
+    -apple-system,
+    'Microsoft YaHei',
+    'Helvetica Neue',
+    Arial,
+    sans-serif !important;
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
