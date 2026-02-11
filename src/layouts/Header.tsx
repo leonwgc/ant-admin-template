@@ -25,8 +25,10 @@ import {
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
+
 import MobileMenus from './MobileMenus';
 import { GlobalSearch } from 'components/GlobalSearch';
+import { AccountSwitcher } from 'components/AccountSwitcher';
 import { changeLanguage, type Language } from '~/i18n';
 import { useTheme } from '~/hooks/useTheme';
 import logo from '~/images/logo.png';
@@ -111,8 +113,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   return (
     <div className="neat-header">
       <Layout.Header {...props}>
-        <Flex align="center">
+        <Flex align="center" gap={24}>
           <img src={logo} alt="Logo" style={{ height: 32 }} />
+          <AccountSwitcher />
         </Flex>
 
         <Space size={8}>
