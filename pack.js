@@ -17,7 +17,7 @@ run({
   rsConfig: {
     html: {
       template: './index.html',
-      title: 'Neat Design Admin',
+      title: 'Neat Admin',
       favicon: './public/favicon.ico',
     },
     server: {
