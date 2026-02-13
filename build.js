@@ -12,5 +12,17 @@ build({
     resolve: {
       aliasStrategy: 'prefer-tsconfig',
     },
+    tools: {
+      rspack: (config, { rspack }) => {
+        // 使用 IgnorePlugin 忽略文档文件和许可证文件
+        config.plugins = config.plugins || [];
+        config.plugins.push(
+          new rspack.IgnorePlugin({
+            resourceRegExp: /\.(md|txt)$/,
+          })
+        );
+        return config;
+      },
+    },
   },
 });
