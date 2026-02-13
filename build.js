@@ -15,6 +15,11 @@ build({
     resolve: {
       aliasStrategy: 'prefer-tsconfig',
     },
+    performance: {
+      chunkSplit: {
+        strategy: 'single-vendor',
+      },
+    },
     tools: {
       rspack: (config, { rspack }) => {
         // 使用 IgnorePlugin 忽略文档文件和许可证文件

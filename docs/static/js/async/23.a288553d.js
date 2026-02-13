@@ -1,0 +1,22 @@
+"use strict";(self.webpackChunkant_admin_template=self.webpackChunkant_admin_template||[]).push([["23"],{91585(e,s,n){n.r(s)},26247(e,s,n){n.r(s),n.d(s,{default:()=>i});var c=n(96540);let i=function(e){let s=(0,c.useRef)(!1);return(0,c.useCallback)(async function(){for(var n=arguments.length,c=Array(n),i=0;i<n;i++)c[i]=arguments[i];if(!s.current){s.current=!0;try{return await e(...c)}catch(e){throw e}finally{s.current=!1}}},[e])}},18666(e,s,n){n.r(s),n.d(s,{default:()=>m});var c=n(74848),i=n(96540),r=n(12229),l=n(40244),t=n(36813),d=n(16629),o=n(58607),a=n(63255),h=n(15398),u=n(26247);n(91585);let{Title:x,Paragraph:j,Text:y}=r.A,m=()=>{let[e,s]=(0,i.useState)(0),[n,r]=(0,i.useState)(0),[m,A]=(0,i.useState)([]),[p,f]=(0,i.useState)(!1),k=e=>{let s=new Date().toLocaleTimeString();A(n=>[`[${s}] ${e}`,...n].slice(0,10))},g=async e=>{k(`${e}: 开始执行`),await new Promise(e=>setTimeout(e,3e3)),k(`${e}: 执行完成`)},v=(0,u.default)(async()=>{f(!0),await g("锁定函数"),s(e=>e+1),f(!1)}),w=async()=>{f(!0),await g("普通函数"),r(e=>e+1),f(!1)};return(0,c.jsxs)("div",{className:"use-lock-async-func",children:[(0,c.jsx)(x,{level:2,children:"useLockAsyncFunc Hook 示例"}),(0,c.jsxs)(j,{children:[(0,c.jsx)(y,{strong:!0,children:"useLockAsyncFunc"})," 是一个防止异步函数并发执行的 React Hook。 当函数正在执行时，后续调用会被忽略，直到当前执行完成。"]}),(0,c.jsx)(l.A,{message:"使用场景",description:"防止用户快速点击按钮导致的重复提交、多次 API 调用等问题。",type:"info",showIcon:!0,style:{marginBottom:24}}),(0,c.jsxs)(t.A,{direction:"vertical",size:"large",style:{width:"100%"},children:[(0,c.jsx)(d.A,{title:"示例 1: 使用 useLockAsyncFunc（防并发）",bordered:!1,children:(0,c.jsxs)(t.A,{direction:"vertical",size:"middle",style:{width:"100%"},children:[(0,c.jsxs)("div",{children:[(0,c.jsx)(y,{children:"点击次数: "}),(0,c.jsx)(y,{strong:!0,style:{fontSize:20,color:"#1890ff"},children:e})]}),(0,c.jsx)(o.Ay,{type:"primary",onClick:v,size:"large",children:"快速点击我（3 秒后完成）"}),(0,c.jsx)(a.A,{spinning:p}),(0,c.jsx)(l.A,{message:"提示",description:"尝试快速多次点击按钮，只有第一次点击会被执行。",type:"success",showIcon:!0})]})}),(0,c.jsx)(d.A,{title:"示例 2: 普通异步函数（允许并发）",bordered:!1,children:(0,c.jsxs)(t.A,{direction:"vertical",size:"middle",style:{width:"100%"},children:[(0,c.jsxs)("div",{children:[(0,c.jsx)(y,{children:"点击次数: "}),(0,c.jsx)(y,{strong:!0,style:{fontSize:20,color:"#52c41a"},children:n})]}),(0,c.jsx)(o.Ay,{onClick:w,size:"large",children:"快速点击我（3 秒后完成）"}),(0,c.jsx)(a.A,{spinning:p}),(0,c.jsx)(l.A,{message:"注意",description:"每次点击都会创建新的异步任务，可能导致重复执行。",type:"warning",showIcon:!0})]})}),(0,c.jsx)(d.A,{title:"执行日志",bordered:!1,extra:(0,c.jsx)(o.Ay,{onClick:()=>{A([])},size:"small",children:"清空日志"}),children:(0,c.jsx)("div",{className:"use-lock-async-func__logs",children:0===m.length?(0,c.jsx)(y,{type:"secondary",children:"暂无日志"}):m.map((e,s)=>(0,c.jsx)("div",{className:"use-lock-async-func__log-item",children:e},s))})}),(0,c.jsx)(h.A,{}),(0,c.jsx)(d.A,{title:"代码示例",bordered:!1,children:(0,c.jsx)("pre",{className:"use-lock-async-func__code",children:`import useLockAsyncFunc from '~/hooks/useLockAsyncFunc';
+
+const MyComponent = () => {
+  const [counter, setCounter] = useState(0);
+
+  // 使用 useLockAsyncFunc 包装异步函数
+  const handleSubmit = useLockAsyncFunc(async () => {
+    // 模拟 API 调用
+    await fetch('/api/submit', {
+      method: 'POST',
+      body: JSON.stringify({ data: 'example' }),
+    });
+
+    setCounter(prev => prev + 1);
+  });
+
+  return (
+    <Button onClick={handleSubmit}>
+      提交（防止重复点击）
+    </Button>
+  );
+};`})}),(0,c.jsx)(d.A,{title:"API 文档",bordered:!1,children:(0,c.jsxs)(t.A,{direction:"vertical",size:"small",style:{width:"100%"},children:[(0,c.jsxs)("div",{children:[(0,c.jsx)(y,{strong:!0,children:"函数签名:"}),(0,c.jsx)("pre",{className:"use-lock-async-func__code-inline",children:"useLockAsyncFunc<P extends any[], V>(fn: (...args: P) => Promise<V>)"})]}),(0,c.jsxs)("div",{children:[(0,c.jsx)(y,{strong:!0,children:"参数:"}),(0,c.jsx)("ul",{children:(0,c.jsxs)("li",{children:[(0,c.jsx)(y,{code:!0,children:"fn"})," - 需要加锁的异步函数"]})})]}),(0,c.jsxs)("div",{children:[(0,c.jsx)(y,{strong:!0,children:"返回值:"}),(0,c.jsxs)("ul",{children:[(0,c.jsx)("li",{children:"返回一个包装后的函数，该函数在执行时会检查锁状态"}),(0,c.jsx)("li",{children:"如果锁已被占用（函数正在执行），则忽略本次调用"})]})]}),(0,c.jsxs)("div",{children:[(0,c.jsx)(y,{strong:!0,children:"特性:"}),(0,c.jsxs)("ul",{children:[(0,c.jsx)("li",{children:"✅ 防止并发执行"}),(0,c.jsx)("li",{children:"✅ 自动管理锁状态"}),(0,c.jsx)("li",{children:"✅ TypeScript 类型安全"}),(0,c.jsx)("li",{children:"✅ 支持任意参数和返回值类型"})]})]})]})})]})]})}}}]);

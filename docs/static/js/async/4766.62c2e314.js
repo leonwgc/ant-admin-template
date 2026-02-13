@@ -1,0 +1,48 @@
+"use strict";(self.webpackChunkant_admin_template=self.webpackChunkant_admin_template||[]).push([["4766"],{56891(e,a,c){c.r(a)},85336(e,a,c){c.r(a)},99412(e,a,c){c.r(a),c.d(a,{UserContactCard:()=>o,default:()=>m});var s=c(74848),r=c(96540),t=c(17125),n=c(78732),l=c(69986),i=c(39360),d=c(57124);c(56891);let o=e=>{let{name:a,avatarUrl:c,email:o,phone:m,className:h=""}=e,[x,p]=(0,r.useState)(!1),[j,u]=(0,r.useState)(!1);if(!a&&!c)return console.warn("UserContactCard: At least one of name or avatarUrl must be provided"),null;if(!o&&!m)return console.warn("UserContactCard: At least one of email or phone must be provided"),null;let v=async(e,a)=>{let c="email"===a?p:u;try{await navigator.clipboard.writeText(e),c(!0),t.Ay.success(`${"email"===a?"Email":"Phone"} copied successfully`),setTimeout(()=>{c(!1)},2e3)}catch(e){t.Ay.error("Failed to copy")}};return(0,s.jsxs)("div",{className:`user-contact-card ${h}`,children:[(0,s.jsxs)("div",{className:"user-contact-card__header",children:[(0,s.jsx)(n.A,{src:c,size:32,className:"user-contact-card__avatar",children:!c&&a?a.charAt(0).toUpperCase():""}),a&&(0,s.jsx)("div",{className:"user-contact-card__name",children:a})]}),(0,s.jsxs)("div",{className:"user-contact-card__contacts",children:[o&&(0,s.jsxs)("div",{className:"user-contact-card__contact-item",children:[(0,s.jsxs)("div",{className:"user-contact-card__contact-content",children:[(0,s.jsx)(l.A,{className:"user-contact-card__icon"}),(0,s.jsx)("span",{className:"user-contact-card__text",children:o})]}),(0,s.jsx)(i.A,{className:`user-contact-card__copy-icon ${x?"user-contact-card__copy-icon--active":""}`,onClick:()=>v(o,"email")})]}),m&&(0,s.jsxs)("div",{className:"user-contact-card__contact-item",children:[(0,s.jsxs)("div",{className:"user-contact-card__contact-content",children:[(0,s.jsx)(d.A,{className:"user-contact-card__icon"}),(0,s.jsx)("span",{className:"user-contact-card__text",children:m})]}),(0,s.jsx)(i.A,{className:`user-contact-card__copy-icon ${j?"user-contact-card__copy-icon--active":""}`,onClick:()=>v(m,"phone")})]})]})]})},m=o},44951(e,a,c){c.r(a),c.d(a,{default:()=>s.default});var s=c(99412)},97917(e,a,c){c.r(a),c.d(a,{default:()=>t});var s=c(74848);c(96540);var r=c(44951);c(85336);let t=()=>(0,s.jsxs)("div",{className:"user-contact-card-example",children:[(0,s.jsx)("h2",{className:"user-contact-card-example__title",children:"UserContactCard Component Examples"}),(0,s.jsxs)("div",{className:"user-contact-card-example__section",children:[(0,s.jsx)("h3",{children:"Basic Usage - With Avatar URL"}),(0,s.jsx)("p",{children:"Display user contact card with avatar image, email and phone"}),(0,s.jsx)("div",{className:"user-contact-card-example__demo-box",children:(0,s.jsx)(r.default,{name:"张 三",avatarUrl:"https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",email:"zhangsan@derbysoft.net",phone:"+86 13912345678"})}),(0,s.jsx)("div",{className:"user-contact-card-example__code",children:`<UserContactCard
+  name="张 三"
+  avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+  email="zhangsan@derbysoft.net"
+  phone="+86 13912345678"
+/>`})]}),(0,s.jsxs)("div",{className:"user-contact-card-example__section",children:[(0,s.jsx)("h3",{children:"With Name Initials"}),(0,s.jsx)("p",{children:"Display user contact card with name initials when avatarUrl is not provided"}),(0,s.jsxs)("div",{className:"user-contact-card-example__demo-box",children:[(0,s.jsx)(r.default,{name:"李 四",email:"lisi@company.com",phone:"+86 13800138000"}),(0,s.jsx)(r.default,{name:"John Doe",email:"john.doe@example.com",phone:"+1 (555) 123-4567"})]}),(0,s.jsx)("div",{className:"user-contact-card-example__code",children:`<UserContactCard
+  name="李 四"
+  email="lisi@company.com"
+  phone="+86 13800138000"
+/>
+
+<UserContactCard
+  name="John Doe"
+  email="john.doe@example.com"
+  phone="+1 (555) 123-4567"
+/>`})]}),(0,s.jsxs)("div",{className:"user-contact-card-example__section",children:[(0,s.jsx)("h3",{children:"Email Only"}),(0,s.jsx)("p",{children:"Display only email contact information"}),(0,s.jsx)("div",{className:"user-contact-card-example__demo-box",children:(0,s.jsx)(r.default,{name:"王 五",avatarUrl:"https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka",email:"wangwu@derbysoft.net"})}),(0,s.jsx)("div",{className:"user-contact-card-example__code",children:`<UserContactCard
+  name="王 五"
+  avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
+  email="wangwu@derbysoft.net"
+/>`})]}),(0,s.jsxs)("div",{className:"user-contact-card-example__section",children:[(0,s.jsx)("h3",{children:"Phone Only"}),(0,s.jsx)("p",{children:"Display only phone contact information"}),(0,s.jsx)("div",{className:"user-contact-card-example__demo-box",children:(0,s.jsx)(r.default,{name:"赵 六",avatarUrl:"https://api.dicebear.com/7.x/avataaars/svg?seed=Sophie",phone:"+86 13666666666"})}),(0,s.jsx)("div",{className:"user-contact-card-example__code",children:`<UserContactCard
+  name="赵 六"
+  avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Sophie"
+  phone="+86 13666666666"
+/>`})]}),(0,s.jsxs)("div",{className:"user-contact-card-example__section",children:[(0,s.jsx)("h3",{children:"Multiple Cards"}),(0,s.jsx)("p",{children:"Display multiple user contact cards"}),(0,s.jsxs)("div",{className:"user-contact-card-example__demo-box",children:[(0,s.jsx)(r.default,{name:"Alice Chen",avatarUrl:"https://api.dicebear.com/7.x/avataaars/svg?seed=Alice",email:"alice.chen@company.com",phone:"+1-555-0101"}),(0,s.jsx)(r.default,{name:"Bob Zhang",avatarUrl:"https://api.dicebear.com/7.x/avataaars/svg?seed=Bob",email:"bob.zhang@company.com",phone:"+1-555-0102"}),(0,s.jsx)(r.default,{name:"Carol Liu",avatarUrl:"https://api.dicebear.com/7.x/avataaars/svg?seed=Carol",email:"carol.liu@company.com",phone:"+1-555-0103"})]}),(0,s.jsx)("div",{className:"user-contact-card-example__code",children:`<UserContactCard
+  name="Alice Chen"
+  avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Alice"
+  email="alice.chen@company.com"
+  phone="+1-555-0101"
+/>
+
+<UserContactCard
+  name="Bob Zhang"
+  avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Bob"
+  email="bob.zhang@company.com"
+  phone="+1-555-0102"
+/>
+
+<UserContactCard
+  name="Carol Liu"
+  avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Carol"
+  email="carol.liu@company.com"
+  phone="+1-555-0103"
+/>`})]}),(0,s.jsxs)("div",{className:"user-contact-card-example__section",children:[(0,s.jsx)("h3",{children:"Custom Styling"}),(0,s.jsx)("p",{children:"Apply custom styles using className prop"}),(0,s.jsx)("div",{className:"user-contact-card-example__demo-box",children:(0,s.jsx)(r.default,{name:"Custom Style",email:"custom@example.com",phone:"+1-999-8888",className:"custom-user-card"})}),(0,s.jsx)("div",{className:"user-contact-card-example__code",children:`<UserContactCard
+  name="Custom Style"
+  email="custom@example.com"
+  phone="+1-999-8888"
+  className="custom-user-card"
+/>`})]}),(0,s.jsxs)("div",{className:"user-contact-card-example__section",children:[(0,s.jsx)("h3",{children:"API Documentation"}),(0,s.jsxs)("table",{className:"user-contact-card-example__api-table",children:[(0,s.jsx)("thead",{children:(0,s.jsxs)("tr",{children:[(0,s.jsx)("th",{children:"Property"}),(0,s.jsx)("th",{children:"Type"}),(0,s.jsx)("th",{children:"Default"}),(0,s.jsx)("th",{children:"Description"})]})}),(0,s.jsxs)("tbody",{children:[(0,s.jsxs)("tr",{children:[(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"name"})}),(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"string"})}),(0,s.jsx)("td",{children:"-"}),(0,s.jsx)("td",{children:"User name. Used for avatar when avatarUrl is not provided. At least one of name or avatarUrl is required."})]}),(0,s.jsxs)("tr",{children:[(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"avatarUrl"})}),(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"string"})}),(0,s.jsx)("td",{children:"-"}),(0,s.jsx)("td",{children:"Avatar image URL. At least one of name or avatarUrl is required."})]}),(0,s.jsxs)("tr",{children:[(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"email"})}),(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"string"})}),(0,s.jsx)("td",{children:"-"}),(0,s.jsx)("td",{children:"Email address to display. At least one of email or phone is required. Click copy icon to copy."})]}),(0,s.jsxs)("tr",{children:[(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"phone"})}),(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"string"})}),(0,s.jsx)("td",{children:"-"}),(0,s.jsx)("td",{children:"Phone number to display. At least one of email or phone is required. Click copy icon to copy."})]}),(0,s.jsxs)("tr",{children:[(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"className"})}),(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"string"})}),(0,s.jsx)("td",{children:(0,s.jsx)("code",{children:"''"})}),(0,s.jsx)("td",{children:"Custom CSS class name for styling"})]})]})]}),(0,s.jsx)("h3",{style:{marginTop:"24px"},children:"Features"}),(0,s.jsxs)("ul",{style:{paddingLeft:"24px",color:"#666",fontSize:"14px"},children:[(0,s.jsx)("li",{children:"Display user avatar with image URL or name initials"}),(0,s.jsx)("li",{children:"Show email and phone contact information"}),(0,s.jsx)("li",{children:"Click copy icon to copy email or phone to clipboard"}),(0,s.jsx)("li",{children:"Visual feedback when copying (icon color changes)"}),(0,s.jsx)("li",{children:"Hover effect on contact items"}),(0,s.jsx)("li",{children:"Responsive design with flexible layout"})]})]})]})}}]);

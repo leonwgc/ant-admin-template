@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkant_admin_template=self.webpackChunkant_admin_template||[]).push([["7638"],{16421(e,a,l){l.r(a),l.d(a,{useScrollToTop:()=>n});var t=l(90030);let n=()=>{(0,t.A)(()=>{window.scroll(0,0)})}}}]);
