@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router';
+import { BrowserRouter, HashRouter } from 'react-router';
 import App from './App';
 import { initWebVitals } from './utils/webVitals';
 import './scss/index.scss';
@@ -11,7 +11,7 @@ initWebVitals({
 });
 
 createRoot(document.getElementById('app')).render(
-  <BrowserRouter>
+  <HashRouter>
     <App />
-  </BrowserRouter>,
+  </HashRouter>,
 );
