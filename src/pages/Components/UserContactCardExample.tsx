@@ -18,7 +18,7 @@ const UserContactCardExample: React.FC = () => {
           <UserContactCard
             name="张 三"
             avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-            email="zhangsan@derbysoft.net"
+            email="zhangsan@gooabcgle.net"
             phone="+86 13912345678"
           />
         </div>
@@ -26,7 +26,7 @@ const UserContactCardExample: React.FC = () => {
           {`<UserContactCard
   name="张 三"
   avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-  email="zhangsan@derbysoft.net"
+  email="zhangsan@gooabcgle.net"
   phone="+86 13912345678"
 />`}
         </div>
@@ -71,14 +71,14 @@ const UserContactCardExample: React.FC = () => {
           <UserContactCard
             name="王 五"
             avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
-            email="wangwu@derbysoft.net"
+            email="wangwu@gooabcgle.net"
           />
         </div>
         <div className="user-contact-card-example__code">
           {`<UserContactCard
   name="王 五"
   avatarUrl="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
-  email="wangwu@derbysoft.net"
+  email="wangwu@gooabcgle.net"
 />`}
         </div>
       </div>

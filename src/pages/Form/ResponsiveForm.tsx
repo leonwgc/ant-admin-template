@@ -52,7 +52,7 @@ const Form: FC = () => {
           primaryLanguage: 'English',
           country: 'China',
           timeZone: 'Asia/Shanghai',
-          workEmail: 'felicia.lawson@derbysoft.net',
+          workEmail: 'felicia.lawson@gooabcgle.net',
           secondaryEmail: '',
           jobTitle: 'Product Manager',
           phoneNumber: '+87 18018600000',

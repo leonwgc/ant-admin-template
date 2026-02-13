@@ -45,7 +45,7 @@ const VerificationCodePageExample: React.FC = () => {
             </div>
             <div className="verification-code-page-example__code">
               {`<VerificationCodePage
-  contact="fe****@derbysoft.net"
+  contact="fe****@gooabcgle.net"
   codeLength={8}
   countdownSeconds={60}
   onComplete={handleComplete}
@@ -195,7 +195,7 @@ const MyPage = () => {
 
   return (
     <VerificationCodePage
-      contact="fe****@derbysoft.net"
+      contact="fe****@gooabcgle.net"
       codeLength={8}
       countdownSeconds={60}
       onComplete={handleComplete}
@@ -209,7 +209,7 @@ const MyPage = () => {
         </>
       ) : (
         <VerificationCodePage
-          contact="fe****@derbysoft.net"
+          contact="fe****@gooabcgle.net"
           codeLength={8}
           countdownSeconds={60}
           onComplete={handleComplete}
