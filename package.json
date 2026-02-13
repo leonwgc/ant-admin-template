@@ -1,7 +1,7 @@
 {
-  "name": "neat-admin-template",
+  "name": "ant-admin-template",
   "version": "1.0.0",
-  "description": "neat-admin-template",
+  "description": "ant-admin-template",
   "scripts": {
     "scan": "npm run start & npx react-scan localhost:3002",
     "start": "node pack.js",

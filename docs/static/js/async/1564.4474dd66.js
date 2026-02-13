@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["1564"],{82679(e,s,t){t.r(s),t.d(s,{default:()=>d});var i=t(74848),a=t(96540);let d=()=>((0,a.useEffect)(()=>{console.log("edit user ")},[]),(0,i.jsxs)("div",{children:[(0,i.jsx)("h1",{children:"Edit User"}),(0,i.jsx)("p",{children:"This is the Eidt User page."})]}))}}]);

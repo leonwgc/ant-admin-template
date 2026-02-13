@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkant_admin_template=self.webpackChunkant_admin_template||[]).push([["1194"],{50305(t,a,e){t.exports=e.p+"static/font/Roboto-BlackItalic.2f51d379.ttf"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkant_admin_template=self.webpackChunkant_admin_template||[]).push([["4447"],{84898(e,a,t){t.r(a),t.d(a,{default:()=>s});var n=t(74848);t(96540);let s=()=>(0,n.jsx)(ComponentBasic,{})}}]);

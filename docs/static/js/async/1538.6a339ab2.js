@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["1538"],{55176(e,a,t){t.r(a),t.d(a,{default:()=>l.default});var l=t(49856)}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["8435"],{510(e,a,t){t.r(a)}}]);
