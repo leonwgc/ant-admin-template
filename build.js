@@ -5,7 +5,7 @@ build({
   dist: './docs',
   rsConfig: {
     output: {
-      assetPrefix: './',
+      assetPrefix: 'https://leonwgc.github.io/ant-admin-template/',
     },
     html: {
       template: './index.html',
