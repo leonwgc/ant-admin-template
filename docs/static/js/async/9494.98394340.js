@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["9494"],{27493(e,t,a){a.r(t),a.d(t,{default:()=>s});var n=a(17125),l=a(96540),o=a(47752);let s=()=>{let{language:e}=(0,o.useAppStore)();return{showToast:(0,l.useCallback)(t=>{n.Ay.info({content:"zh"===e?"加载中...":"Loading...",duration:0,icon:"loading",...t})},[e])}}}}]);
