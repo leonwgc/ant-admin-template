@@ -4,11 +4,9 @@
  */
 
 module.exports = {
+  port: '8000',
 
-    port: '8000',
-
-    proxyTable: {
-        '/book-engine': 'https://sso-gateway-us-west-2.derbysoftsec.com'
-    }
-
+  proxyTable: {
+    '/book-engine': 'https://xxxx',
+  },
 };

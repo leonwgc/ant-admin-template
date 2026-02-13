@@ -26,9 +26,8 @@ export interface Account {
 export const AccountSwitcher: FC = () => {
   // Default accounts list
   const accounts: Account[] = [
-    { id: '1', company: '德比软件科技公司' },
-    { id: '2', company: 'derbysoft' },
-    { id: '3', company: 'Test Company' },
+    { id: '1', company: 'goooooogle' },
+    { id: '2', company: '谷ooooooooooooo歌' },
   ];
 
   const [open, setOpen] = useState(false);

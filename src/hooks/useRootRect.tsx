@@ -5,7 +5,7 @@
 
 import { useEventListener, useMount } from 'ahooks';
 import { useState } from 'react';
-import { isMobile } from '~/utils';
+import { isMobile } from '~/utils/util';
 
 type RootRect =
   | {
@@ -41,7 +41,7 @@ export const useRootRect: () => RootRect = () => {
         setRect(undefined);
       }
     },
-    { target: window }
+    { target: window },
   );
 
   return rect;

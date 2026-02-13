@@ -1,16 +1,13 @@
 import React, { FC } from 'react';
-import { ComponentBasic } from '~/components/ComponentBasicModalItemDefaultFalse/ComponentBasicModalItemDefaultFalse';
+
 /**
  * @file pages/Form/AddPhoneNumber.tsx
  * @author leon.wang
  */
 
-
-
-
 export interface AddPhoneNumberFormValues {
-    /** 手机号 */
-    phone: string;
+  /** 手机号 */
+  phone: string;
 }
 
 /**
@@ -18,8 +15,7 @@ export interface AddPhoneNumberFormValues {
  * 用于添加新的手机号码
  */
 const AddPhoneNumber: FC = () => {
-
-    return  <ComponentBasic/>
+  return <ComponentBasic />;
 };
 
 export default AddPhoneNumber;

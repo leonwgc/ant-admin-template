@@ -31,7 +31,7 @@ import { GlobalSearch } from 'components/GlobalSearch';
 import { AccountSwitcher } from 'components/AccountSwitcher';
 import { changeLanguage, type Language } from '~/i18n';
 import { useTheme } from '~/hooks/useTheme';
-import logo from '~/images/logo.png';
+import logo from '~/images/robot.png';
 import './Header.scss';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
@@ -67,7 +67,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         <div>
           <div style={{ color: '#1B2C34' }}>Felicia Lawson</div>
           <div style={{ fontSize: 12, color: '#647075' }}>
-            felicia.lawson@derbysoft.net
+            felicia.lawson@goooooogle.net
           </div>
         </div>
       ),

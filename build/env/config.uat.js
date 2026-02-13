@@ -6,6 +6,6 @@
 module.exports = {
   port: '8000',
   proxyTable: {
-    '/book-engine-uat': 'https://api-gateway2.derbysoft-test.com',
+    '/book-engine-uat': 'https://xxxt.com',
   },
 };

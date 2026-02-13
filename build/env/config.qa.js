@@ -4,11 +4,9 @@
  */
 
 module.exports = {
+  port: '8080',
 
-    port: '8080',
-
-    proxyTable: {
-        '/book-engine-qa': 'http://api-gateway2-default.stone:9080'
-    }
-
+  proxyTable: {
+    '/book-engine-qa': 'http://axxxx:9080',
+  },
 };
