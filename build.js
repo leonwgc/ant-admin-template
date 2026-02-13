@@ -4,6 +4,9 @@ const { build } = require('packrs');
 build({
   dist: './docs',
   rsConfig: {
+    output: {
+      assetPrefix: '/ant-admin-template/',
+    },
     html: {
       template: './index.html',
       title: 'Ant Admin',
@@ -19,7 +22,7 @@ build({
         config.plugins.push(
           new rspack.IgnorePlugin({
             resourceRegExp: /\.(md|txt)$/,
-          })
+          }),
         );
         return config;
       },
