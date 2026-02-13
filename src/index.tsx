@@ -11,7 +11,11 @@ initWebVitals({
 });
 
 createRoot(document.getElementById('app')).render(
-  <BrowserRouter>
+  <BrowserRouter
+    basename={
+      process.env.NODE_ENV === 'production' ? '/ant-admin-template/' : '/'
+    }
+  >
     <App />
-  </BrowserRouter>
+  </BrowserRouter>,
 );
