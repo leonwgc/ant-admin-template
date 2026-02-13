@@ -4,9 +4,6 @@ const { build } = require('packrs');
 build({
   dist: './docs',
   rsConfig: {
-    output: {
-      assetPrefix: '/ant-admin-template/',
-    },
     html: {
       template: './index.html',
       title: 'Ant Admin',
