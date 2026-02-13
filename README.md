@@ -1,193 +1,193 @@
 <div align="center">
   <h1>Ant Admin Template</h1>
-  <p>基于 React + TypeScript + Ant Design 的企业级后台管理模板</p>
+  <p>Enterprise-level Admin Template based on React + TypeScript + Ant Design</p>
 
-  **[English](./README_EN.md) | 简体中文**
+  **English | [简体中文](./README_ZH.md)**
 
   <p>
-    <a href="#特性">特性</a> •
-    <a href="#快速开始">快速开始</a> •
-    <a href="#技术栈">技术栈</a> •
-    <a href="#项目结构">项目结构</a> •
-    <a href="#开发指南">开发指南</a>
+    <a href="#features">Features</a> •
+    <a href="#quick-start">Quick Start</a> •
+    <a href="#tech-stack">Tech Stack</a> •
+    <a href="#project-structure">Project Structure</a> •
+    <a href="#development-guide">Development Guide</a>
   </p>
 </div>
 
 ---
 
-## 📖 项目简介
+## 📖 Introduction
 
-Ant Admin Template 是一个开箱即用的企业级后台管理系统模板，采用 React 18 + TypeScript 构建，基于 Ant Design 5.x 提供现代化的 UI 体验。项目内置**自动路由生成系统**、**国际化支持**、**权限管理**等核心功能，遵循最佳实践和代码规范，帮助您快速构建高质量的管理后台。
+Ant Admin Template is a production-ready enterprise admin system template built with React 18 + TypeScript, based on Ant Design 5.x for modern UI experience. The project features **automatic route generation**, **i18n support**, **permission management**, and follows best practices to help you build high-quality admin dashboards quickly.
 
-## ✨ 特性
+## ✨ Features
 
-### 核心特性
-- 🚀 **自动路由生成** - 菜单配置驱动路由，无需手动维护，告别重复配置
-- 🎨 **Ant Design UI** - 基于 Ant Design 5.x 的企业级组件库，提供更丰富的组件和样式
-- 🌍 **国际化支持** - 集成 i18next，支持中英文切换，TypeScript 类型安全
-- 🔐 **权限管理** - 完整的路由权限和操作权限控制体系
-- 📱 **响应式布局** - 支持桌面端和移动端，自适应各种屏幕尺寸
-- 🎯 **TypeScript** - 完整的类型定义，提供出色的开发体验
-- ⚡ **性能优化** - 路由懒加载、代码分割、Web Vitals 监控
-- 🛠️ **开发体验** - ESLint + Prettier，统一代码风格，提升团队协作效率
+### Core Features
+- 🚀 **Automatic Route Generation** - Menu-driven routing, no manual maintenance needed
+- 🎨 **Ant Design UI** - Enterprise-level component library based on Ant Design 5.x
+- 🌍 **Internationalization** - Built-in i18next, supports Chinese/English with TypeScript safety
+- 🔐 **Permission Management** - Complete route and operation permission control
+- 📱 **Responsive Layout** - Supports desktop and mobile devices
+- 🎯 **TypeScript** - Full type definitions for excellent DX
+- ⚡ **Performance Optimized** - Route lazy loading, code splitting, Web Vitals monitoring
+- 🛠️ **Developer Experience** - ESLint + Prettier for consistent code style
 
-### 技术亮点
-- **状态管理** - Zustand 5.x + zustand-kit，轻量级且易用
-- **路由方案** - React Router 7.x，支持数据预加载
-- **表单处理** - React Hook Form + antd-form-builder，高性能表单方案
-- **请求封装** - Axios + ahooks，支持请求去重、错误处理
-- **样式方案** - SCSS + BEM 命名规范，可维护的样式架构
-- **构建工具** - 自定义构建脚本，支持多环境配置
+### Technical Highlights
+- **State Management** - Zustand 5.x + zustand-kit, lightweight and easy to use
+- **Routing** - React Router 7.x with data preloading support
+- **Form Handling** - React Hook Form + antd-form-builder, high-performance forms
+- **Request Handling** - Axios + ahooks, request deduplication and error handling
+- **Styling** - SCSS + BEM naming convention, maintainable style architecture
+- **Build Tools** - Custom build scripts with multi-environment support
 
-## 🔧 技术栈
+## 🔧 Tech Stack
 
 ```json
 {
-  "核心框架": "React 18.3.1 + TypeScript",
-  "UI组件库": "Ant Design 5.x",
-  "状态管理": "Zustand 5.0.9 + zustand-kit",
-  "路由方案": "React Router 7.7.1",
-  "请求处理": "Axios 1.11.0",
-  "Hooks库": "ahooks 3.9.0",
-  "表单方案": "React Hook Form 7.71.1",
-  "国际化": "i18next 25.3.2 + react-i18next 15.6.1",
-  "样式方案": "SCSS + BEM",
-  "构建工具": "自定义构建脚本"
+  "Core Framework": "React 18.3.1 + TypeScript",
+  "UI Library": "Ant Design 5.x",
+  "State Management": "Zustand 5.0.9 + zustand-kit",
+  "Routing": "React Router 7.7.1",
+  "HTTP Client": "Axios 1.11.0",
+  "Hooks Library": "ahooks 3.9.0",
+  "Form Solution": "React Hook Form 7.71.1",
+  "i18n": "i18next 25.3.2 + react-i18next 15.6.1",
+  "Styling": "SCSS + BEM",
+  "Build Tools": "Custom Build Scripts"
 }
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 环境要求
+### Prerequisites
 
 - Node.js >= 16.x
 - npm >= 8.x
 
-### 安装
+### Installation
 
-#### 方式一：克隆项目
+#### Option 1: Clone the Repository
 
 ```bash
-# 克隆仓库
+# Clone repository
 git clone --depth 1 https://github.com/leonwgc/ant-admin-template.git my-admin-project
 
-# 进入项目目录
+# Enter directory
 cd my-admin-project
 
-# 删除 Git 记录（可选）
+# Remove Git history (optional)
 rm -rf .git
 
-# 初始化新仓库（可选）
+# Initialize new repository (optional)
 git init
 
-# 安装依赖
+# Install dependencies
 npm install
 ```
 
-#### 方式二：直接使用
+#### Option 2: Direct Use
 
 ```bash
-# 克隆到本地
+# Clone to local
 git clone https://github.com/leonwgc/ant-admin-template.git
 cd ant-admin-template
 
-# 安装依赖
+# Install dependencies
 npm install
 ```
 
-### 开发
+### Development
 
 ```bash
-# 启动开发服务器（默认端口 3002）
+# Start dev server (default port 3002)
 npm start
 
-# 访问 http://localhost:3002
+# Visit http://localhost:3002
 ```
 
-### 构建
+### Build
 
 ```bash
-# 构建 QA 环境
+# Build for QA environment
 npm run build:qa
 
-# 构建 UAT 环境
+# Build for UAT environment
 npm run build:uat
 
-# 构建生产环境
+# Build for production
 npm run build:prod
 ```
 
-### 项目配置
+### Configuration
 
-配置文件位于 `build/env/` 目录：
+Configuration files are located in `build/env/`:
 
-- `config.qa.js` - QA 环境配置
-- `config.uat.js` - UAT 环境配置
-- `config.production.js` - 生产环境配置
+- `config.qa.js` - QA environment config
+- `config.uat.js` - UAT environment config
+- `config.production.js` - Production environment config
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 ant-admin-template/
-├── build/                      # 构建脚本
-│   ├── env/                   # 环境配置
+├── build/                      # Build scripts
+│   ├── env/                   # Environment configs
 │   │   ├── config.qa.js
 │   │   ├── config.uat.js
 │   │   └── config.production.js
-│   ├── config.js              # 构建配置
-│   └── utils.js               # 构建工具
+│   ├── config.js              # Build configuration
+│   └── utils.js               # Build utilities
 ├── src/
-│   ├── components/            # 通用组件
-│   │   ├── ErrorBoundary/    # 错误边界
-│   │   ├── GlobalSearch/     # 全局搜索
+│   ├── components/            # Shared components
+│   │   ├── ErrorBoundary/    # Error boundary
+│   │   ├── GlobalSearch/     # Global search
 │   │   └── ...
-│   ├── pages/                 # 页面组件
-│   │   ├── User/             # 用户管理
-│   │   ├── Form/             # 表单示例
+│   ├── pages/                 # Page components
+│   │   ├── User/             # User management
+│   │   ├── Form/             # Form examples
 │   │   └── ...
-│   ├── layouts/               # 布局组件
-│   │   ├── App.tsx           # 主布局
-│   │   ├── Header.tsx        # 头部
-│   │   ├── Sider.tsx         # 侧边栏
-│   │   ├── Menus.tsx         # 菜单
-│   │   └── RouteGuard.tsx    # 路由守卫
-│   ├── hooks/                 # 自定义 Hooks
-│   │   ├── useNavTo.tsx      # 路由导航
-│   │   ├── useDsRequest.tsx  # 数据请求
-│   │   ├── useDsTable.tsx    # 表格数据
+│   ├── layouts/               # Layout components
+│   │   ├── App.tsx           # Main layout
+│   │   ├── Header.tsx        # Header
+│   │   ├── Sider.tsx         # Sidebar
+│   │   ├── Menus.tsx         # Menu
+│   │   └── RouteGuard.tsx    # Route guard
+│   ├── hooks/                 # Custom hooks
+│   │   ├── useNavTo.tsx      # Navigation hook
+│   │   ├── useDsRequest.tsx  # Data request hook
+│   │   ├── useDsTable.tsx    # Table data hook
 │   │   └── ...
-│   ├── locales/               # 国际化
-│   │   ├── zh.ts             # 中文
-│   │   ├── en.ts             # 英文
-│   │   └── index.ts          # i18n 配置
-│   ├── utils/                 # 工具函数
-│   │   ├── routeGenerator.tsx # 路由生成器
-│   │   ├── errorMonitor.ts   # 错误监控
+│   ├── locales/               # Internationalization
+│   │   ├── zh.ts             # Chinese
+│   │   ├── en.ts             # English
+│   │   └── index.ts          # i18n config
+│   ├── utils/                 # Utilities
+│   │   ├── routeGenerator.tsx # Route generator
+│   │   ├── errorMonitor.ts   # Error monitor
 │   │   └── ...
-│   ├── scss/                  # 全局样式
-│   ├── config.menu.tsx        # 菜单配置（路由来源）
-│   ├── config.route.ts        # 路由配置（自动生成）
-│   ├── config.operations.ts   # 操作权限配置
-│   ├── RouteConfig.tsx        # 路由配置（自动生成）
-│   ├── store.ts               # 全局状态
-│   ├── req.ts                 # 请求封装
-│   ├── i18n.ts                # i18n 初始化
-│   └── App.tsx                # 应用入口
+│   ├── scss/                  # Global styles
+│   ├── config.menu.tsx        # Menu config (route source)
+│   ├── config.route.ts        # Route config (auto-generated)
+│   ├── config.operations.ts   # Operation permissions
+│   ├── RouteConfig.tsx        # Route configuration (auto-generated)
+│   ├── store.ts               # Global state
+│   ├── req.ts                 # Request wrapper
+│   ├── i18n.ts                # i18n initialization
+│   └── App.tsx                # App entry
 ├── .github/
-│   └── instructions/          # 开发规范文档
+│   └── instructions/          # Development standards
 │       ├── 00-dev.instructions.md
 │       ├── 01-mcp.neat.instructions.md
 │       └── 02-mcp.ant.instructions.md
-├── pack.js                    # 开发服务器
-├── build.js                   # 构建脚本
+├── pack.js                    # Dev server
+├── build.js                   # Build script
 └── package.json
 ```
 
-## 📝 开发指南
+## 📝 Development Guide
 
-### 添加新页面（3 步完成）
+### Adding New Pages (3 Steps)
 
-#### 第 1 步：创建页面组件
+#### Step 1: Create Page Component
 
 ```tsx
 /**
@@ -201,23 +201,23 @@ import './ProductList.scss';
 const ProductList: FC = () => {
   return (
     <div className="product-list">
-      <h2>产品列表</h2>
+      <h2>Product List</h2>
       <Table />
     </div>
   );
 };
 
-export default ProductList;  // 必须使用 default export
+export default ProductList;  // Must use default export
 ```
 
-创建样式文件：
+Create style file:
 
 ```scss
 /**
  * @file pages/Product/ProductList.scss
  * @author leon.wang
  */
-@import 'scss/common.scss';  // 必须导入
+@import 'scss/common.scss';  // Must import
 
 .product-list {
   padding: 20px;
@@ -228,38 +228,38 @@ export default ProductList;  // 必须使用 default export
 }
 ```
 
-#### 第 2 步：配置菜单（路由来源）
+#### Step 2: Configure Menu (Route Source)
 
-在 `src/config.menu.tsx` 中添加菜单项：
+Add menu item in `src/config.menu.tsx`:
 
 ```tsx
-import { ShopOutlined } from '@ant-design/icons';  // 菜单图标
+import { ShopOutlined } from '@ant-design/icons';  // Menu icons
 
 {
   key: 'product',
-  get label() { return t('menu.products'); },  // 使用 getter 支持动态翻译
+  get label() { return t('menu.products'); },  // Use getter for dynamic translation
   icon: <ShopOutlined />,
   permissions: [],
   children: [
     {
       key: 'product-list',
       get label() { return t('menu.productList'); },
-      route: '/app/products',        // 定义路由路径
+      route: '/app/products',        // Define route path
       permissions: [],
     },
     {
       key: 'product-detail',
       get label() { return t('menu.productDetail'); },
       route: '/app/products/:id',
-      hidden: true,  // 不在菜单显示，但路由存在
+      hidden: true,  // Hidden from menu, but route exists
     },
   ],
 }
 ```
 
-#### 第 3 步：注册组件映射
+#### Step 3: Register Component Mapping
 
-在 `src/utils/routeGenerator.tsx` 中添加：
+Add in `src/utils/routeGenerator.tsx`:
 
 ```tsx
 export const routeComponentMap: RouteComponentMap = {
@@ -269,27 +269,27 @@ export const routeComponentMap: RouteComponentMap = {
 };
 ```
 
-**完成！** 路由自动生成，无需手动配置 `RouteConfig.tsx`。
+**Done!** Routes are auto-generated, no need to manually edit `RouteConfig.tsx`.
 
-### 菜单配置说明
+### Menu Configuration
 
 ```tsx
 interface MenuItem {
-  key: string;                          // 菜单唯一标识
-  label: string | { (): string };       // 菜单文本（使用 getter 支持动态翻译）
-  route?: string;                       // 路由路径（必须以 /app/ 开头）
-  icon?: ReactNode;                     // 菜单图标（@ant-design/icons）
-  permissions?: string[];               // 权限列表
-  hidden?: boolean;                     // true: 路由存在但菜单隐藏
-  children?: MenuItem[];                // 子菜单
+  key: string;                          // Unique identifier
+  label: string | { (): string };       // Menu text (use getter for dynamic translation)
+  route?: string;                       // Route path (must start with /app/)
+  icon?: ReactNode;                     // Menu icon (@ant-design/icons)
+  permissions?: string[];               // Permission list
+  hidden?: boolean;                     // true: route exists but menu hidden
+  children?: MenuItem[];                // Sub-menus
 }
 ```
 
-### 国际化配置
+### Internationalization
 
-#### 添加新翻译
+#### Adding New Translations
 
-1. **创建翻译文件**
+1. **Create translation files**
 
 ```typescript
 // src/locales/pages/product/zh.ts
@@ -307,7 +307,7 @@ export default {
 };
 ```
 
-2. **导入翻译**
+2. **Import translations**
 
 ```typescript
 // src/locales/zh.ts
@@ -317,24 +317,24 @@ const zh = {
   ...commonZh,
   pages: {
     user: userZh,
-    product: productZh,  // ← 添加
+    product: productZh,  // ← Add
   },
 };
 ```
 
-3. **注册命名空间**
+3. **Register namespace**
 
 ```typescript
 // src/locales/index.ts
 export const resources = {
   zh: {
     common: zh,
-    'pages.product': zh.pages.product,  // ← 注册命名空间
+    'pages.product': zh.pages.product,  // ← Register namespace
   },
-} as const;  // ← as const 确保 TypeScript 类型推断
+} as const;  // ← as const for TypeScript type inference
 ```
 
-4. **在组件中使用**
+4. **Use in component**
 
 ```tsx
 import { useTranslation } from 'react-i18next';
@@ -351,31 +351,31 @@ const ProductPage: FC = () => {
 };
 ```
 
-### 状态管理
+### State Management
 
-#### 全局状态（Zustand）
+#### Global State (Zustand)
 
 ```tsx
 import { useAppStore } from '~/store';
 
-// 读取状态
+// Read state
 const language = useAppStore((state) => state.language);
 const operations = useAppStore((state) => state.operations);
 
-// 更新状态
+// Update state
 const { setLanguage, setOperations } = useAppStore();
 setLanguage('en');
 ```
 
-**使用场景**：语言设置、权限信息、主题配置、用户信息等跨页面数据
+**Use cases**: Language settings, permissions, theme config, user info (cross-page data)
 
-#### 局部状态
+#### Local State
 
-使用 `useState` 或 ahooks 管理：表单输入、表格数据、弹窗状态等页面级数据
+Use `useState` or ahooks for: form inputs, table data, modals, page-specific data
 
-### 代码规范
+### Code Standards
 
-#### 文件头注释（必须）
+#### File Header (Required)
 
 ```typescript
 /**
@@ -384,70 +384,70 @@ setLanguage('en');
  */
 ```
 
-#### 导入顺序
+#### Import Order
 
 ```typescript
-// 1. React 核心
+// 1. React core
 import React, { FC, useState } from 'react';
 
-// 2. 第三方库
+// 2. Third-party libraries
 import { Button, Table } from '@derbysoft/neat-design';
 import { useRequest } from 'ahooks';
 
-// 3. 项目模块
+// 3. Project modules
 import { useNavTo } from '~/hooks/useNavTo';
 import req from '~/req';
 
-// 4. 样式（最后）
+// 4. Styles (last)
 import './Component.scss';
 ```
 
-#### 组件开发
+#### Component Development
 
 ```tsx
 export interface ComponentProps {
-  /** Prop 描述 */
+  /** Prop description */
   title?: string;
-  /** 回调函数 */
+  /** Callback function */
   onSubmit?: (data: any) => void;
 }
 
 /**
- * 组件功能描述（使用英文）
+ * Component description (use English)
  * Used for displaying product information
  */
 export const Component: FC<ComponentProps> = ({ title, onSubmit }) => {
   return <div>{title}</div>;
 };
 
-export default Component;  // 同时导出命名和默认导出
+export default Component;  // Export both named and default
 ```
 
-#### UI 组件使用
+#### UI Component Usage
 
 ```tsx
-// ✅ 正确
+// ✅ Correct
 import { Button, Form, Input } from '@derbysoft/neat-design';
 import { EmailOutlined } from '@derbysoft/neat-design-icons';
 
-// ❌ 错误
+// ❌ Wrong
 import { Button } from 'antd';
 import { EmailOutlined } from '@ant-design/icons';
 ```
 
-**规则：**
-- 菜单图标：`@ant-design/icons`
-- 页面图标：`@derbysoft/neat-design-icons`
-- UI 组件：`@derbysoft/neat-design`（禁止直接使用 antd）
+**Rules:**
+- Menu icons: `@ant-design/icons`
+- Page icons: `@derbysoft/neat-design-icons`
+- UI components: `@derbysoft/neat-design` (DO NOT use antd directly)
 
-#### SCSS 规范
+#### SCSS Standards
 
 ```scss
 /**
  * @file components/ContactInfo/ContactInfo.scss
  * @author leon.wang
  */
-@import 'scss/common.scss';  // ✅ 必须导入
+@import 'scss/common.scss';  // ✅ Must import
 
 .contact-info {
   padding: 16px;
@@ -462,7 +462,7 @@ import { EmailOutlined } from '@ant-design/icons';
 }
 ```
 
-### 路径别名
+### Path Aliases
 
 ```typescript
 "~/*"          → "src/*"
@@ -470,7 +470,7 @@ import { EmailOutlined } from '@ant-design/icons';
 "components/*" → "src/components/*"
 ```
 
-使用示例：
+Usage example:
 
 ```tsx
 import { useNavTo } from '~/hooks/useNavTo';
@@ -478,39 +478,39 @@ import { ContactInfo } from 'components/ContactInfo';
 import 'scss/common.scss';
 ```
 
-## 🎯 核心功能
+## 🎯 Core Features
 
-### 自动路由生成系统
+### Automatic Route Generation
 
-项目采用**菜单驱动路由**的设计理念，路由配置从菜单自动生成：
+The project adopts a **menu-driven routing** design philosophy:
 
 ```
 config.menu.tsx → routeGenerator.tsx → RouteConfig.tsx → RouteGuard.tsx
-  (菜单配置)         (组件映射)          (自动路由)        (权限守卫)
+  (Menu Config)     (Component Map)      (Auto Routes)     (Guard)
 ```
 
-**优势：**
-- 📌 单一数据源：菜单配置驱动路由和导航
-- 📌 无重复维护：路由只定义一次
-- 📌 类型安全：完整的 TypeScript 类型支持
-- 📌 权限集成：路由自动继承菜单权限
+**Advantages:**
+- 📌 Single source of truth: Menu config drives routes and navigation
+- 📌 No duplication: Routes defined only once
+- 📌 Type safety: Full TypeScript type support
+- 📌 Permission integration: Routes automatically inherit menu permissions
 
-详细文档：[src/utils/README.md](src/utils/README.md)
+Detailed docs: [src/utils/README.md](src/utils/README.md)
 
-### 权限管理
+### Permission Management
 
-#### 路由权限
+#### Route Permissions
 
 ```tsx
 {
   key: 'admin-panel',
   label: 'Admin Panel',
   route: '/app/admin',
-  permissions: ['admin', 'superuser'],  // 只有这些权限的用户能访问
+  permissions: ['admin', 'superuser'],  // Only these users can access
 }
 ```
 
-#### 操作权限
+#### Operation Permissions
 
 ```tsx
 import { useAppStore } from '~/store';
@@ -518,101 +518,65 @@ import { useAppStore } from '~/store';
 const operations = useAppStore((state) => state.operations);
 const canDelete = operations.includes('user:delete');
 
-{canDelete && <Button>删除</Button>}
+{canDelete && <Button>Delete</Button>}
 ```
 
-### 错误监控
+### Error Monitoring
 
-项目集成了完整的错误监控系统：
+Complete error monitoring system:
 
-- **错误边界** - 捕获组件渲染错误
-- **全局错误处理** - 捕获未处理的错误和 Promise 拒绝
-- **错误上报** - 自动上报到后端
-- **性能监控** - Web Vitals 性能指标收集
+- **Error Boundary** - Catch component rendering errors
+- **Global Error Handler** - Catch unhandled errors and promise rejections
+- **Error Reporting** - Auto report to backend
+- **Performance Monitoring** - Web Vitals metrics collection
 
-详细文档：[ERROR_MONITOR.md](ERROR_MONITOR.md)
+Detailed docs: [ERROR_MONITOR.md](ERROR_MONITOR.md)
 
-### 性能优化
+### Performance Optimization
 
-- ✅ 路由懒加载
-- ✅ 代码分割
-- ✅ 图片懒加载
-- ✅ 请求去重
-- ✅ 防抖节流
-- ✅ Web Vitals 监控
+- ✅ Route lazy loading
+- ✅ Code splitting
+- ✅ Image lazy loading
+- ✅ Request deduplication
+- ✅ Debounce/throttle
+- ✅ Web Vitals monitoring
 
-详细文档：[WEB_VITALS_GUIDE.md](WEB_VITALS_GUIDE.md)
+Detailed docs: [WEB_VITALS_GUIDE.md](WEB_VITALS_GUIDE.md)
 
-## 🔌 MCP 服务
+## 📚 Documentation
 
-项目集成了 MCP（Model Context Protocol）服务，提供智能文档查询：
+- [Development Standards](.github/instructions/00-dev.instructions.md) - Complete code standards and best practices
+- [Ant Design MCP Services](.github/instructions/01-mcp.neat.instructions.md) - Ant Design component query guide
+- [Automatic Routing](src/utils/README.md) - Route generator detailed docs
+- [Internationalization](src/locales/README.md) - i18n system usage guide
+- [Error Monitoring](ERROR_MONITOR.md) - Error monitoring and reporting system
+- [Performance Optimization](WEB_VITALS_GUIDE.md) - Web Vitals monitoring guide
+- [Global Search](GLOBAL_SEARCH.md) - Global search functionality
+- [Zustand State Management](zustand.md) - Zustand usage guide
 
-### Ant Design 组件查询
+## 🤝 Contributing
 
-```typescript
-// 查询组件列表
-mcp_neat-design-m_get_components_information()
+Issues and Pull Requests are welcome!
 
-// 查询组件文档
-mcp_neat-design-m_get_component_document({ componentName: "Table" })
+### Commit Convention
 
-// 查询组件示例
-mcp_neat-design-m_get_component_example({
-  componentName: "Table",
-  exampleFileName: "basic.tsx"
-})
-
-// 查询图标
-mcp_neat-design-m_get_icons_information()
-```
-
-### ahooks 查询
-
-```typescript
-// 搜索 Hook
-mcp_ahooks_search_hooks({ keyword: "table" })
-
-// 查询 Hook 详情
-mcp_ahooks_get_hook_info({ name: "useAntdTable" })
-```
-
-详细文档：[.github/instructions/01-mcp.neat.instructions.md](.github/instructions/01-mcp.neat.instructions.md)
-
-## 📚 相关文档
-
-- [开发规范](.github/instructions/00-dev.instructions.md) - 完整的代码规范和最佳实践
-- [Ant Design MCP 服务](.github/instructions/01-mcp.neat.instructions.md) - Ant Design 组件查询指南
-- [自动路由系统](src/utils/README.md) - 路由生成器详细文档
-- [国际化配置](src/locales/README.md) - i18n 系统使用指南
-- [错误监控](ERROR_MONITOR.md) - 错误监控和上报系统
-- [性能优化](WEB_VITALS_GUIDE.md) - Web Vitals 性能监控指南
-- [全局搜索](GLOBAL_SEARCH.md) - 全局搜索功能说明
-- [Zustand 状态管理](zustand.md) - Zustand 使用指南
-
-## 🤝 贡献指南
-
-欢迎提交 Issue 和 Pull Request！
-
-### Commit 规范
-
-使用 [Conventional Commits](https://www.conventionalcommits.org/) 规范：
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```bash
-feat: 添加新功能
-fix: 修复 Bug
-docs: 文档更新
-style: 代码格式调整
-refactor: 重构代码
-perf: 性能优化
-test: 测试相关
-chore: 构建/工具链更新
+feat: Add new feature
+fix: Fix bug
+docs: Update documentation
+style: Code formatting
+refactor: Code refactoring
+perf: Performance optimization
+test: Testing related
+chore: Build/toolchain updates
 ```
 
 ## 📄 License
 
 ISC
 
-## 👤 作者
+## 👤 Author
 
 leon.wang
-
