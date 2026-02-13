@@ -35,7 +35,7 @@ const RouteConfig = () => {
   return (
     <Suspense>
       <Routes>
-        <Route path="/" element={<Redirect to="/app/users/table" />} />
+        <Route path="/" element={<Redirect to="/app/system/menus" />} />
 
         <Route
           path="no-permission"
