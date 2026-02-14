@@ -5,6 +5,7 @@ build({
   dist: './docs',
   rsConfig: {
     output: {
+      cleanDistPath: false,
       assetPrefix: '/ant-admin-template/',
     },
     html: {
