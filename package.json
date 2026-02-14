@@ -1,7 +1,7 @@
 {
   "name": "ant-admin-template",
   "version": "1.0.0",
-  "description": "ant-admin-template",
+  "description": "🚀 Enterprise-level admin template built with React 18 + TypeScript + Ant Design 5.x. Features automatic route generation, i18n, permission control, and responsive layout. Production-ready.",
   "scripts": {
     "scan": "npm run start & npx react-scan localhost:3002",
     "start": "node pack.js",
