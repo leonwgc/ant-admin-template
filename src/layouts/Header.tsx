@@ -3,12 +3,7 @@
  * @author leon.wang
  */
 import React, { useState } from 'react';
-import {
-  Layout,
-  Space,
-  Flex,
-  Avatar,
-} from '@derbysoft/neat-design';
+import { Layout, Space, Flex, Avatar, Divider } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
   MenuOutlined,
@@ -113,8 +108,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   return (
     <div className="neat-header">
       <Layout.Header {...props}>
-        <Flex align="center" gap={24}>
+        <Flex align="center" gap={16}>
           <img src={logo} alt="Logo" style={{ height: 32 }} />
+          <Divider alignment="vertical" />
           <AccountSwitcher />
         </Flex>
 
@@ -125,9 +121,13 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             aria-label={t('common:searchMenuTooltip')}
           >
             <SearchOutlined className="header-search-btn__icon" />
-            <span className="header-search-btn__text">{t('common:search')}</span>
+            <span className="header-search-btn__text">
+              {t('common:search')}
+            </span>
             <kbd className="header-search-btn__shortcut">
-              {navigator.platform.toLowerCase().includes('mac') ? '⌘K' : 'Ctrl+K'}
+              {navigator.platform.toLowerCase().includes('mac')
+                ? '⌘K'
+                : 'Ctrl+K'}
             </kbd>
           </button>
           <button
@@ -145,7 +145,10 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
             placement="bottomRight"
           >
-            <button className="header-lang-btn" aria-label={t('common:switchLanguage')}>
+            <button
+              className="header-lang-btn"
+              aria-label={t('common:switchLanguage')}
+            >
               <GlobalOutlined className="header-lang-btn__icon" />
               <span className="header-lang-btn__text">
                 {currentLang === 'zh' ? '简体中文' : 'English'}
