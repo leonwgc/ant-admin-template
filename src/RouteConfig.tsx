@@ -14,6 +14,7 @@ import {
   routeComponentMap,
   getRouteElement,
 } from './utils/routeGenerator';
+import { defaultRoute } from './config';
 
 const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
@@ -35,7 +36,7 @@ const RouteConfig = () => {
   return (
     <Suspense>
       <Routes>
-        <Route path="/" element={<Redirect to="/app/system/menus" />} />
+        <Route path="/" element={<Redirect to={defaultRoute} />} />
 
         <Route
           path="no-permission"
