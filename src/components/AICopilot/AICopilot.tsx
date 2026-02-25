@@ -77,7 +77,8 @@ export const AICopilot: FC = () => {
     if (!inputValue.trim() || isLoading) return;
 
     const config = aiService.getConfig();
-    if (!config.apiKey) {
+    // Only check API key if not using mock mode
+    if (!config.useMock && !config.apiKey) {
       message.warning(t('pages.ai:aiMsgApiKeyRequired'));
       return;
     }

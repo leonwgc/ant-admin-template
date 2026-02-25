@@ -32,11 +32,13 @@ const AISettings: FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
+  const [useMock, setUseMock] = useState(true); // 监听 Mock 模式状态
 
   useEffect(() => {
     // Load current config
     const config = aiService.getConfig();
     form.setFieldsValue(config);
+    setUseMock(config.useMock);
   }, [form]);
 
   const handleSave = async (values: AIConfig) => {
@@ -100,67 +102,90 @@ const AISettings: FC = () => {
           >
             <Switch />
           </Form.Item>
-
-          <Divider />
-
-          {/* API Key */}
+{/* Mock Mode */}
           <Form.Item
-            name="apiKey"
-            label={t('pages.ai:aiSettingsFormApiKey')}
-            rules={[{ required: true, message: t('pages.ai:aiMsgApiKeyRequired') }]}
-            help={t('pages.ai:aiSettingsHelpApiKey')}
+            name="useMock"
+            label={t('pages.ai:aiSettingsFormUseMock')}
+            valuePropName="checked"
+            help={t('pages.ai:aiSettingsHelpUseMock')}
           >
-            <Input.Password
-              placeholder={t('pages.ai:aiSettingsFormApiKeyPh')}
-              autoComplete="off"
-            />
-          </Form.Item>
-
-          {/* Model */}
-          <Form.Item
-            name="model"
-            label={t('pages.ai:aiSettingsFormModel')}
-            rules={[{ required: true }]}
-          >
-            <Select placeholder={t('pages.ai:aiSettingsFormModelPh')}>
-              <Option value="gpt-4">{t('pages.ai:aiModelGpt4')}</Option>
-              <Option value="gpt-3.5-turbo">{t('pages.ai:aiModelGpt35')}</Option>
-              <Option value="gpt-4o-mini">{t('pages.ai:aiModelGpt4Mini')}</Option>
-            </Select>
+            <Switch onChange={(checked) => setUseMock(checked)} />
           </Form.Item>
 
           <Divider />
 
-          {/* Temperature */}
-          <Form.Item
-            name="temperature"
-            label={t('pages.ai:aiSettingsFormTemperature')}
-            help={t('pages.ai:aiSettingsHelpTemperature')}
-          >
-            <InputNumber
-              min={0}
-              max={2}
-              step={0.1}
-              style={{ width: '100%' }}
-              placeholder={t('pages.ai:aiSettingsFormTemperaturePh')}
-            />
-          </Form.Item>
+          {/* API Key - Only show when not using mock */}
+          {!useMock && (
+            <>
+              <Form.Item
+                name="apiKey"
+                label={t('pages.ai:aiSettingsFormApiKey')}
+                rules={[
+                  {
+                    required: !useMock,
+                    message: t('pages.ai:aiMsgApiKeyRequired'),
+                  },
+                ]}
+                help={t('pages.ai:aiSettingsHelpApiKey')}
+              >
+                <Input.Password
+                  placeholder={t('pages.ai:aiSettingsFormApiKeyPh')}
+                  autoComplete="off"
+                />
+              </Form.Item>
 
-          {/* Max Tokens */}
-          <Form.Item
-            name="maxTokens"
-            label={t('pages.ai:aiSettingsFormMaxTokens')}
-            help={t('pages.ai:aiSettingsHelpMaxTokens')}
-          >
-            <InputNumber
-              min={100}
-              max={4000}
-              step={100}
-              style={{ width: '100%' }}
-              placeholder={t('pages.ai:aiSettingsFormMaxTokensPh')}
-            />
-          </Form.Item>
+              {/* Model */}
+              <Form.Item
+                name="model"
+                label={t('pages.ai:aiSettingsFormModel')}
+                rules={[{ required: !useMock }]}
+              >
+                <Select placeholder={t('pages.ai:aiSettingsFormModelPh')}>
+                  <Option value="gpt-4">{t('pages.ai:aiModelGpt4')}</Option>
+                  <Option value="gpt-3.5-turbo">
+                    {t('pages.ai:aiModelGpt35')}
+                  </Option>
+                  <Option value="gpt-4o-mini">
+                    {t('pages.ai:aiModelGpt4Mini')}
+                  </Option>
+                </Select>
+              </Form.Item>
 
+              <Divider />
+
+              {/* Temperature */}
+              <Form.Item
+                name="temperature"
+                label={t('pages.ai:aiSettingsFormTemperature')}
+                help={t('pages.ai:aiSettingsHelpTemperature')}
+              >
+                <InputNumber
+                  min={0}
+                  max={2}
+                  step={0.1}
+                  style={{ width: '100%' }}
+                  placeholder={t('pages.ai:aiSettingsFormTemperaturePh')}
+                />
+              </Form.Item>
+
+              {/* Max Tokens */}
+              <Form.Item
+                name="maxTokens"
+                label={t('pages.ai:aiSettingsFormMaxTokens')}
+                help={t('pages.ai:aiSettingsHelpMaxTokens')}
+              >
+                <InputNumber
+                  min={100}
+                  max={4000}
+                  step={100}
+                  style={{ width: '100%' }}
+                  placeholder={t('pages.ai:aiSettingsFormMaxTokensPh')}
+                />
+              </Form.Item>
+
+              <Divider />
+            </>
+          )}
           <Divider />
 
           {/* System Prompt */}
@@ -176,9 +201,13 @@ const AISettings: FC = () => {
           </Form.Item>
 
           <Alert
-            message="提示"
-            description="为了保护您的 API 密钥安全，所有配置信息仅保存在浏览器本地存储中，不会上传到服务器。"
-            type="info"
+            message={useMock ? 'Mock 模式' : '提示'}
+            description={
+              useMock
+                ? '当前使用 Mock 模式，AI 助手将使用本地预设回答，无需消耗 API 额度。适合测试和演示使用。'
+                : '为了保护您的 API 密钥安全，所有配置信息仅保存在浏览器本地存储中，不会上传到服务器。'
+            }
+            type={useMock ? 'success' : 'info'}
             showIcon
             style={{ marginBottom: 24 }}
           />
@@ -200,9 +229,30 @@ const AISettings: FC = () => {
 
       <Card title="使用说明" style={{ marginTop: 24 }}>
         <div className="ai-settings__help">
+          <h3>Mock 模式 vs 真实 API</h3>
+          <ul>
+            <li>
+              <strong>Mock 模式（推荐新手）:</strong> 无需 API 密钥，使用本地预设回答，
+              完全免费，适合测试和演示
+            </li>
+            <li>
+              <strong>真实 API 模式:</strong> 需要 OpenAI API 密钥，使用真实的 GPT 模型，
+              回答更智能准确，但需要付费
+            </li>
+          </ul>
+
           <h3>如何获取 OpenAI API 密钥？</h3>
           <ol>
-            <li>访问 <a href="https://platform.openai.com" target="_blank" rel="noopener noreferrer">OpenAI 官网</a></li>
+            <li>
+              访问{' '}
+              <a
+                href="https://platform.openai.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                OpenAI 官网
+              </a>
+            </li>
             <li>注册并登录账号</li>
             <li>进入 API Keys 页面创建新的密钥</li>
             <li>将密钥复制到上方表单中</li>

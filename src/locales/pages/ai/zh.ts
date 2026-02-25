@@ -12,6 +12,8 @@ export default {
   aiSettingsDesc: '配置 AI 助手的行为和参数',
 
   // 表单字段
+  aiSettingsFormUseMock: '使用 Mock 模式',
+  aiSettingsFormUseMockHelp: 'Mock 模式无需 API 密钥，适合测试和演示',
   aiSettingsFormApiKey: 'API 密钥',
   aiSettingsFormApiKeyPh: '请输入您的 OpenAI API 密钥',
   aiSettingsFormModel: 'AI 模型',
@@ -35,7 +37,7 @@ export default {
   aiChatBtnClear: '清空对话',
   aiChatBtnClose: '关闭',
   aiChatBtnOpen: 'AI 助手',
-  aiChatThinking: '思考中...',
+  aiChatThinking: '思考中',
   aiChatWelcome: '您好！我是 AI 助手，有什么可以帮您？',
 
   // 快捷功能
@@ -61,7 +63,8 @@ export default {
   aiModelGpt4Mini: 'GPT-4 Mini (快速)',
 
   // 配置说明
-  aiSettingsHelpApiKey: 'API 密钥用于身份验证，可在 OpenAI 官网获取',
+  aiSettingsHelpUseMock: '开启后将使用本地 Mock 数据模拟 AI 回答，无需消耗 API 额度',
+  aiSettingsHelpApiKey: 'API 密钥用于身份验证，可在 OpenAI 官网获取（Mock 模式下无需配置）',
   aiSettingsHelpTemperature: '较低的温度使输出更确定，较高的温度使输出更随机和创造性',
   aiSettingsHelpMaxTokens: '控制单次回复的长度，1 token ≈ 0.75 个英文单词',
   aiSettingsHelpSystemPrompt: '定义 AI 的角色、专业领域和回复风格',

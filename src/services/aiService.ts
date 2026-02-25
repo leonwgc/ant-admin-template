@@ -4,6 +4,8 @@
  * @author leon.wang
  */
 
+import { mockAIService } from './mockAIService';
+
 export interface AIConfig {
   apiKey: string;
   model: 'gpt-4' | 'gpt-3.5-turbo' | 'gpt-4o-mini';
@@ -11,6 +13,7 @@ export interface AIConfig {
   maxTokens: number;
   systemPrompt: string;
   enabled: boolean;
+  useMock: boolean; // 是否使用 Mock 模式
 }
 
 export interface ChatMessage {
@@ -28,6 +31,7 @@ const DEFAULT_CONFIG: AIConfig = {
   systemPrompt:
     'You are a helpful AI assistant for an admin dashboard. You can help users with code explanations, debugging, translations, and general questions. Always provide clear, concise, and accurate answers.',
   enabled: true,
+  useMock: true, // 默认使用 Mock 模式（无需 API key）
 };
 
 const CONFIG_STORAGE_KEY = 'ai_assistant_config';
@@ -86,6 +90,11 @@ class AIService {
    * Test API connection
    */
   async testConnection(): Promise<boolean> {
+    // If using mock mode, always return true
+    if (this.config.useMock) {
+      return mockAIService.testConnection();
+    }
+
     if (!this.config.apiKey) {
       throw new Error('API key is required');
     }
@@ -121,6 +130,11 @@ class AIService {
     messages: ChatMessage[],
     onProgress?: (text: string) => void,
   ): Promise<string> {
+    // If using mock mode, use mock service
+    if (this.config.useMock) {
+      return mockAIService.sendMessage(messages, onProgress);
+    }
+
     if (!this.config.apiKey) {
       throw new Error('API key is required');
     }
