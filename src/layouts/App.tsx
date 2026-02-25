@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Header from './Header';
 import Sider from './Sider';
 import RouteGuard from './RouteGuard';
+import AICopilot from '~/components/AICopilot';
 
 import './App.scss';
 
@@ -41,6 +42,9 @@ const App: React.FC<{
           </Layout>
         </Layout.Content>
       </Layout>
+
+      {/* AI Copilot - Global floating assistant */}
+      <AICopilot />
     </Layout>
   );
 };

@@ -110,5 +110,8 @@ export default {
     roomCalendar: 'Room Calendar',
     phoneManagement: 'Phone Management',
     loginPage: 'Login Page',
+    ai: 'AI Assistant',
+    aiAssistant: 'AI Chat',
+    aiSettings: 'AI Settings',
   },
 };

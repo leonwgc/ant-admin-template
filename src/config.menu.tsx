@@ -12,6 +12,7 @@ import {
   AndroidOutlined,
   HomeOutlined,
   SettingOutlined,
+  RobotOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -54,6 +55,24 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
  * This structure is used to render navigation menus and control access based on permissions.
  */
 export const menus: MenuItem[] = [
+  {
+    key: 'ai',
+    get label() {
+      return t('menu.ai');
+    },
+    icon: <RobotOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'ai-settings',
+        get label() {
+          return t('menu.aiSettings');
+        },
+        route: '/app/ai/settings',
+        permissions: [],
+      },
+    ],
+  },
   {
     key: 'js-feature',
     get label() {

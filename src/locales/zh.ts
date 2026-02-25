@@ -10,6 +10,7 @@ import hotelZh from './pages/hotel/zh';
 import componentsZh from './pages/components/zh';
 import systemZh from './pages/system/zh';
 import securityZh from './pages/security/zh';
+import aiZh from './pages/ai/zh';
 
 /**
  * 中文翻译
@@ -27,6 +28,7 @@ const zh = {
     components: componentsZh,
     system: systemZh,
     security: securityZh,
+    ai: aiZh,
   },
 };
 

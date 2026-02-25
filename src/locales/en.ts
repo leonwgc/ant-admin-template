@@ -10,6 +10,7 @@ import hotelEn from './pages/hotel/en';
 import componentsEn from './pages/components/en';
 import systemEn from './pages/system/en';
 import securityEn from './pages/security/en';
+import aiEn from './pages/ai/en';
 
 /**
  * English translations
@@ -25,7 +26,10 @@ const en = {
     form: formEn,
     hotel: hotelEn,
     components: componentsEn,
-    system: systemEn,    security: securityEn,  },
+    system: systemEn,
+    security: securityEn,
+    ai: aiEn,
+  },
 };
 
 export default en;

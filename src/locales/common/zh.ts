@@ -110,5 +110,8 @@ export default {
     roomCalendar: '房控日历',
     phoneManagement: '手机号管理',
     loginPage: '登录页面',
+    ai: 'AI 助手',
+    aiAssistant: 'AI 对话',
+    aiSettings: 'AI 配置',
   },
 };
