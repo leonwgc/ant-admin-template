@@ -10,10 +10,7 @@ const Footer = ({ menuCollapsed }) => {
         </div>
       ) : (
         <FadeIn duration={300}>
-          <div>
-            <div>© past - future</div>
-            <div>All rights reserved.</div>
-          </div>
+          <div>© PAST - FUTURE</div>
         </FadeIn>
       )}
     </div>
