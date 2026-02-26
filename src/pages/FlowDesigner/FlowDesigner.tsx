@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { CustomNode, CustomNodeData, CustomNodeType } from './nodes';
 import { CustomEdge } from './components/CustomEdge';
 import { Toolbar } from './components/Toolbar';
-import { NodePanel } from './components/NodePanel';
+import { NodePopover } from './components/NodePopover';
 
 import './FlowDesigner.scss';
 
@@ -49,7 +49,8 @@ const FlowDesigner: FC = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node<CustomNodeData> | null>(null);
   const [selectedEdges, setSelectedEdges] = useState<string[]>([]);
-  const [panelVisible, setPanelVisible] = useState(false);
+  const [popoverVisible, setPopoverVisible] = useState(false);
+  const [popoverPosition, setPopoverPosition] = useState<{ x: number; y: number } | null>(null);
   const { fitView, zoomIn, zoomOut } = useReactFlow();
 
   // 自定义节点类型
@@ -128,11 +129,13 @@ const FlowDesigner: FC = () => {
     [nodes.length, setNodes, t]
   );
 
-  // 节点点击
-  const onNodeClick = useCallback(
-    (_event: React.MouseEvent, node: Node<CustomNodeData>) => {
+  // 节点右键点击
+  const onNodeContextMenu = useCallback(
+    (event: React.MouseEvent, node: Node<CustomNodeData>) => {
+      event.preventDefault(); // 阻止默认右键菜单
       setSelectedNode(node);
-      setPanelVisible(true);
+      setPopoverPosition({ x: event.clientX, y: event.clientY });
+      setPopoverVisible(true);
     },
     []
   );
@@ -155,7 +158,7 @@ const FlowDesigner: FC = () => {
       setEdges((eds) =>
         eds.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id)
       );
-      setPanelVisible(false);
+      setPopoverVisible(false);
       setSelectedNode(null);
       message.success(t('pages.flow:nodeDeleted'));
     }
@@ -191,7 +194,7 @@ const FlowDesigner: FC = () => {
       if (
         (event.key === 'Delete' || event.key === 'Backspace') &&
         selectedEdges.length > 0 &&
-        !panelVisible // 不在编辑节点时才响应
+        !popoverVisible // 不在编辑节点时才响应
       ) {
         setEdges((eds) => eds.filter((edge) => !selectedEdges.includes(edge.id)));
         setSelectedEdges([]);
@@ -204,7 +207,7 @@ const FlowDesigner: FC = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [selectedEdges, panelVisible, setEdges, t]);
+  }, [selectedEdges, popoverVisible, setEdges, t]);
 
   // 放大
   const handleZoomIn = useCallback(() => {
@@ -239,7 +242,7 @@ const FlowDesigner: FC = () => {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          onNodeClick={onNodeClick}
+          onNodeContextMenu={onNodeContextMenu}
           onEdgeClick={onEdgeClick}
           onPaneClick={onPaneClick}
           nodeTypes={nodeTypes}
@@ -256,10 +259,11 @@ const FlowDesigner: FC = () => {
         </ReactFlow>
       </div>
 
-      <NodePanel
-        visible={panelVisible}
+      <NodePopover
+        visible={popoverVisible}
         node={selectedNode}
-        onClose={() => setPanelVisible(false)}
+        position={popoverPosition}
+        onClose={() => setPopoverVisible(false)}
         onSave={handleSaveNode}
         onDelete={handleDeleteNode}
       />
