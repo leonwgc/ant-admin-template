@@ -137,6 +137,9 @@
 
 // Responsive design
 @media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
   .app-layout {
     &__header {
       .mobile-menus {

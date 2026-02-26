@@ -110,7 +110,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
       <Layout.Header {...props}>
         <Flex align="center" gap={16}>
           <img src={logo} alt="Logo" style={{ height: 32 }} />
-          <Divider alignment="vertical" />
+          <Divider alignment="vertical" className="hide-on-mobile" />
           <AccountSwitcher />
         </Flex>
 
