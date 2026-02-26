@@ -113,5 +113,6 @@ export default {
     ai: 'AI Assistant',
     aiAssistant: 'AI Chat',
     aiSettings: 'AI Settings',
+    dashboard: 'Dashboard',
   },
 };

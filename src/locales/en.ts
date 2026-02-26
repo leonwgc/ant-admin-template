@@ -11,6 +11,7 @@ import componentsEn from './pages/components/en';
 import systemEn from './pages/system/en';
 import securityEn from './pages/security/en';
 import aiEn from './pages/ai/en';
+import dashboardEn from './pages/dashboard/en';
 
 /**
  * English translations
@@ -29,6 +30,7 @@ const en = {
     system: systemEn,
     security: securityEn,
     ai: aiEn,
+    dashboard: dashboardEn,
   },
 };
 

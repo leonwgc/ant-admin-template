@@ -13,6 +13,7 @@ import {
   HomeOutlined,
   SettingOutlined,
   RobotOutlined,
+  BarChartOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -55,6 +56,15 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
  * This structure is used to render navigation menus and control access based on permissions.
  */
 export const menus: MenuItem[] = [
+  {
+    key: 'dashboard',
+    get label() {
+      return t('menu.dashboard');
+    },
+    icon: <BarChartOutlined />,
+    route: '/app/dashboard',
+    permissions: [],
+  },
   {
     key: 'ai',
     get label() {

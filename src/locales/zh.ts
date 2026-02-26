@@ -11,6 +11,7 @@ import componentsZh from './pages/components/zh';
 import systemZh from './pages/system/zh';
 import securityZh from './pages/security/zh';
 import aiZh from './pages/ai/zh';
+import dashboardZh from './pages/dashboard/zh';
 
 /**
  * 中文翻译
@@ -29,6 +30,7 @@ const zh = {
     system: systemZh,
     security: securityZh,
     ai: aiZh,
+    dashboard: dashboardZh,
   },
 };
 

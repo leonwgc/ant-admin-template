@@ -113,5 +113,6 @@ export default {
     ai: 'AI 助手',
     aiAssistant: 'AI 对话',
     aiSettings: 'AI 配置',
+    dashboard: '数据可视化',
   },
 };
