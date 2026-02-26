@@ -5,7 +5,7 @@
 @import 'scss/common.scss';
 
 .custom-node {
-  min-width: 100px;
+  // min-width: 100px;
   background: white;
   border: 1px solid #b1b1b7;
   border-radius: 8px;
@@ -55,22 +55,22 @@
   &--decision {
     border-color: #faad14;
     background: linear-gradient(135deg, #fffbe6 0%, #fff1b8 100%);
-    border-radius: 0;
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    min-width: 160px;
-    min-height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // border-radius: 0;
+    // clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    // min-width: 160px;
+    // min-height: 100px;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
 
-    .custom-node__header {
-      flex-direction: column;
-      text-align: center;
-    }
+    // .custom-node__header {
+    //   flex-direction: column;
+    //   text-align: center;
+    // }
 
     .custom-node__icon {
       color: #faad14;
-      margin-bottom: 4px;
+      // margin-bottom: 4px;
     }
 
     .custom-node__label {
