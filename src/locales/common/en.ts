@@ -114,5 +114,6 @@ export default {
     aiAssistant: 'AI Chat',
     aiSettings: 'AI Settings',
     dashboard: 'Dashboard',
+    flowDesigner: 'Flow Designer',
   },
 };

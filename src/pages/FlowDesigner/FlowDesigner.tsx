@@ -1,0 +1,206 @@
+/**
+ * @file pages/FlowDesigner/FlowDesigner.tsx
+ * @author leon.wang
+ */
+import React, { FC, useState, useCallback, useMemo } from 'react';
+import { message } from '@derbysoft/neat-design';
+import ReactFlow, {
+  Node,
+  Edge,
+  Controls,
+  Background,
+  BackgroundVariant,
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  Connection,
+  NodeTypes,
+  useReactFlow,
+  MarkerType,
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+import { useTranslation } from 'react-i18next';
+
+import { CustomNode, CustomNodeData, CustomNodeType } from './nodes';
+import { Toolbar } from './components/Toolbar';
+import { NodePanel } from './components/NodePanel';
+
+import './FlowDesigner.scss';
+
+const initialNodes: Node<CustomNodeData>[] = [
+  {
+    id: '1',
+    type: 'custom',
+    position: { x: 250, y: 50 },
+    data: { label: '开始', type: 'start' },
+  },
+];
+
+const initialEdges: Edge[] = [];
+
+/**
+ * 可视化流程设计器
+ */
+const FlowDesigner: FC = () => {
+  const { t } = useTranslation();
+  const [nodes, setNodes, onNodesChange] = useNodesState<CustomNodeData>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [selectedNode, setSelectedNode] = useState<Node<CustomNodeData> | null>(null);
+  const [panelVisible, setPanelVisible] = useState(false);
+  const { fitView, zoomIn, zoomOut } = useReactFlow();
+
+  // 自定义节点类型
+  const nodeTypes: NodeTypes = useMemo(
+    () => ({
+      custom: CustomNode,
+    }),
+    []
+  );
+
+  // 连接节点
+  const onConnect = useCallback(
+    (params: Connection) => {
+      const newEdge = {
+        ...params,
+        type: 'smoothstep',
+        animated: true,
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+        },
+      };
+      setEdges((eds) => addEdge(newEdge, eds));
+    },
+    [setEdges]
+  );
+
+  // 添加节点
+  const handleAddNode = useCallback(
+    (type: CustomNodeType) => {
+      const id = `${Date.now()}`;
+      const newNode: Node<CustomNodeData> = {
+        id,
+        type: 'custom',
+        position: { x: Math.random() * 400 + 100, y: Math.random() * 400 + 100 },
+        data: {
+          label: t(`pages.flow:${type}Node`),
+          type,
+        },
+      };
+      setNodes((nds) => [...nds, newNode]);
+      message.success(t('pages.flow:nodeAdded'));
+    },
+    [setNodes, t]
+  );
+
+  // 节点点击
+  const onNodeClick = useCallback(
+    (_event: React.MouseEvent, node: Node<CustomNodeData>) => {
+      setSelectedNode(node);
+      setPanelVisible(true);
+    },
+    []
+  );
+
+  // 保存节点配置
+  const handleSaveNode = useCallback(
+    (updatedNode: Node<CustomNodeData>) => {
+      setNodes((nds) =>
+        nds.map((node) => (node.id === updatedNode.id ? updatedNode : node))
+      );
+      message.success(t('pages.flow:nodeSaved'));
+    },
+    [setNodes, t]
+  );
+
+  // 删除节点
+  const handleDeleteNode = useCallback(() => {
+    if (selectedNode) {
+      setNodes((nds) => nds.filter((node) => node.id !== selectedNode.id));
+      setEdges((eds) =>
+        eds.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id)
+      );
+      setPanelVisible(false);
+      setSelectedNode(null);
+      message.success(t('pages.flow:nodeDeleted'));
+    }
+  }, [selectedNode, setNodes, setEdges, t]);
+
+  // 保存流程
+  const handleSave = useCallback(() => {
+    const flowData = {
+      nodes,
+      edges,
+      timestamp: Date.now(),
+    };
+
+    // 保存到 localStorage
+    localStorage.setItem('flowDesign', JSON.stringify(flowData));
+
+    message.success(t('pages.flow:flowSaved'));
+
+    // 这里可以调用 API 保存到服务器
+    // await saveFlowToServer(flowData);
+  }, [nodes, edges, t]);
+
+  // 清空画布
+  const handleClear = useCallback(() => {
+    setNodes(initialNodes);
+    setEdges(initialEdges);
+    message.success(t('pages.flow:flowCleared'));
+  }, [setNodes, setEdges, t]);
+
+  // 放大
+  const handleZoomIn = useCallback(() => {
+    zoomIn();
+  }, [zoomIn]);
+
+  // 缩小
+  const handleZoomOut = useCallback(() => {
+    zoomOut();
+  }, [zoomOut]);
+
+  // 适应视图
+  const handleFitView = useCallback(() => {
+    fitView({ padding: 0.2, duration: 300 });
+  }, [fitView]);
+
+  return (
+    <div className="flow-designer">
+      <Toolbar
+        onAddNode={handleAddNode}
+        onSave={handleSave}
+        onClear={handleClear}
+        onZoomIn={handleZoomIn}
+        onZoomOut={handleZoomOut}
+        onFitView={handleFitView}
+      />
+
+      <div className="flow-designer__canvas">
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onNodeClick={onNodeClick}
+          nodeTypes={nodeTypes}
+          fitView
+          attributionPosition="bottom-left"
+        >
+          <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
+          <Controls />
+        </ReactFlow>
+      </div>
+
+      <NodePanel
+        visible={panelVisible}
+        node={selectedNode}
+        onClose={() => setPanelVisible(false)}
+        onSave={handleSaveNode}
+        onDelete={handleDeleteNode}
+      />
+    </div>
+  );
+};
+
+export default FlowDesigner;

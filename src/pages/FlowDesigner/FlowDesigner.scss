@@ -1,0 +1,57 @@
+/**
+ * @file pages/FlowDesigner/FlowDesigner.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.flow-designer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px - 48px); // 减去 header 和 padding
+  background: #f5f5f5;
+
+  &__canvas {
+    flex: 1;
+    position: relative;
+
+    .react-flow {
+      &__background {
+        background: #fafafa;
+      }
+
+      &__node {
+        &.selected {
+          .custom-node {
+            border-color: #1890ff;
+            box-shadow: 0 0 0 4px rgba(24, 144, 255, 0.2);
+          }
+        }
+      }
+
+      &__edge {
+        &.selected {
+          .react-flow__edge-path {
+            stroke: #1890ff;
+            stroke-width: 2;
+          }
+        }
+      }
+
+      &__controls {
+        button {
+          background: white;
+          border: 1px solid #d9d9d9;
+          border-radius: 4px;
+
+          &:hover {
+            background: #fafafa;
+          }
+
+          svg {
+            fill: rgba(0, 0, 0, 0.65);
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import systemEn from './pages/system/en';
 import securityEn from './pages/security/en';
 import aiEn from './pages/ai/en';
 import dashboardEn from './pages/dashboard/en';
+import flowEn from './pages/flow/en';
 
 /**
  * English translations
@@ -31,6 +32,7 @@ const en = {
     security: securityEn,
     ai: aiEn,
     dashboard: dashboardEn,
+    flow: flowEn,
   },
 };
 

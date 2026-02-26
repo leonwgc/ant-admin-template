@@ -12,6 +12,7 @@ import systemZh from './pages/system/zh';
 import securityZh from './pages/security/zh';
 import aiZh from './pages/ai/zh';
 import dashboardZh from './pages/dashboard/zh';
+import flowZh from './pages/flow/zh';
 
 /**
  * 中文翻译
@@ -31,6 +32,7 @@ const zh = {
     security: securityZh,
     ai: aiZh,
     dashboard: dashboardZh,
+    flow: flowZh,
   },
 };
 

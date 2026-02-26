@@ -114,5 +114,6 @@ export default {
     aiAssistant: 'AI 对话',
     aiSettings: 'AI 配置',
     dashboard: '数据可视化',
+    flowDesigner: '流程设计器',
   },
 };

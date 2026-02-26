@@ -14,6 +14,7 @@ import {
   SettingOutlined,
   RobotOutlined,
   BarChartOutlined,
+  ApartmentOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -63,6 +64,15 @@ export const menus: MenuItem[] = [
     },
     icon: <BarChartOutlined />,
     route: '/app/dashboard',
+    permissions: [],
+  },
+  {
+    key: 'flow-designer',
+    get label() {
+      return t('menu.flowDesigner');
+    },
+    icon: <ApartmentOutlined />,
+    route: '/app/flow-designer',
     permissions: [],
   },
   {

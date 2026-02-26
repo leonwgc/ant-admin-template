@@ -94,6 +94,9 @@ export const routeComponentMap: RouteComponentMap = {
   // Dashboard
   '/app/dashboard': lazyLoad('pages/Dashboard/Dashboard'),
 
+  // Flow Designer
+  '/app/flow-designer': lazyLoad('pages/FlowDesigner'),
+
   // System Management
   '/app/system/users': lazyLoad('pages/User/Users'),
   '/app/system/roles': lazyLoad('pages/System/RoleManagement'),
