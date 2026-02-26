@@ -55,16 +55,30 @@
   &--decision {
     border-color: #faad14;
     background: linear-gradient(135deg, #fffbe6 0%, #fff1b8 100%);
-    border-radius: 4px;
-    transform: rotate(45deg);
+    border-radius: 0;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    min-width: 200px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .custom-node__header,
-    .custom-node__description {
-      transform: rotate(-45deg);
+    .custom-node__header {
+      flex-direction: column;
+      text-align: center;
     }
 
     .custom-node__icon {
       color: #faad14;
+      margin-bottom: 4px;
+    }
+
+    .custom-node__label {
+      font-size: 14px;
+    }
+
+    .custom-node__description {
+      display: none; // 菱形空间有限，隐藏描述
     }
 
     &.custom-node--selected {
