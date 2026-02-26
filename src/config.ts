@@ -1,1 +1,1 @@
-export const defaultRoute = '/app/ai/settings';
+export const defaultRoute = '/app/dashboard';
