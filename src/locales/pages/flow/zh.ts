@@ -31,6 +31,7 @@ export default {
   nodeAdded: '节点已添加',
   nodeSaved: '节点已保存',
   nodeDeleted: '节点已删除',
+  edgeDeleted: '连接已删除',
   flowSaved: '流程已保存',
   flowCleared: '画布已清空',
 };

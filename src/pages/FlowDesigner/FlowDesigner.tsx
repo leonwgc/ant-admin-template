@@ -2,7 +2,7 @@
  * @file pages/FlowDesigner/FlowDesigner.tsx
  * @author leon.wang
  */
-import React, { FC, useState, useCallback, useMemo } from 'react';
+import React, { FC, useState, useCallback, useMemo, useEffect } from 'react';
 import { message } from '@derbysoft/neat-design';
 import ReactFlow, {
   Node,
@@ -15,6 +15,7 @@ import ReactFlow, {
   addEdge,
   Connection,
   NodeTypes,
+  EdgeTypes,
   useReactFlow,
   MarkerType,
 } from 'reactflow';
@@ -22,6 +23,7 @@ import 'reactflow/dist/style.css';
 import { useTranslation } from 'react-i18next';
 
 import { CustomNode, CustomNodeData, CustomNodeType } from './nodes';
+import { CustomEdge } from './components/CustomEdge';
 import { Toolbar } from './components/Toolbar';
 import { NodePanel } from './components/NodePanel';
 
@@ -46,6 +48,7 @@ const FlowDesigner: FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<CustomNodeData>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node<CustomNodeData> | null>(null);
+  const [selectedEdges, setSelectedEdges] = useState<string[]>([]);
   const [panelVisible, setPanelVisible] = useState(false);
   const { fitView, zoomIn, zoomOut } = useReactFlow();
 
@@ -57,12 +60,20 @@ const FlowDesigner: FC = () => {
     []
   );
 
+  // 自定义连接线类型
+  const edgeTypes: EdgeTypes = useMemo(
+    () => ({
+      custom: CustomEdge,
+    }),
+    []
+  );
+
   // 连接节点
   const onConnect = useCallback(
     (params: Connection) => {
       const newEdge = {
         ...params,
-        type: 'smoothstep',
+        type: 'custom',
         animated: true,
         markerEnd: {
           type: MarkerType.ArrowClosed,
@@ -72,6 +83,16 @@ const FlowDesigner: FC = () => {
     },
     [setEdges]
   );
+
+  // 边选中事件
+  const onEdgeClick = useCallback((_event: React.MouseEvent, edge: Edge) => {
+    setSelectedEdges([edge.id]);
+  }, []);
+
+  // 画布点击事件（取消选中）
+  const onPaneClick = useCallback(() => {
+    setSelectedEdges([]);
+  }, []);
 
   // 添加节点
   const handleAddNode = useCallback(
@@ -149,6 +170,27 @@ const FlowDesigner: FC = () => {
     message.success(t('pages.flow:flowCleared'));
   }, [setNodes, setEdges, t]);
 
+  // 键盘事件：Delete/Backspace 删除选中的连接
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        (event.key === 'Delete' || event.key === 'Backspace') &&
+        selectedEdges.length > 0 &&
+        !panelVisible // 不在编辑节点时才响应
+      ) {
+        setEdges((eds) => eds.filter((edge) => !selectedEdges.includes(edge.id)));
+        setSelectedEdges([]);
+        message.success(t('pages.flow:edgeDeleted'));
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedEdges, panelVisible, setEdges, t]);
+
   // 放大
   const handleZoomIn = useCallback(() => {
     zoomIn();
@@ -183,7 +225,14 @@ const FlowDesigner: FC = () => {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onNodeClick={onNodeClick}
+          onEdgeClick={onEdgeClick}
+          onPaneClick={onPaneClick}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          defaultEdgeOptions={{
+            type: 'custom',
+            animated: true,
+          }}
           fitView
           attributionPosition="bottom-left"
         >

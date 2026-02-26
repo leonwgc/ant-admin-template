@@ -31,6 +31,7 @@ export default {
   nodeAdded: 'Node added',
   nodeSaved: 'Node saved',
   nodeDeleted: 'Node deleted',
+  edgeDeleted: 'Edge deleted',
   flowSaved: 'Flow saved',
   flowCleared: 'Canvas cleared',
 };

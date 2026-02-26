@@ -1,0 +1,22 @@
+/**
+ * @file pages/FlowDesigner/components/CustomEdge.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.custom-edge-button {
+  &__icon {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #ff4d4f;
+      transform: scale(1.2);
+    }
+  }
+}
