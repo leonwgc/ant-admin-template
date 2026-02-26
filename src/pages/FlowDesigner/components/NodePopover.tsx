@@ -74,19 +74,20 @@ export const NodePopover: FC<NodePopoverProps> = ({
         <Form.Item
           name="label"
           label={t('pages.flow:nodeLabel')}
-          rules={[{ required: true, message: t('pages.flow:nodeLabelRequired') }]}
+          rules={[
+            { required: true, message: t('pages.flow:nodeLabelRequired') },
+          ]}
         >
           <Input placeholder={t('pages.flow:nodeLabelPlaceholder')} />
         </Form.Item>
 
         <Form.Item name="description" label={t('pages.flow:nodeDescription')}>
           <Input.TextArea
-            rows={3}
             placeholder={t('pages.flow:nodeDescriptionPlaceholder')}
           />
         </Form.Item>
 
-        <div className="node-popover__info">
+        {/* <div className="node-popover__info">
           <div className="node-popover__info-item">
             <span className="node-popover__info-label">{t('pages.flow:nodeType')}:</span>
             <span className="node-popover__info-value">{t(`pages.flow:${node.data.type}Node`)}</span>
@@ -95,7 +96,7 @@ export const NodePopover: FC<NodePopoverProps> = ({
             <span className="node-popover__info-label">{t('pages.flow:nodeId')}:</span>
             <span className="node-popover__info-value">{node.id}</span>
           </div>
-        </div>
+        </div> */}
       </Form>
 
       <div className="node-popover__footer">
@@ -125,6 +126,7 @@ export const NodePopover: FC<NodePopoverProps> = ({
       }}
     >
       <Popover
+        closable
         content={content}
         open={visible}
         onOpenChange={(open) => !open && onClose()}

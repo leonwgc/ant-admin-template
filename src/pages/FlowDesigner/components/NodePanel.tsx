@@ -21,7 +21,13 @@ export interface NodePanelProps {
 /**
  * 节点配置面板
  */
-export const NodePanel: FC<NodePanelProps> = ({ visible, node, onClose, onSave, onDelete }) => {
+export const NodePanel: FC<NodePanelProps> = ({
+  visible,
+  node,
+  onClose,
+  onSave,
+  onDelete,
+}) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
@@ -75,7 +81,9 @@ export const NodePanel: FC<NodePanelProps> = ({ visible, node, onClose, onSave, 
         <Form.Item
           name="label"
           label={t('pages.flow:nodeLabel')}
-          rules={[{ required: true, message: t('pages.flow:nodeLabelRequired') }]}
+          rules={[
+            { required: true, message: t('pages.flow:nodeLabelRequired') },
+          ]}
         >
           <Input placeholder={t('pages.flow:nodeLabelPlaceholder')} />
         </Form.Item>
@@ -89,11 +97,17 @@ export const NodePanel: FC<NodePanelProps> = ({ visible, node, onClose, onSave, 
 
         <div className="node-panel__info">
           <div className="node-panel__info-item">
-            <span className="node-panel__info-label">{t('pages.flow:nodeType')}:</span>
-            <span className="node-panel__info-value">{t(`pages.flow:${node.data.type}Node`)}</span>
+            <span className="node-panel__info-label">
+              {t('pages.flow:nodeType')}:
+            </span>
+            <span className="node-panel__info-value">
+              {t(`pages.flow:${node.data.type}Node`)}
+            </span>
           </div>
           <div className="node-panel__info-item">
-            <span className="node-panel__info-label">{t('pages.flow:nodeId')}:</span>
+            <span className="node-panel__info-label">
+              {t('pages.flow:nodeId')}:
+            </span>
             <span className="node-panel__info-value">{node.id}</span>
           </div>
         </div>

@@ -27,6 +27,11 @@ export default {
   delete: 'Delete',
   cancel: 'Cancel',
 
+  // Edge Label
+  edgeLabel: 'Edge Label',
+  edgeLabelPlaceholder: 'Enter edge label (double-click edge to edit)',
+  edgeLabelSaved: 'Edge label saved',
+
   // Messages
   nodeAdded: 'Node added',
   nodeSaved: 'Node saved',

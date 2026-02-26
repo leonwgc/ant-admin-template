@@ -52,7 +52,7 @@ export const CustomNode: FC<NodeProps<CustomNodeData>> = memo(({ data, selected 
         <Handle
           type="target"
           position={Position.Top}
-          className="custom-node__handle custom-node__handle--target"
+          className={`custom-node__handle custom-node__handle--target ${type === 'decision' ? 'custom-node__handle--decision-target' : ''}`}
         />
       )}
 
@@ -67,7 +67,7 @@ export const CustomNode: FC<NodeProps<CustomNodeData>> = memo(({ data, selected 
         <Handle
           type="source"
           position={Position.Bottom}
-          className="custom-node__handle custom-node__handle--source"
+          className={`custom-node__handle custom-node__handle--source ${type === 'decision' ? 'custom-node__handle--decision-source' : ''}`}
         />
       )}
     </div>

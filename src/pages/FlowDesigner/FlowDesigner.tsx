@@ -26,6 +26,7 @@ import { CustomNode, CustomNodeData, CustomNodeType } from './nodes';
 import { CustomEdge } from './components/CustomEdge';
 import { Toolbar } from './components/Toolbar';
 import { NodePopover } from './components/NodePopover';
+import { EdgeLabelPopover } from './components/EdgeLabelPopover';
 
 import './FlowDesigner.scss';
 
@@ -51,6 +52,9 @@ const FlowDesigner: FC = () => {
   const [selectedEdges, setSelectedEdges] = useState<string[]>([]);
   const [popoverVisible, setPopoverVisible] = useState(false);
   const [popoverPosition, setPopoverPosition] = useState<{ x: number; y: number } | null>(null);
+  const [edgeLabelPopoverVisible, setEdgeLabelPopoverVisible] = useState(false);
+  const [edgeLabelPopoverPosition, setEdgeLabelPopoverPosition] = useState<{ x: number; y: number } | null>(null);
+  const [editingEdge, setEditingEdge] = useState<Edge | null>(null);
   const { fitView, zoomIn, zoomOut } = useReactFlow();
 
   // 自定义节点类型
@@ -90,10 +94,38 @@ const FlowDesigner: FC = () => {
     setSelectedEdges([edge.id]);
   }, []);
 
+  // 边双击事件：编辑标签
+  const onEdgeDoubleClick = useCallback(
+    (event: React.MouseEvent, edge: Edge) => {
+      event.stopPropagation();
+      setEditingEdge(edge);
+      setEdgeLabelPopoverPosition({ x: event.clientX, y: event.clientY });
+      setEdgeLabelPopoverVisible(true);
+    },
+    []
+  );
+
   // 画布点击事件（取消选中）
   const onPaneClick = useCallback(() => {
     setSelectedEdges([]);
   }, []);
+
+  // 保存边标签
+  const handleSaveEdgeLabel = useCallback(
+    (label: string) => {
+      if (editingEdge) {
+        setEdges((eds) =>
+          eds.map((edge) =>
+            edge.id === editingEdge.id
+              ? { ...edge, label, data: { ...edge.data, label } }
+              : edge
+          )
+        );
+        message.success(t('pages.flow:edgeLabelSaved'));
+      }
+    },
+    [editingEdge, setEdges, t]
+  );
 
   // 添加节点
   const handleAddNode = useCallback(
@@ -194,7 +226,8 @@ const FlowDesigner: FC = () => {
       if (
         (event.key === 'Delete' || event.key === 'Backspace') &&
         selectedEdges.length > 0 &&
-        !popoverVisible // 不在编辑节点时才响应
+        !popoverVisible && // 不在编辑节点时才响应
+        !edgeLabelPopoverVisible // 不在编辑连接线文本时才响应
       ) {
         setEdges((eds) => eds.filter((edge) => !selectedEdges.includes(edge.id)));
         setSelectedEdges([]);
@@ -207,7 +240,7 @@ const FlowDesigner: FC = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [selectedEdges, popoverVisible, setEdges, t]);
+  }, [selectedEdges, popoverVisible, edgeLabelPopoverVisible, setEdges, t]);
 
   // 放大
   const handleZoomIn = useCallback(() => {
@@ -244,6 +277,7 @@ const FlowDesigner: FC = () => {
           onConnect={onConnect}
           onNodeContextMenu={onNodeContextMenu}
           onEdgeClick={onEdgeClick}
+          onEdgeDoubleClick={onEdgeDoubleClick}
           onPaneClick={onPaneClick}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
@@ -266,6 +300,18 @@ const FlowDesigner: FC = () => {
         onClose={() => setPopoverVisible(false)}
         onSave={handleSaveNode}
         onDelete={handleDeleteNode}
+      />
+
+      <EdgeLabelPopover
+        visible={edgeLabelPopoverVisible}
+        initialLabel={
+          typeof editingEdge?.label === 'string'
+            ? editingEdge.label
+            : (editingEdge?.data && 'label' in editingEdge.data ? String(editingEdge.data.label || '') : '')
+        }
+        position={edgeLabelPopoverPosition}
+        onClose={() => setEdgeLabelPopoverVisible(false)}
+        onSave={handleSaveEdgeLabel}
       />
     </div>
   );

@@ -27,6 +27,11 @@ export default {
   delete: '删除',
   cancel: '取消',
 
+  // 边标签
+  edgeLabel: '连接线文本',
+  edgeLabelPlaceholder: '请输入连接线文本（双击连接线编辑）',
+  edgeLabelSaved: '连接线文本已保存',
+
   // 消息提示
   nodeAdded: '节点已添加',
   nodeSaved: '节点已保存',

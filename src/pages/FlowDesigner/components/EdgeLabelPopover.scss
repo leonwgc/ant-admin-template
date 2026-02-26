@@ -1,0 +1,32 @@
+/**
+ * @file pages/FlowDesigner/components/EdgeLabelPopover.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.edge-label-popover {
+  &__content {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    min-width: 280px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  &__footer {
+    margin-top: 12px;
+    text-align: right;
+  }
+}
+
+.custom-edge-label {
+  cursor: default;
+  user-select: none;
+}
