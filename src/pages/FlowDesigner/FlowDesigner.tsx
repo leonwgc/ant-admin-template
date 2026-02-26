@@ -98,10 +98,25 @@ const FlowDesigner: FC = () => {
   const handleAddNode = useCallback(
     (type: CustomNodeType) => {
       const id = `${Date.now()}`;
+
+      // 计算新节点位置：在开始节点右侧排列
+      const startX = 250; // 开始节点的 x 坐标
+      const startY = 50;  // 开始节点的 y 坐标
+      const offsetX = 250; // 水平间距
+      const offsetY = 150; // 垂直间距
+
+      // 根据当前节点数量计算位置，形成网格布局
+      const nodeCount = nodes.length;
+      const col = Math.floor(nodeCount / 3); // 第几列
+      const row = nodeCount % 3; // 第几行
+
       const newNode: Node<CustomNodeData> = {
         id,
         type: 'custom',
-        position: { x: Math.random() * 400 + 100, y: Math.random() * 400 + 100 },
+        position: {
+          x: startX + (col * offsetX),
+          y: startY + (row * offsetY)
+        },
         data: {
           label: t(`pages.flow:${type}Node`),
           type,
@@ -110,7 +125,7 @@ const FlowDesigner: FC = () => {
       setNodes((nds) => [...nds, newNode]);
       message.success(t('pages.flow:nodeAdded'));
     },
-    [setNodes, t]
+    [nodes.length, setNodes, t]
   );
 
   // 节点点击
