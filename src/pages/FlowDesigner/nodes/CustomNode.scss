@@ -117,11 +117,10 @@
     height: 10px;
     background: #1890ff;
     border: 2px solid white;
-    transition: all 0.2s;
+    transition: transform 0.2s ease;
 
     &:hover {
-      width: 14px;
-      height: 14px;
+      transform: scale(1.4);
     }
 
     &--target {
