@@ -46,14 +46,23 @@ const initialEdges: Edge[] = [];
  */
 const FlowDesigner: FC = () => {
   const { t } = useTranslation();
-  const [nodes, setNodes, onNodesChange] = useNodesState<CustomNodeData>(initialNodes);
+  const [nodes, setNodes, onNodesChange] =
+    useNodesState<CustomNodeData>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [selectedNode, setSelectedNode] = useState<Node<CustomNodeData> | null>(null);
+  const [selectedNode, setSelectedNode] = useState<Node<CustomNodeData> | null>(
+    null,
+  );
   const [selectedEdges, setSelectedEdges] = useState<string[]>([]);
   const [popoverVisible, setPopoverVisible] = useState(false);
-  const [popoverPosition, setPopoverPosition] = useState<{ x: number; y: number } | null>(null);
+  const [popoverPosition, setPopoverPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
   const [edgeLabelPopoverVisible, setEdgeLabelPopoverVisible] = useState(false);
-  const [edgeLabelPopoverPosition, setEdgeLabelPopoverPosition] = useState<{ x: number; y: number } | null>(null);
+  const [edgeLabelPopoverPosition, setEdgeLabelPopoverPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
   const [editingEdge, setEditingEdge] = useState<Edge | null>(null);
   const { fitView, zoomIn, zoomOut } = useReactFlow();
 
@@ -62,7 +71,7 @@ const FlowDesigner: FC = () => {
     () => ({
       custom: CustomNode,
     }),
-    []
+    [],
   );
 
   // 自定义连接线类型
@@ -70,7 +79,7 @@ const FlowDesigner: FC = () => {
     () => ({
       custom: CustomEdge,
     }),
-    []
+    [],
   );
 
   // 连接节点
@@ -86,7 +95,7 @@ const FlowDesigner: FC = () => {
       };
       setEdges((eds) => addEdge(newEdge, eds));
     },
-    [setEdges]
+    [setEdges],
   );
 
   // 边选中事件
@@ -102,7 +111,7 @@ const FlowDesigner: FC = () => {
       setEdgeLabelPopoverPosition({ x: event.clientX, y: event.clientY });
       setEdgeLabelPopoverVisible(true);
     },
-    []
+    [],
   );
 
   // 画布点击事件（取消选中）
@@ -118,13 +127,13 @@ const FlowDesigner: FC = () => {
           eds.map((edge) =>
             edge.id === editingEdge.id
               ? { ...edge, label, data: { ...edge.data, label } }
-              : edge
-          )
+              : edge,
+          ),
         );
         message.success(t('pages.flow:edgeLabelSaved'));
       }
     },
-    [editingEdge, setEdges, t]
+    [editingEdge, setEdges, t],
   );
 
   // 添加节点
@@ -132,11 +141,12 @@ const FlowDesigner: FC = () => {
     (type: CustomNodeType) => {
       const id = `${Date.now()}`;
 
-      // 计算新节点位置：在开始节点右侧排列
-      const startX = 250; // 开始节点的 x 坐标
-      const startY = 50;  // 开始节点的 y 坐标
-      const offsetX = 250; // 水平间距
-      const offsetY = 150; // 垂直间距
+      // 动态获取开始节点的坐标
+      const startNode = nodes[nodes.length - 1];
+      const startX = startNode?.position.x || 250;
+      const startY = startNode?.position.y || 50;
+      const offsetX = 100; // 水平间距
+      const offsetY = 60; // 垂直间距
 
       // 根据当前节点数量计算位置，形成网格布局
       const nodeCount = nodes.length;
@@ -147,8 +157,8 @@ const FlowDesigner: FC = () => {
         id,
         type: 'custom',
         position: {
-          x: startX + (col * offsetX),
-          y: startY + (row * offsetY)
+          x: startX + col * offsetX,
+          y: startY + row * offsetY,
         },
         data: {
           label: t(`pages.flow:${type}Node`),
@@ -158,7 +168,7 @@ const FlowDesigner: FC = () => {
       setNodes((nds) => [...nds, newNode]);
       message.success(t('pages.flow:nodeAdded'));
     },
-    [nodes.length, setNodes, t]
+    [nodes, setNodes, t],
   );
 
   // 节点右键点击
@@ -169,18 +179,18 @@ const FlowDesigner: FC = () => {
       setPopoverPosition({ x: event.clientX, y: event.clientY });
       setPopoverVisible(true);
     },
-    []
+    [],
   );
 
   // 保存节点配置
   const handleSaveNode = useCallback(
     (updatedNode: Node<CustomNodeData>) => {
       setNodes((nds) =>
-        nds.map((node) => (node.id === updatedNode.id ? updatedNode : node))
+        nds.map((node) => (node.id === updatedNode.id ? updatedNode : node)),
       );
       message.success(t('pages.flow:nodeSaved'));
     },
-    [setNodes, t]
+    [setNodes, t],
   );
 
   // 删除节点
@@ -188,7 +198,10 @@ const FlowDesigner: FC = () => {
     if (selectedNode) {
       setNodes((nds) => nds.filter((node) => node.id !== selectedNode.id));
       setEdges((eds) =>
-        eds.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id)
+        eds.filter(
+          (edge) =>
+            edge.source !== selectedNode.id && edge.target !== selectedNode.id,
+        ),
       );
       setPopoverVisible(false);
       setSelectedNode(null);
@@ -229,7 +242,9 @@ const FlowDesigner: FC = () => {
         !popoverVisible && // 不在编辑节点时才响应
         !edgeLabelPopoverVisible // 不在编辑连接线文本时才响应
       ) {
-        setEdges((eds) => eds.filter((edge) => !selectedEdges.includes(edge.id)));
+        setEdges((eds) =>
+          eds.filter((edge) => !selectedEdges.includes(edge.id)),
+        );
         setSelectedEdges([]);
         message.success(t('pages.flow:edgeDeleted'));
         event.preventDefault();
@@ -307,7 +322,9 @@ const FlowDesigner: FC = () => {
         initialLabel={
           typeof editingEdge?.label === 'string'
             ? editingEdge.label
-            : (editingEdge?.data && 'label' in editingEdge.data ? String(editingEdge.data.label || '') : '')
+            : editingEdge?.data && 'label' in editingEdge.data
+              ? String(editingEdge.data.label || '')
+              : ''
         }
         position={edgeLabelPopoverPosition}
         onClose={() => setEdgeLabelPopoverVisible(false)}
