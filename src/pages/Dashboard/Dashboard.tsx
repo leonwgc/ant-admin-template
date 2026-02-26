@@ -34,6 +34,7 @@ const Dashboard: FC = () => {
     title: {
       text: t('pages.dashboard:salesTrendTitle'),
       left: 'center',
+      top: 0,
     },
     tooltip: {
       trigger: 'axis',
@@ -44,6 +45,7 @@ const Dashboard: FC = () => {
     legend: {
       data: [t('pages.dashboard:sales'), t('pages.dashboard:profit')],
       top: 30,
+      left: 'center',
     },
     grid: {
       left: '3%',
@@ -54,7 +56,20 @@ const Dashboard: FC = () => {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      data: [
+        '1月',
+        '2月',
+        '3月',
+        '4月',
+        '5月',
+        '6月',
+        '7月',
+        '8月',
+        '9月',
+        '10月',
+        '11月',
+        '12月',
+      ],
     },
     yAxis: {
       type: 'value',
@@ -86,6 +101,7 @@ const Dashboard: FC = () => {
     title: {
       text: t('pages.dashboard:categorySalesTitle'),
       left: 'center',
+      top: 0,
     },
     tooltip: {
       trigger: 'axis',
@@ -95,6 +111,7 @@ const Dashboard: FC = () => {
     },
     legend: {
       top: 30,
+      left: 'center',
     },
     grid: {
       left: '3%',
@@ -126,6 +143,7 @@ const Dashboard: FC = () => {
     title: {
       text: t('pages.dashboard:userSourceTitle'),
       left: 'center',
+      top: 0,
     },
     tooltip: {
       trigger: 'item',
@@ -164,9 +182,11 @@ const Dashboard: FC = () => {
     title: {
       text: t('pages.dashboard:productScoreTitle'),
       left: 'center',
+      top: 0,
     },
     legend: {
       top: 30,
+      left: 'center',
     },
     radar: {
       indicator: [
@@ -240,13 +260,48 @@ const Dashboard: FC = () => {
         name: '活跃度',
         type: 'heatmap',
         data: [
-          [0, 0, 5], [0, 1, 10], [0, 2, 45], [0, 3, 78], [0, 4, 92], [0, 5, 56],
-          [1, 0, 8], [1, 1, 12], [1, 2, 50], [1, 3, 85], [1, 4, 88], [1, 5, 60],
-          [2, 0, 6], [2, 1, 15], [2, 2, 52], [2, 3, 82], [2, 4, 90], [2, 5, 58],
-          [3, 0, 7], [3, 1, 14], [3, 2, 48], [3, 3, 80], [3, 4, 95], [3, 5, 62],
-          [4, 0, 9], [4, 1, 16], [4, 2, 55], [4, 3, 88], [4, 4, 98], [4, 5, 65],
-          [5, 0, 15], [5, 1, 25], [5, 2, 60], [5, 3, 70], [5, 4, 75], [5, 5, 70],
-          [6, 0, 20], [6, 1, 30], [6, 2, 65], [6, 3, 75], [6, 4, 80], [6, 5, 72],
+          [0, 0, 5],
+          [0, 1, 10],
+          [0, 2, 45],
+          [0, 3, 78],
+          [0, 4, 92],
+          [0, 5, 56],
+          [1, 0, 8],
+          [1, 1, 12],
+          [1, 2, 50],
+          [1, 3, 85],
+          [1, 4, 88],
+          [1, 5, 60],
+          [2, 0, 6],
+          [2, 1, 15],
+          [2, 2, 52],
+          [2, 3, 82],
+          [2, 4, 90],
+          [2, 5, 58],
+          [3, 0, 7],
+          [3, 1, 14],
+          [3, 2, 48],
+          [3, 3, 80],
+          [3, 4, 95],
+          [3, 5, 62],
+          [4, 0, 9],
+          [4, 1, 16],
+          [4, 2, 55],
+          [4, 3, 88],
+          [4, 4, 98],
+          [4, 5, 65],
+          [5, 0, 15],
+          [5, 1, 25],
+          [5, 2, 60],
+          [5, 3, 70],
+          [5, 4, 75],
+          [5, 5, 70],
+          [6, 0, 20],
+          [6, 1, 30],
+          [6, 2, 65],
+          [6, 3, 75],
+          [6, 4, 80],
+          [6, 5, 72],
         ],
         label: {
           show: false,
@@ -344,11 +399,17 @@ const Dashboard: FC = () => {
               title={t('pages.dashboard:totalUsers')}
               value={stats.totalUsers.value}
               precision={0}
-              valueStyle={{ color: stats.totalUsers.growth > 0 ? '#3f8600' : '#cf1322' }}
+              valueStyle={{
+                color: stats.totalUsers.growth > 0 ? '#3f8600' : '#cf1322',
+              }}
               prefix={<UserOutlined />}
               suffix={
                 <span style={{ fontSize: 14, marginLeft: 8 }}>
-                  {stats.totalUsers.growth > 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                  {stats.totalUsers.growth > 0 ? (
+                    <ArrowUpOutlined />
+                  ) : (
+                    <ArrowDownOutlined />
+                  )}
                   {Math.abs(stats.totalUsers.growth)}%
                 </span>
               }
@@ -361,11 +422,17 @@ const Dashboard: FC = () => {
               title={t('pages.dashboard:totalOrders')}
               value={stats.totalOrders.value}
               precision={0}
-              valueStyle={{ color: stats.totalOrders.growth > 0 ? '#3f8600' : '#cf1322' }}
+              valueStyle={{
+                color: stats.totalOrders.growth > 0 ? '#3f8600' : '#cf1322',
+              }}
               prefix={<ShoppingCartOutlined />}
               suffix={
                 <span style={{ fontSize: 14, marginLeft: 8 }}>
-                  {stats.totalOrders.growth > 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                  {stats.totalOrders.growth > 0 ? (
+                    <ArrowUpOutlined />
+                  ) : (
+                    <ArrowDownOutlined />
+                  )}
                   {Math.abs(stats.totalOrders.growth)}%
                 </span>
               }
@@ -378,11 +445,17 @@ const Dashboard: FC = () => {
               title={t('pages.dashboard:totalRevenue')}
               value={stats.totalRevenue.value}
               precision={0}
-              valueStyle={{ color: stats.totalRevenue.growth > 0 ? '#3f8600' : '#cf1322' }}
+              valueStyle={{
+                color: stats.totalRevenue.growth > 0 ? '#3f8600' : '#cf1322',
+              }}
               prefix={<DollarOutlined />}
               suffix={
                 <span style={{ fontSize: 14, marginLeft: 8 }}>
-                  {stats.totalRevenue.growth > 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                  {stats.totalRevenue.growth > 0 ? (
+                    <ArrowUpOutlined />
+                  ) : (
+                    <ArrowDownOutlined />
+                  )}
                   {Math.abs(stats.totalRevenue.growth)}%
                 </span>
               }
@@ -395,11 +468,17 @@ const Dashboard: FC = () => {
               title={t('pages.dashboard:pageViews')}
               value={stats.pageViews.value}
               precision={0}
-              valueStyle={{ color: stats.pageViews.growth > 0 ? '#3f8600' : '#cf1322' }}
+              valueStyle={{
+                color: stats.pageViews.growth > 0 ? '#3f8600' : '#cf1322',
+              }}
               prefix={<EyeOutlined />}
               suffix={
                 <span style={{ fontSize: 14, marginLeft: 8 }}>
-                  {stats.pageViews.growth > 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                  {stats.pageViews.growth > 0 ? (
+                    <ArrowUpOutlined />
+                  ) : (
+                    <ArrowDownOutlined />
+                  )}
                   {Math.abs(stats.pageViews.growth)}%
                 </span>
               }
