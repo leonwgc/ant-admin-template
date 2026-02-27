@@ -5,7 +5,6 @@
 @import 'scss/common.scss';
 
 .custom-node {
-  // min-width: 100px;
   background: white;
   border: 1px solid #b1b1b7;
   border-radius: 8px;
@@ -16,7 +15,6 @@
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    // transform: translateY(-2px);
   }
 
   &--selected {
@@ -55,30 +53,13 @@
   &--decision {
     border-color: #faad14;
     background: linear-gradient(135deg, #fffbe6 0%, #fff1b8 100%);
-    // border-radius: 0;
-    // clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    // min-width: 160px;
-    // min-height: 100px;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-
-    // .custom-node__header {
-    //   flex-direction: column;
-    //   text-align: center;
-    // }
 
     .custom-node__icon {
       color: #faad14;
-      // margin-bottom: 4px;
     }
 
     .custom-node__label {
       font-size: 13px;
-    }
-
-    .custom-node__description {
-      display: none; // 菱形空间有限，隐藏描述
     }
 
     &.custom-node--selected {
@@ -130,12 +111,7 @@
     width: 6px;
     height: 6px;
     background: #1890ff;
-    // border: 2px solid white;
     transition: transform 0.2s ease;
-
-    // &:hover {
-    //   transform: scale(1.4);
-    // }
 
     &--target {
       top: -5px;
@@ -143,27 +119,6 @@
 
     &--source {
       bottom: -5px;
-    }
-
-    // Decision 节点菱形的连接点需要在顶点位置
-    &--decision-target {
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-      &:hover {
-        transform: translate(-50%, -50%) scale(1.4);
-      }
-    }
-
-    &--decision-source {
-      bottom: 0;
-      left: 50%;
-      transform: translate(-50%, 50%);
-
-      &:hover {
-        transform: translate(-50%, 50%) scale(1.4);
-      }
     }
   }
 }
