@@ -13,6 +13,7 @@ import securityEn from './pages/security/en';
 import aiEn from './pages/ai/en';
 import dashboardEn from './pages/dashboard/en';
 import flowEn from './pages/flow/en';
+import pdfEn from './pages/pdf/en';
 
 /**
  * English translations
@@ -33,6 +34,7 @@ const en = {
     ai: aiEn,
     dashboard: dashboardEn,
     flow: flowEn,
+    pdf: pdfEn,
   },
 };
 

@@ -115,5 +115,6 @@ export default {
     aiSettings: 'AI 配置',
     dashboard: '数据可视化',
     flowDesigner: '流程设计器',
+    pdfViewer: 'PDF 预览',
   },
 };

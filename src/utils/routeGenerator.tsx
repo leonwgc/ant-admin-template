@@ -97,6 +97,9 @@ export const routeComponentMap: RouteComponentMap = {
   // Flow Designer
   '/app/flow-designer': lazyLoad('pages/FlowDesigner'),
 
+  // PDF Viewer
+  '/app/pdf-viewer': lazyLoad('pages/PdfViewer'),
+
   // System Management
   '/app/system/users': lazyLoad('pages/User/Users'),
   '/app/system/roles': lazyLoad('pages/System/RoleManagement'),

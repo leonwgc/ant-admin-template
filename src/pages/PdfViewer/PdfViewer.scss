@@ -1,0 +1,91 @@
+/**
+ * @file pages/PdfViewer/PdfViewer.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.pdf-viewer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+
+  &__header {
+    padding: 16px;
+    background: white;
+    border-bottom: 1px solid #e8e8e8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  &__page-info {
+    padding: 0 12px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &__scale {
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    min-width: 50px;
+    text-align: center;
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px;
+    min-height: 0;
+  }
+
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    width: 100%;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  &__empty-icon {
+    font-size: 80px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  &__empty-text {
+    font-size: 16px;
+  }
+
+  &__document {
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+
+    .react-pdf__Page {
+      margin: 0;
+
+      canvas {
+        display: block;
+      }
+    }
+  }
+}

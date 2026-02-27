@@ -15,6 +15,7 @@ import {
   RobotOutlined,
   BarChartOutlined,
   ApartmentOutlined,
+  FilePdfOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -75,6 +76,7 @@ export const menus: MenuItem[] = [
     route: '/app/flow-designer',
     permissions: [],
   },
+
   {
     key: 'ai',
     get label() {
@@ -594,6 +596,14 @@ export const menus: MenuItem[] = [
           return t('menu.sortableJs');
         },
         route: '/app/js/sortable-demo',
+        permissions: [],
+      },
+      {
+        key: 'pdf-viewer',
+        get label() {
+          return t('menu.pdfViewer');
+        },
+        route: '/app/pdf-viewer',
         permissions: [],
       },
     ],

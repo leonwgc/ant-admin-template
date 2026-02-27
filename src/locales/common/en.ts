@@ -115,5 +115,6 @@ export default {
     aiSettings: 'AI Settings',
     dashboard: 'Dashboard',
     flowDesigner: 'Flow Designer',
+    pdfViewer: 'PDF Viewer',
   },
 };
