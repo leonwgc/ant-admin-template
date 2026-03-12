@@ -2,17 +2,33 @@
 marp: true
 theme: default
 paginate: true
-header: 'AI 核心概念详解'
+header: 'AI 核心概念详解 - leonwgc'
 footer: 'leon.wang | 2026年3月12日'
 style: |
   section {
     font-size: 28px;
+    padding-bottom: 50px;
   }
   h1 {
     color: #1890ff;
   }
   h2 {
     color: #52c41a;
+  }
+  header {
+    color: #666;
+    font-size: 18px;
+  }
+  footer {
+    color: #666;
+    font-size: 16px;
+    font-weight: 500;
+    display: none;
+  }
+  section::after {
+    color: #666;
+    font-size: 18px;
+    font-weight: bold;
   }
 ---
 
@@ -22,7 +38,7 @@ style: |
 ## 从 LLM 到 Agent 的完整知识体系
 
 **演讲人**: leon.wang
-**日期**: 2026年3月12日
+**日期**: 2026年
 
 ---
 
@@ -1135,4 +1151,4 @@ tokens ≈ characters × 0.3
 
 **文档**: ai.md
 **演示**: ai-presentation.md
-**日期**: 2026年3月12日
+**日期**: 2026年
