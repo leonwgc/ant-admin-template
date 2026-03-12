@@ -2,8 +2,8 @@
 marp: true
 theme: default
 paginate: true
-header: 'AI 核心概念详解 - leonwgc'
-footer: 'leon.wang | 2026年3月12日'
+header: 'AI 核心概念详解'
+footer: 'leon.wang  2026年'
 style: |
   section {
     font-size: 28px;
@@ -20,15 +20,20 @@ style: |
     font-size: 18px;
   }
   footer {
-    color: #666;
-    font-size: 16px;
-    font-weight: 500;
-    display: none;
+    color: #999;
+    font-size: 12px;
+    font-weight: 400;
+    position: absolute;
+    right: 12px;
+    top: 16px;
+    text-align: right;
   }
   section::after {
     color: #666;
     font-size: 18px;
     font-weight: bold;
+
+
   }
 ---
 
@@ -957,17 +962,6 @@ async function codeReview(code: string) {
 ---
 
 <!-- _class: lead -->
-# Q & A
-
-## 感谢聆听！
-
-**联系方式**: leon.wang
-**项目地址**: ant-admin-template
-**文档**: ai.md
-
----
-
-<!-- _class: lead -->
 # 附录：快速参考
 
 ---
@@ -1148,7 +1142,3 @@ tokens ≈ characters × 0.3
 # 再次感谢！
 
 ## 让 AI 成为你的超级助手 🚀
-
-**文档**: ai.md
-**演示**: ai-presentation.md
-**日期**: 2026年
