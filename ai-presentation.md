@@ -23,17 +23,12 @@ style: |
     color: #999;
     font-size: 12px;
     font-weight: 400;
-    position: absolute;
-    right: 12px;
-    top: 16px;
-    text-align: right;
+    display:none;
   }
   section::after {
     color: #666;
     font-size: 18px;
     font-weight: bold;
-
-
   }
 ---
 
