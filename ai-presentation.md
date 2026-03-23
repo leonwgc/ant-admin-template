@@ -47,11 +47,12 @@ style: |
    - LLM、Prompt、Context、Token
 
 2. **高级概念** - 智能系统的构建
-   - Agent、Tool、MCP、Skill、Memory
+   - Agent、Tool、MCP、Skill、RAG
 
 3. **架构设计** - 系统如何协作
+   - 整体架构、数据流向
 
-4. **实际应用** - 真实场景演示
+4. **实际应用** - 真实场景演示与总结
 
 ---
 
