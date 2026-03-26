@@ -7,22 +7,10 @@
  * Parse query parameters from a URL string (or current page URL by default).
  * Returns a plain object of key-value pairs.
  */
-export const getParams = (url?: string): Record<string, string> => {
-  const search = url ? new URL(url, window.location.href).search : window.location.search;
-  const params = new URLSearchParams(search);
-  const result: Record<string, string> = {};
-  params.forEach((value, key) => {
-    result[key] = value;
-  });
-  return result;
-};
-
-/**
- * Get a single query parameter from the current URL (or a provided URL).
- */
-export const getParam = (key: string, url?: string): string | null => {
-  const search = url ? new URL(url, window.location.href).search : window.location.search;
-  return new URLSearchParams(search).get(key);
+export const getParams = (): Record<string, string> => {
+  return Object.fromEntries(
+    new URLSearchParams(window.location.search).entries(),
+  );
 };
 
 /**
@@ -51,7 +39,9 @@ export const removeParam = (url: string, key: string): string => {
  * Build a query string from a plain object.
  * e.g. { page: 1, size: 20 } → "page=1&size=20"
  */
-export const buildQuery = (params: Record<string, string | number | boolean | undefined | null>): string => {
+export const buildQuery = (
+  params: Record<string, string | number | boolean | undefined | null>,
+): string => {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
