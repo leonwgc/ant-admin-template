@@ -55,14 +55,16 @@ export const maskEmail = (email) => {
   return `****@${domain}`;
 };
 
+// 部分	说明
+// [a-zA-Z0-9._%+-]+	本地部分只允许合法字符
+// [a-zA-Z0-9.-]+	域名只允许字母、数字、点、连字符
+// \.[a-zA-Z]{2,}	TLD 必须是至少 2 位字母（如 .com、.cn）
 export const isValidEmail = (email = '') => {
   return (
     !!email &&
     email.length > 0 &&
     email.length <= 128 &&
-    /^([a-zA-Z0-9]+[\_\|\.\-\+]+)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[\_\|\.\-]+)*[a-zA-Z0-9]+\.[a-zA-Z]+$/.test(
-      email?.trim(),
-    )
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email?.trim())
   );
 };
 
