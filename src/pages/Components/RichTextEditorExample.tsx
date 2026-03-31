@@ -82,19 +82,46 @@ const RichTextEditorExample: FC = () => {
 
       <Divider />
 
+      {/* ── 粘贴纯文本 + 字符限制 ── */}
+      <Card title="粘贴净化 + 字符限制 (pasteAsPlainText + maxLength)" className="rte-example__card">
+        <RichTextEditor
+          placeholder="从网页/Word 粘贴内容会自动去除格式..."
+          height={120}
+          pasteAsPlainText
+          maxLength={200}
+          showWordCount
+        />
+        <p className="rte-example__hint">
+          开启 <code>pasteAsPlainText</code> 后，从外部粘贴的内容会自动剥离 HTML 格式；
+          <code>maxLength=200</code> 超出时底部计数器变红。
+        </p>
+      </Card>
+
+      <Divider />
+
       {/* ── 功能说明 ── */}
       <Card title="功能清单" className="rte-example__card">
         <div className="rte-example__feature-list">
           {[
           { label: '加粗 / 斜体 / 下划线 / 删除线', color: 'blue' as const },
-            { label: '字体大小（10px - 48px）', color: 'blue' as const },
-            { label: '文字颜色（32色板）', color: 'blue' as const },
-            { label: '背景色（32色板 + 透明）', color: 'blue' as const },
+            { label: '字体大小（12px - 48px）', color: 'blue' as const },
+            { label: '文字颜色 + 背景色（32色板）', color: 'blue' as const },
             { label: '左对齐 / 居中 / 右对齐', color: 'green' as const },
             { label: '有序列表 / 无序列表', color: 'green' as const },
+            { label: '缩进 / 减少缩进', color: 'green' as const },
+            { label: '上标 / 下标', color: 'green' as const },
+            { label: '插入分割线', color: 'orange' as const },
+            { label: '插入链接 (Ctrl+K)', color: 'orange' as const },
+            { label: '插入图片 URL', color: 'orange' as const },
             { label: '撤销 / 重做 (Ctrl+Z / Ctrl+Y)', color: 'orange' as const },
             { label: '清除格式', color: 'orange' as const },
             { label: '40 个预制 Emoji', color: 'purple' as const },
+            { label: '浮动气泡工具栏', color: 'purple' as const },
+            { label: '粘贴纯文本模式', color: 'purple' as const },
+            { label: 'HTML 源码视图', color: 'purple' as const },
+            { label: '全屏编辑 (Esc 退出)', color: 'purple' as const },
+            { label: '字符 / 词数统计', color: 'purple' as const },
+            { label: '最大字符数限制', color: 'purple' as const },
             { label: '零第三方依赖', color: 'purple' as const },
           ].map((item) => (
             <Tag key={item.label} color={item.color} className="rte-example__tag">

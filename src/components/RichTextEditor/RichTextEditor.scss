@@ -111,6 +111,19 @@
     border-radius: 2px;
     border: 1px solid rgba(0, 0, 0, 0.08);
   }
+
+  // Superscript / subscript text icon label
+  &__text-icon {
+    font-size: 11px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1;
+    color: var(--color-text, #333);
+
+    &--sub {
+      font-size: 10px;
+    }
+  }
 }
 
 // ─── Editor content area ──────────────────────────────────────────────────────
@@ -140,6 +153,9 @@
   p { margin: 0 0 4px; }
   ul, ol { padding-left: 20px; margin: 4px 0; }
   b, strong { font-weight: 600; }
+  hr { border: none; border-top: 1px solid var(--color-border, #d9d9d9); margin: 8px 0; }
+  img { max-width: 100%; height: auto; border-radius: 4px; display: inline-block; }
+  a { color: var(--color-primary, #1677ff); text-decoration: underline; }
 }
 
 // ─── Color picker ─────────────────────────────────────────────────────────────
@@ -202,5 +218,103 @@
     &:hover {
       background: var(--color-fill-secondary, #f0f0f0);
     }
+  }
+}
+
+// ─── Fullscreen mode ─────────────────────────────────────────────────────────────────────
+.rte--fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  border-radius: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+
+  .rte-toolbar { flex-shrink: 0; }
+
+  .rte-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: unset !important;
+  }
+
+  .rte-source {
+    flex: 1;
+    min-height: unset !important;
+  }
+}
+
+// ─── Source mode textarea ───────────────────────────────────────────────────────────
+.rte-source {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text, #333);
+  background: var(--color-bg-container, #fff);
+  box-sizing: border-box;
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────────────
+.rte-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+  border-top: 1px solid var(--color-border, #d9d9d9);
+  background: var(--color-fill-quaternary, #fafafa);
+  font-size: 12px;
+  color: var(--color-text-secondary, #888);
+
+  &__limit {
+    margin-left: auto;
+
+    &--over {
+      color: #ff4d4f;
+      font-weight: 600;
+    }
+  }
+}
+
+// ─── Floating bubble toolbar ─────────────────────────────────────────────────────────
+.rte-bubble {
+  position: fixed;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  background: var(--color-bg-elevated, #fff);
+  border: 1px solid var(--color-border, #d9d9d9);
+  border-radius: 6px;
+  padding: 3px 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  pointer-events: auto;
+
+  &__divider {
+    width: 1px;
+    height: 16px;
+    background: var(--color-border, #e0e0e0);
+    margin: 0 2px;
+    flex-shrink: 0;
+  }
+
+  // Downward caret arrow
+  &__arrow {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--color-bg-elevated, #fff);
+    border-right: 1px solid var(--color-border, #d9d9d9);
+    border-bottom: 1px solid var(--color-border, #d9d9d9);
+    transform: translateX(-50%) rotate(45deg);
   }
 }
