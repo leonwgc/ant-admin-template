@@ -90,6 +90,7 @@ export default {
     imageUpload: '图片上传',
     imageCropper: '图片裁剪',
     richTextEditor: '富文本编辑器',
+    numberRoll: '数字滚动',
     fadeIn: '淡入动画',
     textEllipsis: '文本省略',
     animated: '动画组件',

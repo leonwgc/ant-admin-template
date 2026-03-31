@@ -90,6 +90,7 @@ export default {
     imageUpload: 'ImageUpload',
     imageCropper: 'ImageCropper',
     richTextEditor: 'RichTextEditor',
+    numberRoll: 'NumberRoll',
     fadeIn: 'FadeIn',
     textEllipsis: 'TextEllipsis',
     animated: 'Animated',

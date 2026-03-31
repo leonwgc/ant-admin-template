@@ -525,6 +525,14 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'number-roll',
+        get label() {
+          return t('menu.numberRoll');
+        },
+        route: '/app/components/number-roll',
+        permissions: [],
+      },
+      {
         key: 'fade-in',
         get label() {
           return t('menu.fadeIn');

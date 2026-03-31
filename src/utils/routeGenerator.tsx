@@ -174,6 +174,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/image-upload': lazyLoad('pages/Components/ImageUploadExample'),
   '/app/components/image-cropper': lazyLoad('pages/Components/ImageCropperExample'),
   '/app/components/rich-text-editor': lazyLoad('pages/Components/RichTextEditorExample'),
+  '/app/components/number-roll': lazyLoad('pages/Components/NumberRollExample'),
   '/app/components/fade-in': lazyLoad('pages/Components/FadeInExample'),
   '/app/components/text-ellipsis': lazyLoad('pages/Components/TextEllipsisDemo'),
   '/app/components/animated': lazyLoad('pages/Components/AnimatedDemo'),

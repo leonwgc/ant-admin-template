@@ -1,0 +1,50 @@
+/**
+ * @file components/NumberRoll/NumberRoll.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.number-roll {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+
+  // ── Digit roller ──────────────────────────────────────────────────────────
+  &__track {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+
+  &__cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1ch;
+  }
+
+  // ── Static characters (separators, decimal point, minus) ─────────────────
+  &__sep {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 1px;
+  }
+
+  // ── Prefix / suffix text ──────────────────────────────────────────────────
+  &__affix {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin: 0 2px;
+  }
+}
