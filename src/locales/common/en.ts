@@ -88,6 +88,7 @@ export default {
     masonry: 'Masonry',
     chatbot: 'ChatBot',
     imageUpload: 'ImageUpload',
+    imageCropper: 'ImageCropper',
     fadeIn: 'FadeIn',
     textEllipsis: 'TextEllipsis',
     animated: 'Animated',

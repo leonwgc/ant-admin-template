@@ -172,6 +172,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/masonry': lazyLoad('pages/Components/MasonryExample'),
   '/app/components/chatbot': lazyLoad('pages/Components/ChatBot'),
   '/app/components/image-upload': lazyLoad('pages/Components/ImageUploadExample'),
+  '/app/components/image-cropper': lazyLoad('pages/Components/ImageCropperExample'),
   '/app/components/fade-in': lazyLoad('pages/Components/FadeInExample'),
   '/app/components/text-ellipsis': lazyLoad('pages/Components/TextEllipsisDemo'),
   '/app/components/animated': lazyLoad('pages/Components/AnimatedDemo'),

@@ -509,6 +509,14 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'image-cropper',
+        get label() {
+          return t('menu.imageCropper');
+        },
+        route: '/app/components/image-cropper',
+        permissions: [],
+      },
+      {
         key: 'fade-in',
         get label() {
           return t('menu.fadeIn');
