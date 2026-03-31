@@ -89,6 +89,7 @@ export default {
     chatbot: 'ChatBot',
     imageUpload: 'ImageUpload',
     imageCropper: 'ImageCropper',
+    richTextEditor: 'RichTextEditor',
     fadeIn: 'FadeIn',
     textEllipsis: 'TextEllipsis',
     animated: 'Animated',

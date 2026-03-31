@@ -517,6 +517,14 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'rich-text-editor',
+        get label() {
+          return t('menu.richTextEditor');
+        },
+        route: '/app/components/rich-text-editor',
+        permissions: [],
+      },
+      {
         key: 'fade-in',
         get label() {
           return t('menu.fadeIn');
