@@ -73,6 +73,7 @@
   }
 
   &__document {
+    position: relative;
     background: white;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
@@ -86,6 +87,74 @@
       canvas {
         display: block;
       }
+    }
+
+    &:hover .pdf-viewer__pager,
+    &:focus-within .pdf-viewer__pager {
+      opacity: 1;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
+    }
+  }
+
+  &__pager {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    z-index: 3;
+    transform: translate(-50%, 10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 14px 18px;
+    background: rgba(245, 246, 248, 0.92);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(6px);
+  }
+
+  &__pager-text {
+    min-width: 86px;
+    text-align: center;
+    font-size: 19px;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.82);
+    font-weight: 500;
+  }
+
+  &__pager-btn {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.72);
+    font-size: 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: rgba(0, 0, 0, 0.08);
+      color: rgba(0, 0, 0, 0.9);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (hover: none) {
+    &__pager {
+      opacity: 1;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
     }
   }
 }

@@ -29,7 +29,7 @@ const PdfViewer: FC = () => {
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
-    setPageNumber(1);
+    setPageNumber((prev) => Math.min(Math.max(prev, 1), numPages));
   };
 
   const onDocumentLoadError = () => {
@@ -41,6 +41,8 @@ const PdfViewer: FC = () => {
 
     if (fileObj && fileObj instanceof File && fileObj.type === 'application/pdf') {
       setLoading(true);
+      setPageNumber(1);
+      setNumPages(0);
       const reader = new FileReader();
       reader.onload = (e) => {
         setFile(e.target?.result as string);
@@ -159,6 +161,34 @@ const PdfViewer: FC = () => {
                 renderAnnotationLayer={true}
               />
             </Document>
+
+            {numPages > 1 && (
+              <div className="pdf-viewer__pager">
+                <button
+                  type="button"
+                  className="pdf-viewer__pager-btn"
+                  onClick={goToPrevPage}
+                  disabled={pageNumber <= 1}
+                  aria-label={t('pages.pdf:prevPage')}
+                >
+                  <LeftOutlined />
+                </button>
+
+                <span className="pdf-viewer__pager-text">
+                  {`${pageNumber} / ${numPages}`}
+                </span>
+
+                <button
+                  type="button"
+                  className="pdf-viewer__pager-btn"
+                  onClick={goToNextPage}
+                  disabled={pageNumber >= numPages}
+                  aria-label={t('pages.pdf:nextPage')}
+                >
+                  <RightOutlined />
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
