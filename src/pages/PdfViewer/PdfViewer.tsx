@@ -2,7 +2,7 @@
  * @file pages/PdfViewer/PdfViewer.tsx
  * @author leon.wang
  */
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Button, Space, Upload, Spin, message } from '@derbysoft/neat-design';
 import { UploadOutlined } from '@derbysoft/neat-design-icons';
@@ -26,6 +26,14 @@ const PdfViewer: FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1.0);
   const [loading, setLoading] = useState<boolean>(false);
+  const [pageRendering, setPageRendering] = useState<boolean>(false);
+  const [pageHeight, setPageHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (file) {
+      setPageRendering(true);
+    }
+  }, [file, pageNumber, scale]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -33,7 +41,21 @@ const PdfViewer: FC = () => {
   };
 
   const onDocumentLoadError = () => {
+    setPageRendering(false);
     message.error(t('pages.pdf:loadError'));
+  };
+
+  const onPageLoadSuccess = (page: { getViewport: (options: { scale: number }) => { height: number } }) => {
+    const viewport = page.getViewport({ scale });
+    setPageHeight(viewport.height);
+  };
+
+  const onPageRenderSuccess = () => {
+    setPageRendering(false);
+  };
+
+  const onPageRenderError = () => {
+    setPageRendering(false);
   };
 
   const handleFileChange = (info: { file: { originFileObj?: File; type?: string } }) => {
@@ -154,12 +176,27 @@ const PdfViewer: FC = () => {
               onLoadSuccess={onDocumentLoadSuccess}
               onLoadError={onDocumentLoadError}
             >
-              <Page
-                pageNumber={pageNumber}
-                scale={scale}
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-              />
+              <div
+                className={`pdf-viewer__page-shell ${pageRendering ? 'pdf-viewer__page-shell--loading' : ''}`}
+                style={{ minHeight: pageHeight || 420 }}
+              >
+                <Page
+                  pageNumber={pageNumber}
+                  scale={scale}
+                  renderTextLayer={true}
+                  renderAnnotationLayer={true}
+                  loading={null}
+                  onLoadSuccess={onPageLoadSuccess}
+                  onRenderSuccess={onPageRenderSuccess}
+                  onRenderError={onPageRenderError}
+                />
+
+                {pageRendering && (
+                  <div className="pdf-viewer__page-loading">
+                    <Spin size="large" />
+                  </div>
+                )}
+              </div>
             </Document>
 
             {numPages > 1 && (
