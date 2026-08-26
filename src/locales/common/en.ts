@@ -120,6 +120,7 @@ export default {
     ahooksUseRequest: 'useRequest',
     ahooksUseVirtualList: 'useVirtualList',
     ahooksUseDynamicList: 'useDynamicList',
+    ahooksUseDynamicListSortable: 'useDynamicList + Sortable.js',
     dashboard: 'Dashboard',
     flowDesigner: 'Flow Designer',
     pdfViewer: 'PDF Viewer',

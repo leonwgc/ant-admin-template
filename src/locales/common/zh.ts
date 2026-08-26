@@ -120,6 +120,7 @@ export default {
     ahooksUseRequest: 'useRequest',
     ahooksUseVirtualList: 'useVirtualList',
     ahooksUseDynamicList: 'useDynamicList',
+    ahooksUseDynamicListSortable: 'useDynamicList + Sortable.js',
     dashboard: '数据可视化',
     flowDesigner: '流程设计器',
     pdfViewer: 'PDF 预览',

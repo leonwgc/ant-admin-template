@@ -111,6 +111,14 @@ export const menus: MenuItem[] = [
         route: '/app/ahooks/use-dynamic-list',
         permissions: [],
       },
+      {
+        key: 'ahooks-use-dynamic-list-sortable',
+        get label() {
+          return t('menu.ahooksUseDynamicListSortable');
+        },
+        route: '/app/ahooks/use-dynamic-list-sortable',
+        permissions: [],
+      },
     ],
   },
   {

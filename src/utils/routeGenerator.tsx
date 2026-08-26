@@ -202,4 +202,7 @@ export const routeComponentMap: RouteComponentMap = {
 
   // ahooks Examples
   '/app/ahooks/use-dynamic-list': lazyLoad('pages/ahooks/useDynamicListDemo'),
+  '/app/ahooks/use-dynamic-list-sortable': lazyLoad(
+    'pages/ahooks/useDynamicListSortableDemo'
+  ),
 };
