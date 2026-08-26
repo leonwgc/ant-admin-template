@@ -199,4 +199,7 @@ export const routeComponentMap: RouteComponentMap = {
 
   // AI Assistant
   '/app/ai/settings': lazyLoad('pages/AI/AISettings'),
+
+  // ahooks Examples
+  '/app/ahooks/use-dynamic-list': lazyLoad('pages/ahooks/useDynamicListDemo'),
 };

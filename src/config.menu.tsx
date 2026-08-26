@@ -96,6 +96,24 @@ export const menus: MenuItem[] = [
     ],
   },
   {
+    key:'ahooks',
+    get label() {
+      return t('menu.ahooks');
+    },
+    icon: <CodeOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'ahooks-use-dynamic-list',
+        get label() {
+          return t('menu.ahooksUseDynamicList');
+        },
+        route: '/app/ahooks/use-dynamic-list',
+        permissions: [],
+      },
+    ],
+  },
+  {
     key: 'js-feature',
     get label() {
       return t('menu.jsFeature');

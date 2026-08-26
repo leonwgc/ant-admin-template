@@ -345,6 +345,10 @@ src/locales/
 
 ## 🚀 快速开发工作流
 
+### 构建验证
+- 添加、修改或删除代码后，默认不执行 `npm run build`
+- 仅在用户明确要求或确有必要时执行构建命令
+
 ### 创建新组件时
 1. 确定组件位置：`src/components/` 或 `src/pages/`
 2. 创建组件文件：`ComponentName.tsx`
