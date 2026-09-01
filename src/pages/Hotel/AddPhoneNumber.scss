@@ -5,7 +5,6 @@
 @import 'scss/common.scss';
 
 .add-phone-number-page {
-
   background: #fff;
   min-height: calc(100vh - 120px);
 
@@ -26,10 +25,9 @@
 
 .add-phone-number-modal {
   &__content-wrapper {
-
   }
   &__content {
-    padding-top: 16px;
+    padding: 24px;
   }
 
   &__alert {
