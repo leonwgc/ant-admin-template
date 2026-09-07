@@ -15,10 +15,10 @@ import {
   Space,
   Typography,
 } from '@derbysoft/neat-design';
+import { useTranslation } from 'react-i18next';
 
-import usePageStateInStorage, {
-  PageState,
-} from '~/hooks/usePageStateInStorage';
+import usePageStateInStorage from '~/hooks/usePageStateInStorage';
+import type { PageState } from '~/hooks/usePageStateInStorage';
 
 import './UsePageStateInStorageDemo.scss';
 
@@ -52,6 +52,7 @@ const stateToFormValues = (state: Partial<DemoState>): DemoFormValues => ({
  * Demonstrates restoring page filters and pagination from sessionStorage.
  */
 const UsePageStateInStorageDemo: FC = () => {
+  const { t } = useTranslation();
   const {
     form,
     state,
@@ -80,7 +81,7 @@ const UsePageStateInStorageDemo: FC = () => {
       <Card>
         <Typography.Title level={2}>usePageStateInStorage</Typography.Title>
         <Typography.Paragraph>
-          将筛选条件和分页状态保存到 sessionStorage。刷新页面后，表单会恢复上次的状态。
+          {t('common:pageStateStorageDescription')}
         </Typography.Paragraph>
 
         <Form<DemoFormValues>
@@ -90,23 +91,23 @@ const UsePageStateInStorageDemo: FC = () => {
           onValuesChange={onValuesChange}
         >
           <Space wrap align="start" className="use-page-state-in-storage-demo__form">
-            <Form.Item label="关键词" name="keyword">
-              <Input placeholder="输入关键词" style={{ width: 240 }} />
+            <Form.Item label={t('common:pageStateStorageKeyword')} name="keyword">
+              <Input placeholder={t('common:pageStateStorageKeywordPh')} style={{ width: 240 }} />
             </Form.Item>
-            <Form.Item label="状态" name="status">
+            <Form.Item label={t('common:pageStateStorageStatus')} name="status">
               <Select
                 style={{ width: 160 }}
                 options={[
-                  { label: '全部', value: 'all' },
-                  { label: '启用', value: 'active' },
-                  { label: '停用', value: 'inactive' },
+                  { label: t('common:pageStateStorageAll'), value: 'all' },
+                  { label: t('common:pageStateStorageActive'), value: 'active' },
+                  { label: t('common:pageStateStorageInactive'), value: 'inactive' },
                 ]}
               />
             </Form.Item>
-            <Form.Item label="当前页" name="current">
+            <Form.Item label={t('common:pageStateStorageCurrent')} name="current">
               <Input style={{ width: 120 }} />
             </Form.Item>
-            <Form.Item label="每页条数" name="pageSize">
+            <Form.Item label={t('common:pageStateStoragePageSize')} name="pageSize">
               <Select
                 style={{ width: 120 }}
                 options={[
@@ -120,20 +121,27 @@ const UsePageStateInStorageDemo: FC = () => {
         </Form>
 
         <Space wrap>
-          <Button onClick={() => form.submit()}>保存当前状态</Button>
-          <Button onClick={handleReset}>恢复默认状态</Button>
+          <Button onClick={handleReset}>{t('common:pageStateStorageReset')}</Button>
         </Space>
       </Card>
 
-      <Card title="当前持久化状态">
+      <Card title={t('common:pageStateStorageCurrentState')}>
         <Descriptions bordered column={1}>
-          <Descriptions.Item label="storage key">
+          <Descriptions.Item label={t('common:pageStateStorageStorageKey')}>
             use-page-state-in-storage-demo
           </Descriptions.Item>
-          <Descriptions.Item label="keyword">{state.keyword || '空'}</Descriptions.Item>
-          <Descriptions.Item label="status">{state.status}</Descriptions.Item>
-          <Descriptions.Item label="current">{state.current}</Descriptions.Item>
-          <Descriptions.Item label="pageSize">{state.pageSize}</Descriptions.Item>
+          <Descriptions.Item label={t('common:pageStateStorageKeyword')}>
+            {state.keyword || t('common:pageStateStorageEmpty')}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('common:pageStateStorageStatus')}>
+            {t(`common:pageStateStorage${state.status === 'all' ? 'All' : state.status === 'active' ? 'Active' : 'Inactive'}`)}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('common:pageStateStorageCurrent')}>
+            {state.current}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('common:pageStateStoragePageSize')}>
+            {state.pageSize}
+          </Descriptions.Item>
         </Descriptions>
       </Card>
     </div>
