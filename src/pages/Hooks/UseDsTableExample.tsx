@@ -43,7 +43,6 @@ import {
   ClockCircleOutlined,
   FireOutlined,
 } from '@ant-design/icons';
-import { useMount } from 'ahooks';
 import useDsTable from '~/hooks/useDsTable';
 import type { ObjectType, ResponseDataType } from '~/hooks/useDsTable';
 import usePageStateInStorage from '~/hooks/usePageStateInStorage';
@@ -322,8 +321,8 @@ const UseDsTableExample: React.FC = () => {
   const [requestCount, setRequestCount] = useState(0);
   const [lastSearchTime, setLastSearchTime] = useState<string>('');
 
-  // Persist search form values and pagination in sessionStorage
-  const { formValues, onValuesChange, onBeforeRequest } =
+  // Persist search form values, pagination and sort in sessionStorage
+  const { state, formValues, onValuesChange, onBeforeRequest } =
     usePageStateInStorage<SearchPageState, SearchFormValues>({
       key: 'use-ds-table-example',
       initialState: { current: 1, pageSize: 10 },
@@ -337,6 +336,13 @@ const UseDsTableExample: React.FC = () => {
         role: values.role,
         status: values.status,
       }),
+      requestToState: (data) => {
+        const sort = (data.sorts as { direction: string; property: string }[])?.[0];
+        return {
+          sortField: sort?.property,
+          sortOrder: sort?.direction === 'DESC' ? 'descend' : sort ? 'ascend' : undefined,
+        };
+      },
     });
 
   const { tableProps, form, submit, reset } = useDsTable(
@@ -357,14 +363,20 @@ const UseDsTableExample: React.FC = () => {
         total: data.totals,
         list: data.records,
       };
-    }
+    },
+    // Restore persisted pagination/sorter/filters for the initial request
+    // defaultParams 默认参数，第一项为分页数据，第二项为表单数据
+    [
+      {
+        current: Number(state.current) || 1,
+        pageSize: Number(state.pageSize) || 10,
+        sorter: state.sortField
+          ? { field: state.sortField, order: state.sortOrder, columnKey: state.sortField }
+          : undefined,
+      },
+      formValues,
+    ]
   );
-
-  // Restore persisted filters on mount and re-run search with them
-  useMount(() => {
-    form.setFieldsValue(formValues);
-    submit();
-  });
 
   // Calculate statistics
   const stats = {
@@ -427,6 +439,10 @@ const UseDsTableExample: React.FC = () => {
     });
   };
 
+  // Restore column sort arrow from persisted state on initial render
+  const getDefaultSortOrder = (columnKey: string) =>
+    state.sortField === columnKey ? state.sortOrder : undefined;
+
   const columns = [
     {
       title: 'User Info',
@@ -434,6 +450,7 @@ const UseDsTableExample: React.FC = () => {
       key: 'name',
       width: 280,
       sorter: true,
+      defaultSortOrder: getDefaultSortOrder('name'),
       render: (text: string, record: any) => (
         <Space>
           <Badge
@@ -472,6 +489,7 @@ const UseDsTableExample: React.FC = () => {
       key: 'role',
       width: 120,
       sorter: true,
+      defaultSortOrder: getDefaultSortOrder('role'),
       render: (role: string) => {
         const config: Record<string, { color: string; icon: React.ReactNode }> =
           {
@@ -492,6 +510,7 @@ const UseDsTableExample: React.FC = () => {
       key: 'status',
       width: 130,
       sorter: true,
+      defaultSortOrder: getDefaultSortOrder('status'),
       render: (status: string) => (
         <Badge
           status={status === 'active' ? 'processing' : 'default'}
@@ -519,6 +538,7 @@ const UseDsTableExample: React.FC = () => {
       key: 'performance',
       width: 180,
       sorter: true,
+      defaultSortOrder: getDefaultSortOrder('performance'),
       render: (performance: number) => (
         <Tooltip title={`Performance: ${performance}%`}>
           <Progress
@@ -553,6 +573,7 @@ const UseDsTableExample: React.FC = () => {
       key: 'projects',
       width: 100,
       sorter: true,
+      defaultSortOrder: getDefaultSortOrder('projects'),
       align: 'center' as const,
       render: (projects: number) => (
         <Tooltip title={`${projects} active projects`}>
@@ -578,6 +599,7 @@ const UseDsTableExample: React.FC = () => {
       key: 'joinDate',
       width: 130,
       sorter: true,
+      defaultSortOrder: getDefaultSortOrder('joinDate'),
       render: (date: string) => (
         <Text>
           <ClockCircleOutlined style={{ marginRight: 4 }} />

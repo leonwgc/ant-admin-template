@@ -11,6 +11,8 @@ import type { SetStateAction } from 'react';
 export interface PageState {
   current: string | number;
   pageSize: string | number;
+  sortField?: string;
+  sortOrder?: 'ascend' | 'descend';
 }
 
 export interface PageStateOptions<StorageState extends PageState, FormValues> {
@@ -30,7 +32,10 @@ export interface PageStateInStorageResult<
   state: Partial<StorageState>;
   setState: (state: SetStateAction<Partial<StorageState>>) => void;
   formValues: FormValues;
-  defaultParams: [{ current: number; pageSize: number } & ObjectType, FormValues];
+  defaultParams: [
+    { current: number; pageSize: number } & ObjectType,
+    FormValues,
+  ];
   getFormData: (values: ObjectType) => ObjectType;
   onBeforeRequest: (data: ObjectType) => ObjectType;
   onValuesChange: (

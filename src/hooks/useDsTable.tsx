@@ -38,7 +38,9 @@ const useTable = (
   formValuesTransform?: (values: ObjectType) => ObjectType,
   responseDataTransform?: (
     data: ObjectType | ObjectType[]
-  ) => ListResult<ObjectType>
+  ) => ListResult<ObjectType>,
+  // Initial pagination/sorter/form values, e.g. to restore persisted table state
+  defaultParams?: Params
 ) => {
   const [form] = Form.useForm();
   const req = useLatest(request);
@@ -112,6 +114,7 @@ const useTable = (
   } = useAntdTable<Data, Params>(service as Service<Data, Params>, {
     debounceWait: 400,
     form,
+    defaultParams,
     onFinally() {
       setLoading(false);
     },
