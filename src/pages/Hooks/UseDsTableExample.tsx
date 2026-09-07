@@ -43,8 +43,11 @@ import {
   ClockCircleOutlined,
   FireOutlined,
 } from '@ant-design/icons';
+import { useMount } from 'ahooks';
 import useDsTable from '~/hooks/useDsTable';
 import type { ObjectType, ResponseDataType } from '~/hooks/useDsTable';
+import usePageStateInStorage from '~/hooks/usePageStateInStorage';
+import type { PageState } from '~/hooks/usePageStateInStorage';
 import './UseDsTableExample.scss';
 
 const { Title, Paragraph, Text } = Typography;
@@ -300,6 +303,18 @@ const fetchUserList = (
   });
 };
 
+interface SearchFormValues {
+  name?: string;
+  role?: string;
+  status?: string;
+}
+
+interface SearchPageState extends PageState {
+  name?: string;
+  role?: string;
+  status?: string;
+}
+
 /**
  * UseDsTableExample component - Demonstrates useDsTable hook usage with enhanced visuals
  */
@@ -307,11 +322,28 @@ const UseDsTableExample: React.FC = () => {
   const [requestCount, setRequestCount] = useState(0);
   const [lastSearchTime, setLastSearchTime] = useState<string>('');
 
+  // Persist search form values and pagination in sessionStorage
+  const { formValues, onValuesChange, onBeforeRequest } =
+    usePageStateInStorage<SearchPageState, SearchFormValues>({
+      key: 'use-ds-table-example',
+      initialState: { current: 1, pageSize: 10 },
+      stateToFormValues: (state) => ({
+        name: state.name,
+        role: state.role,
+        status: state.status,
+      }),
+      formValuesToState: (values) => ({
+        name: values.name,
+        role: values.role,
+        status: values.status,
+      }),
+    });
+
   const { tableProps, form, submit, reset } = useDsTable(
     (params) => {
       setRequestCount((prev) => prev + 1);
       setLastSearchTime(new Date().toLocaleTimeString());
-      return fetchUserList(params) as any;
+      return fetchUserList(onBeforeRequest(params)) as any;
     },
     // Optional: Transform form values before sending to API
     (formValues) => {
@@ -327,6 +359,12 @@ const UseDsTableExample: React.FC = () => {
       };
     }
   );
+
+  // Restore persisted filters on mount and re-run search with them
+  useMount(() => {
+    form.setFieldsValue(formValues);
+    submit();
+  });
 
   // Calculate statistics
   const stats = {
@@ -677,7 +715,11 @@ const UseDsTableExample: React.FC = () => {
         }
       >
         {/* Search Form */}
-        <Form form={form} className="use-ds-table-example__search-form">
+        <Form
+          form={form}
+          className="use-ds-table-example__search-form"
+          onValuesChange={onValuesChange}
+        >
           <Row gutter={16}>
             <Col span={6}>
               <Form.Item name="name" style={{ marginBottom: 0 }}>
