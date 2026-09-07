@@ -2,7 +2,7 @@
  * @file layouts/Header.tsx
  * @author leon.wang
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Space, Flex, Avatar, Divider } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
@@ -18,7 +18,7 @@ import {
   MoonOutlined,
 } from '@ant-design/icons';
 import { Dropdown } from 'antd';
-import { useBoolean } from 'ahooks';
+import { useBoolean, useMount } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
 import MobileMenus from './MobileMenus';
@@ -27,20 +27,31 @@ import { AccountSwitcher } from 'components/AccountSwitcher';
 import { changeLanguage, type Language } from '~/i18n';
 import { useTheme } from '~/hooks/useTheme';
 import logo from '~/images/robot.png';
+import useGlobalState from 'zustand-kit';
 import './Header.scss';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [open, { setTrue, setFalse }] = useBoolean(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
 
-  const currentLang = i18n.language as Language;
+  const [lang, setLang] = useGlobalState('APP_LANG', 'zh', {
+    storageKey: 'ant-admin',
+    storage: 'localStorage',
+  });
+
+  // const currentLang = i18n.language as Language;
 
   const handleLanguageChange = async (lang: Language) => {
     await changeLanguage(lang);
+    setLang(lang);
     // No need to reload - components will re-render automatically
   };
+
+  useMount(() => {
+    handleLanguageChange(lang as Language);
+  });
 
   const languageMenuItems = [
     {
@@ -142,7 +153,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             )}
           </button>
           <Dropdown
-            menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
+            menu={{ items: languageMenuItems, selectedKeys: [lang] }}
             placement="bottomRight"
           >
             <button
@@ -151,7 +162,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             >
               <GlobalOutlined className="header-lang-btn__icon" />
               <span className="header-lang-btn__text">
-                {currentLang === 'zh' ? '简体中文' : 'English'}
+                {lang === 'zh' ? '简体中文' : 'English'}
               </span>
               <DownOutlined className="header-lang-btn__arrow" />
             </button>
