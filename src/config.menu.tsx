@@ -443,6 +443,14 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-lock-async-func',
         permissions: [],
       },
+      {
+        key: 'use-page-state-in-storage',
+        get label() {
+          return t('menu.usePageStateInStorage');
+        },
+        route: '/app/hooks/use-page-state-in-storage',
+        permissions: [],
+      },
     ],
   },
 

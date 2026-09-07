@@ -155,6 +155,9 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/use-global-state': lazyLoad('pages/Hooks/ZustandKitDemo'),
   '/app/hooks/use-form-field': lazyLoad('pages/Hooks/UseFormFieldHook'),
   '/app/hooks/react-hook-form': lazyLoad('pages/Hooks/ReactHookForm'),
+  '/app/hooks/use-page-state-in-storage': lazyLoad(
+    'pages/Hooks/UsePageStateInStorageDemo'
+  ),
 
   // JavaScript/Library Examples
   '/app/js/sortable-demo': lazyLoad('pages/Js/SortableDemo'),

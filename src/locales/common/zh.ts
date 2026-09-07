@@ -78,6 +78,7 @@ export default {
     useResponsive: 'useResponsive',
     useDsTable: 'useDsTable',
     useLockAsyncFunc: 'useLockAsyncFunc',
+    usePageStateInStorage: 'usePageStateInStorage',
     components: '组件',
     dotStatus: '状态点',
     verificationCode: '验证码',

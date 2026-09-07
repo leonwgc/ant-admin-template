@@ -78,6 +78,7 @@ export default {
     useResponsive: 'useResponsive',
     useDsTable: 'useDsTable',
     useLockAsyncFunc: 'useLockAsyncFunc',
+    usePageStateInStorage: 'usePageStateInStorage',
     components: 'Components',
     dotStatus: 'DotStatus',
     verificationCode: 'VerificationCode',
