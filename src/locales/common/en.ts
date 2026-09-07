@@ -79,6 +79,7 @@ export default {
     useDsTable: 'useDsTable',
     useLockAsyncFunc: 'useLockAsyncFunc',
     usePageStateInStorage: 'usePageStateInStorage',
+    usePageStateInURL: 'usePageStateInURL',
     components: 'Components',
     dotStatus: 'DotStatus',
     verificationCode: 'VerificationCode',
@@ -139,4 +140,6 @@ export default {
   pageStateStorageReset: 'Restore defaults',
   pageStateStorageCurrentState: 'Persisted state',
   pageStateStorageEmpty: 'Empty',
+  pageStateURLDescription: 'Filter and pagination state are synchronized to the URL and remain available after copying or refreshing the page.',
+  pageStateURLCurrentState: 'Current URL state',
 };

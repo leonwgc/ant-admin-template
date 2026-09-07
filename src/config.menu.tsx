@@ -451,6 +451,14 @@ export const menus: MenuItem[] = [
         route: '/app/hooks/use-page-state-in-storage',
         permissions: [],
       },
+      {
+        key: 'use-page-state-in-url',
+        get label() {
+          return t('menu.usePageStateInURL');
+        },
+        route: '/app/hooks/use-page-state-in-url',
+        permissions: [],
+      },
     ],
   },
 

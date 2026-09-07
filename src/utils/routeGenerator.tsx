@@ -158,6 +158,9 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/hooks/use-page-state-in-storage': lazyLoad(
     'pages/Hooks/UsePageStateInStorageDemo'
   ),
+  '/app/hooks/use-page-state-in-url': lazyLoad(
+    'pages/Hooks/UsePageStateInURLDemo'
+  ),
 
   // JavaScript/Library Examples
   '/app/js/sortable-demo': lazyLoad('pages/Js/SortableDemo'),

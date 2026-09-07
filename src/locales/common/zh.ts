@@ -79,6 +79,7 @@ export default {
     useDsTable: 'useDsTable',
     useLockAsyncFunc: 'useLockAsyncFunc',
     usePageStateInStorage: 'usePageStateInStorage',
+    usePageStateInURL: 'usePageStateInURL',
     components: '组件',
     dotStatus: '状态点',
     verificationCode: '验证码',
@@ -139,4 +140,6 @@ export default {
   pageStateStorageReset: '恢复默认状态',
   pageStateStorageCurrentState: '当前持久化状态',
   pageStateStorageEmpty: '空',
+  pageStateURLDescription: '将筛选条件和分页状态同步到 URL。复制或刷新页面后，状态仍可保留。',
+  pageStateURLCurrentState: '当前 URL 状态',
 };

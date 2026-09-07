@@ -1,0 +1,16 @@
+/**
+ * @file src/pages/Hooks/UsePageStateInURLDemo.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.use-page-state-in-url-demo {
+  display: grid;
+  gap: 16px;
+
+  &__form {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
