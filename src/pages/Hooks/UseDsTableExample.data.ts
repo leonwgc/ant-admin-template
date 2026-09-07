@@ -183,3 +183,68 @@ export const mockUserData = [
     projects: 10,
   },
 ];
+
+/**
+ * Mock API request function
+ */
+export const fetchUserList = (
+  params: ObjectType,
+): Promise<{ data: ResponseDataType }> => {
+  return new Promise((resolve) => {
+    // Simulate network delay
+    setTimeout(() => {
+      const { pageNum = 0, pageSize = 10, name, role, status, sorts } = params;
+
+      // Filter data
+      let filteredData = [...mockUserData];
+
+      if (name) {
+        filteredData = filteredData.filter((user) =>
+          user.name.toLowerCase().includes((name as string).toLowerCase()),
+        );
+      }
+
+      if (role) {
+        filteredData = filteredData.filter((user) => user.role === role);
+      }
+
+      if (status) {
+        filteredData = filteredData.filter((user) => user.status === status);
+      }
+
+      // Sort data
+      if (sorts && Array.isArray(sorts) && sorts.length > 0) {
+        const { property, direction } = sorts[0];
+        filteredData.sort((a, b) => {
+          const aValue = a[property];
+          const bValue = b[property];
+          if (direction === 'ASC') {
+            return aValue > bValue ? 1 : -1;
+          } else {
+            return aValue < bValue ? 1 : -1;
+          }
+        });
+      }
+
+      // Pagination
+      const start = (pageNum as number) * (pageSize as number);
+      const end = start + (pageSize as number);
+      const paginatedData = filteredData.slice(start, end);
+
+      // Return mock response
+      resolve({
+        data: {
+          result: 'success',
+          timestamp: Date.now(),
+          data: {
+            totals: filteredData.length,
+            totalPages: Math.ceil(filteredData.length / (pageSize as number)),
+            pageSize: pageSize as number,
+            pageNum: pageNum as number,
+            records: paginatedData,
+          },
+        },
+      });
+    }, 600); // 600ms delay to simulate network
+  });
+};
