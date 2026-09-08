@@ -1,7 +1,6 @@
 {
   // ========== GitHub Copilot ==========
   "github.copilot.chat.localeOverride": "en",
-  "github.copilot.chat.model": "claude-4.5-sonnet",
 
   // ========== 编辑器基础配置 ==========
   "files.autoSave": "onFocusChange",
