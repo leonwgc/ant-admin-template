@@ -5,6 +5,7 @@
   "scripts": {
     "scan": "npm run start & npx react-scan localhost:3002",
     "start": "node pack.js",
+    "sprint:init": "node scripts/init-sprint.mjs",
     "build": "node build",
     "package": "node build",
     "clean": "rimraf dist",
