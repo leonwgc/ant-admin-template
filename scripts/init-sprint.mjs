@@ -3,23 +3,22 @@
  * @file scripts/init-sprint.mjs
  * @author leon.wang
  *
- * 用法：
- *   npm run sprint:init <feature-name> [--title "中文标题"] [--force]
+ * Usage:
+ *   npm run sprint:init <feature-name> [--title "Human Readable Title"] [--force]
  *
- * 示例：
+ * Examples:
  *   npm run sprint:init user-login
- *   npm run sprint:init order-refund --title "订单退款"
- *   npm run sprint:init user-login --force   # 已存在时覆盖
+ *   npm run sprint:init order-refund --title "Order Refund"
+ *   npm run sprint:init user-login --force   # overwrite existing files
  *
- * 会在 sprints/feature-<feature-name>/ 下生成完整的迭代文档骨架：
+ * Generates the full sprint doc scaffold under sprints/feature-<feature-name>/:
  *   ├── README.md
- *   ├── 01_需求文档_PRD/
- *   ├── 02_验收标准_AC/
- *   ├── 03_测试用例_检测清单/
- *   ├── 04_后端开发/
- *   ├── 05_前端开发/
- *   ├── 06_运维部署/
- *   └── 99_迭代复盘归档/
+ *   ├── 01_PRD/
+ *   ├── 02_Acceptance/
+ *   ├── 03_Testing/
+ *   ├── 04_Backend/
+ *   ├── 05_Frontend/
+ *   └── 06_Retrospective/
  */
 
 import fs from 'node:fs';
@@ -30,7 +29,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 
-// ---------- 参数解析 ----------
+// ---------- Argument parsing ----------
 function parseArgs(argv) {
   const args = { _: [], force: false, title: '' };
   for (let i = 0; i < argv.length; i++) {
@@ -45,13 +44,13 @@ function parseArgs(argv) {
 
 function printHelp() {
   console.log(`
-用法: npm run sprint:init <feature-name> [--title "中文标题"] [--force]
+Usage: npm run sprint:init <feature-name> [--title "Human Readable Title"] [--force]
 
-参数:
-  <feature-name>     迭代英文名（kebab-case），例如 user-login、order-refund
-  --title, -t <str>  可选，中文标题；未提供则由 feature-name 推导
-  --force,  -f       如果目标目录已存在则覆盖
-  --help,   -h       显示帮助
+Arguments:
+  <feature-name>     Sprint code name in kebab-case, e.g. user-login, order-refund
+  --title, -t <str>  Optional human readable title; derived from feature-name if omitted
+  --force,  -f       Overwrite files if the target directory already exists
+  --help,   -h       Show this help
 `);
 }
 
@@ -63,7 +62,7 @@ if (args.help || args._.length === 0) {
 
 const featureName = args._[0].replace(/^feature-/, '').trim();
 if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(featureName)) {
-  console.error(`✖ feature-name 必须是 kebab-case（小写字母、数字、中划线），实际收到: "${featureName}"`);
+  console.error(`✖ feature-name must be kebab-case (lowercase letters, digits, hyphens). Received: "${featureName}"`);
   process.exit(1);
 }
 
@@ -77,12 +76,12 @@ const featureTitle =
 const featureDir = path.join(ROOT, 'sprints', `feature-${featureName}`);
 
 if (fs.existsSync(featureDir) && !args.force) {
-  console.error(`✖ 目录已存在: ${path.relative(ROOT, featureDir)}`);
-  console.error('  使用 --force 覆盖，或换一个 feature-name。');
+  console.error(`✖ Directory already exists: ${path.relative(ROOT, featureDir)}`);
+  console.error('  Pass --force to overwrite, or choose a different feature-name.');
   process.exit(1);
 }
 
-// ---------- 模板 ----------
+// ---------- Templates ----------
 const NAME = featureName;
 const TITLE = featureTitle;
 const SNAKE = featureName.replace(/-/g, '_');
@@ -90,164 +89,162 @@ const SNAKE = featureName.replace(/-/g, '_');
 const files = {
   'README.md': `# feature-${NAME}
 
-> 迭代名：**${TITLE} (${NAME})**
-> 迭代目标：<在此一句话描述业务/技术目标>
+> Sprint: **${TITLE} (${NAME})**
+> Goal: <one-sentence description of the business/technical goal>
 
 ---
 
-## 🔹 业务目的
-<描述业务价值：解决什么问题、给什么角色带来什么收益>
+## 🔹 Business goal
+<Business value: what problem it solves, who benefits and how>
 
-## 🔹 技术目的
-<描述技术沉淀：新建/复用的能力、后续可复用的方案>
+## 🔹 Technical goal
+<Technical outcome: new/reused capabilities, reusable patterns for later>
 
-## 🔹 本次不做（Out-of-Scope）
-- <明确排除项 1>
-- <明确排除项 2>
+## 🔹 Out-of-Scope
+- <Explicit exclusion 1>
+- <Explicit exclusion 2>
 
-明确排除，防止范围蔓延。
+Explicitly excluded to prevent scope creep.
 
 ---
 
-## 目录结构
+## Directory layout
 
 \`\`\`
 feature-${NAME}/
-├── 01_需求文档_PRD/
-├── 02_验收标准_AC/
-├── 03_测试用例_检测清单/
-├── 04_后端开发/
-├── 05_前端开发/
-├── 06_运维部署/
-└── 99_迭代复盘归档/
+├── 01_PRD/
+├── 02_Acceptance/
+├── 03_Testing/
+├── 04_Backend/
+├── 05_Frontend/
+└── 06_Retrospective/
 \`\`\`
 
-## 文档说明
+## What each folder contains
 
-| 目录 | 说明 |
+| Folder | Description |
 | --- | --- |
-| 01_需求文档_PRD | 产品需求文档（official 为正式版，draft_ai 为 AI 初稿） |
-| 02_验收标准_AC | 验收标准 checklist |
-| 03_测试用例_检测清单 | QA 测试用例 / 自测清单 |
-| 04_后端开发 | 接口文档、数据库变更、技术方案 |
-| 05_前端开发 | 组件设计、页面交互逻辑 |
-| 06_运维部署 | 部署步骤、nginx 配置、上线检查项 |
-| 99_迭代复盘归档 | 迭代总结与问题记录 |
+| 01_PRD | Product requirements (\`official\` = signed off, \`draft_ai\` = AI-generated draft) |
+| 02_Acceptance | Acceptance criteria checklist |
+| 03_Testing | QA test cases / dev self-check list |
+| 04_Backend | API spec, DB migration, technical design |
+| 05_Frontend | Component design, interaction flow |
+| 06_Retrospective | Sprint retrospective and issue log |
 `,
 
-  [`01_需求文档_PRD/${SNAKE}_prd_official.md`]: `# ${TITLE} PRD（Official）
+  [`01_PRD/${SNAKE}_prd_official.md`]: `# ${TITLE} PRD (Official)
 
-> 状态：正式版
-> 迭代：feature-${NAME}
+> Status: signed off
+> Sprint: feature-${NAME}
 
 ---
 
-## 一、功能概述
-<简要描述本次要做的功能>
+## 1. Overview
+<Brief description of the feature being built>
 
-## 二、业务规则
-1. <规则 1>
-2. <规则 2>
+## 2. Business rules
+1. <Rule 1>
+2. <Rule 2>
 
-## 三、权限规则
-- <未登录/已登录/角色差异>
+## 3. Permission rules
+- <Anonymous / logged-in / role differences>
 
-## 四、交互流程
-1. <步骤 1>
-2. <步骤 2>
+## 4. User flow
+1. <Step 1>
+2. <Step 2>
 
-## 五、不做（Out-of-Scope）
-- <排除项>
+## 5. Out-of-Scope
+- <Exclusion>
 `,
 
-  [`01_需求文档_PRD/${SNAKE}_prd_draft_ai.md`]: `# ${TITLE} PRD（AI 初稿）
+  [`01_PRD/${SNAKE}_prd_draft_ai.md`]: `# ${TITLE} PRD (AI Draft)
 
-> 状态：AI 生成初稿，待人工审阅、删减、修正后另存为 \`${SNAKE}_prd_official.md\`
+> Status: AI-generated draft — review, trim and save as \`${SNAKE}_prd_official.md\`.
 
 ---
 
-## 一、功能概述（AI 建议）
-<AI 生成>
+## 1. Overview (AI suggestion)
+<AI-generated>
 
-## 二、业务规则（AI 建议，需人工确认）
-1. <规则 1>（**待确认**）
-2. <规则 2>（**待确认**）
+## 2. Business rules (AI suggestion — human confirmation required)
+1. <Rule 1> (**TBD**)
+2. <Rule 2> (**TBD**)
 
-## 三、AI 提醒事项
-- 🚨 <安全/性能/合规提醒 1>
-- 🚨 <安全/性能/合规提醒 2>
+## 3. AI reminders
+- 🚨 <Security / performance / compliance reminder 1>
+- 🚨 <Security / performance / compliance reminder 2>
 
-## 四、待人工决策项
-- [ ] <决策项 1>
-- [ ] <决策项 2>
+## 4. Open decisions
+- [ ] <Decision 1>
+- [ ] <Decision 2>
 `,
 
-  [`02_验收标准_AC/${SNAKE}_ac_standard.md`]: `# ${TITLE} 验收标准 (AC)
+  [`02_Acceptance/${SNAKE}_ac_standard.md`]: `# ${TITLE} Acceptance Criteria
 
-> 迭代：feature-${NAME}
-> 用途：PM / QA / 开发共同确认「做到什么程度算完成」
+> Sprint: feature-${NAME}
+> Purpose: PM / QA / Dev shared definition of "done"
 
 ---
 
-| 编号 | 验收项 |
+| ID | Criterion |
 | --- | --- |
-| AC1 | <验收项 1> |
-| AC2 | <验收项 2> |
-| AC3 | <验收项 3> |
+| AC1 | <Criterion 1> |
+| AC2 | <Criterion 2> |
+| AC3 | <Criterion 3> |
 
 ---
 
-## 补充验收
-- <补充项 1>
-- <补充项 2>
+## Additional criteria
+- <Additional item 1>
+- <Additional item 2>
 `,
 
-  [`03_测试用例_检测清单/${SNAKE}_test_checklist.md`]: `# ${TITLE} 测试用例 / 自测清单
+  [`03_Testing/${SNAKE}_test_checklist.md`]: `# ${TITLE} Test Cases / Checklist
 
-> 迭代：feature-${NAME}
-> 用途：QA 测试执行清单，开发提测前自测清单
+> Sprint: feature-${NAME}
+> Purpose: QA execution checklist and dev pre-handoff self-check
 
 ---
 
-## 一、功能
-- [ ] <正常流程 1>
-- [ ] <正常流程 2>
+## 1. Functional
+- [ ] <Happy path 1>
+- [ ] <Happy path 2>
 
-## 二、边界 & 异常输入
-- [ ] <边界 1>
-- [ ] <边界 2>
+## 2. Boundaries & invalid input
+- [ ] <Edge case 1>
+- [ ] <Edge case 2>
 
-## 三、安全
-- [ ] <安全项 1>
-- [ ] <安全项 2>
+## 3. Security
+- [ ] <Security item 1>
+- [ ] <Security item 2>
 
-## 四、兼容
-- [ ] PC 端（Chrome / Safari / Edge / Firefox）
-- [ ] 移动端（iOS Safari / Android Chrome）
+## 4. Compatibility
+- [ ] Desktop (Chrome / Safari / Edge / Firefox)
+- [ ] Mobile (iOS Safari / Android Chrome)
 
-## 五、异常场景
-- [ ] 网络断开 → 友好提示
-- [ ] 服务端 500 → 不卡死
+## 5. Failure modes
+- [ ] Network offline → friendly message
+- [ ] Server 500 → UI does not lock up
 `,
 
-  '04_后端开发/接口文档.md': `# 后端接口文档 — ${TITLE}
+  '04_Backend/api-spec.md': `# API Spec — ${TITLE}
 
-> 迭代：feature-${NAME}
+> Sprint: feature-${NAME}
 
 ---
 
-## 1. <接口 1 名称>
+## 1. <Endpoint 1>
 
-**接口**：\`POST /api/xxx\`
+**Endpoint**: \`POST /api/xxx\`
 
-**请求体**：
+**Request body**:
 \`\`\`json
 {
   "field1": "string"
 }
 \`\`\`
 
-**返回**：
+**Response**:
 \`\`\`json
 {
   "code": 0,
@@ -256,279 +253,176 @@ feature-${NAME}/
 }
 \`\`\`
 
-**错误码**：
-| code | msg | 说明 |
+**Error codes**:
+| code | msg | Description |
 | --- | --- | --- |
-| 40001 | <错误 1> | <说明> |
-| 50000 | 服务器异常 | 未知异常 |
+| 40001 | <Error 1> | <Description> |
+| 50000 | Server error | Unhandled exception |
 `,
 
-  '04_后端开发/数据库变更SQL.md': `# 数据库变更 SQL — ${TITLE}
+  '04_Backend/db-migration.md': `# Database Migration — ${TITLE}
 
-> 迭代：feature-${NAME}
+> Sprint: feature-${NAME}
 
 ---
 
-## 1. 新建/变更表
+## 1. Schema changes
 
 \`\`\`sql
--- TODO: 补充 DDL
+-- TODO: add DDL
 \`\`\`
 
-## 2. 回滚脚本
+## 2. Rollback
 
 \`\`\`sql
--- TODO: 补充回滚 SQL
+-- TODO: add rollback SQL
 \`\`\`
 `,
 
-  '04_后端开发/开发技术方案.md': `# 后端技术方案 — ${TITLE}
+  '04_Backend/tech-design.md': `# Backend Technical Design — ${TITLE}
 
-> 迭代：feature-${NAME}
+> Sprint: feature-${NAME}
 
 ---
 
-## 一、总体架构
-<可用 ASCII 图>
+## 1. Architecture overview
+<ASCII diagram is fine>
 
-## 二、核心流程
-<主要业务时序>
+## 2. Core flow
+<Primary business sequence>
 
-## 三、依赖与选型
-- <依赖 / 中间件 / 第三方>
+## 3. Dependencies & choices
+- <Dependency / middleware / third-party>
 
-## 四、安全清单
-- [ ] <安全项 1>
-- [ ] <安全项 2>
+## 4. Security checklist
+- [ ] <Security item 1>
+- [ ] <Security item 2>
 
-## 五、埋点 / 审计日志
-<需要记录的事件与字段>
+## 5. Logging / audit events
+<Events and fields to log>
 `,
 
-  '05_前端开发/组件设计文档.md': `# 前端组件设计 — ${TITLE}
+  '05_Frontend/component-design.md': `# Frontend Component Design — ${TITLE}
 
-> 迭代：feature-${NAME}
-> 技术栈：React 18 + TypeScript + @derbysoft/neat-design + zustand + react-router 7 (HashRouter)
+> Sprint: feature-${NAME}
+> Stack: React 18 + TypeScript + @derbysoft/neat-design + zustand + react-router 7 (HashRouter)
 
 ---
 
-## 一、涉及组件与文件
+## 1. Files touched
 
-| 位置 | 说明 |
+| Path | Purpose |
 | --- | --- |
-| \`src/pages/Xxx/Xxx.tsx\` | 页面组件（新建/修改） |
-| \`src/pages/Xxx/Xxx.scss\` | 页面样式 |
-| \`src/components/XxxCard/\` | 复用组件 |
-| \`src/services/xxx.ts\` | API 封装 |
-| \`src/config.menu.tsx\` | 菜单/路由配置 |
-| \`src/utils/routeGenerator.tsx\` | 组件映射 |
-| \`src/locales/pages/xxx/{en,zh}.ts\` | i18n 文案 |
-| \`src/locales/index.ts\` | 命名空间注册（\`as const\`） |
+| \`src/pages/Xxx/Xxx.tsx\` | Page component (new / modified) |
+| \`src/pages/Xxx/Xxx.scss\` | Page styles |
+| \`src/components/XxxCard/\` | Reusable component |
+| \`src/services/xxx.ts\` | API wrapper |
+| \`src/config.menu.tsx\` | Menu / route config |
+| \`src/utils/routeGenerator.tsx\` | Component map |
+| \`src/locales/pages/xxx/{en,zh}.ts\` | i18n copy |
+| \`src/locales/index.ts\` | Namespace registration (\`as const\`) |
 
-## 二、组件说明
-<关键组件 props / 交互 / 依赖 Neat Design 组件>
+## 2. Component notes
+<Key component props / interactions / Neat Design dependencies>
 
-## 三、Store 扩展（如需要）
+## 3. Store additions (if any)
 \`\`\`ts
 interface AppState {
   // TODO
 }
 \`\`\`
 
-## 四、i18n 文案
+## 4. i18n copy
 \`\`\`ts
-// src/locales/pages/${NAME.replace(/-/g, '')}/zh.ts
+// src/locales/pages/${NAME.replace(/-/g, '')}/en.ts
 export default {
-  ${NAME.replace(/-/g, '')}Title: '<标题>',
+  ${NAME.replace(/-/g, '')}Title: '<Title>',
 };
 \`\`\`
 
-## 五、开发价值
-<可复用产物 / 沉淀方案>
+## 5. Reusable outcomes
+<Artifacts other features can reuse>
 `,
 
-  '05_前端开发/页面交互逻辑.md': `# 前端页面交互逻辑 — ${TITLE}
+  '05_Frontend/interaction-flow.md': `# Frontend Interaction Flow — ${TITLE}
 
-> 迭代：feature-${NAME}
+> Sprint: feature-${NAME}
 
 ---
 
-## 一、主流程时序
+## 1. Main sequence
 \`\`\`
-用户进入页面
+User enters the page
   │
   ▼
-<关键步骤>
+<Key step>
   │
   ▼
-成功 / 失败分支
+Success / failure branches
 \`\`\`
 
-## 二、异常分支
-- <网络异常>
-- <权限异常>
-- <参数异常>
+## 2. Failure branches
+- <Network error>
+- <Permission error>
+- <Invalid input>
 
-## 三、边界与状态
-| 场景 | 期望行为 |
+## 3. Edge cases & states
+| Scenario | Expected behavior |
 | --- | --- |
-| <场景 1> | <行为> |
+| <Scenario 1> | <Behavior> |
 `,
 
-  '06_运维部署/部署步骤.md': `# 部署步骤 — ${TITLE}
+  '06_Retrospective/retrospective.md': `# Retrospective & Issue Log — ${TITLE}
 
-> 迭代：feature-${NAME}
-
----
-
-## 一、前置准备
-- [ ] 确认目标环境（QA / UAT / PROD）
-- [ ] 数据库备份完成
-- [ ] 依赖中间件（Redis / MQ / ...）就绪
-
-## 二、后端部署
-1. 执行数据库变更
-2. 配置环境变量
-3. 发布服务（滚动发布）
-4. 验证接口
-
-## 三、前端部署
-\`\`\`bash
-npm ci
-npm run build:qa   # 或 build:uat / build:prod
-\`\`\`
-上传 \`dist/\` 到静态服务器 / CDN。
-
-## 四、灰度 & 回滚
-- 灰度策略：<5% → 30% → 100%>
-- 回滚触发指标：<成功率 / 5xx / 关键业务指标>
-- 回滚步骤：<前端回滚 → 后端回滚 → 表保留>
-
-## 五、上线通知
-- 提前通知客服 / 运营 / QA
-- 值班同学在岗
-`,
-
-  '06_运维部署/nginx配置变更.md': `# Nginx 配置变更 — ${TITLE}
-
-> 迭代：feature-${NAME}
+> Sprint: feature-${NAME}
+> Completion date: YYYY-MM-DD
 
 ---
 
-## 一、变更点
-<新增 location / 限流 / 反向代理 / header 等>
+## 1. Goal review
+- **Business goal**: <recap>
+- **Technical goal**: <recap>
+- **Achieved**: ☐ Yes / ☐ Partial / ☐ No
 
-\`\`\`nginx
-# TODO: 补充配置片段
-\`\`\`
-
-## 二、上线校验
-- [ ] \`nginx -t\` 通过
-- [ ] reload 后接口可访问
-- [ ] 相关安全响应头生效
-`,
-
-  '06_运维部署/上线检查项.md': `# 上线检查项 — ${TITLE}
-
-> 迭代：feature-${NAME}
-> 用途：发布前最后一道 checklist，逐项打勾方可上线。
-
----
-
-## 一、代码与构建
-- [ ] 代码已合并到发布分支
-- [ ] CI 全绿（lint / build / 测试）
-- [ ] 版本号 / changelog 已更新
-
-## 二、配置与密钥
-- [ ] 生产环境变量已配置
-- [ ] 密钥通过安全渠道注入（**不入代码库**）
-- [ ] 生产 DEBUG 关闭
-
-## 三、安全
-- [ ] HTTPS 证书有效
-- [ ] 敏感字段不落日志
-- [ ] 限流 / 鉴权已开启
-
-## 四、数据库
-- [ ] 变更已执行
-- [ ] 备份完成，可回滚
-
-## 五、监控与告警
-- [ ] 关键指标监控大盘就绪
-- [ ] 告警阈值配置
-- [ ] 埋点正常写入
-
-## 六、功能验证
-- [ ] <关键场景 1>
-- [ ] <关键场景 2>
-
-## 七、发布通知
-- [ ] 通知客服 / 运营 / QA 上线时间
-- [ ] 值班同学在岗
-- [ ] 回滚方案已同步团队
-
----
-
-**签字（可选）**：
-- 前端负责人：
-- 后端负责人：
-- QA 负责人：
-- 运维负责人：
-- 发布时间：
-`,
-
-  '99_迭代复盘归档/迭代总结&问题记录.md': `# 迭代总结 & 问题记录 — ${TITLE}
-
-> 迭代：feature-${NAME}
-> 完成日期：YYYY-MM-DD
-
----
-
-## 一、迭代目标回顾
-- **业务目的**：<回顾>
-- **技术目的**：<回顾>
-- **是否达成**：☐ 是 / ☐ 部分 / ☐ 否
-
-## 二、范围核对（Scope）
-| 项目 | 计划 | 实际 | 备注 |
+## 2. Scope review
+| Item | Planned | Actual | Notes |
 | --- | --- | --- | --- |
-| <项目 1> | ✅ | | |
+| <Item 1> | ✅ | | |
 
-## 三、指标
-| 指标 | 期望 | 实际 |
+## 3. Metrics
+| Metric | Target | Actual |
 | --- | --- | --- |
-| <指标 1> | | |
+| <Metric 1> | | |
 
-## 四、遇到的问题 & 解决
-| 编号 | 现象 | 根因 | 解决方案 | 是否已沉淀文档 |
+## 4. Issues & resolutions
+| ID | Symptom | Root cause | Resolution | Documented? |
 | --- | --- | --- | --- | --- |
 | P1 | | | | |
 
-## 五、经验沉淀
-- 可复用产物：
-- 踩坑记录：
-- 改进建议（下一迭代）：
+## 5. Lessons learned
+- Reusable outcomes:
+- Pitfalls:
+- Improvements for next sprint:
 
-## 六、参与人员
-| 角色 | 姓名 |
+## 6. Contributors
+| Role | Name |
 | --- | --- |
 | PM | |
-| 前端 | |
-| 后端 | |
+| Frontend | |
+| Backend | |
 | QA | |
-| 运维 | |
+| DevOps | |
 
-## 七、附件 / 链接
-- 需求：\`01_需求文档_PRD/${SNAKE}_prd_official.md\`
-- 验收：\`02_验收标准_AC/${SNAKE}_ac_standard.md\`
-- 上线检查：\`06_运维部署/上线检查项.md\`
-- 相关 PR：#xxx
-- 相关工单：JIRA-xxx
+## 7. References
+- PRD: \`01_PRD/${SNAKE}_prd_official.md\`
+- Acceptance: \`02_Acceptance/${SNAKE}_ac_standard.md\`
+- Tests: \`03_Testing/${SNAKE}_test_checklist.md\`
+- Related PRs: #xxx
+- Related tickets: JIRA-xxx
 `,
 };
 
-// ---------- 写入 ----------
+// ---------- Write files ----------
 let created = 0;
 let skipped = 0;
 
@@ -538,19 +432,19 @@ for (const [relPath, content] of Object.entries(files)) {
   fs.mkdirSync(dir, { recursive: true });
 
   if (fs.existsSync(fullPath) && !args.force) {
-    console.log(`- 跳过（已存在）: ${path.relative(ROOT, fullPath)}`);
+    console.log(`- skip (exists): ${path.relative(ROOT, fullPath)}`);
     skipped++;
     continue;
   }
 
   fs.writeFileSync(fullPath, content, 'utf8');
-  console.log(`✔ 生成: ${path.relative(ROOT, fullPath)}`);
+  console.log(`✔ create: ${path.relative(ROOT, fullPath)}`);
   created++;
 }
 
-console.log(`\n✅ 完成: 生成 ${created} 个文件，跳过 ${skipped} 个`);
-console.log(`📂 目录: ${path.relative(ROOT, featureDir)}`);
-console.log(`\n下一步：`);
+console.log(`\n✅ Done: ${created} created, ${skipped} skipped`);
+console.log(`📂 Directory: ${path.relative(ROOT, featureDir)}`);
+console.log(`\nNext steps:`);
 console.log(`  1. cd ${path.relative(ROOT, featureDir)}`);
-console.log(`  2. 从 01_需求文档_PRD/${SNAKE}_prd_draft_ai.md 开始编写`);
-console.log(`  3. 与 PM/QA 对齐后另存为 ${SNAKE}_prd_official.md`);
+console.log(`  2. Start from 01_PRD/${SNAKE}_prd_draft_ai.md`);
+console.log(`  3. Once reviewed with PM/QA, save as ${SNAKE}_prd_official.md`);
