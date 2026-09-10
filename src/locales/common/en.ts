@@ -69,6 +69,7 @@ export default {
     responsiveForm: 'Responsive Form',
     dynamicList: 'Dynamic List',
     formValidation: 'Form Validation',
+    remoteSelectSearch: 'Remote Select Search',
     virtualList: 'Virtual List',
     reactHooks: 'React Hooks',
     useTransition: 'useTransition',

@@ -1,0 +1,17 @@
+/**
+ * @file pages/Form/RemoteSelectSearch.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.remote-select-search {
+  &__card {
+    max-width: 720px;
+  }
+
+  &__form {
+    max-width: 560px;
+    margin-top: 24px;
+  }
+}

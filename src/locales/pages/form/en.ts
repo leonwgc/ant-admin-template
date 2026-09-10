@@ -41,4 +41,17 @@ export default {
   // Buttons
   responsiveFormBtnCancel: 'Cancel',
   responsiveFormBtnUpdate: 'Update',
+
+  // Remote Select Search Page
+  remoteSelectSearchTitle: 'Remote Select Search',
+  remoteSelectSearchDescription:
+    'Search users through a debounced mock API instead of filtering all options in the browser.',
+  remoteSelectSearchLabel: 'User',
+  remoteSelectSearchPlaceholder: 'Type a name or email to search',
+  remoteSelectSearchRequired: 'Please select a user.',
+  remoteSelectSearchLoading: 'Loading users...',
+  remoteSelectSearchEmpty: 'No matching users found.',
+  remoteSelectSearchSubmit: 'Submit',
+  remoteSelectSearchReset: 'Reset',
+  remoteSelectSearchSelected: 'Selected {{name}}',
 };

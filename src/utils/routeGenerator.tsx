@@ -140,6 +140,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/forms': lazyLoad('pages/Form/ResponsiveForm'),
   '/app/forms/dynamic-list': lazyLoad('pages/Form/DynamicList'),
   '/app/forms/validation': lazyLoad('pages/Form/FormValidation'),
+  '/app/forms/remote-select': lazyLoad('pages/Form/RemoteSelectSearch'),
   '/app/forms/virtual-list': lazyLoad('pages/Form/VirtualLists'),
 
   '/app/form/add-phone-number': lazyLoad('pages/Form/AddPhoneNumber'),

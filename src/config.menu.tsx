@@ -370,6 +370,14 @@ export const menus: MenuItem[] = [
         permissions: [],
       },
       {
+        key: 'remote-select-search',
+        get label() {
+          return t('menu.remoteSelectSearch');
+        },
+        route: '/app/forms/remote-select',
+        permissions: [],
+      },
+      {
         key: 'virtual-list',
         get label() {
           return t('menu.virtualList');

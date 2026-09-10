@@ -69,6 +69,7 @@ export default {
     responsiveForm: '响应式表单',
     dynamicList: '动态列表',
     formValidation: '表单验证',
+    remoteSelectSearch: 'Select 远程模糊搜索',
     virtualList: '虚拟列表',
     reactHooks: 'React Hooks',
     useTransition: 'useTransition',

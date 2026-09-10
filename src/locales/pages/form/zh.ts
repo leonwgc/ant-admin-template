@@ -41,4 +41,17 @@ export default {
   // 按钮
   responsiveFormBtnCancel: '取消',
   responsiveFormBtnUpdate: '更新',
+
+  // Select 远程搜索页面
+  remoteSelectSearchTitle: 'Select 远程模糊搜索',
+  remoteSelectSearchDescription:
+    '通过带防抖的 Mock API 搜索用户，而不是在浏览器中一次性过滤全部选项。',
+  remoteSelectSearchLabel: '用户',
+  remoteSelectSearchPlaceholder: '输入姓名或邮箱进行搜索',
+  remoteSelectSearchRequired: '请选择用户。',
+  remoteSelectSearchLoading: '正在加载用户...',
+  remoteSelectSearchEmpty: '没有找到匹配的用户。',
+  remoteSelectSearchSubmit: '提交',
+  remoteSelectSearchReset: '重置',
+  remoteSelectSearchSelected: '已选择 {{name}}',
 };
