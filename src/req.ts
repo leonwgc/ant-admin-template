@@ -1,5 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { globalRequestDeduplicator } from './utils/requestDeduplicator';
+import { useAppStore } from './store';
 
 const getGateWayPath = () => {
   switch (process.env.NODE_ENV) {
@@ -67,8 +68,11 @@ req.interceptors.response.use(
     const { status } = error.response;
     switch (status) {
       case 401:
-        // 登录已过期，请重新登录
-        // 可以在这里触发登出逻辑
+        if (!error.config?.url?.includes('/auth/')) {
+          useAppStore.getState().clearUser();
+          const currentPath = `${window.location.pathname}${window.location.search}`;
+          window.location.hash = `/login?redirect=${encodeURIComponent(currentPath)}`;
+        }
         break;
       case 403:
         // 没有权限访问该资源

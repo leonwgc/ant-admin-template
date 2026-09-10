@@ -23,6 +23,7 @@ export const resources = {
     'pages.dashboard': en.pages.dashboard, // 注册命名空间
     'pages.flow': en.pages.flow, // 注册命名空间
     'pages.pdf': en.pages.pdf, // 注册命名空间
+    'pages.login': en.pages.login,
   },
   zh: {
     [defaultNS]: zh,
@@ -36,6 +37,7 @@ export const resources = {
     'pages.dashboard': zh.pages.dashboard, // 注册命名空间
     'pages.flow': zh.pages.flow, // 注册命名空间
     'pages.pdf': zh.pages.pdf, // 注册命名空间
+    'pages.login': zh.pages.login,
   },
 } as const;
 

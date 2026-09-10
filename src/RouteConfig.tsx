@@ -18,6 +18,7 @@ import { defaultRoute } from './config';
 
 const NoPermission = lazy(() => import('./pages/NoPermission/NoPermission'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+const Login = lazy(() => import('./pages/Login/Login'));
 
 // Extract all routes from menu configuration
 const menuRoutes = extractRoutesFromMenus(menus);
@@ -44,6 +45,8 @@ const RouteConfig = () => {
         >
           <Route index element={<NoPermission />} />
         </Route>
+
+        <Route path="login" element={<Login />} />
 
         <Route path="app" element={<App />}>
           {/* Auto-generated routes from menu configuration with page-level error boundaries */}

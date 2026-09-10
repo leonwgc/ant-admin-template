@@ -14,6 +14,7 @@ import aiZh from './pages/ai/zh';
 import dashboardZh from './pages/dashboard/zh';
 import flowZh from './pages/flow/zh';
 import pdfZh from './pages/pdf/zh';
+import loginZh from './pages/login/zh';
 
 /**
  * 中文翻译
@@ -35,6 +36,7 @@ const zh = {
     dashboard: dashboardZh,
     flow: flowZh,
     pdf: pdfZh,
+    login: loginZh,
   },
 };
 

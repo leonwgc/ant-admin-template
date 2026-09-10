@@ -14,6 +14,7 @@ import aiEn from './pages/ai/en';
 import dashboardEn from './pages/dashboard/en';
 import flowEn from './pages/flow/en';
 import pdfEn from './pages/pdf/en';
+import loginEn from './pages/login/en';
 
 /**
  * English translations
@@ -35,6 +36,7 @@ const en = {
     dashboard: dashboardEn,
     flow: flowEn,
     pdf: pdfEn,
+    login: loginEn,
   },
 };
 

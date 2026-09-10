@@ -2,8 +2,15 @@
  * @file layouts/Header.tsx
  * @author leon.wang
  */
-import React, { useEffect, useState } from 'react';
-import { Layout, Space, Flex, Avatar, Divider } from '@derbysoft/neat-design';
+import React, { useState } from 'react';
+import {
+  Layout,
+  Space,
+  Flex,
+  Avatar,
+  Divider,
+  message,
+} from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
   MenuOutlined,
@@ -20,12 +27,15 @@ import {
 import { Dropdown } from 'antd';
 import { useBoolean, useMount } from 'ahooks';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 import MobileMenus from './MobileMenus';
 import { GlobalSearch } from 'components/GlobalSearch';
 import { AccountSwitcher } from 'components/AccountSwitcher';
 import { changeLanguage, type Language } from '~/i18n';
 import { useTheme } from '~/hooks/useTheme';
+import { logout } from '~/services/auth';
+import { useAppStore } from '~/store';
 import logo from '~/images/robot.png';
 import useGlobalState from 'zustand-kit';
 import './Header.scss';
@@ -35,6 +45,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const user = useAppStore((state) => state.user);
+  const clearUser = useAppStore((state) => state.clearUser);
 
   const [lang, setLang] = useGlobalState('APP_LANG', 'zh', {
     storageKey: 'ant-admin',
@@ -71,9 +84,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
       key: 'user-info',
       label: (
         <div>
-          <div style={{ color: '#1B2C34' }}>Felicia Lawson</div>
+          <div style={{ color: '#1B2C34' }}>{user?.name || 'User'}</div>
           <div style={{ fontSize: 12, color: '#647075' }}>
-            felicia.lawson@goooooogle.net
+            {user?.email || ''}
           </div>
         </div>
       ),
@@ -108,10 +121,17 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
     },
     {
       key: 'sign-out',
-      label: t('common:signOut'),
+      label: t('pages.login:logoutBtn'),
       icon: <LogoutOutlined />,
       onClick: () => {
-        // Sign out
+        if (!window.confirm(t('pages.login:logoutConfirmTitle'))) return;
+
+        void logout()
+          .catch(() => message.error(t('pages.login:loginMsgNetwork')))
+          .finally(() => {
+            clearUser();
+            navigate('/login', { replace: true });
+          });
       },
     },
   ];
