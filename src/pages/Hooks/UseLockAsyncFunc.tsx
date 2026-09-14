@@ -63,7 +63,7 @@ const UseLockAsyncFunc: FC = () => {
 
   return (
     <div className="use-lock-async-func">
-      <Title level={2}>useLockAsyncFunc Hook 示例</Title>
+      <Title level={2}>useLockAsyncFunc Hook 示例 (useLockFn in ahooks)</Title>
       <Paragraph>
         <Text strong>useLockAsyncFunc</Text> 是一个防止异步函数并发执行的 React
         Hook。 当函数正在执行时，后续调用会被忽略，直到当前执行完成。
