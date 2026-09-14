@@ -9,9 +9,6 @@
 ```bash
 npm start          # Dev server on http://localhost:3002 (pack.js + packrs)
 npm run lint       # ESLint 9 over src/
-npm run build:qa   # QA build
-npm run build:uat  # UAT build
-npm run build:prod # Production build
 ```
 
 ## Tech Stack (from package.json)
