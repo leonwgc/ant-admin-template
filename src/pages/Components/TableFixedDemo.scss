@@ -1,0 +1,54 @@
+/**
+ * @file pages/Components/TableFixedDemo.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.table-fixed-demo {
+  padding: 20px;
+
+  &__hero {
+    background: #ffffff;
+    border: 1px solid #edf0f2;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    padding: 20px;
+  }
+
+  &__title {
+    margin-bottom: 8px !important;
+  }
+
+  &__desc {
+    color: #5f6b72;
+    margin-bottom: 0;
+  }
+
+  &__tip {
+    color: #5f6b72;
+    margin-bottom: 12px;
+  }
+
+  &__table {
+    :global(.ant-table-wrapper) {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .table-fixed-demo {
+    padding: 12px;
+
+    &__hero {
+      padding: 14px;
+      border-radius: 10px;
+    }
+
+    &__desc,
+    &__tip {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  }
+}

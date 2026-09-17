@@ -15,7 +15,6 @@ import {
   RobotOutlined,
   BarChartOutlined,
   ApartmentOutlined,
-  FilePdfOutlined,
 } from '@ant-design/icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -564,6 +563,14 @@ export const menus: MenuItem[] = [
           return t('menu.imageCropper');
         },
         route: '/app/components/image-cropper',
+        permissions: [],
+      },
+      {
+        key: 'table-fixed',
+        get label() {
+          return t('menu.tableFixed');
+        },
+        route: '/app/components/table-fixed',
         permissions: [],
       },
       {

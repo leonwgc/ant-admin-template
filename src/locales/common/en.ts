@@ -92,6 +92,7 @@ export default {
     chatbot: 'ChatBot',
     imageUpload: 'ImageUpload',
     imageCropper: 'ImageCropper',
+    tableFixed: 'Fixed Header & Columns',
     richTextEditor: 'RichTextEditor',
     numberRoll: 'NumberRoll',
     fadeIn: 'FadeIn',

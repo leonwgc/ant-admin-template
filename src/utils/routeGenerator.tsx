@@ -180,6 +180,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/chatbot': lazyLoad('pages/Components/ChatBot'),
   '/app/components/image-upload': lazyLoad('pages/Components/ImageUploadExample'),
   '/app/components/image-cropper': lazyLoad('pages/Components/ImageCropperExample'),
+  '/app/components/table-fixed': lazyLoad('pages/Components/TableFixedDemo'),
   '/app/components/rich-text-editor': lazyLoad('pages/Components/RichTextEditorExample'),
   '/app/components/number-roll': lazyLoad('pages/Components/NumberRollExample'),
   '/app/components/fade-in': lazyLoad('pages/Components/FadeInExample'),

@@ -92,6 +92,7 @@ export default {
     chatbot: '聊天机器人',
     imageUpload: '图片上传',
     imageCropper: '图片裁剪',
+    tableFixed: '固定表头与列',
     richTextEditor: '富文本编辑器',
     numberRoll: '数字滚动',
     fadeIn: '淡入动画',
