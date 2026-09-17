@@ -44,7 +44,7 @@ const App: React.FC<{
       </Layout>
 
       {/* AI Copilot - Global floating assistant */}
-      <AICopilot />
+      {/* <AICopilot /> */}
     </Layout>
   );
 };
