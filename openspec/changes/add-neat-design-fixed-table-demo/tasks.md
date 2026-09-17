@@ -18,4 +18,4 @@
 
 - [x] 3.1 Create `src/pages/Components/TableFixedDemo.scss` with the required file header, `@import 'scss/common.scss';`, and BEM class names, and verify the demo layout remains readable on desktop and narrow viewports.
 - [x] 3.2 Run a focused validation for the touched frontend files, such as `npm run lint`, and verify no new lint errors are introduced by the change.
-- [ ] 3.3 Manually open the new Components menu item in the dev app, and verify the page is reachable, localized, and demonstrates fixed header plus fixed left/right columns.
+- [x] 3.3 Manually open the new Components menu item in the dev app, and verify the page is reachable, localized, and demonstrates fixed header plus fixed left/right columns.

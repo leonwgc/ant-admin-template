@@ -2,9 +2,16 @@
  * @file pages/Components/TableFixedDemo.tsx
  * @author leon.wang
  */
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 
-import { Button, Card, Space, Table, Tag, Typography } from '@derbysoft/neat-design';
+import {
+  Button,
+  Pagination,
+  Space,
+  Table,
+  Tag,
+  Typography,
+} from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';
 import type { TableColumnsType } from '@derbysoft/neat-design';
 
@@ -35,13 +42,31 @@ interface TableFixedRow {
  */
 const TableFixedDemo: FC = () => {
   const { t } = useTranslation();
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const dataSource = useMemo<TableFixedRow[]>(() => {
-    const departments = ['Sales', 'Operations', 'Finance', 'Marketing', 'Support'];
+    const departments = [
+      'Sales',
+      'Operations',
+      'Finance',
+      'Marketing',
+      'Support',
+    ];
     const roles = ['Manager', 'Supervisor', 'Specialist', 'Coordinator'];
     const cities = ['Shanghai', 'Beijing', 'Guangzhou', 'Shenzhen', 'Chengdu'];
-    const hotels = ['Vista Bay', 'Urban Nest', 'Skyline Inn', 'River Crown', 'Harbor One'];
-    const statuses: Array<TableFixedRow['status']> = ['active', 'pending', 'disabled'];
+    const hotels = [
+      'Vista Bay',
+      'Urban Nest',
+      'Skyline Inn',
+      'River Crown',
+      'Harbor One',
+    ];
+    const statuses: Array<TableFixedRow['status']> = [
+      'active',
+      'pending',
+      'disabled',
+    ];
 
     return Array.from({ length: 64 }, (_, index) => {
       const row = index + 1;
@@ -102,7 +127,6 @@ const TableFixedDemo: FC = () => {
       dataIndex: 'name',
       key: 'name',
       width: 160,
-      fixed: 'left',
     },
     {
       title: t('pages.components:tableFixedColDepartment'),
@@ -192,6 +216,16 @@ const TableFixedDemo: FC = () => {
     },
   ];
 
+  const currentPageData = useMemo(() => {
+    const start = (current - 1) * pageSize;
+    return dataSource.slice(start, start + pageSize);
+  }, [current, dataSource, pageSize]);
+
+  const handlePageChange = (page: number, nextPageSize: number) => {
+    setCurrent(page);
+    setPageSize(nextPageSize);
+  };
+
   return (
     <div className="table-fixed-demo">
       <div className="table-fixed-demo__hero">
@@ -203,20 +237,26 @@ const TableFixedDemo: FC = () => {
         </Paragraph>
       </div>
 
-      <Card title={t('pages.components:tableFixedCardTitle')}>
-        <Paragraph className="table-fixed-demo__tip">
-          {t('pages.components:tableFixedTip')}
-        </Paragraph>
+      <Table<TableFixedRow>
+        className="table-fixed-demo__table"
+        rowKey="key"
+        columns={columns}
+        dataSource={currentPageData}
+        pagination={false}
+        scroll={{ x: 'max-content', y: 48 * 6 }}
+      />
 
-        <Table<TableFixedRow>
-          className="table-fixed-demo__table"
-          rowKey="key"
-          columns={columns}
-          dataSource={dataSource}
-          pagination={{ pageSize: 20, showSizeChanger: false }}
-          scroll={{ x: 1900, y: 420 }}
+      <div className="table-fixed-demo__pagination">
+        <Pagination
+          current={current}
+          pageSize={pageSize}
+          total={dataSource.length}
+          showQuickJumper={false}
+          showSizeChanger
+          pageSizeOptions={[10, 50, 100]}
+          onChange={handlePageChange}
         />
-      </Card>
+      </div>
     </div>
   );
 };

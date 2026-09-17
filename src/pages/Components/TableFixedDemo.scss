@@ -4,15 +4,22 @@
  */
 @import 'scss/common.scss';
 
-.table-fixed-demo {
-  padding: 20px;
+div.table-fixed-demo {
+  padding: 0;
+  overflow: hidden;
+  height: calc(100vh - 56px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 
   &__hero {
     background: #ffffff;
     border: 1px solid #edf0f2;
-    border-radius: 12px;
-    margin-bottom: 16px;
     padding: 20px;
+    height: 200px;
+    box-sizing: border-box;
+    flex-shrink: 0;
   }
 
   &__title {
@@ -30,9 +37,39 @@
   }
 
   &__table {
-    :global(.ant-table-wrapper) {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+
+    :global(.ds-table-wrapper) {
       width: 100%;
+      display: flex;
+      flex: 1 1 auto;
+      min-height: 0;
+      flex-direction: column;
     }
+
+    :global(.ds-spin-nested-loading),
+    :global(.ds-spin-container) {
+      display: flex;
+      flex: 1 1 auto;
+      min-height: 0;
+      flex-direction: column;
+    }
+
+    :global(.ds-table) {
+      flex: 1 1 auto;
+    }
+
+  }
+
+  &__pagination {
+    margin-top: auto; // Push pagination to the bottom of the container
+    flex-shrink: 0;
+    background: #ffffff;
+    border-top: 1px solid #edf0f2;
+    padding: 12px 16px;
   }
 }
 
