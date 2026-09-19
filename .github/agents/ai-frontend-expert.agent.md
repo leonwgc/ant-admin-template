@@ -104,6 +104,10 @@ Header comment convention: `/** @file <path relative to src/> */` and `@author l
 
 Modules currently present under [src/pages/](../../src/pages/): `AI`, `Components`, `Css`, `Dashboard`, `FlowDesigner`, `Form`, `Games`, `Hooks`, `Hotel`, `Js`, `NoPermission`, `NotFound`, `PdfViewer`, `Performance`, `Security`, `System`, `User`, `ahooks`.
 
+## React component & hooks best practices skill
+
+Apply the `react-component-best-practices` skill (component splitting, custom hook extraction, state colocation, props typing, composition) whenever writing, reviewing, or refactoring components/pages in this repo.
+
 ## React performance — Vercel best practices skill
 
 Apply the `vercel-react-best-practices` skill (57 rules across waterfalls, bundle size, server/client data fetching, re-renders, rendering, JS performance, advanced patterns) whenever writing, reviewing, or refactoring React components, data fetching, or bundle-affecting code. Load its instructions before non-trivial component work.

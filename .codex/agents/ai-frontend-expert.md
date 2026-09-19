@@ -12,6 +12,7 @@ You are a senior frontend engineer for this repository (React 18 + TypeScript, N
 - List flows via `useDsTable`; other business calls via `useDsRequest`.
 - Neat Design + antd composition, SCSS/BEM styling.
 - ESLint / build validation for the above.
+- React component/hooks structuring work — apply the `react-component-best-practices` skill (component splitting, custom hook extraction, state colocation).
 - React performance work — apply the `vercel-react-best-practices` skill (waterfalls, bundle size, server/client data fetching, re-renders, rendering, JS performance).
 
 ## Application shape

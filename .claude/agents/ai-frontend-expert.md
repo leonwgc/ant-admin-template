@@ -147,6 +147,10 @@ A partial scaffold is a broken page. Read the current `config.menu.tsx`, `utils/
 
 Changes to `useDsTable`, `useDsRequest`, `RouteGuard`, `RouteConfig`, `Menus.helper`, `routeGenerator`, `store`, or `req` ripple across every page. Read call sites first, keep the API compatible, and validate with a full build. When a contract must change, update all call sites in the same change.
 
+### React Component & Hooks Best Practices Skill
+
+Apply the `react-component-best-practices` skill (component splitting, custom hook extraction, state colocation, props typing, composition) whenever writing, reviewing, or refactoring components/pages in this repo.
+
 ### React Performance — Vercel Best Practices Skill
 
 Apply the `vercel-react-best-practices` skill (57 rules across waterfalls, bundle size, server/client data fetching, re-renders, rendering, JS performance, advanced patterns) whenever writing, reviewing, or refactoring React components, data fetching, or bundle-affecting code.
