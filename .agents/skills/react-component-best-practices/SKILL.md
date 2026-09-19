@@ -25,7 +25,7 @@ Project-specific conventions for structuring components and hooks. For micro-lev
 ## File organization
 
 - New components use the **folder + index** pattern: `components/ComponentName/index.tsx` + `components/ComponentName/index.scss` (see [src/components/FixedTable](../../../src/components/FixedTable)). Do not create `ComponentName.tsx` / `ComponentName.scss` siblings.
-- Export the component as both a named export and (for pages) a default export, per repo convention.
+- Export the component as a default export.
 - If a component's logic needs splitting into hooks/utils, keep them in the same folder (`components/ComponentName/useX.ts`) with the folder's `index.tsx` as the single entry point.
 
 ## Hooks
