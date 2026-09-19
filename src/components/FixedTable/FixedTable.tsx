@@ -18,6 +18,8 @@ export interface FixedTableProps<
   scroll?: TableProps<RecordType>['scroll'];
   /** Minimum table body height in pixels */
   minBodyHeight?: number;
+  /** Hide pagination when all records fit on one page */
+  hidePaginationWhenSinglePage?: boolean;
 }
 
 /**
@@ -29,12 +31,16 @@ export const FixedTable = <RecordType extends object = object>({
   pagination = {},
   scroll,
   minBodyHeight = 120,
+  hidePaginationWhenSinglePage = false,
   ...tableProps
 }: FixedTableProps<RecordType>) => {
   const [current, setCurrent] = useState(pagination.current ?? 1);
   const [pageSize, setPageSize] = useState(pagination.pageSize ?? 10);
   const [bodyHeight, setBodyHeight] = useState(minBodyHeight);
   const containerRef = useRef<HTMLDivElement>(null);
+  const total = pagination.total ?? tableProps.dataSource?.length ?? 0;
+  const shouldHidePagination =
+    hidePaginationWhenSinglePage && total <= pageSize;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -50,7 +56,7 @@ export const FixedTable = <RecordType extends object = object>({
       const availableHeight =
         container.clientHeight -
         (header?.offsetHeight ?? 48) -
-        (paginationElement?.offsetHeight ?? 56);
+        (paginationElement?.offsetHeight ?? 0);
 
       setBodyHeight(Math.max(availableHeight, minBodyHeight));
     };
@@ -60,7 +66,7 @@ export const FixedTable = <RecordType extends object = object>({
     updateBodyHeight();
 
     return () => resizeObserver.disconnect();
-  }, [minBodyHeight]);
+  }, [minBodyHeight, shouldHidePagination]);
 
   const handlePageChange = (nextCurrent: number, nextPageSize: number) => {
     setCurrent(nextCurrent);
@@ -69,18 +75,21 @@ export const FixedTable = <RecordType extends object = object>({
   };
 
   const tablePropsForRender = tableProps as TableProps<RecordType>;
-
   return (
     <div ref={containerRef} className={`fixed-table ${className}`}>
       <Table<RecordType>
         {...tablePropsForRender}
         className="fixed-table__table"
-        pagination={{
-          ...pagination,
-          current: pagination.current ?? current,
-          pageSize: pagination.pageSize ?? pageSize,
-          onChange: handlePageChange,
-        }}
+        pagination={
+          shouldHidePagination
+            ? false
+            : {
+                ...pagination,
+                current: pagination.current ?? current,
+                pageSize: pagination.pageSize ?? pageSize,
+                onChange: handlePageChange,
+              }
+        }
         scroll={{ x: scroll?.x ?? 'max-content', y: bodyHeight }}
       />
     </div>

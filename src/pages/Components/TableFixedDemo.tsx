@@ -224,6 +224,7 @@ const TableFixedDemo: FC = () => {
         rowKey="key"
         columns={columns}
         dataSource={dataSource}
+        hidePaginationWhenSinglePage
         pagination={{
           total: dataSource.length,
           showQuickJumper: false,
