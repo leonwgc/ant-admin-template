@@ -8,7 +8,7 @@ import { Button, Space, Tag, Typography } from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';
 import type { TableColumnsType } from '@derbysoft/neat-design';
 
-import { FixedTable } from 'components/FixedTable';
+import FixedTable from 'components/FixedTable';
 
 import './TableFixedDemo.scss';
 

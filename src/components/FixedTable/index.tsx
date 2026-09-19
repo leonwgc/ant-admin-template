@@ -24,7 +24,7 @@ export interface FixedTableProps<
  * Table wrapper with fixed header, fixed columns, built-in pagination, and a
  * body height that follows the available container height.
  */
-export const FixedTable = <RecordType extends object = object>({
+const FixedTable = <RecordType extends object = object>({
   className = '',
   pagination = {},
   scroll,
