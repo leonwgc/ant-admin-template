@@ -85,11 +85,24 @@ export const ContactInfo: FC<ContactInfoProps> = ({
 };
 ```
 
+### 1️⃣.1 组件文件组织规范（参考 `src/components/FixedTable`）
+
+新增组件统一采用**目录 + index 组合**的方式，而非 `ComponentName.tsx` 单文件形式：
+
+```
+components/ComponentName/
+├── index.tsx    # 组件实现，文件头 @file components/ComponentName/index.tsx
+└── index.scss   # 组件样式，文件头 @file components/ComponentName/index.scss
+```
+
+- `index.tsx` 中 `import './index.scss';`
+- 对外仅通过目录路径导入，如 `import { ComponentName } from '~/components/ComponentName';`
+- 如需额外拆分子文件（hooks、utils），同样放在该目录下，但主入口保持 `index.tsx`
+
 ### 2️⃣ 样式规范
 
 #### SCSS 文件要求
-- **位置**: 与组件文件同目录
-- **命名**: 与组件同名（如 `ContactInfo.tsx` → `ContactInfo.scss`）
+- **位置**: 与组件文件同目录，文件名固定为 `index.scss`（见上文组件文件组织规范）
 - **导入**: 文件头必须添加 `@import 'scss/common.scss';`
 - **BEM 命名**: 使用 BEM 规范（Block__Element--Modifier）
 - **className**: 使用双引号
