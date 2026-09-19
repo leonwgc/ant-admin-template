@@ -9,8 +9,9 @@ import type { TableProps } from '@derbysoft/neat-design';
 
 import './FixedTable.scss';
 
-export interface FixedTableProps<RecordType extends object = object>
-  extends Omit<TableProps<RecordType>, 'pagination' | 'scroll'> {
+export interface FixedTableProps<
+  RecordType extends object = object,
+> extends Omit<TableProps<RecordType>, 'pagination' | 'scroll'> {
   /** Table pagination configuration */
   pagination?: Exclude<TableProps<RecordType>['pagination'], false>;
   /** Table scroll configuration; the vertical value is managed automatically */
@@ -80,7 +81,7 @@ export const FixedTable = <RecordType extends object = object>({
           pageSize: pagination.pageSize ?? pageSize,
           onChange: handlePageChange,
         }}
-        scroll={{ ...scroll, y: bodyHeight }}
+        scroll={{ x: scroll?.x ?? 'max-content', y: bodyHeight }}
       />
     </div>
   );

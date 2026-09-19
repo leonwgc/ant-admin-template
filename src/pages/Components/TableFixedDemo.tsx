@@ -220,20 +220,17 @@ const TableFixedDemo: FC = () => {
         </Paragraph>
       </div>
 
-      <div className="table-fixed-demo__table-container">
-        <FixedTable<TableFixedRow>
-          rowKey="key"
-          columns={columns}
-          dataSource={dataSource}
-          pagination={{
-            total: dataSource.length,
-            showQuickJumper: false,
-            showSizeChanger: true,
-            pageSizeOptions: [3, 10, 50, 100],
-          }}
-          scroll={{ x: 'max-content' }}
-        />
-      </div>
+      <FixedTable<TableFixedRow>
+        rowKey="key"
+        columns={columns}
+        dataSource={dataSource}
+        pagination={{
+          total: dataSource.length,
+          showQuickJumper: false,
+          showSizeChanger: true,
+          pageSizeOptions: [3, 10, 50, 100],
+        }}
+      />
     </div>
   );
 };
