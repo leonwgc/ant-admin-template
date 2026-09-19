@@ -2,16 +2,9 @@
  * @file pages/Components/TableFixedDemo.tsx
  * @author leon.wang
  */
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 
-import {
-  Button,
-  Pagination,
-  Space,
-  Table,
-  Tag,
-  Typography,
-} from '@derbysoft/neat-design';
+import { Button, Space, Table, Tag, Typography } from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';
 import type { TableColumnsType } from '@derbysoft/neat-design';
 
@@ -44,6 +37,8 @@ const TableFixedDemo: FC = () => {
   const { t } = useTranslation();
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [tableBodyHeight, setTableBodyHeight] = useState(240);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   const dataSource = useMemo<TableFixedRow[]>(() => {
     const departments = [
@@ -216,10 +211,31 @@ const TableFixedDemo: FC = () => {
     },
   ];
 
-  const currentPageData = useMemo(() => {
-    const start = (current - 1) * pageSize;
-    return dataSource.slice(start, start + pageSize);
-  }, [current, dataSource, pageSize]);
+  useEffect(() => {
+    const tableContainer = tableContainerRef.current;
+    if (!tableContainer) return;
+
+    const updateTableBodyHeight = () => {
+      const tableHeader = tableContainer.querySelector<HTMLElement>(
+        '.ds-table-thead, .ant-table-thead',
+      );
+      const tablePagination = tableContainer.querySelector<HTMLElement>(
+        '.ds-pagination, .ant-pagination',
+      );
+      const headerHeight = tableHeader?.offsetHeight ?? 48;
+      const paginationHeight = tablePagination?.offsetHeight ?? 56;
+      const nextHeight =
+        tableContainer.clientHeight - headerHeight - paginationHeight;
+
+      setTableBodyHeight(Math.max(nextHeight, 120));
+    };
+
+    const resizeObserver = new ResizeObserver(updateTableBodyHeight);
+    resizeObserver.observe(tableContainer);
+    updateTableBodyHeight();
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   const handlePageChange = (page: number, nextPageSize: number) => {
     setCurrent(page);
@@ -237,24 +253,25 @@ const TableFixedDemo: FC = () => {
         </Paragraph>
       </div>
 
-      <Table<TableFixedRow>
-        className="table-fixed-demo__table"
-        rowKey="key"
-        columns={columns}
-        dataSource={currentPageData}
-        pagination={false}
-        scroll={{ x: 'max-content', y: 48 * 6 }}
-      />
-
-      <div className="table-fixed-demo__pagination">
-        <Pagination
-          current={current}
-          pageSize={pageSize}
-          total={dataSource.length}
-          showQuickJumper={false}
-          showSizeChanger
-          pageSizeOptions={[10, 50, 100]}
-          onChange={handlePageChange}
+      <div
+        ref={tableContainerRef}
+        className="table-fixed-demo__table-container"
+      >
+        <Table<TableFixedRow>
+          className="table-fixed-demo__table"
+          rowKey="key"
+          columns={columns}
+          dataSource={dataSource}
+          pagination={{
+            current,
+            pageSize,
+            total: dataSource.length,
+            showQuickJumper: false,
+            showSizeChanger: true,
+            pageSizeOptions: [3, 10, 50, 100],
+            onChange: handlePageChange,
+          }}
+          scroll={{ x: 'max-content', y: tableBodyHeight }}
         />
       </div>
     </div>
