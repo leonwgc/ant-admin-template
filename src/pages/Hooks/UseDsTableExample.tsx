@@ -44,8 +44,8 @@ import {
   FireOutlined,
 } from '@ant-design/icons';
 import useDsTable from '~/hooks/useDsTable';
-import usePageStateInStorage from '~/hooks/usePageStateInStorage';
-import type { PageState } from '~/hooks/usePageStateInStorage';
+import usePageState from '~/hooks/usePageState';
+import type { PageState } from '~/hooks/usePageState';
 import { mockUserData, fetchUserList } from './UseDsTableExample.data';
 import './UseDsTableExample.scss';
 
@@ -72,7 +72,7 @@ const UseDsTableExample: React.FC = () => {
 
   // Persist search form values, pagination and sort in sessionStorage
   const { state, formValues, onValuesChange, onBeforeRequest } =
-    usePageStateInStorage<SearchPageState, SearchFormValues>({
+    usePageState<SearchPageState, SearchFormValues>({
       key: 'use-ds-table-example',
       initialState: { current: 1, pageSize: 10 },
       stateToFormValues: (state) => ({

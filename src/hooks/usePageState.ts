@@ -1,5 +1,5 @@
 /**
- * @file src/hooks/usePageStateInStorage.ts
+ * @file src/hooks/usePageState.ts
  * @author leon.wang
  */
 
@@ -47,7 +47,7 @@ export interface PageStateInStorageResult<
   resetState: () => void;
 }
 
-const usePageStateInStorage = <StorageState extends PageState, FormValues>(
+const usePageState = <StorageState extends PageState, FormValues>(
   options: PageStateOptions<StorageState, FormValues>,
 ): PageStateInStorageResult<StorageState, FormValues> => {
   const [form] = Form.useForm();
@@ -121,6 +121,6 @@ const usePageStateInStorage = <StorageState extends PageState, FormValues>(
   };
 };
 
-export const usePageFilters = usePageStateInStorage;
+export const usePageFilters = usePageState;
 
-export default usePageStateInStorage;
+export default usePageState;

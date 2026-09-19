@@ -17,8 +17,8 @@ import {
 } from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';
 
-import usePageStateInStorage from '~/hooks/usePageStateInStorage';
-import type { PageState } from '~/hooks/usePageStateInStorage';
+import usePageState from '~/hooks/usePageState';
+import type { PageState } from '~/hooks/usePageState';
 
 import './UsePageStateInStorageDemo.scss';
 
@@ -59,7 +59,7 @@ const UsePageStateInStorageDemo: FC = () => {
     formValues,
     onValuesChange,
     resetState,
-  } = usePageStateInStorage<DemoState, DemoFormValues>({
+  } = usePageState<DemoState, DemoFormValues>({
     key: 'use-page-state-in-storage-demo',
     initialState,
     stateToFormValues,
