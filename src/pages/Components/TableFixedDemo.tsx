@@ -61,7 +61,7 @@ const TableFixedDemo: FC = () => {
       'disabled',
     ];
 
-    return Array.from({ length: 64 }, (_, index) => {
+    return Array.from({ length: 60 }, (_, index) => {
       const row = index + 1;
       const q1 = 70 + (row % 17);
       const q2 = 72 + (row % 19);
@@ -230,6 +230,7 @@ const TableFixedDemo: FC = () => {
           showQuickJumper: false,
           showSizeChanger: true,
           pageSizeOptions: [3, 10, 50, 100],
+          hideOnSinglePage: true,
         }}
       />
     </div>
