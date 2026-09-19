@@ -4,11 +4,6 @@
  */
 @import 'scss/common.scss';
 
-.ds-table-pagination.ds-pagination {
-  margin: 0 !important;
-  padding: 16px;
-}
-
 div.table-fixed-demo {
   padding: 0;
   overflow: hidden;
@@ -45,55 +40,6 @@ div.table-fixed-demo {
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
-  }
-
-  &__table {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .ds-table-wrapper,
-    .ant-table-wrapper {
-      width: 100%;
-      display: flex;
-      flex: 1 1 auto;
-      min-height: 0;
-      flex-direction: column;
-    }
-
-    .ds-spin-nested-loading,
-    .ds-spin-container,
-    .ds-table-container,
-    .ant-table-container {
-      display: flex;
-      flex: 1 1 auto;
-      min-height: 0;
-      flex-direction: column;
-    }
-
-    .ds-table,
-    .ant-table {
-      display: flex;
-      flex: 1 1 auto;
-      min-height: 0;
-      flex-direction: column;
-    }
-
-    .ds-table-thead,
-    .ant-table-thead {
-      flex-shrink: 0;
-    }
-
-    .ds-table-body,
-    .ant-table-body {
-      flex: 1 1 auto;
-      min-height: 0;
-    }
-
-    .ds-table-pagination,
-    .ant-pagination {
-      flex-shrink: 0;
-    }
   }
 }
 
